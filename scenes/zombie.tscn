@@ -81,7 +81,6 @@ speed = 20.0
 script = ExtResource("1_1vlb3")
 damage = 1
 score_reward = 1
-spawn_rate_reduction = 3.0
 sprite = NodePath("../Sprite")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -105,7 +104,7 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "2688533be403d85f73ed15b7cf8f32f8"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_httt1")
 
 [node name="BodyForwardCast" type="RayCast2D" parent="."]

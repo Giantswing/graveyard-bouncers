@@ -5,6 +5,7 @@ class_name PrefabChance
 enum SPAWN_POS_OPTIONS {
 	GROUND,
 	AIR,
+	REWARD,
 }
 
 @export var name: String

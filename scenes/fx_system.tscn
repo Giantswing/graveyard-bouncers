@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqem8f0lk2r2y"]
+[gd_scene load_steps=9 format=3 uid="uid://bqem8f0lk2r2y"]
 
 [ext_resource type="Script" uid="uid://dagqrdhdib5v1" path="res://scripts/fx_system.gd" id="1_6qabg"]
 [ext_resource type="Texture2D" uid="uid://4ink0fxv6y70" path="res://sprites/smoke.png" id="1_try75"]
@@ -10,6 +10,22 @@ particles_animation = true
 particles_anim_h_frames = 3
 particles_anim_v_frames = 3
 particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_6qabg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_liso6"]
+curve = SubResource("Curve_6qabg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qip3y"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, 98, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_liso6")
 
 [node name="FxSystem" type="Node2D"]
 script = ExtResource("1_6qabg")
@@ -28,3 +44,11 @@ position = Vector2(0, 58)
 amount = 1
 texture = ExtResource("3_liso6")
 process_material = ExtResource("2_6qabg")
+
+[node name="CoinCollect" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 0.0666667, 1)
+position = Vector2(84, 0)
+amount = 42
+explosiveness = 1.0
+trail_lifetime = 1.92
+process_material = SubResource("ParticleProcessMaterial_qip3y")

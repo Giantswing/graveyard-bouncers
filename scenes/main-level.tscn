@@ -104,20 +104,24 @@ animations = [{
 [node name="Level" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
+unique_name_in_owner = true
 position = Vector2(0, -35)
+failed_attack_str_mult = 0.6
+parry_raycast_distance = 50.0
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_djt6b")
 
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
-position = Vector2(-85, -36)
+position = Vector2(-90, -36)
 
 [node name="StartingGround" type="StaticBody2D" parent="Scenery"]
 position = Vector2(0, -12)
 scale = Vector2(8.52, 1)
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/StartingGround"]
+[node name="Collision" type="CollisionShape2D" parent="Scenery/StartingGround"]
 shape = SubResource("RectangleShape2D_bdrgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/StartingGround"]
@@ -287,7 +291,9 @@ amount = 64
 process_material = SubResource("ParticleProcessMaterial_aqsxy")
 
 [node name="Grave" parent="Scenery" instance=ExtResource("4_yyih8")]
-position = Vector2(66, -36)
+position = Vector2(90, -36)
+
+[node name="RewardContainer" type="Node2D" parent="Scenery"]
 
 [node name="EnemyContainer" type="Node2D" parent="Scenery"]
 
@@ -303,6 +309,7 @@ metadata/_edit_lock_ = true
 zoom = Vector2(3, 3)
 script = ExtResource("7_vrglu")
 on_hit_shake = 0.2
+max_y_increase = 600.0
 
 [node name="UI" parent="." instance=ExtResource("9_6g0xn")]
 

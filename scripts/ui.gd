@@ -4,6 +4,9 @@ extends Control
 @onready var time_label: Label = %TimeLabel
 @onready var heart_container: HBoxContainer = %HeartContainer
 @onready var death_screen: Control = %DeathScreen
+@onready var death_score_label: Label = %DeathScoreLabel
+@onready var coins_label: Label = %CoinsLabel
+@onready var round_label: Label = %RoundLabel
 
 @export var ui_heart_scene: PackedScene
 
@@ -22,15 +25,26 @@ func _ready() -> void:
 	Events.hp_changed.connect(on_hp_changed)
 	Events.round_time_changed.connect(on_round_time_changed)
 	Events.player_died.connect(on_player_died)
+	Events.coins_changed.connect(on_coins_changed)
+	Events.round_counter_changed.connect(on_round_counter_changed)
 
 	Events.round_time_changed.emit(0)
 	Events.score_changed.emit(0)
 	Events.hp_changed.emit(GameManager.player_hp_max, 0)
+	Events.coins_changed.emit(0)
+	Events.round_counter_changed.emit(0)
+
+func on_round_counter_changed(new_round: int) -> void:
+	round_label.text = "Round: " + str(new_round)
+
+func on_coins_changed(new_coins: int) -> void:
+	coins_label.text = str(new_coins)
 
 func on_round_time_changed(new_time: int) -> void:
 	time_label.text = "Time: " + str(new_time)
 
 func on_player_died() -> void:
+	death_score_label.text = str(GameManager.score)
 	death_screen.visible = true
 	
 func on_score_changed(new_score: int) -> void:

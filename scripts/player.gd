@@ -112,13 +112,13 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			can_get_hit = false
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
-			if is_parrying == false:
+			if is_parrying == false: # Normal attack
 				speed_particles.emitting = false
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
 				sprite.play("Idle")
 
 				FxSystem.play_fx("SmokeHitSmall", position)
-			else:
+			else: # Parry atack
 				velocity.y = -parry_bounce_str_mult * base_strength
 				sprite.play("Parry")
 
@@ -135,9 +135,9 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			is_parrying = false
 
 		else:
-			if can_get_hit and stats.damage > 0:
-
+			if can_get_hit and stats.damage > 0: # Take damage
 				can_get_hit = false
+
 				get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
 				velocity.y = -getting_hit_bounce_str_mult * base_strength
 				is_attacking = 0
