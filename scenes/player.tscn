@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3 uid="uid://dsdtpug2sa4g0"]
+
+[ext_resource type="Script" uid="uid://bx8m8lkkpx4xl" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://nt6uaad0q4ln" path="res://sprites/main-player.png" id="2_qhqgy"]
+
+[sub_resource type="Gradient" id="Gradient_g2els"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qhqgy"]
+gradient = SubResource("Gradient_g2els")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g2els"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0, 0, 0)
+gravity = Vector3(0, 2, 0)
+color_ramp = SubResource("GradientTexture1D_qhqgy")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdrgs"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyih8"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djt6b"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rdlt"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrglu"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tl6x4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdrgs")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyih8")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djt6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rdlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrglu")
+}],
+"loop": false,
+"name": &"Parry",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02re4"]
+size = Vector2(18, 20)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_g2els")
+base_strength = 400.0
+normal_attack_bounce_str_mult = 1.4
+parry_bounce_str_mult = 1.8
+mov_speed = 250.0
+parry_raycast_distance = 40.0
+
+[node name="SpeedParticles" type="GPUParticles2D" parent="."]
+amount = 32
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_g2els")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_tl6x4")
+animation = &"Idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/main-player.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c68f9b22762d93b77cdfa1b1f8f77b6c"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_02re4")
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="BodyDownCast1" type="RayCast2D" parent="Raycasts"]
+position = Vector2(-8, 0)
+target_position = Vector2(0, 35)
+collision_mask = 4
+
+[node name="BodyDownCast2" type="RayCast2D" parent="Raycasts"]
+position = Vector2(8, 0)
+target_position = Vector2(0, 35)
+collision_mask = 4

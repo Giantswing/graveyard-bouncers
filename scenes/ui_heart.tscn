@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh2e3rf6yppxo"]
+
+[ext_resource type="Script" uid="uid://hh22dlpnnl2" path="res://scripts/ui_heart.gd" id="1_6l0s0"]
+[ext_resource type="Texture2D" uid="uid://bco8714no4csj" path="res://sprites/ui-heart.png" id="1_y7sw2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g0xn"]
+atlas = ExtResource("1_y7sw2")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2kee"]
+atlas = ExtResource("1_y7sw2")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqsxy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g0xn")
+}],
+"loop": true,
+"name": &"Empty",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2kee")
+}],
+"loop": true,
+"name": &"Filled",
+"speed": 10.0
+}]
+
+[node name="UIHeart" type="Panel"]
+custom_minimum_size = Vector2(101, 0)
+script = ExtResource("1_6l0s0")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(38.5, 36.5)
+scale = Vector2(4.164, 4)
+sprite_frames = SubResource("SpriteFrames_aqsxy")
+animation = &"Filled"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/ui-heart.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "270775a526bfc6b2e5a39ad38ae234e0"

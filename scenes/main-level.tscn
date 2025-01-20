@@ -1,0 +1,330 @@
+[gd_scene load_steps=25 format=3 uid="uid://btuvbhvc412un"]
+
+[ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
+[ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="3_6rdlt"]
+[ext_resource type="Texture2D" uid="uid://b8iq2rdtnrvmj" path="res://sprites/wall-basic.png" id="3_bdrgs"]
+[ext_resource type="Script" uid="uid://b0hf2hi6k40q8" path="res://scripts/scenery.gd" id="3_djt6b"]
+[ext_resource type="PackedScene" uid="uid://clbg6qul035bg" path="res://scenes/grave.tscn" id="4_yyih8"]
+[ext_resource type="PackedScene" uid="uid://c2s4o300l8sf4" path="res://scenes/toxic_ground.tscn" id="5_6rdlt"]
+[ext_resource type="Texture2D" uid="uid://glkrutqer0mx" path="res://sprites/bg-temp.jpg" id="7_s2kee"]
+[ext_resource type="Script" uid="uid://bpk64m74d0ygy" path="res://scripts/main_camera.gd" id="7_vrglu"]
+[ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
+[ext_resource type="Texture2D" uid="uid://du6it06j6pkub" path="res://sprites/smoke-small.png" id="12_aqsxy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
+size = Vector2(24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfkck"]
+atlas = ExtResource("3_bdrgs")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6g0xn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfkck")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6g0xn"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s2kee"]
+gradient = SubResource("Gradient_6g0xn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aqsxy"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(450, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, -20, 0)
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_s2kee")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvcr4"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl0b8"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr822"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wgpl"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvmw5"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5usra"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2e2k"]
+atlas = ExtResource("12_aqsxy")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bdk1c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvcr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl0b8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dr822")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wgpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvmw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5usra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2e2k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Level" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_djt6b")]
+position = Vector2(0, -35)
+
+[node name="Scenery" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_djt6b")
+
+[node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
+position = Vector2(-85, -36)
+
+[node name="StartingGround" type="StaticBody2D" parent="Scenery"]
+position = Vector2(0, -12)
+scale = Vector2(8.52, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/StartingGround"]
+shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/StartingGround"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_6g0xn")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
+
+[node name="LeftWall" type="StaticBody2D" parent="Scenery"]
+position = Vector2(-114, 0)
+rotation = 1.57079
+scale = Vector2(24, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/LeftWall"]
+shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/LeftWall"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_6g0xn")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
+
+[node name="RightWall" type="StaticBody2D" parent="Scenery"]
+position = Vector2(114, 5.50244e-11)
+rotation = -1.57079
+scale = Vector2(24, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/RightWall"]
+shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/RightWall"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_6g0xn")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
+
+[node name="Bottom" type="Node2D" parent="Scenery"]
+position = Vector2(-308, 180)
+
+[node name="ToxicGround" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(4, -12)
+
+[node name="ToxicGround28" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(-20, -12)
+
+[node name="ToxicGround2" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(28, -12)
+
+[node name="ToxicGround3" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(52, -12)
+
+[node name="ToxicGround4" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(76, -12)
+
+[node name="ToxicGround5" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(100, -12)
+
+[node name="ToxicGround6" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(124, -12)
+
+[node name="ToxicGround7" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(148, -12)
+
+[node name="ToxicGround8" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(172, -12)
+
+[node name="ToxicGround9" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(196, -12)
+
+[node name="ToxicGround10" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(220, -12)
+
+[node name="ToxicGround11" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(244, -12)
+
+[node name="ToxicGround12" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(268, -12)
+
+[node name="ToxicGround13" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(292, -12)
+
+[node name="ToxicGround14" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(316, -12)
+
+[node name="ToxicGround15" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(340, -12)
+
+[node name="ToxicGround16" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(364, -12)
+
+[node name="ToxicGround17" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(388, -12)
+
+[node name="ToxicGround18" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(412, -12)
+
+[node name="ToxicGround19" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(436, -12)
+
+[node name="ToxicGround20" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(460, -12)
+
+[node name="ToxicGround21" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(484, -12)
+
+[node name="ToxicGround22" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(508, -12)
+
+[node name="ToxicGround23" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(532, -12)
+
+[node name="ToxicGround24" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(556, -12)
+
+[node name="ToxicGround25" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(580, -12)
+
+[node name="ToxicGround26" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(604, -12)
+
+[node name="ToxicGround27" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+position = Vector2(628, -12)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Scenery/Bottom"]
+modulate = Color(0.415686, 0.741176, 0.188235, 1)
+position = Vector2(308, -21)
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_aqsxy")
+
+[node name="Grave" parent="Scenery" instance=ExtResource("4_yyih8")]
+position = Vector2(66, -36)
+
+[node name="EnemyContainer" type="Node2D" parent="Scenery"]
+
+[node name="Background" type="Sprite2D" parent="Scenery"]
+modulate = Color(0.187176, 0.187176, 0.187176, 1)
+z_index = -10
+texture_filter = 1
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("7_s2kee")
+metadata/_edit_lock_ = true
+
+[node name="MainCamera" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+script = ExtResource("7_vrglu")
+on_hit_shake = 0.2
+
+[node name="UI" parent="." instance=ExtResource("9_6g0xn")]
+
+[node name="SpriteImporter" type="Node2D" parent="."]
+visible = false
+position = Vector2(-490, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_bdk1c")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/smoke-small.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "8020d06026ecd20835b9c57f93a26f97"

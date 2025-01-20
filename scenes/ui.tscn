@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://50wu1jt67mqg"]
+
+[ext_resource type="Script" uid="uid://dtqbfcsfon5fk" path="res://scripts/ui.gd" id="1_yev5y"]
+[ext_resource type="PackedScene" uid="uid://bh2e3rf6yppxo" path="res://scenes/ui_heart.tscn" id="2_gdt2y"]
+[ext_resource type="Theme" uid="uid://bskvkfmytudor" path="res://fonts/default-font.tres" id="3_wm3ai"]
+[ext_resource type="Material" uid="uid://b0xyk8m5xjeue" path="res://shaders/wavy.tres" id="4_gdt2y"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_yev5y")
+ui_heart_scene = ExtResource("2_gdt2y")
+
+[node name="ScoreLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 211.0
+offset_bottom = 82.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "score"
+uppercase = true
+
+[node name="TimeLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -211.0
+offset_bottom = 82.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "time"
+horizontal_alignment = 2
+uppercase = true
+
+[node name="HeartContainer" type="HBoxContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_top = 79.0
+offset_right = 1885.0
+offset_bottom = 215.0
+
+[node name="DeathScreen" type="VBoxContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.5
+offset_top = -127.0
+offset_right = 105.5
+offset_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Message" type="Label" parent="Control/DeathScreen"]
+material = ExtResource("4_gdt2y")
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "You died, your score was"
+
+[node name="DeathScoreLabel" type="Label" parent="Control/DeathScreen"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 236
+text = "25"
+
+[node name="Message2" type="Label" parent="Control/DeathScreen"]
+material = ExtResource("4_gdt2y")
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "Press jump to restart"

@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqem8f0lk2r2y"]
+
+[ext_resource type="Script" uid="uid://dagqrdhdib5v1" path="res://scripts/fx_system.gd" id="1_6qabg"]
+[ext_resource type="Texture2D" uid="uid://4ink0fxv6y70" path="res://sprites/smoke.png" id="1_try75"]
+[ext_resource type="Material" uid="uid://c082kptv3ycp5" path="res://shaders/basic_particle_sprite_animation.tres" id="2_6qabg"]
+[ext_resource type="Texture2D" uid="uid://du6it06j6pkub" path="res://sprites/smoke-small.png" id="3_liso6"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aqsxy"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[node name="FxSystem" type="Node2D"]
+script = ExtResource("1_6qabg")
+
+[node name="SmokeHit" type="GPUParticles2D" parent="."]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_aqsxy")
+amount = 1
+texture = ExtResource("1_try75")
+process_material = ExtResource("2_6qabg")
+
+[node name="SmokeHitSmall" type="GPUParticles2D" parent="."]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_aqsxy")
+position = Vector2(0, 58)
+amount = 1
+texture = ExtResource("3_liso6")
+process_material = ExtResource("2_6qabg")

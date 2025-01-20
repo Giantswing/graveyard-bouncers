@@ -1,0 +1,113 @@
+[gd_scene load_steps=13 format=3 uid="uid://cbqjx7lp0mmbo"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1vlb3"]
+[ext_resource type="Script" uid="uid://udfi6q1yqfei" path="res://scripts/zombie.gd" id="1_xepks"]
+[ext_resource type="Texture2D" uid="uid://bn2omk5b4w7bx" path="res://sprites/zombie.png" id="2_httt1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xepks"]
+atlas = ExtResource("2_httt1")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gx57"]
+atlas = ExtResource("2_httt1")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycv6i"]
+atlas = ExtResource("2_httt1")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjjxt"]
+atlas = ExtResource("2_httt1")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pfmu"]
+atlas = ExtResource("2_httt1")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fthk"]
+atlas = ExtResource("2_httt1")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aetfh"]
+atlas = ExtResource("2_httt1")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjlcg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xepks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gx57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycv6i")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_pjjxt")
+}],
+"loop": false,
+"name": &"Spawn",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_7pfmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fthk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aetfh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fthk")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_httt1"]
+size = Vector2(16, 24)
+
+[node name="Zombie" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_xepks")
+speed = 20.0
+
+[node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_1vlb3")
+damage = 1
+score_reward = 1
+spawn_rate_reduction = 3.0
+sprite = NodePath("../Sprite")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_jjlcg")
+animation = &"Spawn"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/zombie.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "2688533be403d85f73ed15b7cf8f32f8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_httt1")
+
+[node name="BodyForwardCast" type="RayCast2D" parent="."]
+target_position = Vector2(20, 0)
+collision_mask = 5

@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://clbg6qul035bg"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_mlivn"]
+[ext_resource type="Texture2D" uid="uid://b6dbt3id4osjb" path="res://sprites/grave.png" id="1_qpo7b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tl6x4"]
+atlas = ExtResource("1_qpo7b")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dfkck"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tl6x4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyih8"]
+size = Vector2(22, 16)
+
+[node name="Grave" type="StaticBody2D"]
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("1_mlivn")
+death_behaviour = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_dfkck")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/grave.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "883f994c856eab95b345bf79b684aaad"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_yyih8")
