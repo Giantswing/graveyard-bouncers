@@ -31,7 +31,7 @@ func _ready() -> void:
 	Events.round_time_changed.emit(0)
 	Events.score_changed.emit(0)
 	Events.hp_changed.emit(GameManager.player_hp_max, 0)
-	Events.coins_changed.emit(0)
+	Events.coins_changed.emit(1)
 	Events.round_counter_changed.emit(0)
 
 func on_round_counter_changed(new_round: int) -> void:

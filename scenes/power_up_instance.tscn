@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://1cdkvfj1vbge"]
+
+[ext_resource type="Script" uid="uid://co8fu4trvnver" path="res://scripts/power_up_instance.gd" id="1_po57t"]
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="3_1dnvq"]
+[ext_resource type="Texture2D" uid="uid://c0kmmnq7xsq5n" path="res://sprites/small-coin.png" id="4_cfp6u"]
+[ext_resource type="Theme" uid="uid://bskvkfmytudor" path="res://fonts/default-font.tres" id="5_74416"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s2kee"]
+radius = 14.0357
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8x35"]
+atlas = ExtResource("4_cfp6u")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhu1n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8x35")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PowerUpInstance" type="StaticBody2D"]
+collision_layer = 4
+script = ExtResource("1_po57t")
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("3_1dnvq")
+metadata/_custom_type_script = ExtResource("3_1dnvq")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/potion.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "d5a749bcceca9be7f61a21d0662de2d2"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s2kee")
+one_way_collision = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = -10.0
+offset_top = -47.0
+offset_right = 30.0
+offset_bottom = -7.0
+
+[node name="CoinIcon" type="AnimatedSprite2D" parent="HBoxContainer"]
+texture_filter = 1
+position = Vector2(17, 22)
+scale = Vector2(1.70351, 1.70351)
+sprite_frames = SubResource("SpriteFrames_mhu1n")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/small-coin.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "a930cb340fbd4182441a875097d7160e"
+
+[node name="PowerUpCostLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme = ExtResource("5_74416")
+theme_override_font_sizes/font_size = 18
+text = "3"
+horizontal_alignment = 1

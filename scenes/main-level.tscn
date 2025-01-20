@@ -1,15 +1,18 @@
-[gd_scene load_steps=25 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=20 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="3_6rdlt"]
 [ext_resource type="Texture2D" uid="uid://b8iq2rdtnrvmj" path="res://sprites/wall-basic.png" id="3_bdrgs"]
-[ext_resource type="Script" uid="uid://b0hf2hi6k40q8" path="res://scripts/scenery.gd" id="3_djt6b"]
 [ext_resource type="PackedScene" uid="uid://clbg6qul035bg" path="res://scenes/grave.tscn" id="4_yyih8"]
 [ext_resource type="PackedScene" uid="uid://c2s4o300l8sf4" path="res://scenes/toxic_ground.tscn" id="5_6rdlt"]
 [ext_resource type="Texture2D" uid="uid://glkrutqer0mx" path="res://sprites/bg-temp.jpg" id="7_s2kee"]
 [ext_resource type="Script" uid="uid://bpk64m74d0ygy" path="res://scripts/main_camera.gd" id="7_vrglu"]
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
-[ext_resource type="Texture2D" uid="uid://du6it06j6pkub" path="res://sprites/smoke-small.png" id="12_aqsxy"]
+[ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
+[ext_resource type="SpriteFrames" uid="uid://c22nv125fr7j8" path="res://resources/potion-frames.tres" id="10_vl0b8"]
+[ext_resource type="Script" uid="uid://c2ii2mke1pk65" path="res://scripts/power_up_shop.gd" id="11_aqsxy"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="12_dr822"]
+[ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/potion.tres" id="13_7wgpl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
 size = Vector2(24, 24)
@@ -44,63 +47,6 @@ gravity = Vector3(0, -20, 0)
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_s2kee")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yvcr4"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vl0b8"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(24, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dr822"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(48, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wgpl"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(0, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cvmw5"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(24, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5usra"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(48, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h2e2k"]
-atlas = ExtResource("12_aqsxy")
-region = Rect2(0, 48, 24, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_bdk1c"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yvcr4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vl0b8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dr822")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7wgpl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cvmw5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5usra")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h2e2k")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
 [node name="Level" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
@@ -111,7 +57,6 @@ parry_raycast_distance = 50.0
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_djt6b")
 
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
 position = Vector2(-90, -36)
@@ -297,6 +242,13 @@ position = Vector2(90, -36)
 
 [node name="EnemyContainer" type="Node2D" parent="Scenery"]
 
+[node name="PowerUpShop" type="Node2D" parent="Scenery"]
+position = Vector2(-31, -104)
+script = ExtResource("11_aqsxy")
+all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl")])
+instance = ExtResource("10_dr822")
+instance_padding = 32
+
 [node name="Background" type="Sprite2D" parent="Scenery"]
 modulate = Color(0.187176, 0.187176, 0.187176, 1)
 z_index = -10
@@ -314,12 +266,13 @@ max_y_increase = 600.0
 [node name="UI" parent="." instance=ExtResource("9_6g0xn")]
 
 [node name="SpriteImporter" type="Node2D" parent="."]
-visible = false
 position = Vector2(-490, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_bdk1c")
+sprite_frames = ExtResource("10_vl0b8")
+autoplay = "default"
+frame_progress = 0.0753016
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -332,6 +285,6 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/smoke-small.aseprite"
+"source": "/home/alex/Pictures/sprites/potion.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "8020d06026ecd20835b9c57f93a26f97"
+metadata/_aseprite_wizard_source_file_hash_ = "d5a749bcceca9be7f61a21d0662de2d2"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://dmhulh2ca188t"]
+
+[ext_resource type="SpriteFrames" uid="uid://c22nv125fr7j8" path="res://resources/potion-frames.tres" id="1_3owoh"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="1_vue1v"]
+
+[resource]
+script = ExtResource("1_vue1v")
+frames = ExtResource("1_3owoh")
+power_up_name = "Potion"
+power_up_description = "Heal to full"
+cost = 1
+amount = 1
+metadata/_custom_type_script = ExtResource("1_vue1v")

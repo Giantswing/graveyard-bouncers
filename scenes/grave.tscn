@@ -22,6 +22,7 @@ animations = [{
 size = Vector2(22, 16)
 
 [node name="Grave" type="StaticBody2D"]
+collision_layer = 4
 
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_mlivn")

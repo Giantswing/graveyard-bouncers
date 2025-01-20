@@ -16,6 +16,8 @@ extends Node2D
 @export var round_max_time: int = 20
 @export var current_round: int = 0
 
+@export var powerups: Array[PowerUp]
+
 var round_time: int = 0
 
 var score: int = 0
@@ -23,6 +25,7 @@ var coins: int = 0
 var player_hp: int = 3
 var enemy_container: Node2D
 var reward_container: Node2D
+var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
 var game_width: float = 200
@@ -45,7 +48,7 @@ func _ready() -> void:
 	Events.level_restarted.connect(on_level_restarted)
 	seconds_timer.timeout.connect(on_seconds_timer_timeout)
 	Events.round_ended.connect(end_round)
-
+	Events.picked_up_powerup.connect(add_powerup)
 	Events.level_restarted.emit()
 
 func on_level_restarted() -> void:
@@ -65,13 +68,13 @@ func on_player_died() -> void:
 	can_restart = false
 	get_tree().create_timer(0.5).timeout.connect(allow_can_restart)
 
+
 func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
 	if round_time >= round_max_time:
 		Events.round_ended.emit()
-
 
 func on_score_changed(new_score: int) -> void:
 	score = new_score
@@ -122,17 +125,17 @@ func spawn_prefab(list: Array[PrefabChance]) -> void:
 
 	var max_spawn_attempts: int = 10
 
-	var totalChance: float = 0
-
-	for prefab_chance in spawn_list:
-		totalChance += prefab_chance.chance
-
-	var chance: float = randf() * totalChance
-	var currentChance: float = 0
+	var total_chance: float = 0
 
 	for prefab_chance in list:
-		currentChance += prefab_chance.chance
-		if chance > currentChance:
+		total_chance += prefab_chance.chance
+
+	var chance: float = randf() * total_chance
+	var current_chance: float = 0
+
+	for prefab_chance in list:
+		current_chance += prefab_chance.chance
+		if chance > current_chance:
 			continue
 
 		var instance: Node2D = prefab_chance.prefab.instantiate()
@@ -182,6 +185,14 @@ func should_spawn(current_amount: int, max_amount: int) -> bool:
 		return false
 
 
+func add_powerup(powerup: PowerUp) -> void:
+	print(powerup.power_up_name)
+	powerups.append(powerup)
+
+	if powerup.power_up_name == "Potion":
+		Events.hp_changed.emit(player_hp_max, 0)
+
+
 func start_round() -> void:
 	left_wall = $"/root/Level/Scenery/LeftWall"
 	right_wall = $"/root/Level/Scenery/RightWall"
@@ -190,6 +201,7 @@ func start_round() -> void:
 	enemy_container = $"/root/Level/Scenery/EnemyContainer"
 	reward_container = $"/root/Level/Scenery/RewardContainer"
 	grave = $"/root/Level/Scenery/Grave"
+	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
 
 	game_width_start = right_wall.position.x - left_wall.position.x
 	game_width = game_width_start
@@ -201,15 +213,13 @@ func start_round() -> void:
 	current_round += 1
 	Events.round_counter_changed.emit(current_round)
 
-	trampoline.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
-	trampoline.visible = false
-
-	grave.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
-	grave.visible = false
+	deactivate(trampoline)
+	deactivate(grave)
 
 	seconds_timer.start()
 
 	game_started = true
+
 	round_started = true
 
 
@@ -236,11 +246,16 @@ func end_round() -> void:
 
 
 func items_appear() -> void:
-	trampoline.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
-	trampoline.visible = true
-
-	grave.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
-	grave.visible = true
+	activate(trampoline)
+	activate(grave)
 
 func allow_can_restart() -> void:
 	can_restart = true
+
+func deactivate(target: Node2D) -> void:
+	target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
+	target.visible = false
+
+func activate(target: Node2D) -> void:
+	target.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
+	target.visible = true
