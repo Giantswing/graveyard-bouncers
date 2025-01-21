@@ -5,6 +5,7 @@ class_name PrefabChance
 enum SPAWN_POS_OPTIONS {
 	GROUND,
 	AIR,
+	AIR_OUTSIDE,
 	REWARD,
 }
 

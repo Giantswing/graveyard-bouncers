@@ -136,10 +136,12 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			is_parrying = false
 
 		else:
-			if can_get_hit and stats.damage > 0: # Take damage
+			if can_get_hit and stats.damage > 0: # Take damage get hit
 				can_get_hit = false
 
+				set_collision_mask_value(3, false)
 				get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
+
 				velocity.y = -getting_hit_bounce_str_mult * base_strength
 				is_attacking = 0
 				sprite.play("Idle")
@@ -201,5 +203,6 @@ func reset_time_scale() -> void:
 	Engine.time_scale = 1.0
 
 func reset_can_get_hit() -> void:
+	set_collision_mask_value(3, true)
 	can_get_hit = true
 

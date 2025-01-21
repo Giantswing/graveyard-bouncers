@@ -13,20 +13,20 @@
 [ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="12_dr822"]
 [ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/potion.tres" id="13_7wgpl"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="13_cvmw5"]
-[ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://scenes/rain.gdshader" id="14_dr822"]
-[ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://scenes/vignette.gdshader" id="14_vl0b8"]
+[ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://shaders/rain.gdshader" id="14_dr822"]
+[ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://shaders/vignette.gdshader" id="14_vl0b8"]
 [ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="15_dr822"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7wgpl"]
 shader = ExtResource("14_dr822")
-shader_parameter/rain_amount = 50.0
+shader_parameter/rain_amount = 200.0
 shader_parameter/near_rain_length = 0.04
 shader_parameter/far_rain_length = 0.01
-shader_parameter/near_rain_width = 0.02
-shader_parameter/far_rain_width = 0.01
+shader_parameter/near_rain_width = 0.06
+shader_parameter/far_rain_width = 0.02
 shader_parameter/near_rain_transparency = 1.0
 shader_parameter/far_rain_transparency = 1.0
-shader_parameter/rain_color = Color(0.86, 0.86, 0.86, 0.466667)
+shader_parameter/rain_color = Color(0.86, 0.86, 0.86, 0.203922)
 shader_parameter/base_rain_speed = 0.5
 shader_parameter/additional_rain_speed = 0.5
 shader_parameter/slant = 0.176
@@ -76,7 +76,7 @@ shader_parameter/interference_amount = 0.0
 shader_parameter/grille_amount = 0.1
 shader_parameter/grille_size = 1.0
 shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_intensity = 0.181
 shader_parameter/aberation_amount = 0.0
 shader_parameter/roll_line_amount = 0.0
 shader_parameter/roll_speed = 1.0
@@ -109,11 +109,11 @@ animations = [{
 unique_name_in_owner = true
 
 [node name="Background" type="Sprite2D" parent="Scenery"]
-modulate = Color(0.122252, 0.122252, 0.122252, 1)
+modulate = Color(0.210588, 0.190222, 0.275639, 1)
 light_mask = 2
 z_index = -10
 texture_filter = 1
-scale = Vector2(0.45, 0.45)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_s2kee")
 metadata/_edit_lock_ = true
 
@@ -324,9 +324,9 @@ position = Vector2(90, -36)
 [node name="PointLight2D" type="PointLight2D" parent="Scenery"]
 z_index = -4096
 texture_filter = 1
-position = Vector2(0, 168)
+position = Vector2(0, 134)
 rotation = -1.57079
-scale = Vector2(0.309999, 1)
+scale = Vector2(0.368413, 1.70722)
 color = Color(0.498039, 0.776471, 0.235294, 1)
 energy = 2.0
 range_item_cull_mask = 2

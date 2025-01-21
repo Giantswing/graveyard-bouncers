@@ -19,7 +19,8 @@ func _ready():
 	Events.hp_changed.connect(on_hp_change)
 	Events.player_parry.connect(on_player_parry)
 	target = get_parent().get_node_or_null("%Player")
-	start_y_pos = global_position.y
+	start_y_pos = 0
+	# start_y_pos = global_position.y
 
 
 func on_hp_change(_hp: int, change: int):
@@ -45,9 +46,14 @@ func point_target():
 		return
 
 	var dist = target.global_position - global_position
-	var final_pos = min(start_y_pos, start_y_pos + dist.y * 0.2)
+	var final_pos: float
 
-	position.y = lerp(position.y, final_pos, 0.005)
+	if GameManager.round_started:
+		final_pos = min(start_y_pos, start_y_pos + dist.y * 0.2)
+		position.y = lerp(position.y, final_pos, 0.01)
+	else:
+		final_pos = min(start_y_pos - 10, start_y_pos + dist.y * 0.2)
+		position.y = lerp(position.y, final_pos, 0.05)
 	
 
 func shake():

@@ -112,16 +112,16 @@ func _process(delta: float) -> void:
 		if reward_spawn_countdown <= 0:
 			reward_spawn_countdown = reward_spawn_rate
 			if should_spawn(reward_container.get_child_count(), max_reward):
-				spawn_prefab(reward_list)
+				spawn_prefab(reward_list, reward_container, max_reward, 20)
 
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
 			enemy_spawn_countdown = enemy_spawn_rate
 			if should_spawn(enemy_container.get_child_count(), max_enemies):
-				spawn_prefab(spawn_list)
+				spawn_prefab(spawn_list, enemy_container, max_enemies, 100)
 
 
-func spawn_prefab(list: Array[PrefabChance]) -> void:
-	if enemy_container.get_child_count() >= max_enemies:
+func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int, free_space: float) -> void:
+	if container.get_child_count() >= max_amount:
 		return 
 
 	var max_spawn_attempts: int = 10
@@ -152,22 +152,30 @@ func spawn_prefab(list: Array[PrefabChance]) -> void:
 				pos_y = randf_range(90, 147)
 			elif prefab_chance.spawn_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
 				pos_y = randf_range(0, -150)
+			elif prefab_chance.spawn_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
+				pos_y = randf_range(90, -120)
+				# var side = randf() < 0.5
+				var side = randf() > 1 
+
+				pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
 
 
 			spawn_pos = Vector2(pos_x, pos_y)
 
 			var is_free: bool = true
 
-			for enemy in enemy_container.get_children():
-				if enemy.position.distance_to(spawn_pos) < 20:
+			for unit in container.get_children():
+				if unit.position.distance_to(spawn_pos) < free_space:
 					is_free = false
 					break
 
-			if not is_free and i != max_spawn_attempts - 1:
+			# if not is_free and i != max_spawn_attempts - 1:
+			if not is_free:
 				continue
 
+			print(i)
 			instance.position = spawn_pos
-			enemy_container.add_child(instance)
+			container.add_child(instance)
 			
 			return
 

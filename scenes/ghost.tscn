@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d1kww0kwpsiej" path="res://scripts/ghost.gd" id="1_bbnym"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_l5lq6"]
 [ext_resource type="Texture2D" uid="uid://b784kk44rak2v" path="res://sprites/ghost.png" id="2_bbnym"]
-[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="4_veat2"]
+[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_veat2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
 size = Vector2(16, 16)
@@ -60,7 +60,6 @@ one_way_collision = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_aksw0")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
@@ -80,7 +79,8 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "ffb127f4e21468d9e2ffefec6dc62b07"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-energy = 2.0
+texture_filter = 1
+energy = 2.5
 range_item_cull_mask = 2
 texture = ExtResource("4_veat2")
-texture_scale = 0.35
+texture_scale = 1.6

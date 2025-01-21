@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=13 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
 [ext_resource type="PackedScene" uid="uid://cbqjx7lp0mmbo" path="res://scenes/zombie.tscn" id="3_oo155"]
 [ext_resource type="PackedScene" uid="uid://bvapbvjvt7sng" path="res://scenes/ghost.tscn" id="4_oo155"]
 [ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="5_eaq8r"]
+[ext_resource type="PackedScene" uid="uid://ywgdf87hvv7a" path="res://scenes/bat.tscn" id="5_jdad8"]
 [ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="6_q8mjp"]
 [ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/potion.tres" id="7_jdad8"]
 
@@ -24,22 +25,30 @@ chance = 0.5
 spawn_type = 1
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
+[sub_resource type="Resource" id="Resource_k4jhu"]
+script = ExtResource("2_udu3i")
+name = "Bat"
+prefab = ExtResource("5_jdad8")
+chance = 0.6
+spawn_type = 2
+metadata/_custom_type_script = ExtResource("2_udu3i")
+
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("2_udu3i")
 name = "Coin"
 prefab = ExtResource("5_eaq8r")
 chance = 1.0
-spawn_type = 2
+spawn_type = 3
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_hwd4i")
 reward_spawn_rate = 6.0
 game_width_speed_increase = 4.0
-max_enemies = 7
-spawn_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_eaq8r"), SubResource("Resource_ternb")])
+max_enemies = 15
+spawn_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_eaq8r"), SubResource("Resource_ternb"), SubResource("Resource_k4jhu")])
 reward_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_q8mjp")])
-gravity_multiplier = 0.6
+gravity_multiplier = 0.5
 player_hp_max = 2
 round_max_time = 25
 powerups = Array[ExtResource("6_q8mjp")]([ExtResource("7_jdad8")])
