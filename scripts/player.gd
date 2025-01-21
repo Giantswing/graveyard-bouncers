@@ -90,11 +90,12 @@ func _physics_process(_delta: float) -> void:
 		handle_collision(collision)
 	
 
-	if(grounded and is_attacking == 2):
+	if(grounded and is_attacking == 2): # Failed attack
 		velocity.y = -failed_attack_str_mult * base_strength
 		is_attacking = 0
 		is_parrying = false
 		sprite.play("Idle")
+		FxSystem.play_fx("SmokeHitSmall", position)
 
 
 func handle_collision(collision: KinematicCollision2D) -> void:
@@ -193,16 +194,8 @@ func get_raycasts_collision_node(raycasts: Array) -> Node2D:
 	return null
 
 
-
-func reset_attack() -> void:
-	is_attacking = 0
-	sprite.play("Idle")
-
 func reset_jump() -> void:
 	can_jump = true
-
-func reset_speed_particles() -> void:
-	speed_particles.emitting = false
 
 func reset_time_scale() -> void:
 	Engine.time_scale = 1.0

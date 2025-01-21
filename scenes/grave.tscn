@@ -50,3 +50,4 @@ metadata/_aseprite_wizard_source_file_hash_ = "883f994c856eab95b345bf79b684aaad"
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_yyih8")
+one_way_collision = true

@@ -56,6 +56,7 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_bdrgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 2
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_bm5tg")
 autoplay = "default"

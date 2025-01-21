@@ -55,6 +55,7 @@ func on_level_restarted() -> void:
 	round_time = 0
 	score = 0
 	coins = 0
+	game_started = false
 	player_hp = player_hp_max
 	round_started = false
 	enemy_spawn_countdown = 0
@@ -66,7 +67,7 @@ func on_level_restarted() -> void:
 func on_player_died() -> void:
 	seconds_timer.stop()
 	can_restart = false
-	get_tree().create_timer(0.5).timeout.connect(allow_can_restart)
+	get_tree().create_timer(0.5).timeout.connect(func(): can_restart = true)
 
 
 func on_seconds_timer_timeout() -> void:
@@ -236,7 +237,10 @@ func end_round() -> void:
 	game_width = game_width_start
 	get_tree().create_tween().tween_property(starting_ground, "position:y", ground_y_pos, 0.5)
 
-	get_tree().create_timer(0.5).timeout.connect(items_appear)
+	get_tree().create_timer(0.5).timeout.connect(func():
+		activate(trampoline)
+		activate(grave)
+	)
 
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
@@ -245,17 +249,19 @@ func end_round() -> void:
 		reward.queue_free()
 
 
-func items_appear() -> void:
-	activate(trampoline)
-	activate(grave)
-
-func allow_can_restart() -> void:
-	can_restart = true
-
 func deactivate(target: Node2D) -> void:
-	target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
-	target.visible = false
+	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(target, "scale", Vector2(0, 0), 0.5)
+	tween.tween_callback(
+		func() -> void:
+			target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
+			target.visible = false
+	)
 
 func activate(target: Node2D) -> void:
 	target.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
 	target.visible = true
+	target.scale = Vector2(0, 0)
+
+	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(target, "scale", Vector2(1, 1), 0.5)

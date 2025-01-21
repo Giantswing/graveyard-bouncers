@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=30 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="3_6rdlt"]
@@ -9,10 +9,29 @@
 [ext_resource type="Script" uid="uid://bpk64m74d0ygy" path="res://scripts/main_camera.gd" id="7_vrglu"]
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
 [ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
-[ext_resource type="SpriteFrames" uid="uid://c22nv125fr7j8" path="res://resources/potion-frames.tres" id="10_vl0b8"]
 [ext_resource type="Script" uid="uid://c2ii2mke1pk65" path="res://scripts/power_up_shop.gd" id="11_aqsxy"]
 [ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="12_dr822"]
 [ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/potion.tres" id="13_7wgpl"]
+[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="13_cvmw5"]
+[ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://scenes/rain.gdshader" id="14_dr822"]
+[ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://scenes/vignette.gdshader" id="14_vl0b8"]
+[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="15_dr822"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7wgpl"]
+shader = ExtResource("14_dr822")
+shader_parameter/rain_amount = 50.0
+shader_parameter/near_rain_length = 0.04
+shader_parameter/far_rain_length = 0.01
+shader_parameter/near_rain_width = 0.02
+shader_parameter/far_rain_width = 0.01
+shader_parameter/near_rain_transparency = 1.0
+shader_parameter/far_rain_transparency = 1.0
+shader_parameter/rain_color = Color(0.86, 0.86, 0.86, 0.466667)
+shader_parameter/base_rain_speed = 0.5
+shader_parameter/additional_rain_speed = 0.5
+shader_parameter/slant = 0.176
+
+[sub_resource type="Theme" id="Theme_yvcr4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
 size = Vector2(24, 24)
@@ -47,16 +66,77 @@ gravity = Vector3(0, -20, 0)
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_s2kee")
 
-[node name="Level" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dr822"]
+shader = ExtResource("14_vl0b8")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/scan_line_amount = 0.1
+shader_parameter/warp_amount = 0.05
+shader_parameter/noise_amount = 0.01
+shader_parameter/interference_amount = 0.0
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.0
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -1.0
+shader_parameter/pixel_strength = -4.0
 
-[node name="Player" parent="." instance=ExtResource("1_djt6b")]
-unique_name_in_owner = true
-position = Vector2(0, -35)
-failed_attack_str_mult = 0.6
-parry_raycast_distance = 50.0
+[sub_resource type="Gradient" id="Gradient_vl0b8"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dr822"]
+gradient = SubResource("Gradient_vl0b8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wgpl"]
+atlas = ExtResource("15_dr822")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cvmw5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wgpl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Level" type="Node2D"]
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="Background" type="Sprite2D" parent="Scenery"]
+modulate = Color(0.122252, 0.122252, 0.122252, 1)
+light_mask = 2
+z_index = -10
+texture_filter = 1
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("7_s2kee")
+metadata/_edit_lock_ = true
+
+[node name="Rain" type="ColorRect" parent="Scenery"]
+modulate = Color(1, 1, 1, 0.835294)
+light_mask = 2
+z_index = -9
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_7wgpl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -213.0
+offset_right = 377.0
+offset_bottom = 237.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_yvcr4")
+color = Color(0, 0, 0, 1)
 
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
 position = Vector2(-90, -36)
@@ -97,6 +177,7 @@ scale = Vector2(24, 1)
 shape = SubResource("RectangleShape2D_bdrgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/LeftWall"]
+light_mask = 2
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6g0xn")
 metadata/_aseprite_wizard_interface_config_ = {
@@ -124,6 +205,7 @@ scale = Vector2(24, 1)
 shape = SubResource("RectangleShape2D_bdrgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/RightWall"]
+light_mask = 2
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6g0xn")
 metadata/_aseprite_wizard_interface_config_ = {
@@ -233,10 +315,25 @@ position = Vector2(628, -12)
 modulate = Color(0.415686, 0.741176, 0.188235, 1)
 position = Vector2(308, -21)
 amount = 64
+lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_aqsxy")
 
 [node name="Grave" parent="Scenery" instance=ExtResource("4_yyih8")]
 position = Vector2(90, -36)
+
+[node name="PointLight2D" type="PointLight2D" parent="Scenery"]
+z_index = -4096
+texture_filter = 1
+position = Vector2(0, 168)
+rotation = -1.57079
+scale = Vector2(0.309999, 1)
+color = Color(0.498039, 0.776471, 0.235294, 1)
+energy = 2.0
+range_item_cull_mask = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_item_cull_mask = 15
+texture = ExtResource("13_cvmw5")
+texture_scale = 2.0
 
 [node name="RewardContainer" type="Node2D" parent="Scenery"]
 
@@ -249,13 +346,11 @@ all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl")])
 instance = ExtResource("10_dr822")
 instance_padding = 32
 
-[node name="Background" type="Sprite2D" parent="Scenery"]
-modulate = Color(0.187176, 0.187176, 0.187176, 1)
-z_index = -10
-texture_filter = 1
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("7_s2kee")
-metadata/_edit_lock_ = true
+[node name="Player" parent="." instance=ExtResource("1_djt6b")]
+unique_name_in_owner = true
+position = Vector2(0, -35)
+failed_attack_str_mult = 0.6
+parry_raycast_distance = 50.0
 
 [node name="MainCamera" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -265,14 +360,27 @@ max_y_increase = 600.0
 
 [node name="UI" parent="." instance=ExtResource("9_6g0xn")]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_dr822")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_yvcr4")
+texture = SubResource("GradientTexture2D_dr822")
+
 [node name="SpriteImporter" type="Node2D" parent="."]
 position = Vector2(-490, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
 texture_filter = 1
-sprite_frames = ExtResource("10_vl0b8")
+sprite_frames = SubResource("SpriteFrames_cvmw5")
 autoplay = "default"
-frame_progress = 0.0753016
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -285,6 +393,6 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/potion.aseprite"
+"source": "/home/alex/Pictures/sprites/light-basic.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "d5a749bcceca9be7f61a21d0662de2d2"
+metadata/_aseprite_wizard_source_file_hash_ = "09af024e2896e4a49c619bbcc28826f2"

@@ -13,6 +13,7 @@ func _ready() -> void:
 	displayed_powerups.resize(amount_of_powerups)
 	Events.round_started.connect(close_shop)
 	Events.round_ended.connect(on_round_ended)
+	# display_shop()
 	
 
 func on_round_ended() -> void:
