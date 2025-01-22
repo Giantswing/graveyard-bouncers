@@ -10,12 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
 [ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
 [ext_resource type="Script" uid="uid://c2ii2mke1pk65" path="res://scripts/power_up_shop.gd" id="11_aqsxy"]
+[ext_resource type="Resource" uid="uid://bmx4tbxu0gfdu" path="res://resources/jumpy-shovel.tres" id="11_cvmw5"]
+[ext_resource type="Resource" uid="uid://bvyautccwn7xh" path="res://resources/powerup-life.tres" id="12_5usra"]
 [ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="12_dr822"]
 [ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/potion.tres" id="13_7wgpl"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="13_cvmw5"]
 [ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://shaders/rain.gdshader" id="14_dr822"]
 [ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://shaders/vignette.gdshader" id="14_vl0b8"]
-[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="15_dr822"]
+[ext_resource type="SpriteFrames" uid="uid://yxgadxtne4k5" path="res://resources/powerup-life-frames.tres" id="17_cvmw5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7wgpl"]
 shader = ExtResource("14_dr822")
@@ -87,21 +89,6 @@ shader_parameter/pixel_strength = -4.0
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dr822"]
 gradient = SubResource("Gradient_vl0b8")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wgpl"]
-atlas = ExtResource("15_dr822")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_cvmw5"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7wgpl")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
 
 [node name="Level" type="Node2D"]
 
@@ -340,9 +327,9 @@ texture_scale = 2.0
 [node name="EnemyContainer" type="Node2D" parent="Scenery"]
 
 [node name="PowerUpShop" type="Node2D" parent="Scenery"]
-position = Vector2(-31, -104)
+position = Vector2(-29, -104)
 script = ExtResource("11_aqsxy")
-all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl")])
+all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl"), ExtResource("11_cvmw5"), ExtResource("12_5usra")])
 instance = ExtResource("10_dr822")
 instance_padding = 32
 
@@ -375,12 +362,14 @@ theme = SubResource("Theme_yvcr4")
 texture = SubResource("GradientTexture2D_dr822")
 
 [node name="SpriteImporter" type="Node2D" parent="."]
+visible = false
 position = Vector2(-490, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_cvmw5")
+sprite_frames = ExtResource("17_cvmw5")
 autoplay = "default"
+frame_progress = 0.915585
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -393,6 +382,6 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/light-basic.aseprite"
+"source": "/home/alex/Pictures/sprites/powerup-life.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "09af024e2896e4a49c619bbcc28826f2"
+metadata/_aseprite_wizard_source_file_hash_ = "9fd8fb1dc0afb52846e84de545801e91"

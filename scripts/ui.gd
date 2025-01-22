@@ -15,14 +15,15 @@ var hearts: Array[ui_heart] = []
 func _ready() -> void:
 	death_screen.visible = false
 
-	for i in range(GameManager.player_hp_max):
-		var heart = ui_heart_scene.instantiate() as ui_heart
-		heart_container.add_child(heart)
-		heart.set_heart_state(true)
-		hearts.append(heart)
+	# for i in range(GameManager.player_hp_max):
+	# 	var heart = ui_heart_scene.instantiate() as ui_heart
+	# 	heart_container.add_child(heart)
+	# 	heart.set_heart_state(true)
+	# 	hearts.append(heart)
 
 	Events.score_changed.connect(on_score_changed)
 	Events.hp_changed.connect(on_hp_changed)
+	Events.max_hp_changed.connect(on_max_hp_changed)
 	Events.round_time_changed.connect(on_round_time_changed)
 	Events.player_died.connect(on_player_died)
 	Events.coins_changed.connect(on_coins_changed)
@@ -31,6 +32,7 @@ func _ready() -> void:
 	Events.round_time_changed.emit(0)
 	Events.score_changed.emit(0)
 	Events.hp_changed.emit(GameManager.player_hp_max, 0)
+	Events.max_hp_changed.emit(GameManager.player_hp_max)
 	Events.coins_changed.emit(0)
 	Events.round_counter_changed.emit(0)
 
@@ -49,6 +51,18 @@ func on_player_died() -> void:
 	
 func on_score_changed(new_score: int) -> void:
 	score_label.text = "Score: " + str(new_score)
+
+func on_max_hp_changed(new_max_hp: int) -> void:
+	for i in range(hearts.size()):
+		hearts[i].queue_free()
+
+	hearts.clear()
+
+	for i in range(new_max_hp):
+		var heart = ui_heart_scene.instantiate() as ui_heart
+		heart_container.add_child(heart)
+		heart.set_heart_state(true)
+		hearts.append(heart)
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
 	for i in range(hearts.size()):

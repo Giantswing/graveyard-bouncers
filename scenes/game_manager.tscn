@@ -50,7 +50,7 @@ spawn_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_eaq8r"), SubRe
 reward_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_q8mjp")])
 gravity_multiplier = 0.5
 player_hp_max = 2
-round_max_time = 25
+round_max_time = 3
 powerups = Array[ExtResource("6_q8mjp")]([ExtResource("7_jdad8")])
 
 [node name="SecondsTimer" type="Timer" parent="."]

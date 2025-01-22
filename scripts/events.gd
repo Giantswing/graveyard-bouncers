@@ -4,6 +4,7 @@ extends Node2D
 
 signal coins_changed(score: int)
 signal hp_changed(new_hp: int, change: int)
+signal max_hp_changed(new_max_hp: int, change: int)
 signal level_restarted
 signal picked_up_powerup(powerup: PowerUp)
 signal player_died

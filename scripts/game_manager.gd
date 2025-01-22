@@ -20,6 +20,7 @@ extends Node2D
 
 var round_time: int = 0
 
+var player_hp_max_original: int = 3
 var score: int = 0
 var coins: int = 0
 var player_hp: int = 3
@@ -40,6 +41,7 @@ var can_restart: bool = false
 var ground_y_pos: float
 
 func _ready() -> void:
+	player_hp_max_original = player_hp_max
 	Events.round_started.connect(start_round)
 	Events.score_changed.connect(on_score_changed)
 	Events.coins_changed.connect(on_coins_changed)
@@ -51,11 +53,17 @@ func _ready() -> void:
 	Events.picked_up_powerup.connect(add_powerup)
 	Events.level_restarted.emit()
 
+	
+
 func on_level_restarted() -> void:
+
+	powerups = []
+	current_round = 0
 	round_time = 0
 	score = 0
 	coins = 0
 	game_started = false
+	player_hp_max = player_hp_max_original
 	player_hp = player_hp_max
 	round_started = false
 	enemy_spawn_countdown = 0
@@ -117,7 +125,7 @@ func _process(delta: float) -> void:
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
 			enemy_spawn_countdown = enemy_spawn_rate
 			if should_spawn(enemy_container.get_child_count(), max_enemies):
-				spawn_prefab(spawn_list, enemy_container, max_enemies, 100)
+				spawn_prefab(spawn_list, enemy_container, max_enemies, 80)
 
 
 func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int, free_space: float) -> void:
@@ -173,7 +181,6 @@ func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int,
 			if not is_free:
 				continue
 
-			print(i)
 			instance.position = spawn_pos
 			container.add_child(instance)
 			
@@ -195,11 +202,28 @@ func should_spawn(current_amount: int, max_amount: int) -> bool:
 
 
 func add_powerup(powerup: PowerUp) -> void:
-	print(powerup.power_up_name)
 	powerups.append(powerup)
 
-	if powerup.power_up_name == "Potion":
+	if powerup.power_up_name == "heal-potion":
 		Events.hp_changed.emit(player_hp_max, 0)
+	elif powerup.power_up_name == "extra-life":
+		player_hp_max += 1
+		Events.max_hp_changed.emit(player_hp_max)
+		Events.hp_changed.emit(player_hp_max, 0)
+
+func has_powerup(powerup_name: String) -> bool:
+	for powerup in powerups:
+		if powerup.power_up_name == powerup_name and powerup.active:
+			return true
+
+	return false
+
+	
+func set_powerup_active(powerup_name: String, active: bool) -> void:
+	for powerup in powerups:
+		if powerup.power_up_name == powerup_name:
+			powerup.active = active
+			break
 
 
 func start_round() -> void:

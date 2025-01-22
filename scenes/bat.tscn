@@ -5,51 +5,51 @@
 [ext_resource type="Texture2D" uid="uid://crvysj4la2qsn" path="res://sprites/bat.png" id="3_5fn3r"]
 [ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_8qtcx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5usra"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
+size = Vector2(18, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ss3tx"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h2e2k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv0ya"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bdk1c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fn3r"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u8x35"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtcx"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(0, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mhu1n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4bhu"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(24, 24, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_aksw0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_k0o7o"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5usra")
+"texture": SubResource("AtlasTexture_ss3tx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_h2e2k")
+"texture": SubResource("AtlasTexture_lv0ya")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bdk1c")
+"texture": SubResource("AtlasTexture_5fn3r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u8x35")
+"texture": SubResource("AtlasTexture_8qtcx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mhu1n")
+"texture": SubResource("AtlasTexture_x4bhu")
 }],
 "loop": true,
 "name": &"default",
 "speed": 10.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
-size = Vector2(18, 8)
 
 [node name="Bat" type="CharacterBody2D"]
 collision_layer = 4
@@ -64,11 +64,14 @@ damage = 1
 score_reward = 1
 metadata/_custom_type_script = ExtResource("2_lv0ya")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1)
+shape = SubResource("RectangleShape2D_cvmw5")
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_aksw0")
+sprite_frames = SubResource("SpriteFrames_k0o7o")
 autoplay = "default"
-frame_progress = 0.714534
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -84,11 +87,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/sprites/bat.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "4154a458ecfbbc318550678135185128"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 1)
-shape = SubResource("RectangleShape2D_cvmw5")
+metadata/_aseprite_wizard_source_file_hash_ = "bfc58dfd97e7b0bf63b7c9334110f0e8"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture_filter = 1

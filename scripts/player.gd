@@ -114,12 +114,14 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
 			if is_parrying == false: # Normal attack
+				GameManager.set_powerup_active("double-jump", true)
 				speed_particles.emitting = false
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
 				sprite.play("Idle")
 
 				FxSystem.play_fx("SmokeHitSmall", position)
 			else: # Parry atack
+				GameManager.set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength
 				sprite.play("Parry")
 
@@ -156,32 +158,40 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 
 
-
 func handle_jump() -> void:
 	if jump_pressed and can_jump:
 		can_jump = false
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 		if grounded:
+			GameManager.set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
 		else:
 			if is_attacking == 0:
-				var collision = get_raycasts_collision_node([body_down_cast1, body_down_cast2])
+				process_jump()
+				return
+			
+			if is_attacking > 0 and GameManager.has_powerup("double-jump"):
+				GameManager.set_powerup_active("double-jump", false)
+				process_jump()
+				return
 
-				if collision != null:
-					var stats: Stats = collision.get_node_or_null("Stats")
+func process_jump() -> void:
+	var collision = get_raycasts_collision_node([body_down_cast1, body_down_cast2])
 
-					if stats != null and stats.can_be_parried:
-						is_parrying = true
-						velocity.y = parry_downward_str_mult * base_strength
-						is_attacking = 2
-						return
+	if collision != null:
+		var stats: Stats = collision.get_node_or_null("Stats")
+
+		if stats != null and stats.can_be_parried:
+			is_parrying = true
+			velocity.y = parry_downward_str_mult * base_strength
+			is_attacking = 2
+			return
 
 
-				is_attacking = 1
-				velocity.y = -attack_recoil_str_mult * base_strength
-				sprite.play("Attack")
-
+	is_attacking = 1
+	velocity.y = -attack_recoil_str_mult * base_strength
+	sprite.play("Attack")
 
 func get_input() -> void:
 	movement_input = Input.get_vector("Left", "Right", "Up", "Down")

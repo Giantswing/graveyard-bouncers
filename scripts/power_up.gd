@@ -8,3 +8,8 @@ class_name PowerUp
 @export var chance: float = 1
 @export var cost: int = 1
 @export var amount: int = 1
+
+var original_chance: float
+var original_cost: int
+var original_amount: int
+var active: bool = true 

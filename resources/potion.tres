@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_vue1v")
 frames = ExtResource("1_3owoh")
-power_up_name = "Potion"
+power_up_name = "heal-potion"
 power_up_description = "Heal to full"
 chance = 1.0
-cost = 6
-amount = 1
+cost = 4
+amount = 10
 metadata/_custom_type_script = ExtResource("1_vue1v")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://bmx4tbxu0gfdu"]
+
+[ext_resource type="SpriteFrames" uid="uid://dxn5d3l35sjyb" path="res://resources/jumpy-shovel-frames.tres" id="1_tue1p"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_ht8mn"]
+
+[resource]
+script = ExtResource("2_ht8mn")
+frames = ExtResource("1_tue1p")
+power_up_name = "double-jump"
+power_up_description = "Double jump"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_ht8mn")

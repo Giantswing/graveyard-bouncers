@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://1cdkvfj1vbge"]
+[gd_scene load_steps=38 format=3 uid="uid://1cdkvfj1vbge"]
 
 [ext_resource type="Script" uid="uid://co8fu4trvnver" path="res://scripts/power_up_instance.gd" id="1_po57t"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="3_1dnvq"]
@@ -12,33 +12,37 @@ region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vm5ae"]
 atlas = ExtResource("3_po57t")
-region = Rect2(48, 24, 24, 24)
+region = Rect2(24, 48, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4pgd4"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 24, 24, 24)
+region = Rect2(48, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fm2c3"]
 atlas = ExtResource("3_po57t")
-region = Rect2(0, 24, 24, 24)
+region = Rect2(24, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tpwfh"]
 atlas = ExtResource("3_po57t")
-region = Rect2(48, 0, 24, 24)
+region = Rect2(0, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fcjbp"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 0, 24, 24)
+region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ksu7a"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 48, 24, 24)
+region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_snrul"]
 atlas = ExtResource("3_po57t")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgy3h"]
+atlas = ExtResource("3_po57t")
 region = Rect2(0, 48, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6owo0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_8qyo4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -46,9 +50,24 @@ animations = [{
 }],
 "loop": true,
 "name": &"Base",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vm5ae")
 }, {
@@ -66,12 +85,18 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ksu7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snrul")
 }],
 "loop": true,
 "name": &"ShineBack",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksu7a")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fcjbp")
 }, {
@@ -85,14 +110,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_4pgd4")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hgy3h")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_vm5ae")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_snrul")
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm5ae")
 }],
 "loop": true,
 "name": &"ShineFor",
-"speed": 4.0
+"speed": 8.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_po57t"]
@@ -190,33 +230,37 @@ region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1dnvq"]
 atlas = ExtResource("3_po57t")
-region = Rect2(48, 24, 24, 24)
+region = Rect2(24, 48, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfp6u"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 24, 24, 24)
+region = Rect2(48, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_74416"]
 atlas = ExtResource("3_po57t")
-region = Rect2(0, 24, 24, 24)
+region = Rect2(24, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kkc3a"]
 atlas = ExtResource("3_po57t")
-region = Rect2(48, 0, 24, 24)
+region = Rect2(0, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4eeif"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 0, 24, 24)
+region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_thb5n"]
 atlas = ExtResource("3_po57t")
-region = Rect2(24, 48, 24, 24)
+region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6owo0"]
 atlas = ExtResource("3_po57t")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2o0yj"]
+atlas = ExtResource("3_po57t")
 region = Rect2(0, 48, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2o0yj"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hgy3h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -224,9 +268,24 @@ animations = [{
 }],
 "loop": true,
 "name": &"Base",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1dnvq")
 }, {
@@ -244,12 +303,18 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_thb5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6owo0")
 }],
 "loop": true,
 "name": &"ShineBack",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thb5n")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4eeif")
 }, {
@@ -263,14 +328,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_cfp6u")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2o0yj")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_1dnvq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6owo0")
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dnvq")
 }],
 "loop": true,
 "name": &"ShineFor",
-"speed": 4.0
+"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s2kee"]
@@ -304,7 +384,7 @@ unique_name_in_owner = true
 modulate = Color(0.47788, 0.47788, 0.47788, 0.741176)
 texture_filter = 1
 scale = Vector2(1.2, 1.2)
-sprite_frames = SubResource("SpriteFrames_6owo0")
+sprite_frames = SubResource("SpriteFrames_8qyo4")
 animation = &"ShineBack"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
@@ -320,7 +400,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/sprites/powerup-bubble.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "5621fdc71df2ceba18ba5b36002e79f4"
+metadata/_aseprite_wizard_source_file_hash_ = "92495623bddf703bc66064aa44b590fa"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -337,9 +417,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/potion.aseprite"
+"source": "/home/alex/Pictures/sprites/jumpy-shovel.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "d5a749bcceca9be7f61a21d0662de2d2"
+metadata/_aseprite_wizard_source_file_hash_ = "c4f90dd23f6722568da12164ad1101b2"
 
 [node name="BubbleBase" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -367,7 +447,7 @@ unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.556863)
 texture_filter = 1
 scale = Vector2(1.2, 1.2)
-sprite_frames = SubResource("SpriteFrames_2o0yj")
+sprite_frames = SubResource("SpriteFrames_hgy3h")
 animation = &"ShineFor"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
@@ -383,21 +463,17 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/sprites/powerup-bubble.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "5621fdc71df2ceba18ba5b36002e79f4"
+metadata/_aseprite_wizard_source_file_hash_ = "92495623bddf703bc66064aa44b590fa"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_s2kee")
 one_way_collision = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = -10.0
-offset_top = -47.0
-offset_right = 30.0
-offset_bottom = -7.0
+[node name="Cost" type="Node2D" parent="."]
 
-[node name="CoinIcon" type="AnimatedSprite2D" parent="HBoxContainer"]
+[node name="CoinIcon" type="AnimatedSprite2D" parent="Cost"]
 texture_filter = 1
-position = Vector2(17, 22)
+position = Vector2(8, -25)
 scale = Vector2(1.70351, 1.70351)
 sprite_frames = SubResource("SpriteFrames_mhu1n")
 metadata/_aseprite_wizard_interface_config_ = {
@@ -416,11 +492,34 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "a930cb340fbd4182441a875097d7160e"
 
-[node name="PowerUpCostLabel" type="Label" parent="HBoxContainer"]
+[node name="PowerUpCostLabel" type="Label" parent="Cost"]
 unique_name_in_owner = true
 texture_filter = 1
-layout_mode = 2
+custom_minimum_size = Vector2(27.345, 0)
+offset_left = -23.0
+offset_top = -39.0
+offset_right = 4.345
+offset_bottom = -15.0
 theme = ExtResource("5_74416")
 theme_override_font_sizes/font_size = 18
-text = "3"
+text = "25"
+horizontal_alignment = 2
+
+[node name="DescriptionLabel" type="Label" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+offset_left = -51.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 77.0
+theme = ExtResource("5_74416")
+theme_override_constants/line_spacing = -10
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 15
+text = "This is an item"
 horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 80)
+collision_mask = 2
