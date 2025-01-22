@@ -211,10 +211,14 @@ func add_powerup(powerup: PowerUp) -> void:
 		Events.max_hp_changed.emit(player_hp_max)
 		Events.hp_changed.emit(player_hp_max, 0)
 
-func has_powerup(powerup_name: String) -> bool:
+func has_powerup(powerup_name: String, ignore_active: bool = false) -> bool:
 	for powerup in powerups:
-		if powerup.power_up_name == powerup_name and powerup.active:
-			return true
+		if ignore_active:
+			if powerup.power_up_name == powerup_name:
+				return true
+		else:
+			if powerup.power_up_name == powerup_name and powerup.active:
+				return true
 
 	return false
 

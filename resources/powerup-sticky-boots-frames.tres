@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://dok01gl1a6dqy"]
+
+[ext_resource type="Texture2D" uid="uid://cikf4n3puqxni" path="res://sprites/powerup-sticky-boots.png" id="1_h5nkw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2e2k"]
+atlas = ExtResource("1_h5nkw")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdk1c"]
+atlas = ExtResource("1_h5nkw")
+region = Rect2(24, 0, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2e2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdk1c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]

@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_down_cast1: RayCast2D = $Raycasts/BodyDownCast1
 @onready var body_down_cast2: RayCast2D = $Raycasts/BodyDownCast2
+@onready var body_forward_cast: RayCast2D = $Raycasts/BodyForwardCast
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
 
 @export var acceleration: float = 0.1 
@@ -16,13 +17,17 @@ extends CharacterBody2D
 @export var parry_bounce_str_mult: float = 2
 @export var parry_downward_str_mult: float = 1
 @export var getting_hit_bounce_str_mult: float = 1.5
+@export var slide_down_max_speed: float = 30
 
 @export var hit_invincibility_time: float = 0.5
 @export var mov_speed: float = 100
 @export var parry_raycast_distance: float = 30
+@export var extra_hspeed_decay: float = 0.1
+@export var extra_hspeed_strength: float = 1
 
 var can_jump: bool = true
 var hspeed: float = 0
+var extra_hspeed: float = 0
 var hspeed_to: float = 0
 var is_attacking: int = 0 # 0 = not attacking, 1 = preparing attack, 2 = attacking
 var is_parrying: bool = false
@@ -31,6 +36,8 @@ var movement_input: Vector2
 var can_get_hit: bool = true
 var previous_velocity: Vector2 = Vector2.ZERO
 var grounded: bool = false
+var on_wall: bool = false
+var can_be_on_wall: bool = true 
 
 
 func _ready() -> void:
@@ -54,6 +61,7 @@ func on_animation_finished() -> void:
 func _process(delta: float) -> void:
 	get_input()
 
+
 	if velocity.y > 0 and is_attacking == 1:
 		speed_particles.emitting = true
 		is_attacking = 2
@@ -61,20 +69,31 @@ func _process(delta: float) -> void:
 	if velocity.y > 0 and is_attacking != 2 and speed_particles.emitting == true:
 		speed_particles.emitting = false
 
+	extra_hspeed += (0 - extra_hspeed) * delta * extra_hspeed_decay * 60
 	hspeed_to = movement_input.x * mov_speed
 	hspeed += (hspeed_to - hspeed) * acceleration * delta * 60
 
-	velocity.x = hspeed
+	if on_wall and GameManager.has_powerup("sticky-boots"):
+		GameManager.set_powerup_active("sticky-boots", true)
+
+	velocity.x = hspeed + extra_hspeed
 	if is_attacking == 0:
-		velocity.y += get_gravity().y * delta * GameManager.gravity_multiplier
+		if on_wall:
+			hspeed = 0
+			velocity.y += get_gravity().y * delta * GameManager.gravity_multiplier
+			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
+		else:
+			velocity.y += get_gravity().y * delta * GameManager.gravity_multiplier
+			
 	else:
 		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.gravity_multiplier
 
 	handle_jump()
 
-	if hspeed > 0:
+
+	if velocity.x > 5 and !on_wall:
 		sprite.flip_h = false
-	elif hspeed < 0:
+	elif velocity.x < -5 and !on_wall:
 		sprite.flip_h = true
 
 
@@ -84,6 +103,20 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 	grounded = is_on_floor()
+	on_wall = false
+
+	body_forward_cast.target_position.x = 10 if movement_input.x > 0 else -10
+	if movement_input.x == 0:
+		body_forward_cast.target_position.x = 0
+
+	# if is_attacking == 0 and velocity.y > 0 and movement_input.x != 0:
+	if is_attacking == 0 and movement_input.x != 0 and can_be_on_wall:
+		on_wall = body_forward_cast.is_colliding()
+
+	if on_wall:
+		sprite.play("WallSlide")
+	elif sprite.animation == "WallSlide":
+		sprite.play("Idle")
 
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
@@ -166,6 +199,13 @@ func handle_jump() -> void:
 		if grounded:
 			GameManager.set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
+
+		elif on_wall and GameManager.has_powerup("sticky-boots", true):
+			deactivate_can_be_on_wall()
+			GameManager.set_powerup_active("sticky-boots", false)
+			extra_hspeed = -movement_input.x * 500 * extra_hspeed_strength
+			velocity.y = -base_strength * jump_str_mult
+
 		else:
 			if is_attacking == 0:
 				process_jump()
@@ -216,3 +256,6 @@ func reset_can_get_hit() -> void:
 	set_collision_mask_value(3, true)
 	can_get_hit = true
 
+func deactivate_can_be_on_wall() -> void:
+	can_be_on_wall = false
+	get_tree().create_timer(0.1).timeout.connect(func(): can_be_on_wall = true)

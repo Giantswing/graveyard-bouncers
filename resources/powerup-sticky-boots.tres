@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://bkih55vqd3qcg"]
+
+[ext_resource type="SpriteFrames" uid="uid://dok01gl1a6dqy" path="res://resources/powerup-sticky-boots-frames.tres" id="1_cpt3a"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_hxpss"]
+
+[resource]
+script = ExtResource("2_hxpss")
+frames = ExtResource("1_cpt3a")
+power_up_name = "sticky-boots"
+power_up_description = "Wall jump"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_hxpss")
