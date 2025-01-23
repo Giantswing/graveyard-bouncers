@@ -43,6 +43,7 @@ animations = [{
 }]
 
 [node name="ToxicGround" type="StaticBody2D"]
+collision_mask = 0
 
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_2fdja")

@@ -2,9 +2,9 @@ extends Resource
 
 class_name GameRound
 
-@export var time: int = 45
+@export var time_limit: int = 45
 @export var gravity_multiplier: float = 0.5
-@export var game_width_speed_increase: float = 0.1
+@export var game_width_speed_increase: float = 4 
 
 @export var enemy_list: Array[PrefabChance]
 @export var enemy_spawn_rate: float = 2

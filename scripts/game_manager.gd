@@ -1,20 +1,11 @@
 extends Node2D
 
-@export var enemy_spawn_rate: float = 1
-@export var reward_spawn_rate: float = 4
-@export var game_width_speed_increase: float = 0.1
-@export var max_enemies: int = 10
-@export var max_reward: int = 8
-@export var spawn_list: Array[PrefabChance]
-@export var reward_list: Array[PrefabChance]
-@export var gravity_multiplier: float = 1
 @export var player_hp_max: int = 3
 @export var game_width_start: float
 
 @onready var seconds_timer: Timer = %SecondsTimer
 
-@export var round_max_time: int = 20
-@export var current_round: int = 0
+@export var current_round: int = 0 
 
 @export var powerups: Array[PowerUp]
 @export var game_rounds: Array[GameRound]
@@ -32,6 +23,8 @@ var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
 var game_width: float = 200
 var left_wall: Node2D
+var toxic_floor: Node2D
+var normal_floor: Node2D
 var right_wall: Node2D
 var round_started: bool = false
 var game_started: bool = false
@@ -40,6 +33,7 @@ var trampoline: Node2D
 var grave: Node2D
 var can_restart: bool = false
 var ground_y_pos: float
+
 
 func _ready() -> void:
 	player_hp_max_original = player_hp_max
@@ -71,6 +65,7 @@ func on_level_restarted() -> void:
 	seconds_timer.stop()
 	can_restart = false
 	Engine.time_scale = 1
+	set_up_floor()
 
 func on_player_died() -> void:
 	seconds_timer.stop()
@@ -82,7 +77,7 @@ func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
-	if round_time >= round_max_time:
+	if round_time >= round_data().time_limit:
 		Events.round_ended.emit()
 
 func on_score_changed(new_score: int) -> void:
@@ -95,6 +90,20 @@ func on_hp_changed(new_hp: int, _change: int) -> void:
 	player_hp = new_hp
 	if player_hp <= 0:
 		Events.player_died.emit()
+
+
+func round_data(game_round = null) -> GameRound:
+	if game_round == null:
+		game_round = current_round
+
+	if game_round < 0:
+		game_round = 0
+
+	if game_round > game_rounds.size():
+		game_round = game_rounds.size()
+
+	print("game_round", game_round)
+	return game_rounds[game_round - 1]
 
 
 func _process(delta: float) -> void:
@@ -114,18 +123,33 @@ func _process(delta: float) -> void:
 	if round_started:
 		enemy_spawn_countdown -= delta
 		reward_spawn_countdown -= delta
-		game_width += game_width_speed_increase * delta
+		game_width += round_data().game_width_speed_increase * delta
 		game_width = min(game_width, 620)
 
 		if reward_spawn_countdown <= 0:
-			reward_spawn_countdown = reward_spawn_rate
-			if should_spawn(reward_container.get_child_count(), max_reward):
-				spawn_prefab(reward_list, reward_container, max_reward, 20)
+			reward_spawn_countdown = round_data().reward_spawn_rate 
+			if should_spawn(reward_container.get_child_count(), round_data().max_rewards):
+				spawn_prefab(round_data().reward_list, reward_container, round_data().max_rewards, 20)
 
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
-			enemy_spawn_countdown = enemy_spawn_rate
-			if should_spawn(enemy_container.get_child_count(), max_enemies):
-				spawn_prefab(spawn_list, enemy_container, max_enemies, 80)
+			enemy_spawn_countdown = round_data().enemy_spawn_rate
+			if should_spawn(enemy_container.get_child_count(), round_data().max_enemies):
+				spawn_prefab(round_data().enemy_list, enemy_container, round_data().max_enemies, 80)
+
+
+func set_up_floor():
+	normal_floor = $"/root/Level/Scenery/NormalFloor"
+	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
+
+	var ground_height: float = 180
+	var next_round = current_round + 1
+
+	if round_data(next_round).has_toxic_floor:
+		get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height, 0.5)
+		get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + 80, 0.5)
+	else:
+		get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + 80, 0.5)
+		get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height, 0.5)
 
 
 func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int, free_space: float) -> void:
@@ -283,6 +307,8 @@ func end_round() -> void:
 
 	for reward in reward_container.get_children():
 		reward.queue_free()
+
+	set_up_floor()
 
 
 func deactivate(target: Node2D) -> void:

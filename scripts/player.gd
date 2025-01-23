@@ -42,7 +42,7 @@ var can_be_on_wall: bool = true
 
 func _ready() -> void:
 	speed_particles.emitting = false
-	base_strength *= GameManager.gravity_multiplier
+	base_strength *= GameManager.round_data().gravity_multiplier
 	sprite.animation_finished.connect(on_animation_finished)
 	body_down_cast1.target_position.y = parry_raycast_distance
 	body_down_cast2.target_position.y = parry_raycast_distance
@@ -80,13 +80,13 @@ func _process(delta: float) -> void:
 	if is_attacking == 0:
 		if on_wall:
 			hspeed = 0
-			velocity.y += get_gravity().y * delta * GameManager.gravity_multiplier
+			velocity.y += get_gravity().y * delta * GameManager.round_data().gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 		else:
-			velocity.y += get_gravity().y * delta * GameManager.gravity_multiplier
+			velocity.y += get_gravity().y * delta * GameManager.round_data().gravity_multiplier
 			
 	else:
-		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.gravity_multiplier
+		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.round_data().gravity_multiplier
 
 	handle_jump()
 
@@ -224,7 +224,10 @@ func process_jump() -> void:
 
 		if stats != null and stats.can_be_parried:
 			is_parrying = true
-			velocity.y = parry_downward_str_mult * base_strength
+			if velocity.y < parry_downward_str_mult * base_strength:
+				velocity.y = parry_downward_str_mult * base_strength
+			else:
+				velocity.y *= parry_downward_str_mult * 2
 			is_attacking = 2
 			return
 

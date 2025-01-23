@@ -212,99 +212,130 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
 
-[node name="Bottom" type="Node2D" parent="Scenery"]
+[node name="ToxicFloor" type="Node2D" parent="Scenery"]
+unique_name_in_owner = true
 position = Vector2(-308, 180)
 
-[node name="ToxicGround" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(4, -12)
 
-[node name="ToxicGround28" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround28" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(-20, -12)
 
-[node name="ToxicGround2" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround2" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(28, -12)
 
-[node name="ToxicGround3" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround3" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(52, -12)
 
-[node name="ToxicGround4" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround4" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(76, -12)
 
-[node name="ToxicGround5" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround5" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(100, -12)
 
-[node name="ToxicGround6" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround6" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(124, -12)
 
-[node name="ToxicGround7" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround7" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(148, -12)
 
-[node name="ToxicGround8" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround8" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(172, -12)
 
-[node name="ToxicGround9" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround9" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(196, -12)
 
-[node name="ToxicGround10" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround10" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(220, -12)
 
-[node name="ToxicGround11" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround11" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(244, -12)
 
-[node name="ToxicGround12" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround12" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(268, -12)
 
-[node name="ToxicGround13" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround13" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(292, -12)
 
-[node name="ToxicGround14" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround14" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(316, -12)
 
-[node name="ToxicGround15" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround15" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(340, -12)
 
-[node name="ToxicGround16" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround16" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(364, -12)
 
-[node name="ToxicGround17" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround17" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(388, -12)
 
-[node name="ToxicGround18" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround18" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(412, -12)
 
-[node name="ToxicGround19" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround19" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(436, -12)
 
-[node name="ToxicGround20" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround20" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(460, -12)
 
-[node name="ToxicGround21" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround21" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(484, -12)
 
-[node name="ToxicGround22" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround22" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(508, -12)
 
-[node name="ToxicGround23" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround23" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(532, -12)
 
-[node name="ToxicGround24" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround24" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(556, -12)
 
-[node name="ToxicGround25" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround25" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(580, -12)
 
-[node name="ToxicGround26" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround26" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(604, -12)
 
-[node name="ToxicGround27" parent="Scenery/Bottom" instance=ExtResource("5_6rdlt")]
+[node name="ToxicGround27" parent="Scenery/ToxicFloor" instance=ExtResource("5_6rdlt")]
 position = Vector2(628, -12)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Scenery/Bottom"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Scenery/ToxicFloor"]
 modulate = Color(0.415686, 0.741176, 0.188235, 1)
 position = Vector2(308, -21)
 amount = 64
 lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_aqsxy")
+
+[node name="NormalFloor" type="StaticBody2D" parent="Scenery"]
+unique_name_in_owner = true
+position = Vector2(6, 180)
+scale = Vector2(27.4, 1)
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Scenery/NormalFloor"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/NormalFloor"]
+texture_filter = 1
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_6g0xn")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
 
 [node name="Grave" parent="Scenery" instance=ExtResource("4_yyih8")]
 position = Vector2(90, -36)
