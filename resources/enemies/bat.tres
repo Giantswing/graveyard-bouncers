@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PrefabChance" load_steps=3 format=3 uid="uid://dqjt5c0gd5xnf"]
+
+[ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="1_x7kp6"]
+[ext_resource type="PackedScene" uid="uid://ywgdf87hvv7a" path="res://scenes/bat.tscn" id="2_dbjcq"]
+
+[resource]
+script = ExtResource("1_x7kp6")
+name = "Bat"
+prefab = ExtResource("2_dbjcq")
+chance = 0.6
+spawn_type = 2
+metadata/_custom_type_script = ExtResource("1_x7kp6")

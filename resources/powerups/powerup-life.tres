@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://bvyautccwn7xh"]
 
-[ext_resource type="SpriteFrames" uid="uid://yxgadxtne4k5" path="res://resources/powerup-life-frames.tres" id="1_353fb"]
+[ext_resource type="SpriteFrames" uid="uid://yxgadxtne4k5" path="res://resources/powerups/powerup-life-frames.tres" id="1_353fb"]
 [ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_ngll4"]
 
 [resource]

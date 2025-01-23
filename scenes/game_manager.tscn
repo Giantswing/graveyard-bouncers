@@ -1,54 +1,36 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=9 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
-[ext_resource type="PackedScene" uid="uid://cbqjx7lp0mmbo" path="res://scenes/zombie.tscn" id="3_oo155"]
-[ext_resource type="PackedScene" uid="uid://bvapbvjvt7sng" path="res://scenes/ghost.tscn" id="4_oo155"]
-[ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="5_eaq8r"]
-[ext_resource type="PackedScene" uid="uid://ywgdf87hvv7a" path="res://scenes/bat.tscn" id="5_jdad8"]
+[ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
+[ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="4_jdad8"]
+[ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="5_k4jhu"]
+[ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="6_q8mjp"]
+[ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
 
-[sub_resource type="Resource" id="Resource_eaq8r"]
-script = ExtResource("2_udu3i")
-name = "Zombie"
-prefab = ExtResource("3_oo155")
-chance = 1.0
-spawn_type = 0
-metadata/_custom_type_script = ExtResource("2_udu3i")
-
-[sub_resource type="Resource" id="Resource_ternb"]
-script = ExtResource("2_udu3i")
-name = "Ghost"
-prefab = ExtResource("4_oo155")
-chance = 0.5
-spawn_type = 1
-metadata/_custom_type_script = ExtResource("2_udu3i")
-
-[sub_resource type="Resource" id="Resource_k4jhu"]
-script = ExtResource("2_udu3i")
-name = "Bat"
-prefab = ExtResource("5_jdad8")
-chance = 0.6
-spawn_type = 2
-metadata/_custom_type_script = ExtResource("2_udu3i")
-
-[sub_resource type="Resource" id="Resource_q8mjp"]
-script = ExtResource("2_udu3i")
-name = "Coin"
-prefab = ExtResource("5_eaq8r")
-chance = 1.0
-spawn_type = 3
-metadata/_custom_type_script = ExtResource("2_udu3i")
+[sub_resource type="Resource" id="Resource_0rse5"]
+script = ExtResource("7_frtjd")
+time = 45
+enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp")])
+enemy_spawn_rate = 2.0
+max_enemies = 10
+reward_list = Array[ExtResource("2_udu3i")]([])
+reward_spawn_rate = 4.0
+max_rewards = 5
+has_toxic_floor = false
+metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_hwd4i")
 reward_spawn_rate = 6.0
 game_width_speed_increase = 4.0
 max_enemies = 15
-spawn_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_eaq8r"), SubResource("Resource_ternb"), SubResource("Resource_k4jhu")])
-reward_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_q8mjp")])
+spawn_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp"), ExtResource("4_jdad8"), ExtResource("5_k4jhu")])
+reward_list = Array[ExtResource("2_udu3i")]([ExtResource("6_q8mjp")])
 gravity_multiplier = 0.5
 player_hp_max = 2
 round_max_time = 25
+game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_0rse5")])
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

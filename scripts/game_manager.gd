@@ -17,6 +17,7 @@ extends Node2D
 @export var current_round: int = 0
 
 @export var powerups: Array[PowerUp]
+@export var game_rounds: Array[GameRound]
 
 var round_time: int = 0
 
@@ -42,21 +43,20 @@ var ground_y_pos: float
 
 func _ready() -> void:
 	player_hp_max_original = player_hp_max
+	seconds_timer.timeout.connect(on_seconds_timer_timeout)
+
 	Events.round_started.connect(start_round)
 	Events.score_changed.connect(on_score_changed)
 	Events.coins_changed.connect(on_coins_changed)
 	Events.hp_changed.connect(on_hp_changed)
 	Events.player_died.connect(on_player_died)
 	Events.level_restarted.connect(on_level_restarted)
-	seconds_timer.timeout.connect(on_seconds_timer_timeout)
 	Events.round_ended.connect(end_round)
 	Events.picked_up_powerup.connect(add_powerup)
 	Events.level_restarted.emit()
-
 	
 
 func on_level_restarted() -> void:
-
 	powerups = []
 	current_round = 0
 	round_time = 0
