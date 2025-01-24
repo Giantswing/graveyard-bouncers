@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.4", "Mobile")
 
 Events="*res://scenes/events.tscn"
 FxSystem="*res://scenes/fx_system.tscn"
+Utils="*res://scenes/utils.tscn"
 
 [display]
 

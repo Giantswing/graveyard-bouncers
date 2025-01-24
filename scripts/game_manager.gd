@@ -22,6 +22,7 @@ var score: int = 0
 var coins: int = 0
 var player_hp: int = 3
 var enemy_container: Node2D
+var other_container: Node2D
 var reward_container: Node2D
 var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
@@ -58,6 +59,7 @@ func _ready() -> void:
 	starting_ground = $"/root/Level/Scenery/StartingGround"
 	trampoline = $"/root/Level/Scenery/Trampoline"
 	enemy_container = $"/root/Level/Scenery/EnemyContainer"
+	other_container = $"/root/Level/Scenery/OtherContainer"
 	reward_container = $"/root/Level/Scenery/RewardContainer"
 	grave = $"/root/Level/Scenery/Grave"
 	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
@@ -134,13 +136,11 @@ func _process(delta: float) -> void:
 
 		if reward_spawn_countdown <= 0:
 			reward_spawn_countdown = round_data.reward_spawn_rate 
-			if should_spawn(reward_container.get_child_count(), round_data.max_rewards):
-				spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
+			Utils.spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
 
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
 			enemy_spawn_countdown = round_data.enemy_spawn_rate
-			if should_spawn(enemy_container.get_child_count(), round_data.max_enemies):
-				spawn_prefab_from_list(round_data.enemy_list, enemy_container, round_data.max_enemies)
+			Utils.spawn_prefab_from_list(round_data.enemy_list, enemy_container, round_data.max_enemies)
 
 
 
@@ -150,90 +150,25 @@ func set_up_round():
 
 	if round_data.has_trampoline:
 		print("Spawning trampoline")
-		var new_obj: Node2D = spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
+		var new_obj: Node2D = Utils.spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
 		new_obj.scale = Vector2(0, 0)
-		get_tree().create_tween().tween_property(new_obj, "scale", Vector2(1, 1), 0.4)
+		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
 
 	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:
-			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height, 0.5)
-			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + offset, 0.5)
-			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(normal_floor, "position:y", ground_height, 0.5)
+			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.TOXIC:
-			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + offset, 0.5)
-			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height, 0.5)
-			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(toxic_floor, "position:y", ground_height, 0.5)
+			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.LAVA:
-			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + offset, 0.5)
-			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + offset, 0.5)
-			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height, 0.5)
-
-
-
-func spawn_prefab_from_list(list: Array[PrefabChance], container: Node2D, max_amount: int) -> void:
-	if container.get_child_count() >= max_amount:
-		return
-
-	var total_chance: float = 0
-	for prefab_chance in list:
-		total_chance += prefab_chance.chance
-
-	var chance: float = randf() * total_chance
-	var current_chance: float = 0
-
-	for prefab_chance in list:
-		current_chance += prefab_chance.chance
-		if chance <= current_chance:
-			spawn_prefab(prefab_chance.prefab, container, prefab_chance.spawn_type, prefab_chance.free_space)
-		return
-
-
-
-
-func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float) -> Node2D:
-	var new_prefab: Node2D = prefab.instantiate()
-	var spawn_pos: Vector2 = Vector2.ZERO
-
-	var horizontal_wall_padding = 10
-	var max_tries = 20
-
-	for i in range(max_tries):
-		var pos_x = randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
-		var pos_y = 147
-
-		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
-			pos_y = randf_range(90, 147)
-		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
-			pos_y = randf_range(0, -150)
-		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
-			pos_y = randf_range(90, -120)
-			# var side = randf() < 0.5
-			var side = randf() > 1 
-
-			pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
-
-		spawn_pos = Vector2(pos_x, pos_y)
-
-		var is_free: bool = true
-
-		for unit in container.get_children():
-			if unit.position.distance_to(spawn_pos) < free_space:
-				is_free = false
-				break
-
-		if player.position.distance_to(spawn_pos) < free_space:
-			is_free = false
-
-		if not is_free:
-			continue
-
-		new_prefab.position = spawn_pos
-		container.add_child(new_prefab)
-		return new_prefab
-
-	return null
+			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
+			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)
 
 
 
@@ -244,14 +179,16 @@ func should_spawn(current_amount: int, max_amount: int) -> bool:
 	if current_amount >= max_amount:
 		return false
 
-	var spawn_chance = 1.0 - float(current_amount) / float(max_amount)
-	
-	var roll = randf()
-	
-	if roll < spawn_chance:
-		return true
-	else:
-		return false
+	return true
+
+	# var spawn_chance = 1.0 - float(current_amount) / float(max_amount)
+	# 
+	# var roll = randf()
+	# 
+	# if roll < spawn_chance:
+	# 	return true
+	# else:
+	# 	return false
 
 
 func add_powerup(powerup: PowerUp) -> void:
@@ -289,7 +226,7 @@ func start_round() -> void:
 
 	ground_y_pos = starting_ground.position.y
 	starting_ground.set_collision_layer_value(1, false)
-	get_tree().create_tween().tween_property(starting_ground, "position:y", 220, 0.5)
+	Utils.fast_tween(starting_ground, "position:y", 220, 0.5)
 
 	current_round += 1
 	Events.round_counter_changed.emit(current_round)
@@ -300,7 +237,6 @@ func start_round() -> void:
 	seconds_timer.start()
 
 	game_started = true
-
 	round_started = true
 
 
@@ -315,7 +251,7 @@ func end_round() -> void:
 	seconds_timer.stop()
 	starting_ground.set_collision_layer_value(1, true)
 	game_width = game_width_start
-	get_tree().create_tween().tween_property(starting_ground, "position:y", ground_y_pos, 0.5)
+	Utils.fast_tween(starting_ground, "position:y", ground_y_pos, 0.5)
 
 	get_tree().create_timer(0.5).timeout.connect(func():
 		activate(trampoline)

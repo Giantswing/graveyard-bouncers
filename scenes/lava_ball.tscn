@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://ewq68vpmsm17"]
+
+[ext_resource type="Script" uid="uid://bx2kfpcnxvte7" path="res://scripts/lava_ball.gd" id="1_wo57b"]
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_uxo8x"]
+[ext_resource type="Texture2D" uid="uid://bifoq8aierf30" path="res://sprites/lava-ball.png" id="3_wo57b"]
+[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_56t6b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo57b"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxo8x"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bich"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56t6b"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k3xa"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br6a8"]
+atlas = ExtResource("3_wo57b")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tca38"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo57b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxo8x")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bich")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56t6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k3xa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br6a8")
+}],
+"loop": true,
+"name": &"Spawn",
+"speed": 10.0
+}]
+
+[node name="LavaBall" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_wo57b")
+speed = 175.0
+jump_time = 2.5
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("2_uxo8x")
+hp = 100
+hp_max = 100
+damage = 1
+can_take_damage = false
+can_be_parried = false
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_veat2")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+light_mask = 2
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_tca38")
+animation = &"Spawn"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/lava-ball.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "6cff7a9cd563ac7e5b262bea77bb9d33"
+
+[node name="Light" type="PointLight2D" parent="."]
+modulate = Color(0.973341, 0.386927, 0, 1)
+texture_filter = 1
+color = Color(1, 0.537667, 0.27, 1)
+energy = 2.5
+range_item_cull_mask = 2
+texture = ExtResource("4_56t6b")
+texture_scale = 1.6

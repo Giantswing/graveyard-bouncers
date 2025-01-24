@@ -13,5 +13,4 @@ signal round_counter_changed(round: int)
 signal round_ended
 signal round_started
 signal round_time_changed(time: int)
-signal game_started
 signal score_changed(score: int)

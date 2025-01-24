@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="4_jdad8"]
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="6_q8mjp"]
-[ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scenes/round_manager.gd" id="6_ternb"]
+[ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scripts/round_manager.gd" id="6_ternb"]
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
 
 [sub_resource type="Resource" id="Resource_0rse5"]
@@ -66,13 +66,13 @@ time_limit = 10
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp")])
-enemy_spawn_rate = 0.5
+enemy_list = Array[ExtResource("2_udu3i")]([])
+enemy_spawn_rate = 4.0
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
-ground_type = 0
+ground_type = 2
 has_trampoline = true
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
@@ -89,7 +89,7 @@ max_enemies = 10
 reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
-ground_type = 0
+ground_type = 1
 has_trampoline = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 

@@ -41,7 +41,7 @@ animations = [{
 size = Vector2(20, 21)
 
 [node name="Trampoline" type="StaticBody2D"]
-collision_layer = 4
+collision_layer = 8
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_nytqh")
