@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=33 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="3_6rdlt"]
 [ext_resource type="Texture2D" uid="uid://b8iq2rdtnrvmj" path="res://sprites/wall-basic.png" id="3_bdrgs"]
 [ext_resource type="PackedScene" uid="uid://clbg6qul035bg" path="res://scenes/grave.tscn" id="4_yyih8"]
 [ext_resource type="PackedScene" uid="uid://c2s4o300l8sf4" path="res://scenes/toxic_ground.tscn" id="5_6rdlt"]
+[ext_resource type="PackedScene" uid="uid://dtyg2va2kyx66" path="res://scenes/lava_ground.tscn" id="6_bdk1c"]
 [ext_resource type="Texture2D" uid="uid://glkrutqer0mx" path="res://sprites/bg-temp.jpg" id="7_s2kee"]
 [ext_resource type="Script" uid="uid://bpk64m74d0ygy" path="res://scripts/main_camera.gd" id="7_vrglu"]
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
@@ -61,6 +62,15 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 gradient = SubResource("Gradient_6g0xn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aqsxy"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(450, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, -20, 0)
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_s2kee")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bdk1c"]
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(450, 1, 1)
 emission_shape = 3
@@ -307,6 +317,129 @@ amount = 64
 lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_aqsxy")
 
+[node name="ToxicLight" type="PointLight2D" parent="Scenery/ToxicFloor"]
+z_index = -4096
+texture_filter = 1
+position = Vector2(308, -46)
+rotation = -1.57079
+scale = Vector2(0.368413, 1.70722)
+color = Color(0.498039, 0.776471, 0.235294, 1)
+energy = 2.0
+range_item_cull_mask = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_item_cull_mask = 15
+texture = ExtResource("13_cvmw5")
+texture_scale = 2.0
+
+[node name="LavaFloor" type="Node2D" parent="Scenery"]
+unique_name_in_owner = true
+position = Vector2(-308, 180)
+
+[node name="LavaGround" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(-10, -12)
+
+[node name="LavaGround2" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(14, -12)
+
+[node name="LavaGround3" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(38, -12)
+
+[node name="LavaGround4" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(62, -12)
+
+[node name="LavaGround5" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(86, -12)
+
+[node name="LavaGround6" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(110, -12)
+
+[node name="LavaGround7" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(134, -12)
+
+[node name="LavaGround8" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(158, -12)
+
+[node name="LavaGround9" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(182, -12)
+
+[node name="LavaGround10" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(206, -12)
+
+[node name="LavaGround11" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(230, -12)
+
+[node name="LavaGround12" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(254, -12)
+
+[node name="LavaGround13" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(278, -12)
+
+[node name="LavaGround14" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(302, -12)
+
+[node name="LavaGround15" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(326, -12)
+
+[node name="LavaGround16" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(350, -12)
+
+[node name="LavaGround17" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(374, -12)
+
+[node name="LavaGround18" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(398, -12)
+
+[node name="LavaGround19" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(422, -12)
+
+[node name="LavaGround20" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(446, -12)
+
+[node name="LavaGround21" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(470, -12)
+
+[node name="LavaGround22" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(494, -12)
+
+[node name="LavaGround23" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(518, -12)
+
+[node name="LavaGround24" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(542, -12)
+
+[node name="LavaGround25" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(566, -12)
+
+[node name="LavaGround26" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(590, -12)
+
+[node name="LavaGround27" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(614, -12)
+
+[node name="LavaGround28" parent="Scenery/LavaFloor" instance=ExtResource("6_bdk1c")]
+position = Vector2(638, -12)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Scenery/LavaFloor"]
+modulate = Color(0.85098, 0.560784, 0, 1)
+position = Vector2(308, -21)
+amount = 64
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_bdk1c")
+
+[node name="LavaLight" type="PointLight2D" parent="Scenery/LavaFloor"]
+z_index = -4096
+texture_filter = 1
+position = Vector2(308, -46)
+rotation = -1.57079
+scale = Vector2(0.368413, 1.70722)
+color = Color(1, 0.545737, 0.276496, 1)
+energy = 3.05
+range_item_cull_mask = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_item_cull_mask = 15
+texture = ExtResource("13_cvmw5")
+texture_scale = 2.0
+
 [node name="NormalFloor" type="StaticBody2D" parent="Scenery"]
 unique_name_in_owner = true
 position = Vector2(6, 180)
@@ -339,20 +472,6 @@ metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
 
 [node name="Grave" parent="Scenery" instance=ExtResource("4_yyih8")]
 position = Vector2(90, -36)
-
-[node name="PointLight2D" type="PointLight2D" parent="Scenery"]
-z_index = -4096
-texture_filter = 1
-position = Vector2(0, 134)
-rotation = -1.57079
-scale = Vector2(0.368413, 1.70722)
-color = Color(0.498039, 0.776471, 0.235294, 1)
-energy = 2.0
-range_item_cull_mask = 2
-shadow_color = Color(0, 0, 0, 1)
-shadow_item_cull_mask = 15
-texture = ExtResource("13_cvmw5")
-texture_scale = 2.0
 
 [node name="RewardContainer" type="Node2D" parent="Scenery"]
 

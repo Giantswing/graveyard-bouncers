@@ -8,6 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_0rse5"]
 script = ExtResource("7_frtjd")
+difficulty = 1.0
 time_limit = 5
 gravity_multiplier = 0.5
 game_width_speed_increase = 10.0
@@ -17,11 +18,12 @@ max_enemies = 10
 reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
-has_toxic_floor = false
+ground_type = 2
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_eaq8r"]
 script = ExtResource("7_frtjd")
+difficulty = 1.0
 time_limit = 15
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
@@ -31,11 +33,12 @@ max_enemies = 10
 reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
-has_toxic_floor = true
+ground_type = 1
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_ternb"]
 script = ExtResource("7_frtjd")
+difficulty = 1.0
 time_limit = 15
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
@@ -45,7 +48,7 @@ max_enemies = 10
 reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
-has_toxic_floor = false
+ground_type = 0
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]

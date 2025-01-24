@@ -2,6 +2,13 @@ extends Resource
 
 class_name GameRound
 
+enum GROUND_TYPES {
+	NORMAL,
+	TOXIC,
+	LAVA,
+}
+
+@export var difficulty: float = 1
 @export var time_limit: int = 45
 @export var gravity_multiplier: float = 0.5
 @export var game_width_speed_increase: float = 4 
@@ -14,4 +21,4 @@ class_name GameRound
 @export var reward_spawn_rate: float = 4
 @export var max_rewards: int = 5
 
-@export var has_toxic_floor: bool = false
+@export var ground_type: GROUND_TYPES = GROUND_TYPES.NORMAL

@@ -24,6 +24,7 @@ var reward_spawn_countdown: float = 0
 var game_width: float = 200
 var left_wall: Node2D
 var toxic_floor: Node2D
+var lava_floor: Node2D
 var normal_floor: Node2D
 var right_wall: Node2D
 var round_started: bool = false
@@ -102,7 +103,6 @@ func round_data(game_round = null) -> GameRound:
 	if game_round > game_rounds.size():
 		game_round = game_rounds.size()
 
-	print("game_round", game_round)
 	return game_rounds[game_round - 1]
 
 
@@ -140,16 +140,27 @@ func _process(delta: float) -> void:
 func set_up_floor():
 	normal_floor = $"/root/Level/Scenery/NormalFloor"
 	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
+	lava_floor = $"/root/Level/Scenery/LavaFloor"
 
 	var ground_height: float = 180
 	var next_round = current_round + 1
+	var offset: float = 200
 
-	if round_data(next_round).has_toxic_floor:
-		get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height, 0.5)
-		get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + 80, 0.5)
-	else:
-		get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + 80, 0.5)
-		get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height, 0.5)
+	match round_data(next_round).ground_type:
+		GameRound.GROUND_TYPES.NORMAL:
+			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height, 0.5)
+			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + offset, 0.5)
+			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height + offset, 0.5)
+
+		GameRound.GROUND_TYPES.TOXIC:
+			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + offset, 0.5)
+			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height, 0.5)
+			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height + offset, 0.5)
+
+		GameRound.GROUND_TYPES.LAVA:
+			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height + offset, 0.5)
+			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + offset, 0.5)
+			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height, 0.5)
 
 
 func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int, free_space: float) -> void:

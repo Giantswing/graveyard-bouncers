@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://dtyg2va2kyx66"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_wayyf"]
+[ext_resource type="Texture2D" uid="uid://cpbiaxl8a5sd1" path="res://sprites/lava-ground.png" id="2_wayyf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
+size = Vector2(24, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1pbw"]
+atlas = ExtResource("2_wayyf")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2wsy"]
+atlas = ExtResource("2_wayyf")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2b76"]
+atlas = ExtResource("2_wayyf")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkpje"]
+atlas = ExtResource("2_wayyf")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mj04a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1pbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2wsy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2b76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkpje")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="LavaGround" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("1_wayyf")
+damage = 1
+can_take_damage = false
+can_be_parried = false
+metadata/_custom_type_script = ExtResource("1_wayyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 2
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_mj04a")
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/lava-ground.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "86f1de3fbe54b67a8b113956b13a5b1f"
