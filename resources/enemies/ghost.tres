@@ -7,6 +7,7 @@
 script = ExtResource("1_6khb5")
 name = "Ghost"
 prefab = ExtResource("2_fadr6")
-chance = 0.5
+chance = 2.0
+free_space = 30.0
 spawn_type = 1
 metadata/_custom_type_script = ExtResource("1_6khb5")

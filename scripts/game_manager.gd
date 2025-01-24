@@ -81,8 +81,6 @@ func _ready() -> void:
 	Events.coins_changed.emit(coins)
 	Events.round_counter_changed.emit(current_round)
 
-
-
 	update_current_round()
 	set_up_round()
 
@@ -131,10 +129,12 @@ func _process(delta: float) -> void:
 	if round_started:
 		enemy_spawn_countdown -= delta
 		reward_spawn_countdown -= delta
+
 		game_width += round_data.game_width_speed_increase * delta
 		game_width = min(game_width, 620)
 
 		if reward_spawn_countdown <= 0:
+			print("reward spawned")
 			reward_spawn_countdown = round_data.reward_spawn_rate 
 			Utils.spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
 

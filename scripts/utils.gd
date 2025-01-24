@@ -21,7 +21,7 @@ func spawn_prefab_from_list(list: Array[PrefabChance], container: Node2D, max_am
 		current_chance += prefab_chance.chance
 		if chance <= current_chance:
 			spawn_prefab(prefab_chance.prefab, container, prefab_chance.spawn_type, prefab_chance.free_space)
-		return
+			return
 
 
 

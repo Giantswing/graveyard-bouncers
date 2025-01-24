@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=14 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="6_q8mjp"]
 [ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scripts/round_manager.gd" id="6_ternb"]
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
+[ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="8_k4jhu"]
+[ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="9_frtjd"]
 
 [sub_resource type="Resource" id="Resource_0rse5"]
 script = ExtResource("7_frtjd")
@@ -66,28 +68,11 @@ time_limit = 10
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
-enemy_list = Array[ExtResource("2_udu3i")]([])
-enemy_spawn_rate = 4.0
+enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource("9_frtjd"), ExtResource("3_q8mjp")])
+enemy_spawn_rate = 1.5
 max_enemies = 30
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
-max_rewards = 5
-ground_type = 2
-has_trampoline = true
-metadata/_custom_type_script = ExtResource("7_frtjd")
-
-[sub_resource type="Resource" id="Resource_k4jhu"]
-script = ExtResource("7_frtjd")
-difficulty = 3.0
-time_limit = 45
-chance = 1.0
-gravity_multiplier = 0.5
-game_width_speed_increase = 4.0
-enemy_list = Array[ExtResource("2_udu3i")]([])
-enemy_spawn_rate = 0.5
-max_enemies = 10
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
+reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
+reward_spawn_rate = 5.0
 max_rewards = 5
 ground_type = 1
 has_trampoline = false
@@ -101,7 +86,7 @@ trampoline_prefab = ExtResource("6_q8mjp")
 
 [node name="RoundManager" type="Node2D" parent="."]
 script = ExtResource("6_ternb")
-game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_q8mjp"), SubResource("Resource_k4jhu")])
+game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_q8mjp")])
 chance_decay_rate = 0.5
 
 [node name="SecondsTimer" type="Timer" parent="."]
