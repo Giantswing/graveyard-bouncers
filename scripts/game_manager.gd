@@ -15,6 +15,7 @@ class_name GameManager
 @export var game_rounds: Array[GameRound]
 
 @export var trampoline_prefab: PackedScene
+@export var helper_enemy_prefab: PackedScene
 
 var round_time: int = 0
 var round_data: GameRound = null
@@ -149,8 +150,12 @@ func set_up_round():
 	var offset: float = 200
 
 	if round_data.has_trampoline:
-		print("Spawning trampoline")
 		var new_obj: Node2D = Utils.spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
+		new_obj.scale = Vector2(0, 0)
+		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
+
+	if round_data.has_helper_enemy:
+		var new_obj: Node2D = Utils.spawn_prefab(helper_enemy_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
 		new_obj.scale = Vector2(0, 0)
 		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
 
@@ -173,8 +178,6 @@ func set_up_round():
 
 
 
-
-
 func should_spawn(current_amount: int, max_amount: int) -> bool:
 	if current_amount >= max_amount:
 		return false
@@ -191,6 +194,7 @@ func should_spawn(current_amount: int, max_amount: int) -> bool:
 	# 	return false
 
 
+
 func add_powerup(powerup: PowerUp) -> void:
 	powerups.append(powerup)
 
@@ -200,6 +204,7 @@ func add_powerup(powerup: PowerUp) -> void:
 		player_hp_max += 1
 		Events.max_hp_changed.emit(player_hp_max)
 		Events.hp_changed.emit(player_hp_max, 0)
+
 
 func has_powerup(powerup_name: String, ignore_active: bool = false) -> bool:
 	for powerup in powerups:
@@ -212,12 +217,14 @@ func has_powerup(powerup_name: String, ignore_active: bool = false) -> bool:
 
 	return false
 
+
 	
 func set_powerup_active(powerup_name: String, active: bool) -> void:
 	for powerup in powerups:
 		if powerup.power_up_name == powerup_name:
 			powerup.active = active
 			break
+
 
 
 func start_round() -> void:
@@ -265,6 +272,7 @@ func end_round() -> void:
 		reward.queue_free()
 
 	current_difficulty += 1
+
 	update_current_round()
 	set_up_round()
 

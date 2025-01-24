@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://xejrp383li1a"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1l2iw"]
+[ext_resource type="Texture2D" uid="uid://djhacfugb8twm" path="res://scenes/turtle.png" id="1_diba4"]
+[ext_resource type="Script" uid="uid://cy38ea17p502" path="res://scripts/turtle.gd" id="1_hbk6c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l2iw"]
+atlas = ExtResource("1_diba4")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbk6c"]
+atlas = ExtResource("1_diba4")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kcg0"]
+atlas = ExtResource("1_diba4")
+region = Rect2(0, 36, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrtyu"]
+atlas = ExtResource("1_diba4")
+region = Rect2(36, 36, 36, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f2r5w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l2iw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kcg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrtyu")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbk6c"]
+size = Vector2(34, 23)
+
+[node name="Turtle" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_hbk6c")
+speed = 25.0
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("1_1l2iw")
+hp_max = 600
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_f2r5w")
+animation = &"Walk"
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/turtle.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c00164a8f01ff194fe778f6ef0a03de0"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_hbk6c")
+
+[node name="BodyForwardCast" type="RayCast2D" parent="."]
+target_position = Vector2(25, 0)
