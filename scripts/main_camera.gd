@@ -48,7 +48,7 @@ func point_target():
 	var dist = target.global_position - global_position
 	var final_pos: float
 
-	if GameManager.round_started:
+	if GameManager.get_instance().round_started:
 		final_pos = min(start_y_pos, start_y_pos + dist.y * 0.2)
 		position.y = lerp(position.y, final_pos, 0.01)
 	else:

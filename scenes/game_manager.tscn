@@ -1,15 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=13 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
 [ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="4_jdad8"]
+[ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="6_q8mjp"]
+[ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scenes/round_manager.gd" id="6_ternb"]
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
 
 [sub_resource type="Resource" id="Resource_0rse5"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
 time_limit = 5
+chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 10.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp")])
@@ -19,12 +22,14 @@ reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
 ground_type = 2
+has_trampoline = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_eaq8r"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
 time_limit = 15
+chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8")])
@@ -34,12 +39,14 @@ reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
 ground_type = 1
+has_trampoline = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_ternb"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
 time_limit = 15
+chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8")])
@@ -49,13 +56,53 @@ reward_list = Array[ExtResource("2_udu3i")]([])
 reward_spawn_rate = 4.0
 max_rewards = 5
 ground_type = 0
+has_trampoline = false
+metadata/_custom_type_script = ExtResource("7_frtjd")
+
+[sub_resource type="Resource" id="Resource_q8mjp"]
+script = ExtResource("7_frtjd")
+difficulty = 1.0
+time_limit = 10
+chance = 1.0
+gravity_multiplier = 0.5
+game_width_speed_increase = 4.0
+enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp")])
+enemy_spawn_rate = 0.5
+max_enemies = 30
+reward_list = Array[ExtResource("2_udu3i")]([])
+reward_spawn_rate = 4.0
+max_rewards = 5
+ground_type = 0
+has_trampoline = true
+metadata/_custom_type_script = ExtResource("7_frtjd")
+
+[sub_resource type="Resource" id="Resource_k4jhu"]
+script = ExtResource("7_frtjd")
+difficulty = 3.0
+time_limit = 45
+chance = 1.0
+gravity_multiplier = 0.5
+game_width_speed_increase = 4.0
+enemy_list = Array[ExtResource("2_udu3i")]([])
+enemy_spawn_rate = 0.5
+max_enemies = 10
+reward_list = Array[ExtResource("2_udu3i")]([])
+reward_spawn_rate = 4.0
+max_rewards = 5
+ground_type = 0
+has_trampoline = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
-position = Vector2(10, 0)
 script = ExtResource("1_hwd4i")
 player_hp_max = 2
 game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_0rse5"), SubResource("Resource_eaq8r"), SubResource("Resource_ternb")])
+trampoline_prefab = ExtResource("6_q8mjp")
+
+[node name="RoundManager" type="Node2D" parent="."]
+script = ExtResource("6_ternb")
+game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_q8mjp"), SubResource("Resource_k4jhu")])
+chance_decay_rate = 0.5
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

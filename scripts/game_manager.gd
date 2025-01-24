@@ -1,18 +1,23 @@
 extends Node2D
 
+class_name GameManager
+
 @export var player_hp_max: int = 3
 @export var game_width_start: float
 
 @onready var seconds_timer: Timer = %SecondsTimer
+@onready var round_manager: RoundManager = $RoundManager
 
 @export var current_round: int = 0 
+@export var current_difficulty: float = 1.0
 
 @export var powerups: Array[PowerUp]
 @export var game_rounds: Array[GameRound]
 
-var round_time: int = 0
+@export var trampoline_prefab: PackedScene
 
-var player_hp_max_original: int = 3
+var round_time: int = 0
+var round_data: GameRound = null
 var score: int = 0
 var coins: int = 0
 var player_hp: int = 3
@@ -22,6 +27,7 @@ var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
 var game_width: float = 200
+var player: Node2D
 var left_wall: Node2D
 var toxic_floor: Node2D
 var lava_floor: Node2D
@@ -35,39 +41,57 @@ var grave: Node2D
 var can_restart: bool = false
 var ground_y_pos: float
 
+static var instance: GameManager
+
+static func get_instance() -> GameManager:
+	return instance
 
 func _ready() -> void:
-	player_hp_max_original = player_hp_max
+	instance = self
+
+	player = $"/root/Level/Player"
+	normal_floor = $"/root/Level/Scenery/NormalFloor"
+	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
+	lava_floor = $"/root/Level/Scenery/LavaFloor"
+	left_wall = $"/root/Level/Scenery/LeftWall"
+	right_wall = $"/root/Level/Scenery/RightWall"
+	starting_ground = $"/root/Level/Scenery/StartingGround"
+	trampoline = $"/root/Level/Scenery/Trampoline"
+	enemy_container = $"/root/Level/Scenery/EnemyContainer"
+	reward_container = $"/root/Level/Scenery/RewardContainer"
+	grave = $"/root/Level/Scenery/Grave"
+	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
+
 	seconds_timer.timeout.connect(on_seconds_timer_timeout)
 
 	Events.round_started.connect(start_round)
-	Events.score_changed.connect(on_score_changed)
-	Events.coins_changed.connect(on_coins_changed)
+	Events.score_changed.connect(func(new_score: int) -> void: score = new_score)
+	Events.coins_changed.connect(func(new_coins: int) -> void: coins = new_coins)
 	Events.hp_changed.connect(on_hp_changed)
 	Events.player_died.connect(on_player_died)
-	Events.level_restarted.connect(on_level_restarted)
 	Events.round_ended.connect(end_round)
 	Events.picked_up_powerup.connect(add_powerup)
-	Events.level_restarted.emit()
+
+	Events.round_time_changed.emit(0)
+	Events.score_changed.emit(score)
+	Events.hp_changed.emit(player_hp_max, 0)
+	Events.max_hp_changed.emit(player_hp_max)
+	Events.coins_changed.emit(coins)
+	Events.round_counter_changed.emit(current_round)
+
+
+
+	update_current_round()
+	set_up_round()
+
+
+func update_current_round() -> void:
+	round_data = round_manager.get_round(current_difficulty)
+	print("Current difficulty: ", current_difficulty)
+	print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
 	
 
-func on_level_restarted() -> void:
-	powerups = []
-	current_round = 0
-	round_time = 0
-	score = 0
-	coins = 0
-	game_started = false
-	player_hp_max = player_hp_max_original
-	player_hp = player_hp_max
-	round_started = false
-	enemy_spawn_countdown = 0
-	game_width = game_width_start
-	seconds_timer.stop()
-	can_restart = false
-	Engine.time_scale = 1
-	set_up_floor()
-
+	
 func on_player_died() -> void:
 	seconds_timer.stop()
 	can_restart = false
@@ -78,14 +102,10 @@ func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
-	if round_time >= round_data().time_limit:
+	if round_time >= round_data.time_limit:
 		Events.round_ended.emit()
 
-func on_score_changed(new_score: int) -> void:
-	score = new_score
 
-func on_coins_changed(new_coins: int) -> void:
-	coins = new_coins
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
 	player_hp = new_hp
@@ -93,26 +113,12 @@ func on_hp_changed(new_hp: int, _change: int) -> void:
 		Events.player_died.emit()
 
 
-func round_data(game_round = null) -> GameRound:
-	if game_round == null:
-		game_round = current_round
-
-	if game_round < 0:
-		game_round = 0
-
-	if game_round > game_rounds.size():
-		game_round = game_rounds.size()
-
-	return game_rounds[game_round - 1]
-
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Reset"):
-		Events.level_restarted.emit()
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("Jump") and can_restart:
-		Events.level_restarted.emit()
 		get_tree().reload_current_scene()
 
 	if game_started:
@@ -123,30 +129,32 @@ func _process(delta: float) -> void:
 	if round_started:
 		enemy_spawn_countdown -= delta
 		reward_spawn_countdown -= delta
-		game_width += round_data().game_width_speed_increase * delta
+		game_width += round_data.game_width_speed_increase * delta
 		game_width = min(game_width, 620)
 
 		if reward_spawn_countdown <= 0:
-			reward_spawn_countdown = round_data().reward_spawn_rate 
-			if should_spawn(reward_container.get_child_count(), round_data().max_rewards):
-				spawn_prefab(round_data().reward_list, reward_container, round_data().max_rewards, 20)
+			reward_spawn_countdown = round_data.reward_spawn_rate 
+			if should_spawn(reward_container.get_child_count(), round_data.max_rewards):
+				spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
 
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
-			enemy_spawn_countdown = round_data().enemy_spawn_rate
-			if should_spawn(enemy_container.get_child_count(), round_data().max_enemies):
-				spawn_prefab(round_data().enemy_list, enemy_container, round_data().max_enemies, 80)
+			enemy_spawn_countdown = round_data.enemy_spawn_rate
+			if should_spawn(enemy_container.get_child_count(), round_data.max_enemies):
+				spawn_prefab_from_list(round_data.enemy_list, enemy_container, round_data.max_enemies)
 
 
-func set_up_floor():
-	normal_floor = $"/root/Level/Scenery/NormalFloor"
-	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
-	lava_floor = $"/root/Level/Scenery/LavaFloor"
 
+func set_up_round():
 	var ground_height: float = 180
-	var next_round = current_round + 1
 	var offset: float = 200
 
-	match round_data(next_round).ground_type:
+	if round_data.has_trampoline:
+		print("Spawning trampoline")
+		var new_obj: Node2D = spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
+		new_obj.scale = Vector2(0, 0)
+		get_tree().create_tween().tween_property(new_obj, "scale", Vector2(1, 1), 0.4)
+
+	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:
 			get_tree().create_tween().tween_property(normal_floor, "position:y", ground_height, 0.5)
 			get_tree().create_tween().tween_property(toxic_floor, "position:y", ground_height + offset, 0.5)
@@ -163,14 +171,12 @@ func set_up_floor():
 			get_tree().create_tween().tween_property(lava_floor, "position:y", ground_height, 0.5)
 
 
-func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int, free_space: float) -> void:
-	if container.get_child_count() >= max_amount:
-		return 
 
-	var max_spawn_attempts: int = 10
+func spawn_prefab_from_list(list: Array[PrefabChance], container: Node2D, max_amount: int) -> void:
+	if container.get_child_count() >= max_amount:
+		return
 
 	var total_chance: float = 0
-
 	for prefab_chance in list:
 		total_chance += prefab_chance.chance
 
@@ -179,47 +185,59 @@ func spawn_prefab(list: Array[PrefabChance], container: Node2D, max_amount: int,
 
 	for prefab_chance in list:
 		current_chance += prefab_chance.chance
-		if chance > current_chance:
+		if chance <= current_chance:
+			spawn_prefab(prefab_chance.prefab, container, prefab_chance.spawn_type, prefab_chance.free_space)
+		return
+
+
+
+
+func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float) -> Node2D:
+	var new_prefab: Node2D = prefab.instantiate()
+	var spawn_pos: Vector2 = Vector2.ZERO
+
+	var horizontal_wall_padding = 10
+	var max_tries = 20
+
+	for i in range(max_tries):
+		var pos_x = randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
+		var pos_y = 147
+
+		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
+			pos_y = randf_range(90, 147)
+		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
+			pos_y = randf_range(0, -150)
+		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
+			pos_y = randf_range(90, -120)
+			# var side = randf() < 0.5
+			var side = randf() > 1 
+
+			pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
+
+		spawn_pos = Vector2(pos_x, pos_y)
+
+		var is_free: bool = true
+
+		for unit in container.get_children():
+			if unit.position.distance_to(spawn_pos) < free_space:
+				is_free = false
+				break
+
+		if player.position.distance_to(spawn_pos) < free_space:
+			is_free = false
+
+		if not is_free:
 			continue
 
-		var instance: Node2D = prefab_chance.prefab.instantiate()
-		var spawn_pos: Vector2 = Vector2.ZERO
+		new_prefab.position = spawn_pos
+		container.add_child(new_prefab)
+		return new_prefab
 
-		var horizontal_wall_padding = 10
-
-		for i in range(max_spawn_attempts):
-			var pos_x = randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
-			var pos_y = 147
-
-			if prefab_chance.spawn_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
-				pos_y = randf_range(90, 147)
-			elif prefab_chance.spawn_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
-				pos_y = randf_range(0, -150)
-			elif prefab_chance.spawn_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
-				pos_y = randf_range(90, -120)
-				# var side = randf() < 0.5
-				var side = randf() > 1 
-
-				pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
+	return null
 
 
-			spawn_pos = Vector2(pos_x, pos_y)
 
-			var is_free: bool = true
 
-			for unit in container.get_children():
-				if unit.position.distance_to(spawn_pos) < free_space:
-					is_free = false
-					break
-
-			# if not is_free and i != max_spawn_attempts - 1:
-			if not is_free:
-				continue
-
-			instance.position = spawn_pos
-			container.add_child(instance)
-			
-			return
 
 
 func should_spawn(current_amount: int, max_amount: int) -> bool:
@@ -266,15 +284,6 @@ func set_powerup_active(powerup_name: String, active: bool) -> void:
 
 
 func start_round() -> void:
-	left_wall = $"/root/Level/Scenery/LeftWall"
-	right_wall = $"/root/Level/Scenery/RightWall"
-	starting_ground = $"/root/Level/Scenery/StartingGround"
-	trampoline = $"/root/Level/Scenery/Trampoline"
-	enemy_container = $"/root/Level/Scenery/EnemyContainer"
-	reward_container = $"/root/Level/Scenery/RewardContainer"
-	grave = $"/root/Level/Scenery/Grave"
-	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
-
 	game_width_start = right_wall.position.x - left_wall.position.x
 	game_width = game_width_start
 
@@ -319,7 +328,9 @@ func end_round() -> void:
 	for reward in reward_container.get_children():
 		reward.queue_free()
 
-	set_up_floor()
+	current_difficulty += 1
+	update_current_round()
+	set_up_round()
 
 
 func deactivate(target: Node2D) -> void:

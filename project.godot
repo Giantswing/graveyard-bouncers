@@ -17,7 +17,6 @@ config/features=PackedStringArray("4.4", "Mobile")
 
 [autoload]
 
-GameManager="*res://scenes/game_manager.tscn"
 Events="*res://scenes/events.tscn"
 FxSystem="*res://scenes/fx_system.tscn"
 

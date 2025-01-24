@@ -32,10 +32,9 @@ func _process(_delta: float) -> void:
 
 func set_up_powerups() -> void:
 	for powerup in all_powerups:
-		print(str(powerup.power_up_name) + ", " + str(powerup.amount) + ", " + str(powerup.chance))
+		# print(str(powerup.power_up_name) + ", " + str(powerup.amount) + ", " + str(powerup.chance))
 		powerup.original_chance = powerup.chance
 
-	print("-------------------------")
 	
 func on_powerup_picked_up(powerup: PowerUp) -> void:
 	for i in range(all_powerups.size()):

@@ -22,7 +22,7 @@ func _ready() -> void:
 	%BubbleFront.play("ShineFor")
 
 func _process(_delta: float) -> void:
-	if GameManager.coins < powerup.cost and active:
+	if GameManager.get_instance().coins < powerup.cost and active:
 		active = false
 		set_collision_layer_value(3, false)
 		# sprite.modulate = Color(1, 1, 1, 0.5)
@@ -34,5 +34,5 @@ func _process(_delta: float) -> void:
 	
 func on_pickup() -> void:
 	FxSystem.play_fx("PowerUpPicked", global_position)
-	Events.coins_changed.emit(GameManager.coins - powerup.cost)
+	Events.coins_changed.emit(GameManager.get_instance().coins - powerup.cost)
 	Events.picked_up_powerup.emit(powerup)

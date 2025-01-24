@@ -42,7 +42,7 @@ var can_be_on_wall: bool = true
 
 func _ready() -> void:
 	speed_particles.emitting = false
-	base_strength *= GameManager.round_data().gravity_multiplier
+	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
 	sprite.animation_finished.connect(on_animation_finished)
 	body_down_cast1.target_position.y = parry_raycast_distance
 	body_down_cast2.target_position.y = parry_raycast_distance
@@ -73,20 +73,20 @@ func _process(delta: float) -> void:
 	hspeed_to = movement_input.x * mov_speed
 	hspeed += (hspeed_to - hspeed) * acceleration * delta * 60
 
-	if on_wall and GameManager.has_powerup("sticky-boots"):
-		GameManager.set_powerup_active("sticky-boots", true)
+	if on_wall and GameManager.get_instance().has_powerup("sticky-boots"):
+		GameManager.get_instance().set_powerup_active("sticky-boots", true)
 
 	velocity.x = hspeed + extra_hspeed
 	if is_attacking == 0:
 		if on_wall:
 			hspeed = 0
-			velocity.y += get_gravity().y * delta * GameManager.round_data().gravity_multiplier
+			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 		else:
-			velocity.y += get_gravity().y * delta * GameManager.round_data().gravity_multiplier
+			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			
 	else:
-		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.round_data().gravity_multiplier
+		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.get_instance().round_data.gravity_multiplier
 
 	handle_jump()
 
@@ -147,14 +147,14 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
 			if is_parrying == false: # Normal attack
-				GameManager.set_powerup_active("double-jump", true)
+				GameManager.get_instance().set_powerup_active("double-jump", true)
 				speed_particles.emitting = false
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
 				sprite.play("Idle")
 
 				FxSystem.play_fx("SmokeHitSmall", position)
 			else: # Parry atack
-				GameManager.set_powerup_active("double-jump", true)
+				GameManager.get_instance().set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength
 				sprite.play("Parry")
 
@@ -182,9 +182,9 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 				sprite.play("Idle")
 				can_jump = false
 
-				Events.hp_changed.emit(GameManager.player_hp - stats.damage, -stats.damage)
+				Events.hp_changed.emit(GameManager.get_instance().player_hp - stats.damage, -stats.damage)
 
-				if(GameManager.player_hp > 0):
+				if(GameManager.get_instance().player_hp > 0):
 					Engine.time_scale = 0.1
 					get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
 					get_tree().create_timer(0.1).timeout.connect(reset_jump)
@@ -197,12 +197,12 @@ func handle_jump() -> void:
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 		if grounded:
-			GameManager.set_powerup_active("double-jump", true)
+			GameManager.get_instance().set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
 
-		elif on_wall and GameManager.has_powerup("sticky-boots", true):
+		elif on_wall and GameManager.get_instance().has_powerup("sticky-boots", true):
 			deactivate_can_be_on_wall()
-			GameManager.set_powerup_active("sticky-boots", false)
+			GameManager.get_instance().set_powerup_active("sticky-boots", false)
 			extra_hspeed = -movement_input.x * 500 * extra_hspeed_strength
 			velocity.y = -base_strength * jump_str_mult
 
@@ -211,8 +211,8 @@ func handle_jump() -> void:
 				process_jump()
 				return
 			
-			if is_attacking > 0 and GameManager.has_powerup("double-jump"):
-				GameManager.set_powerup_active("double-jump", false)
+			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
+				GameManager.get_instance().set_powerup_active("double-jump", false)
 				process_jump()
 				return
 

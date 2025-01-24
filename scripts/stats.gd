@@ -45,7 +45,7 @@ func _ready() -> void:
 
 func on_area_entered(_body: Node) -> void:
 	if coin_reward != 0:
-		Events.coins_changed.emit(GameManager.coins + coin_reward)
+		Events.coins_changed.emit(GameManager.get_instance().coins + coin_reward)
 		FxSystem.play_fx("CoinCollect", global_position)
 		get_parent().queue_free()
 	
@@ -70,13 +70,13 @@ func take_damage(amount: int) -> void:
 
 	if hp <= 0:
 		if spawn_rate_reduction > 0:
-			GameManager.enemy_spawn_countdown -= spawn_rate_reduction
+			GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
 		
 		if score_reward != 0:
-			Events.score_changed.emit(GameManager.score + score_reward)
+			Events.score_changed.emit(GameManager.get_instance().score + score_reward)
 
 		if wall_reward != 0:
-			GameManager.game_width -= wall_reward
+			GameManager.get_instance().game_width -= wall_reward
 
 		emit_signal("on_death")
 
