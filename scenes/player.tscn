@@ -168,7 +168,7 @@ getting_hit_bounce_str_mult = 2.0
 slide_down_max_speed = 70.0
 mov_speed = 200.0
 parry_raycast_distance = 40.0
-extra_hspeed_decay = 0.05
+extra_speed_decay = 0.3
 
 [node name="AnimationController" type="Node2D" parent="."]
 script = ExtResource("2_g2els")

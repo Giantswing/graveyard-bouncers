@@ -20,7 +20,10 @@ var round_time: int = 0
 var round_data: GameRound = null
 var score: int = 0
 var coins: int = 0
+
 var player_hp: int = 3
+var player_ability: Ability = null
+
 var enemy_container: Node2D
 var other_container: Node2D
 var reward_container: Node2D

@@ -46,8 +46,8 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 			pos_y = randf_range(0, -150)
 		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
 			pos_y = randf_range(90, -120)
-			# var side = randf() < 0.5
-			var side = randf() > 1 
+			var side = randf() < 0.5
+			# var side = randf() > 1 
 
 			pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
 
@@ -60,7 +60,9 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 				is_free = false
 				break
 
-		if GameManager.instance.player.position.distance_to(spawn_pos) < free_space:
+		var player = GameManager.instance.player
+
+		if player and player.position.distance_to(spawn_pos) < free_space:
 			is_free = false
 
 		if not is_free:

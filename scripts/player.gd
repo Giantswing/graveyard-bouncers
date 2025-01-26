@@ -23,16 +23,19 @@ extends CharacterBody2D
 @export var hit_invincibility_time: float = 0.5
 @export var mov_speed: float = 100
 @export var parry_raycast_distance: float = 30
-@export var extra_hspeed_decay: float = 0.1
-@export var extra_hspeed_strength: float = 1
+
+@export var extra_speed_decay: float = 0.1
+@export var extra_speed_strength: float = 1
+var extra_speed: Vector2 = Vector2.ZERO
 
 var can_jump: bool = true
 var hspeed: float = 0
-var extra_hspeed: float = 0
 var hspeed_to: float = 0
+
 var is_attacking: int = 0 # 0 = not attacking, 1 = preparing attack, 2 = attacking
 var is_parrying: bool = false
 var jump_pressed: bool = false 
+var ability_pressed: bool = false
 var movement_input: Vector2
 var can_get_hit: bool = true
 var previous_velocity: Vector2 = Vector2.ZERO
@@ -66,14 +69,18 @@ func _process(delta: float) -> void:
 	if velocity.y > 0 and is_attacking != 2 and speed_particles.emitting == true:
 		speed_particles.emitting = false
 
-	extra_hspeed += (0 - extra_hspeed) * delta * extra_hspeed_decay * 60
+	extra_speed.x += (0 - extra_speed.x) * delta * extra_speed_decay * 60
+	extra_speed.y += (0 - extra_speed.y) * delta * extra_speed_decay * 60
+
 	hspeed_to = movement_input.x * mov_speed
 	hspeed += (hspeed_to - hspeed) * acceleration * delta * 60
 
 	if on_wall and GameManager.get_instance().has_powerup("sticky-boots"):
 		GameManager.get_instance().set_powerup_active("sticky-boots", true)
 
-	velocity.x = hspeed + extra_hspeed
+	velocity.x = hspeed + extra_speed.x
+	velocity.y = velocity.y + extra_speed.y
+
 	if is_attacking == 0:
 		if on_wall:
 			hspeed = 0
@@ -86,6 +93,7 @@ func _process(delta: float) -> void:
 		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.get_instance().round_data.gravity_multiplier
 
 	handle_jump()
+	handle_ability()
 
 
 func _physics_process(_delta: float) -> void:
@@ -178,6 +186,17 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 
 
+func handle_ability() -> void:
+	if ability_pressed:
+		process_dash()
+
+
+func process_dash() -> void:
+	var direction = movement_input.normalized() * 1.3
+	velocity.x = 0
+	# velocity.y = (direction * 500 * extra_speed_strength).y * 0.01
+	extra_speed = direction * 500 * extra_speed_strength
+
 func handle_jump() -> void:
 	if jump_pressed and can_jump:
 		can_jump = false
@@ -192,7 +211,8 @@ func handle_jump() -> void:
 		elif on_wall and GameManager.get_instance().has_powerup("sticky-boots", true):
 			deactivate_can_be_on_wall()
 			GameManager.get_instance().set_powerup_active("sticky-boots", false)
-			extra_hspeed = -movement_input.x * 500 * extra_hspeed_strength
+			extra_speed = Vector2.ZERO
+			extra_speed.x = -movement_input.x * 500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
 
 		else:
@@ -229,6 +249,7 @@ func process_jump() -> void:
 func get_input() -> void:
 	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
 	jump_pressed = Input.is_action_just_pressed("Jump")
+	ability_pressed = Input.is_action_just_pressed("Ability")
 
 
 func get_raycasts_collision_node(raycasts: Array) -> Node2D:
