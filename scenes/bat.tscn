@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ywgdf87hvv7a"]
+[gd_scene load_steps=13 format=3 uid="uid://ywgdf87hvv7a"]
 
 [ext_resource type="Script" uid="uid://cxk2hkqb5d5ft" path="res://scripts/bat.gd" id="1_ss3tx"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_lv0ya"]
 [ext_resource type="Texture2D" uid="uid://crvysj4la2qsn" path="res://sprites/bat.png" id="3_5fn3r"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_lv0ya"]
 [ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_8qtcx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
@@ -70,6 +71,7 @@ shape = SubResource("RectangleShape2D_cvmw5")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("3_lv0ya")
 sprite_frames = SubResource("SpriteFrames_k0o7o")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {

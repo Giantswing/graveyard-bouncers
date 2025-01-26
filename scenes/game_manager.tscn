@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=12 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
@@ -11,60 +11,6 @@
 [ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="8_k4jhu"]
 [ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="9_frtjd"]
 
-[sub_resource type="Resource" id="Resource_0rse5"]
-script = ExtResource("7_frtjd")
-difficulty = 1.0
-time_limit = 5
-chance = 1.0
-gravity_multiplier = 0.5
-game_width_speed_increase = 10.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp")])
-enemy_spawn_rate = 2.0
-max_enemies = 10
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
-max_rewards = 5
-ground_type = 2
-has_trampoline = false
-has_helper_enemy = false
-metadata/_custom_type_script = ExtResource("7_frtjd")
-
-[sub_resource type="Resource" id="Resource_eaq8r"]
-script = ExtResource("7_frtjd")
-difficulty = 1.0
-time_limit = 15
-chance = 1.0
-gravity_multiplier = 0.5
-game_width_speed_increase = 4.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8")])
-enemy_spawn_rate = 2.0
-max_enemies = 10
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
-max_rewards = 5
-ground_type = 1
-has_trampoline = false
-has_helper_enemy = false
-metadata/_custom_type_script = ExtResource("7_frtjd")
-
-[sub_resource type="Resource" id="Resource_ternb"]
-script = ExtResource("7_frtjd")
-difficulty = 1.0
-time_limit = 15
-chance = 1.0
-gravity_multiplier = 0.5
-game_width_speed_increase = 4.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8")])
-enemy_spawn_rate = 2.0
-max_enemies = 10
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
-max_rewards = 5
-ground_type = 0
-has_trampoline = false
-has_helper_enemy = false
-metadata/_custom_type_script = ExtResource("7_frtjd")
-
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
@@ -76,9 +22,9 @@ enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource(
 enemy_spawn_rate = 1.5
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
-reward_spawn_rate = 5.0
+reward_spawn_rate = 2.0
 max_rewards = 5
-ground_type = 1
+ground_type = 2
 has_trampoline = false
 has_helper_enemy = true
 metadata/_custom_type_script = ExtResource("7_frtjd")
@@ -86,7 +32,6 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_hwd4i")
 player_hp_max = 2
-game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_0rse5"), SubResource("Resource_eaq8r"), SubResource("Resource_ternb")])
 trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbqjx7lp0mmbo"]
+[gd_scene load_steps=14 format=3 uid="uid://cbqjx7lp0mmbo"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1vlb3"]
 [ext_resource type="Script" uid="uid://udfi6q1yqfei" path="res://scripts/zombie.gd" id="1_xepks"]
 [ext_resource type="Texture2D" uid="uid://bn2omk5b4w7bx" path="res://sprites/zombie.png" id="2_httt1"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_4gx57"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xepks"]
 atlas = ExtResource("2_httt1")
@@ -86,6 +87,7 @@ sprite = NodePath("../Sprite")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = -1
 texture_filter = 1
+material = ExtResource("3_4gx57")
 position = Vector2(0, -6)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_jjlcg")

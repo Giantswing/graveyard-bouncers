@@ -19,7 +19,7 @@ func _ready() -> void:
 	Events.round_ended.connect(on_round_ended)
 	Events.picked_up_powerup.connect(on_powerup_picked_up)
 	set_up_powerups()
-	# display_shop()
+	display_shop()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Menu"):

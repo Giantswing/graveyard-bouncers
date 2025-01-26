@@ -35,6 +35,12 @@ signal on_hit
 func _ready() -> void:
 	hp = hp_max
 	parent = get_parent()
+
+	if !sprite:
+		sprite = get_node_or_null("Sprite")
+		if !sprite:
+			sprite = get_node_or_null("../Sprite")
+
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
 
@@ -58,6 +64,21 @@ func on_animation_finished() -> void:
 	if sprite.animation == "GetHit" and sprite.get_sprite_frames().has_animation("Idle"):
 		sprite.play("Idle")
 
+
+
+func hit_flash() -> void:
+	if !sprite or !sprite.material:
+		return
+
+	sprite.material.set_shader_parameter("active", 1)
+	sprite.offset = Vector2(0, 3.0)
+	sprite.scale = Vector2(1.0, 0.8)
+
+	get_tree().create_timer(0.1).connect("timeout", func() -> void:
+		sprite.material.set_shader_parameter("active", 0)
+		sprite.offset = Vector2(0, 0)
+		sprite.scale = Vector2(1.0, 1.0)
+	)
 
 func take_damage(amount: int) -> void:
 	hp -= amount
@@ -85,6 +106,8 @@ func take_damage(amount: int) -> void:
 			death_behaviour_start_round()
 		else:
 			parent.queue_free()
+	else:
+		hit_flash()
 
 
 func death_behaviour_start_round() -> void:

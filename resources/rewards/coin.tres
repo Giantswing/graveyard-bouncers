@@ -8,5 +8,6 @@ script = ExtResource("1_ols0m")
 name = "Coin"
 prefab = ExtResource("2_8muhd")
 chance = 1.0
+free_space = 150.0
 spawn_type = 3
 metadata/_custom_type_script = ExtResource("1_ols0m")

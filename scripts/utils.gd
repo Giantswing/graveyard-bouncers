@@ -34,9 +34,10 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 
 	var horizontal_wall_padding = 10
 	var max_tries = 20
+	var game_width = GameManager.instance.game_width
 
 	for i in range(max_tries):
-		var pos_x = randf_range(-GameManager.instance.game_width / 2 + horizontal_wall_padding, GameManager.instance.game_width / 2 - horizontal_wall_padding)
+		var pos_x = randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
 		var pos_y = 147
 
 		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
@@ -48,7 +49,7 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 			# var side = randf() < 0.5
 			var side = randf() > 1 
 
-			pos_x = -GameManager.instance.game_width / 2 - 80 if side else GameManager.instance.game_width / 2 + 80
+			pos_x = -game_width / 2 - 80 if side else game_width / 2 + 80
 
 		spawn_pos = Vector2(pos_x, pos_y)
 

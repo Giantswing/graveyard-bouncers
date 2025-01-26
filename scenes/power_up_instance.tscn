@@ -1,9 +1,10 @@
-[gd_scene load_steps=38 format=3 uid="uid://1cdkvfj1vbge"]
+[gd_scene load_steps=40 format=3 uid="uid://1cdkvfj1vbge"]
 
 [ext_resource type="Script" uid="uid://co8fu4trvnver" path="res://scripts/power_up_instance.gd" id="1_po57t"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="3_1dnvq"]
 [ext_resource type="Texture2D" uid="uid://h2hlpkudn52l" path="res://sprites/powerup-bubble.png" id="3_po57t"]
 [ext_resource type="Texture2D" uid="uid://c0kmmnq7xsq5n" path="res://sprites/small-coin.png" id="4_cfp6u"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="4_e6bh1"]
 [ext_resource type="Theme" uid="uid://bskvkfmytudor" path="res://fonts/default-font.tres" id="5_74416"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ljdua"]
@@ -371,6 +372,13 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_po57t"]
+line_spacing = -52.355
+font_size = 86
+shadow_size = 25
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(3, 3)
+
 [node name="PowerUpInstance" type="StaticBody2D"]
 collision_layer = 4
 script = ExtResource("1_po57t")
@@ -404,6 +412,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "92495623bddf703bc66064aa44b590fa"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = ExtResource("4_e6bh1")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
@@ -496,27 +505,32 @@ metadata/_aseprite_wizard_source_file_hash_ = "a930cb340fbd4182441a875097d7160e"
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(27.345, 0)
-offset_left = -23.0
-offset_top = -39.0
-offset_right = 4.345
-offset_bottom = -15.0
+offset_left = -21.0
+offset_top = -35.0
+offset_right = 105.0
+offset_bottom = 70.0
+scale = Vector2(0.175, 0.175)
 theme = ExtResource("5_74416")
-theme_override_font_sizes/font_size = 18
-text = "25"
+theme_override_font_sizes/font_size = 82
+text = "10"
 horizontal_alignment = 2
 
 [node name="DescriptionLabel" type="Label" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
-offset_left = -51.0
+offset_left = -54.0
 offset_top = 16.0
-offset_right = 47.0
-offset_bottom = 77.0
+offset_right = 626.0
+offset_bottom = 589.0
+scale = Vector2(0.15, 0.15)
 theme = ExtResource("5_74416")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -10
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 94
 text = "This is an item"
+label_settings = SubResource("LabelSettings_po57t")
 horizontal_alignment = 1
 autowrap_mode = 3
 

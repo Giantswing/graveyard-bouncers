@@ -12,7 +12,6 @@ class_name GameManager
 @export var current_difficulty: float = 1.0
 
 @export var powerups: Array[PowerUp]
-@export var game_rounds: Array[GameRound]
 
 @export var trampoline_prefab: PackedScene
 @export var helper_enemy_prefab: PackedScene

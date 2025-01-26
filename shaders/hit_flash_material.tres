@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://m2vs4tep0oyn"]
+
+[ext_resource type="Shader" uid="uid://wr3wbx3oxm2w" path="res://shaders/hit_flash.gdshader" id="1_p4lki"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_p4lki")
+shader_parameter/active = false

@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var body_down_cast2: RayCast2D = $Raycasts/BodyDownCast2
 @onready var body_forward_cast: RayCast2D = $Raycasts/BodyForwardCast
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
+@onready var animation_controller: PlayerAnimationController = $AnimationController 
 
 @export var acceleration: float = 0.1 
 @export var base_strength: float = 300
@@ -43,7 +44,6 @@ var can_be_on_wall: bool = true
 func _ready() -> void:
 	speed_particles.emitting = false
 	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
-	sprite.animation_finished.connect(on_animation_finished)
 	body_down_cast1.target_position.y = parry_raycast_distance
 	body_down_cast2.target_position.y = parry_raycast_distance
 
@@ -54,13 +54,10 @@ func on_player_died() -> void:
 
 	queue_free()
 
-func on_animation_finished() -> void:
-	if sprite.animation == "Parry":
-		sprite.play("Idle")
-
 func _process(delta: float) -> void:
 	get_input()
 
+	animation_controller.handle_animation(movement_input, velocity, grounded, on_wall, is_attacking)
 
 	if velocity.y > 0 and is_attacking == 1:
 		speed_particles.emitting = true
@@ -91,12 +88,6 @@ func _process(delta: float) -> void:
 	handle_jump()
 
 
-	if velocity.x > 5 and !on_wall:
-		sprite.flip_h = false
-	elif velocity.x < -5 and !on_wall:
-		sprite.flip_h = true
-
-
 func _physics_process(_delta: float) -> void:
 	previous_velocity = velocity
 
@@ -113,10 +104,10 @@ func _physics_process(_delta: float) -> void:
 	if is_attacking == 0 and movement_input.x != 0 and can_be_on_wall:
 		on_wall = body_forward_cast.is_colliding()
 
-	if on_wall:
-		sprite.play("WallSlide")
-	elif sprite.animation == "WallSlide":
-		sprite.play("Idle")
+	# if on_wall:
+	# 	sprite.play("WallSlide")
+	# elif sprite.animation == "WallSlide":
+	# 	sprite.play("Idle")
 
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
@@ -127,7 +118,6 @@ func _physics_process(_delta: float) -> void:
 		velocity.y = -failed_attack_str_mult * base_strength
 		is_attacking = 0
 		is_parrying = false
-		sprite.play("Idle")
 		FxSystem.play_fx("SmokeHitSmall", position)
 
 
@@ -150,13 +140,11 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 				GameManager.get_instance().set_powerup_active("double-jump", true)
 				speed_particles.emitting = false
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
-				sprite.play("Idle")
 
 				FxSystem.play_fx("SmokeHitSmall", position)
 			else: # Parry atack
 				GameManager.get_instance().set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength
-				sprite.play("Parry")
 
 				Engine.time_scale = 0.1
 				get_tree().create_timer(0.02).timeout.connect(reset_time_scale)
@@ -179,7 +167,6 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 				velocity.y = -getting_hit_bounce_str_mult * base_strength
 				is_attacking = 0
-				sprite.play("Idle")
 				can_jump = false
 
 				Events.hp_changed.emit(GameManager.get_instance().player_hp - stats.damage, -stats.damage)
@@ -199,6 +186,8 @@ func handle_jump() -> void:
 		if grounded:
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
+			grounded = false
+			animation_controller.play_animation("jump")
 
 		elif on_wall and GameManager.get_instance().has_powerup("sticky-boots", true):
 			deactivate_can_be_on_wall()
@@ -208,10 +197,12 @@ func handle_jump() -> void:
 
 		else:
 			if is_attacking == 0:
+				animation_controller.play_animation("attack")
 				process_jump()
 				return
 			
 			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
+				animation_controller.play_animation("attack")
 				GameManager.get_instance().set_powerup_active("double-jump", false)
 				process_jump()
 				return
@@ -234,7 +225,6 @@ func process_jump() -> void:
 
 	is_attacking = 1
 	velocity.y = -attack_recoil_str_mult * base_strength
-	sprite.play("Attack")
 
 func get_input() -> void:
 	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
