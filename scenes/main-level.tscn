@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=47 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://clbg6qul035bg" path="res://scenes/grave.tscn" id="4_yyih8"]
 [ext_resource type="PackedScene" uid="uid://c2s4o300l8sf4" path="res://scenes/toxic_ground.tscn" id="5_6rdlt"]
 [ext_resource type="PackedScene" uid="uid://dtyg2va2kyx66" path="res://scenes/lava_ground.tscn" id="6_bdk1c"]
+[ext_resource type="Texture2D" uid="uid://dm0ru57bjifvq" path="res://sprites/tree-base.png" id="7_64nxx"]
 [ext_resource type="Texture2D" uid="uid://glkrutqer0mx" path="res://sprites/bg-temp.jpg" id="7_s2kee"]
 [ext_resource type="Script" uid="uid://bpk64m74d0ygy" path="res://scripts/main_camera.gd" id="7_vrglu"]
 [ext_resource type="Script" uid="uid://bdj7w147q6trl" path="res://scripts/lava_floor.gd" id="8_mhu1n"]
+[ext_resource type="Texture2D" uid="uid://2r8vgnwl11tu" path="res://sprites/tree-bottom.png" id="8_yl8gf"]
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
 [ext_resource type="PackedScene" uid="uid://ewq68vpmsm17" path="res://scenes/lava_ball.tscn" id="9_aksw0"]
 [ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
@@ -23,6 +25,14 @@
 [ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://shaders/rain.gdshader" id="14_dr822"]
 [ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://shaders/vignette.gdshader" id="14_vl0b8"]
 [ext_resource type="SpriteFrames" uid="uid://dok01gl1a6dqy" path="res://resources/powerups/powerup-sticky-boots-frames.tres" id="18_5usra"]
+[ext_resource type="Resource" uid="uid://cggfuht13gbam" path="res://resources/powerups/dash-increase.tres" id="19_bpkkv"]
+
+[sub_resource type="Gradient" id="Gradient_bpkkv"]
+colors = PackedColorArray(0, 0, 0, 1, 0.0647376, 0.152202, 0.223641, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_64nxx"]
+gradient = SubResource("Gradient_bpkkv")
+fill_to = Vector2(0.752137, 0.0299145)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7wgpl"]
 shader = ExtResource("14_dr822")
@@ -39,6 +49,9 @@ shader_parameter/additional_rain_speed = 0.5
 shader_parameter/slant = 0.176
 
 [sub_resource type="Theme" id="Theme_yvcr4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpkkv"]
+size = Vector2(956, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
 size = Vector2(24, 24)
@@ -57,6 +70,39 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl8gf"]
+atlas = ExtResource("7_64nxx")
+region = Rect2(0, 0, 64, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4phqs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl8gf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4phqs"]
+atlas = ExtResource("8_yl8gf")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjry1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4phqs")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64nxx"]
+size = Vector2(54, 573)
 
 [sub_resource type="Gradient" id="Gradient_6g0xn"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -108,13 +154,25 @@ height = 1
 
 [node name="Level" type="Node2D"]
 
+[node name="UI" parent="." instance=ExtResource("9_6g0xn")]
+
 [node name="GameManager" parent="." instance=ExtResource("1_u8x35")]
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="TextureRect" type="TextureRect" parent="Scenery"]
+light_mask = 3
+z_index = -15
+offset_left = -362.0
+offset_top = 207.0
+offset_right = 257.0
+offset_bottom = 939.0
+rotation = -1.57079
+texture = SubResource("GradientTexture2D_64nxx")
+
 [node name="Background" type="Sprite2D" parent="Scenery"]
-modulate = Color(0.210588, 0.190222, 0.275639, 1)
+modulate = Color(0.213453, 0.1932, 0.28, 0.0666667)
 light_mask = 2
 z_index = -10
 texture_filter = 1
@@ -146,13 +204,20 @@ color = Color(0, 0, 0, 1)
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
 position = Vector2(-90, -36)
 
+[node name="TopWall" type="StaticBody2D" parent="Scenery"]
+position = Vector2(11, -265)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/TopWall"]
+shape = SubResource("RectangleShape2D_bpkkv")
+
 [node name="StartingGround" type="StaticBody2D" parent="Scenery"]
 position = Vector2(0, -12)
-scale = Vector2(8.52, 1)
+scale = Vector2(12.28, 1)
 collision_mask = 0
 
 [node name="Collision" type="CollisionShape2D" parent="Scenery/StartingGround"]
 shape = SubResource("RectangleShape2D_bdrgs")
+one_way_collision = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/StartingGround"]
 texture_filter = 1
@@ -175,44 +240,111 @@ metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
 
 [node name="LeftWall" type="StaticBody2D" parent="Scenery"]
 position = Vector2(-114, 0)
-rotation = 1.57079
-scale = Vector2(24, 1)
+
+[node name="Sprites" type="Node2D" parent="Scenery/LeftWall"]
+position = Vector2(-18, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, 33)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="Bottom" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(-24, 129)
+sprite_frames = SubResource("SpriteFrames_tjry1")
+animation = &"Idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-bottom.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "3a5874606e3943a40a3fce46f2b42899"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -95)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -223)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/LeftWall"]
-shape = SubResource("RectangleShape2D_bdrgs")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/LeftWall"]
-light_mask = 2
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_6g0xn")
-metadata/_aseprite_wizard_interface_config_ = {
-"output_section": true,
-"pending_changes": {}
-}
-metadata/_aseprite_wizard_config_ = {
-"layers": [],
-"o_ex_p": "",
-"o_folder": "res://sprites",
-"o_name": "",
-"only_visible": false,
-"should_round_fps": true,
-"slice": "",
-"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
-}
-metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
+position = Vector2(-15, -14.5)
+shape = SubResource("RectangleShape2D_64nxx")
 
 [node name="RightWall" type="StaticBody2D" parent="Scenery"]
-position = Vector2(114, 5.50244e-11)
-rotation = -1.57079
-scale = Vector2(24, 1)
+position = Vector2(114, 0)
+scale = Vector2(-1, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/RightWall"]
-shape = SubResource("RectangleShape2D_bdrgs")
+[node name="Sprites" type="Node2D" parent="Scenery/RightWall"]
+position = Vector2(-18, 0)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/RightWall"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scenery/RightWall/Sprites"]
 light_mask = 2
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_6g0xn")
+position = Vector2(0, 33)
+sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -225,9 +357,77 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/wall-basic.aseprite"
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="Bottom" type="AnimatedSprite2D" parent="Scenery/RightWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(-24, 129)
+sprite_frames = SubResource("SpriteFrames_tjry1")
+animation = &"Idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-bottom.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "3a5874606e3943a40a3fce46f2b42899"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Scenery/RightWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -95)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Scenery/RightWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -223)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/RightWall"]
+position = Vector2(-15, -14.5)
+shape = SubResource("RectangleShape2D_64nxx")
 
 [node name="ToxicFloor" type="Node2D" parent="Scenery"]
 unique_name_in_owner = true
@@ -495,7 +695,7 @@ unique_name_in_owner = true
 [node name="PowerUpShop" type="Node2D" parent="Scenery"]
 position = Vector2(-29, -104)
 script = ExtResource("11_aqsxy")
-all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl"), ExtResource("11_cvmw5"), ExtResource("12_5usra"), ExtResource("13_h2e2k")])
+all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl"), ExtResource("11_cvmw5"), ExtResource("12_5usra"), ExtResource("13_h2e2k"), ExtResource("19_bpkkv")])
 instance = ExtResource("10_dr822")
 instance_padding = 32
 
@@ -509,13 +709,11 @@ parry_raycast_distance = 50.0
 zoom = Vector2(3, 3)
 script = ExtResource("7_vrglu")
 on_hit_shake = 0.2
-max_y_increase = 600.0
+max_y_increase = 0.0
 
-[node name="UI" parent="." instance=ExtResource("9_6g0xn")]
+[node name="ScreenEffect" type="CanvasLayer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="ScreenEffect"]
 material = SubResource("ShaderMaterial_dr822")
 anchors_preset = 15
 anchor_right = 1.0

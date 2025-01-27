@@ -9,6 +9,6 @@ frames = ExtResource("1_353fb")
 power_up_name = "extra-life"
 power_up_description = "+1 MAX HP"
 chance = 1.0
-cost = 8
+cost = 6
 amount = 2
 metadata/_custom_type_script = ExtResource("2_ngll4")

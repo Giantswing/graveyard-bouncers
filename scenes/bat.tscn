@@ -9,32 +9,29 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
 size = Vector2(18, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ss3tx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv0ya"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lv0ya"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fn3r"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5fn3r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtcx"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8qtcx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4bhu"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(0, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x4bhu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0o7o"]
 atlas = ExtResource("3_5fn3r")
 region = Rect2(24, 24, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_k0o7o"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_67y1s"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ss3tx")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lv0ya")
 }, {
@@ -46,6 +43,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x4bhu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0o7o")
 }],
 "loop": true,
 "name": &"default",
@@ -62,7 +62,7 @@ wobble = 0.2
 position = Vector2(-3, 0)
 script = ExtResource("2_lv0ya")
 damage = 1
-score_reward = 1
+score_reward = 15
 metadata/_custom_type_script = ExtResource("2_lv0ya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -72,7 +72,7 @@ shape = SubResource("RectangleShape2D_cvmw5")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_lv0ya")
-sprite_frames = SubResource("SpriteFrames_k0o7o")
+sprite_frames = SubResource("SpriteFrames_67y1s")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
@@ -95,7 +95,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "bfc58dfd97e7b0bf63b7c9334110f0e8"
 texture_filter = 1
 scale = Vector2(1.36, 1)
 color = Color(0.768032, 0.444793, 0.017804, 1)
-energy = 5.0
+energy = 0.0
 range_item_cull_mask = 2
 texture = ExtResource("4_8qtcx")
 texture_scale = 0.8

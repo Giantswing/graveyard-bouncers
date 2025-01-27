@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://ddj51yulhtpj7"]
+
+[ext_resource type="SpriteFrames" uid="uid://bniyryg3serqv" path="res://resources/abilities/dash-frames.tres" id="1_4eicd"]
+[ext_resource type="Script" uid="uid://b2aahsk5r75xx" path="res://scripts/ability.gd" id="1_8kwqy"]
+
+[resource]
+script = ExtResource("1_8kwqy")
+name = "dash"
+uses = 0
+start_uses = 1
+max_uses = 1
+frames = ExtResource("1_4eicd")
+cooldown = 0.0
+metadata/_custom_type_script = ExtResource("1_8kwqy")

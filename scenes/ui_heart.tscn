@@ -30,8 +30,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="UIHeart" type="Panel"]
-custom_minimum_size = Vector2(101, 0)
+[node name="UIHeart" type="MarginContainer"]
+custom_minimum_size = Vector2(102.395, 83.285)
+offset_right = 101.0
 script = ExtResource("1_6l0s0")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

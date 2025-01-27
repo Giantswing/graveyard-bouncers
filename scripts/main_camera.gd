@@ -49,11 +49,14 @@ func point_target():
 	var final_pos: float
 
 	if GameManager.get_instance().round_started:
-		final_pos = min(start_y_pos, start_y_pos + dist.y * 0.2)
-		position.y = lerp(position.y, final_pos, 0.01)
-	else:
-		final_pos = min(start_y_pos - 10, start_y_pos + dist.y * 0.2)
+		final_pos = min(start_y_pos + 15, start_y_pos + dist.y * 0.2)
 		position.y = lerp(position.y, final_pos, 0.05)
+	else:
+		final_pos = min(start_y_pos - 15, start_y_pos + dist.y * 0.7)
+		position.y = lerp(position.y, final_pos, 0.02)
+
+	if position.y > start_y_pos:
+		position.y = start_y_pos
 	
 
 func shake():

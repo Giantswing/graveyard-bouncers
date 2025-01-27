@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://cggfuht13gbam"]
+
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="1_a0gtb"]
+[ext_resource type="SpriteFrames" uid="uid://bniyryg3serqv" path="res://resources/abilities/dash-frames.tres" id="1_pphlc"]
+
+[resource]
+script = ExtResource("1_a0gtb")
+frames = ExtResource("1_pphlc")
+power_up_name = "dash-increase"
+power_up_description = "+1 max dash"
+chance = 1.0
+cost = 7
+amount = 2
+metadata/_custom_type_script = ExtResource("1_a0gtb")

@@ -4,7 +4,9 @@ extends CharacterBody2D
 @onready var body_down_cast1: RayCast2D = $Raycasts/BodyDownCast1
 @onready var body_down_cast2: RayCast2D = $Raycasts/BodyDownCast2
 @onready var body_forward_cast: RayCast2D = $Raycasts/BodyForwardCast
+@onready var dash_cast: RayCast2D = $Raycasts/DashCast
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
+@onready var dash_particles: GPUParticles2D = $DashParticles
 @onready var animation_controller: PlayerAnimationController = $AnimationController 
 
 @export var acceleration: float = 0.1 
@@ -26,6 +28,11 @@ extends CharacterBody2D
 
 @export var extra_speed_decay: float = 0.1
 @export var extra_speed_strength: float = 1
+@export var dash_distance: float = 100
+
+@export var dash_frames_left: Texture2D
+@export var dash_frames_right: Texture2D
+
 var extra_speed: Vector2 = Vector2.ZERO
 
 var can_jump: bool = true
@@ -38,6 +45,7 @@ var jump_pressed: bool = false
 var ability_pressed: bool = false
 var movement_input: Vector2
 var can_get_hit: bool = true
+var received_damage: bool = false
 var previous_velocity: Vector2 = Vector2.ZERO
 var grounded: bool = false
 var on_wall: bool = false
@@ -46,11 +54,42 @@ var can_be_on_wall: bool = true
 
 func _ready() -> void:
 	speed_particles.emitting = false
+	dash_particles.emitting = false
 	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
 	body_down_cast1.target_position.y = parry_raycast_distance
 	body_down_cast2.target_position.y = parry_raycast_distance
 
 	Events.player_died.connect(on_player_died)
+	Events.ability_gained.connect(on_ability_gained)
+	Events.picked_up_powerup.connect(on_picked_up_powerup)
+	Events.round_ended.connect(on_round_ended)
+
+func on_round_ended() -> void:
+	velocity.y = -base_strength * 2
+	is_attacking = 0
+
+func on_picked_up_powerup(powerup: PowerUp) -> void:
+	if powerup.power_up_name == "sticky-boots":
+		slide_down_max_speed *= 0.3
+
+func on_ability_gained(new_ability: Ability) -> void:
+	if new_ability == null:
+		sprite.material.set_shader_parameter("width", 0)
+
+		return
+
+	var ability_name: String = new_ability.name
+	var ability_uses: int = new_ability.uses
+
+	if ability_name == "dash":
+		if ability_uses == 1: # Blue
+			sprite.material.set_shader_parameter("color", Color(0, 1, 1, 0.8))
+		elif ability_uses == 2: # Orange
+			sprite.material.set_shader_parameter("color", Color(1, 0.5, 0, 0.8))
+		elif ability_uses == 3: # White
+			sprite.material.set_shader_parameter("color", Color(1, 1, 1, 1))
+
+		sprite.material.set_shader_parameter("width", 2.0)
 
 func on_player_died() -> void:
 	Engine.time_scale = 0.5
@@ -60,7 +99,7 @@ func on_player_died() -> void:
 func _process(delta: float) -> void:
 	get_input()
 
-	animation_controller.handle_animation(movement_input, velocity, grounded, on_wall, is_attacking)
+	animation_controller.handle_animation(movement_input, velocity, grounded, on_wall, is_attacking, received_damage)
 
 	if velocity.y > 0 and is_attacking == 1:
 		speed_particles.emitting = true
@@ -75,9 +114,6 @@ func _process(delta: float) -> void:
 	hspeed_to = movement_input.x * mov_speed
 	hspeed += (hspeed_to - hspeed) * acceleration * delta * 60
 
-	if on_wall and GameManager.get_instance().has_powerup("sticky-boots"):
-		GameManager.get_instance().set_powerup_active("sticky-boots", true)
-
 	velocity.x = hspeed + extra_speed.x
 	velocity.y = velocity.y + extra_speed.y
 
@@ -86,6 +122,8 @@ func _process(delta: float) -> void:
 			hspeed = 0
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
+
+
 		else:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			
@@ -104,7 +142,7 @@ func _physics_process(_delta: float) -> void:
 	grounded = is_on_floor()
 	on_wall = false
 
-	body_forward_cast.target_position.x = 10 if movement_input.x > 0 else -10
+	body_forward_cast.target_position.x = 20 if movement_input.x > 0 else -20
 	if movement_input.x == 0:
 		body_forward_cast.target_position.x = 0
 
@@ -112,10 +150,6 @@ func _physics_process(_delta: float) -> void:
 	if is_attacking == 0 and movement_input.x != 0 and can_be_on_wall:
 		on_wall = body_forward_cast.is_colliding()
 
-	# if on_wall:
-	# 	sprite.play("WallSlide")
-	# elif sprite.animation == "WallSlide":
-	# 	sprite.play("Idle")
 
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
@@ -153,9 +187,14 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 			else: # Parry atack
 				GameManager.get_instance().set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength
+				grounded = false
+
+				animation_controller.play_animation("parry")
+
+				GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
 
 				Engine.time_scale = 0.1
-				get_tree().create_timer(0.02).timeout.connect(reset_time_scale)
+				get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
 				
 				Events.player_parry.emit()
 				speed_particles.emitting = true
@@ -169,6 +208,7 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 		else:
 			if can_get_hit and stats.damage > 0: # Take damage get hit
 				can_get_hit = false
+				received_damage = true
 
 				set_collision_mask_value(3, false)
 				get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
@@ -187,15 +227,54 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 
 func handle_ability() -> void:
-	if ability_pressed:
+	var current_ability = GameManager.instance.player_ability
+
+	if !current_ability or !ability_pressed:
+		return
+
+	if current_ability.name == "dash":
 		process_dash()
 
+	GameManager.instance.use_current_ability()
 
 func process_dash() -> void:
-	var direction = movement_input.normalized() * 1.3
-	velocity.x = 0
+	is_attacking = 0
+
+	var direction = movement_input.normalized()
+	# velocity.x = 0
+	velocity.y = 0
 	# velocity.y = (direction * 500 * extra_speed_strength).y * 0.01
-	extra_speed = direction * 500 * extra_speed_strength
+
+	extra_speed.x = direction.x * 50 * extra_speed_strength
+	extra_speed.y = direction.y * 10 * extra_speed_strength
+
+	var target_position: Vector2 = direction * dash_distance
+	var new_position: Vector2 = Vector2.ZERO
+
+	dash_cast.target_position = target_position
+	dash_cast.force_raycast_update()
+
+	if dash_cast.is_colliding():
+		new_position = dash_cast.get_collision_point()
+	else:
+		new_position = position + target_position
+
+	animation_controller.play_animation("dash")
+
+	Engine.time_scale = 0.3
+
+	if movement_input.x < 0:
+		dash_particles.texture = dash_frames_left
+	else:
+		dash_particles.texture = dash_frames_right
+
+	dash_particles.emitting = true
+
+	get_tree().create_timer(0.15).timeout.connect(reset_time_scale)
+	get_tree().create_timer(0.06).timeout.connect(func() -> void: dash_particles.emitting = false)
+
+	Utils.fast_tween(self, "position", new_position, 0.05)
+
 
 func handle_jump() -> void:
 	if jump_pressed and can_jump:
@@ -208,11 +287,10 @@ func handle_jump() -> void:
 			grounded = false
 			animation_controller.play_animation("jump")
 
-		elif on_wall and GameManager.get_instance().has_powerup("sticky-boots", true):
+		elif on_wall:
 			deactivate_can_be_on_wall()
-			GameManager.get_instance().set_powerup_active("sticky-boots", false)
 			extra_speed = Vector2.ZERO
-			extra_speed.x = -movement_input.x * 500 * extra_speed_strength
+			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
 
 		else:
@@ -268,6 +346,7 @@ func reset_time_scale() -> void:
 
 func reset_can_get_hit() -> void:
 	set_collision_mask_value(3, true)
+	received_damage = false
 	can_get_hit = true
 
 func deactivate_can_be_on_wall() -> void:

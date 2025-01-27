@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djhacfugb8twm"
-path="res://.godot/imported/turtle.png-b56a5bdc562d27a2bf643f9ef67e4113.ctex"
+uid="uid://giiwj3b2cmm5"
+path="res://.godot/imported/dash-frames.png-df2d587a5d7cd35213b9544386c33332.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/turtle.png"
-dest_files=["res://.godot/imported/turtle.png-b56a5bdc562d27a2bf643f9ef67e4113.ctex"]
+source_file="res://sprites/dash-frames.png"
+dest_files=["res://.godot/imported/dash-frames.png-df2d587a5d7cd35213b9544386c33332.ctex"]
 
 [params]
 

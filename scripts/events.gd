@@ -14,3 +14,4 @@ signal round_ended
 signal round_started
 signal round_time_changed(time: int)
 signal score_changed(score: int)
+signal ability_gained(ability: Ability)

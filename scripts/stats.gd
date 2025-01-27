@@ -94,7 +94,7 @@ func take_damage(amount: int) -> void:
 			GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
 		
 		if score_reward != 0:
-			Events.score_changed.emit(GameManager.get_instance().score + score_reward)
+			Events.score_changed.emit(GameManager.get_instance().score + score_reward * 10)
 
 		if wall_reward != 0:
 			GameManager.get_instance().game_width -= wall_reward

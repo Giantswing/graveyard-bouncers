@@ -8,6 +8,10 @@ extends Control
 @onready var coins_label: Label = %CoinsLabel
 @onready var round_label: Label = %RoundLabel
 
+@onready var ability_sprite: AnimatedSprite2D = %AbilitySprite
+@onready var ability_name: Label = %AbilityName
+@onready var ability_uses: Label = %AbilityAmount
+
 @export var ui_heart_scene: PackedScene
 
 var hearts: Array[ui_heart] = []
@@ -22,13 +26,21 @@ func _ready() -> void:
 	Events.player_died.connect(on_player_died)
 	Events.coins_changed.connect(on_coins_changed)
 	Events.round_counter_changed.connect(on_round_counter_changed)
+	Events.ability_gained.connect(on_ability_gained)
 
-	Events.round_time_changed.emit(0)
-	Events.score_changed.emit(0)
-	Events.hp_changed.emit(GameManager.get_instance().player_hp_max, 0)
-	Events.max_hp_changed.emit(GameManager.get_instance().player_hp_max)
-	Events.coins_changed.emit(0)
-	Events.round_counter_changed.emit(0)
+func on_ability_gained(ability: Ability) -> void:
+	if ability == null:
+		ability_sprite.visible = false
+		ability_name.text = ""
+		ability_uses.text = ""
+		return
+
+	ability_sprite.visible = true
+	ability_sprite.sprite_frames = ability.frames
+	ability_sprite.play("default")
+	ability_name.text = ability.name
+	ability_uses.text = str(ability.uses)
+
 
 func on_round_counter_changed(new_round: int) -> void:
 	round_label.text = "Round: " + str(new_round)

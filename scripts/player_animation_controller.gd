@@ -12,11 +12,11 @@ func _ready() -> void:
 
 
 func on_animation_finished() -> void:
-	if sprite.animation == "parry":
-		sprite.play("idle")
+	if sprite.animation == "parry" or sprite.animation == "dash":
+		play_animation("jump")
 
 
-func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool, on_wall:bool, is_attacking: int) -> void:
+func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool, on_wall:bool, is_attacking: int, received_damage: bool) -> void:
 	if current_animation == "attack" and is_attacking == 0:
 		play_animation("idle")
 
@@ -31,12 +31,24 @@ func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool,
 	if (current_animation == "run" || current_animation == "idle") and !grounded:
 		play_animation("jump")
 
-	# if current_animation == "jump" and velocity.y > 0:
-	# 	play_animation("fall")
+	if current_animation == "jump" and velocity.y > 0:
+		play_animation("fall")
 
-	if velocity.x > 5 and !on_wall:
+	if on_wall and !grounded and velocity.y > 0:
+		play_animation("wallslide")
+
+	if !on_wall and current_animation == "wallslide":
+		play_animation("jump")
+
+	if received_damage:
+		play_animation("hit")
+	elif current_animation == "hit" and !received_damage:
+		play_animation("fall")
+
+
+	if movement_input.x > 0:
 		sprite.flip_h = false
-	elif velocity.x < -5 and !on_wall:
+	elif movement_input.x < 0:
 		sprite.flip_h = true
 
 

@@ -19,10 +19,12 @@ class_name GameManager
 var round_time: int = 0
 var round_data: GameRound = null
 var score: int = 0
-var coins: int = 0
+@export var coins: int = 0
 
 var player_hp: int = 3
-var player_ability: Ability = null
+
+@export var player_ability: Ability = null
+@export var all_abilities: Array[Ability]
 
 var enemy_container: Node2D
 var other_container: Node2D
@@ -84,8 +86,46 @@ func _ready() -> void:
 	Events.coins_changed.emit(coins)
 	Events.round_counter_changed.emit(current_round)
 
+	gain_ability(player_ability)
+
+	Engine.time_scale = 1.0
+
 	update_current_round()
 	set_up_round()
+
+
+func find_ability(ability_name: String) -> Ability:
+	for ability in all_abilities:
+		if ability.name == ability_name:
+			return ability
+
+	return null
+
+func gain_ability(new_ability: Ability) -> void:
+	if new_ability == null:
+		player_ability = null
+		Events.ability_gained.emit(null)
+		return
+	else:
+		if player_ability != null and player_ability.name == new_ability.name:
+			new_ability.increase_uses(1)
+		else:
+			new_ability.init()
+			player_ability = new_ability
+
+		Events.ability_gained.emit(player_ability)
+
+func use_current_ability() -> void:
+	if player_ability == null:
+		return
+
+	player_ability.uses -= 1
+
+	if player_ability.uses <= 0:
+		player_ability = null
+		Events.ability_gained.emit(null)
+	else:
+		Events.ability_gained.emit(player_ability)
 
 
 func update_current_round() -> void:
@@ -137,7 +177,6 @@ func _process(delta: float) -> void:
 		game_width = min(game_width, 620)
 
 		if reward_spawn_countdown <= 0:
-			print("reward spawned")
 			reward_spawn_countdown = round_data.reward_spawn_rate 
 			Utils.spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
 
@@ -202,6 +241,8 @@ func add_powerup(powerup: PowerUp) -> void:
 
 	if powerup.power_up_name == "heal-potion":
 		Events.hp_changed.emit(player_hp_max, 0)
+	elif powerup.power_up_name == "dash-increase":
+		find_ability("dash").max_uses += 1
 	elif powerup.power_up_name == "extra-life":
 		player_hp_max += 1
 		Events.max_hp_changed.emit(player_hp_max)

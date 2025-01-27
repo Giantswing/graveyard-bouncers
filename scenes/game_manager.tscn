@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=14 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
 [ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
+[ext_resource type="Script" uid="uid://b2aahsk5r75xx" path="res://scripts/ability.gd" id="4_aonbx"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="4_jdad8"]
+[ext_resource type="Resource" uid="uid://ddj51yulhtpj7" path="res://resources/abilities/dash.tres" id="5_lcbjr"]
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="6_q8mjp"]
 [ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scripts/round_manager.gd" id="6_ternb"]
 [ext_resource type="PackedScene" uid="uid://xejrp383li1a" path="res://scenes/turtle.tscn" id="7_0rse5"]
@@ -14,12 +16,12 @@
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
-time_limit = 10
+time_limit = 25
 chance = 1.0
 gravity_multiplier = 0.5
-game_width_speed_increase = 4.0
+game_width_speed_increase = 60.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource("9_frtjd"), ExtResource("3_q8mjp")])
-enemy_spawn_rate = 1.5
+enemy_spawn_rate = 1.0
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
 reward_spawn_rate = 2.0
@@ -31,9 +33,9 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_hwd4i")
-player_hp_max = 2
 trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
+all_abilities = Array[ExtResource("4_aonbx")]([ExtResource("5_lcbjr")])
 
 [node name="RoundManager" type="Node2D" parent="."]
 script = ExtResource("6_ternb")

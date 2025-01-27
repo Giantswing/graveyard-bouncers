@@ -9,6 +9,6 @@ frames = ExtResource("1_tue1p")
 power_up_name = "double-jump"
 power_up_description = "Double jump"
 chance = 1.0
-cost = 10
+cost = 6
 amount = 1
 metadata/_custom_type_script = ExtResource("2_ht8mn")

@@ -7,8 +7,8 @@
 script = ExtResource("2_hxpss")
 frames = ExtResource("1_cpt3a")
 power_up_name = "sticky-boots"
-power_up_description = "Wall jump"
+power_up_description = "hold to walls"
 chance = 1.0
-cost = 10
+cost = 5
 amount = 1
 metadata/_custom_type_script = ExtResource("2_hxpss")

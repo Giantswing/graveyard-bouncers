@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://xejrp383li1a"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1l2iw"]
-[ext_resource type="Texture2D" uid="uid://djhacfugb8twm" path="res://scenes/turtle.png" id="1_diba4"]
+[ext_resource type="Texture2D" uid="uid://djhacfugb8twm" path="res://sprites/turtle.png" id="1_diba4"]
 [ext_resource type="Script" uid="uid://cy38ea17p502" path="res://scripts/turtle.gd" id="1_hbk6c"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_7kcg0"]
 

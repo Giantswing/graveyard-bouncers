@@ -1,4 +1,4 @@
-extends Panel
+extends MarginContainer
 
 class_name ui_heart 
 
