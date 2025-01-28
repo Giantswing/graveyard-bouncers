@@ -186,8 +186,8 @@ func _process(delta: float) -> void:
 		pause_game(!game_paused)
 
 	if game_started and !game_paused:
-		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.1)
-		right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.1)
+		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.02)
+		right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.02)
 
 
 	if round_started and !game_paused:
