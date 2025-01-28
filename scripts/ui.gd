@@ -14,10 +14,13 @@ extends Control
 
 @export var ui_heart_scene: PackedScene
 
+@onready var pause_screen: Control = %PauseScreen
+
 var hearts: Array[ui_heart] = []
 
 func _ready() -> void:
 	death_screen.visible = false
+	pause_screen.visible = false
 
 	Events.score_changed.connect(on_score_changed)
 	Events.hp_changed.connect(on_hp_changed)
@@ -27,6 +30,10 @@ func _ready() -> void:
 	Events.coins_changed.connect(on_coins_changed)
 	Events.round_counter_changed.connect(on_round_counter_changed)
 	Events.ability_gained.connect(on_ability_gained)
+	Events.game_paused.connect(on_game_paused)
+
+func on_game_paused(paused: bool) -> void:
+	pause_screen.visible = paused
 
 func on_ability_gained(ability: Ability) -> void:
 	if ability == null:
