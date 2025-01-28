@@ -185,12 +185,12 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Menu"):
 		pause_game(!game_paused)
 
-	if game_started:
+	if game_started and !game_paused:
 		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.1)
 		right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.1)
 
 
-	if round_started:
+	if round_started and !game_paused:
 		enemy_spawn_countdown -= delta
 		reward_spawn_countdown -= delta
 
