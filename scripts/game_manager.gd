@@ -158,9 +158,13 @@ func on_hp_changed(new_hp: int, _change: int) -> void:
 
 
 func pause_game(is_paused: bool) -> void:
-	game_paused = is_paused 
-	get_tree().paused = is_paused
-	Events.game_paused.emit(is_paused)
+	# We add a small delay so that when exiting the menu with the jump button, the player doesn't jump
+	get_tree().create_timer(0.05).timeout.connect(func() -> void:
+		game_paused = is_paused 
+		get_tree().paused = is_paused
+		Events.game_paused.emit(is_paused)
+	)
+
 
 func restart_level() -> void:
 	get_tree().paused = false
