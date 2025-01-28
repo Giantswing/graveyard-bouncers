@@ -7,6 +7,7 @@ class_name GameManager
 
 @onready var seconds_timer: Timer = %SecondsTimer
 @onready var round_manager: RoundManager = $RoundManager
+@onready var fog: ColorRect = %FogRect
 
 @export var current_round: int = 0 
 @export var current_difficulty: float = 1.0
@@ -221,18 +222,26 @@ func set_up_round() -> void:
 		new_obj.scale = Vector2(0, 0)
 		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
 
+	if round_data.has_fog:
+		Utils.fast_tween(fog, "material:shader_parameter/alpha_multiplier", 3, 5)
+	else:
+		Utils.fast_tween(fog, "material:shader_parameter/alpha_multiplier", 0.3, 5)
+
 	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:
+			Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 1.0, 1.0, 0.5), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.TOXIC:
+			Utils.fast_tween(fog, "material:shader_parameter/color", Color(0.5, 0.7, 0.2, 1), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.LAVA:
+			Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 0.5, 0.2, 1), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)

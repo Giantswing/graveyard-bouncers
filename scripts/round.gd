@@ -27,6 +27,7 @@ enum GROUND_TYPES {
 @export var ground_type: GROUND_TYPES = GROUND_TYPES.NORMAL
 @export var has_trampoline: bool = false
 @export var has_helper_enemy: bool = false
+@export var has_fog: bool = false
 
 var original_chance: float
 var id: int = 0

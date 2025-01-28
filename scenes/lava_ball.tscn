@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bx2kfpcnxvte7" path="res://scripts/lava_ball.gd" id="1_wo57b"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_uxo8x"]
 [ext_resource type="Texture2D" uid="uid://bifoq8aierf30" path="res://sprites/lava-ball.png" id="3_wo57b"]
-[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_56t6b"]
+[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="4_wo57b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
 size = Vector2(16, 16)
@@ -106,7 +106,6 @@ metadata/_aseprite_wizard_source_file_hash_ = "6cff7a9cd563ac7e5b262bea77bb9d33"
 modulate = Color(0.973341, 0.386927, 0, 1)
 texture_filter = 1
 color = Color(1, 0.537667, 0.27, 1)
-energy = 2.5
 range_item_cull_mask = 2
-texture = ExtResource("4_56t6b")
-texture_scale = 1.6
+texture = ExtResource("4_wo57b")
+texture_scale = 0.5

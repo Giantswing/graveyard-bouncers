@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=51 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -26,6 +26,7 @@
 [ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://shaders/vignette.gdshader" id="14_vl0b8"]
 [ext_resource type="SpriteFrames" uid="uid://dok01gl1a6dqy" path="res://resources/powerups/powerup-sticky-boots-frames.tres" id="18_5usra"]
 [ext_resource type="Resource" uid="uid://cggfuht13gbam" path="res://resources/powerups/dash-increase.tres" id="19_bpkkv"]
+[ext_resource type="Shader" uid="uid://kudihfw0f7up" path="res://shaders/fog.gdshader" id="23_4phqs"]
 
 [sub_resource type="Gradient" id="Gradient_bpkkv"]
 colors = PackedColorArray(0, 0, 0, 1, 0.0647376, 0.152202, 0.223641, 1)
@@ -128,6 +129,27 @@ gravity = Vector3(0, -20, 0)
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_s2kee")
 
+[sub_resource type="Gradient" id="Gradient_4phqs"]
+offsets = PackedFloat32Array(0.570093, 0.771028, 0.883178)
+colors = PackedColorArray(0, 0, 0, 1, 0.37414, 0.374139, 0.374139, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tjry1"]
+gradient = SubResource("Gradient_4phqs")
+fill_from = Vector2(1, 0.106838)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tjry1"]
+shader = ExtResource("23_4phqs")
+shader_parameter/color = Color(0.3898, 0.364, 0.4, 1)
+shader_parameter/alpha_multiplier = 0.35
+shader_parameter/OCTAVES = 3
+shader_parameter/enable_pixelation = true
+shader_parameter/pixelation_amount = 412
+shader_parameter/fog_mask = SubResource("GradientTexture2D_tjry1")
+shader_parameter/fog_direction = Vector2(-1, 1)
+shader_parameter/scroll_noise_tex = true
+shader_parameter/noise_scroll_direction = Vector2(-0.75, 0)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dr822"]
 shader = ExtResource("14_vl0b8")
 shader_parameter/resolution = Vector2(1920, 1080)
@@ -155,6 +177,7 @@ height = 1
 [node name="Level" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("9_6g0xn")]
+visible = false
 
 [node name="GameManager" parent="." instance=ExtResource("1_u8x35")]
 
@@ -330,7 +353,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/LeftWall"]
-position = Vector2(-15, -14.5)
+position = Vector2(-10, -3)
 shape = SubResource("RectangleShape2D_64nxx")
 
 [node name="RightWall" type="StaticBody2D" parent="Scenery"]
@@ -698,6 +721,21 @@ script = ExtResource("11_aqsxy")
 all_powerups = Array[ExtResource("12_dr822")]([ExtResource("13_7wgpl"), ExtResource("11_cvmw5"), ExtResource("12_5usra"), ExtResource("13_h2e2k"), ExtResource("19_bpkkv")])
 instance = ExtResource("10_dr822")
 instance_padding = 32
+
+[node name="Fog" type="Node2D" parent="Scenery"]
+top_level = true
+light_mask = 3
+visibility_layer = 3
+z_index = 50
+
+[node name="FogRect" type="ColorRect" parent="Scenery/Fog"]
+unique_name_in_owner = true
+light_mask = 3
+material = SubResource("ShaderMaterial_tjry1")
+offset_left = -372.0
+offset_top = -500.0
+offset_right = 381.0
+offset_bottom = 253.0
 
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
 unique_name_in_owner = true

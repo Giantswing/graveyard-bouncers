@@ -184,7 +184,10 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
 
 				FxSystem.play_fx("SmokeHitSmall", position)
-			else: # Parry atack
+
+				can_jump = false
+				get_tree().create_timer(0.1).timeout.connect(reset_jump)
+			else: # Parry attack
 				GameManager.get_instance().set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength
 				grounded = false
@@ -200,6 +203,9 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 				speed_particles.emitting = true
 				
 				FxSystem.play_fx("SmokeHit", position)
+
+				can_jump = false
+				get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 
 			is_attacking = 0
@@ -308,15 +314,16 @@ func handle_jump() -> void:
 func process_jump() -> void:
 	var collision := get_raycasts_collision_node([body_down_cast1, body_down_cast2])
 
-	if collision != null:
+	if collision != null and is_attacking == 0:
 		var stats: Stats = collision.get_node_or_null("Stats")
 
-		if stats != null and stats.can_be_parried:
+		if stats != null and stats.can_be_parried: # Start parry
 			is_parrying = true
 			if velocity.y < parry_downward_str_mult * base_strength:
 				velocity.y = parry_downward_str_mult * base_strength
 			else:
 				velocity.y *= parry_downward_str_mult * 2
+
 			is_attacking = 2
 			return
 

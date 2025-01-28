@@ -26,9 +26,10 @@ max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
 reward_spawn_rate = 2.0
 max_rewards = 5
-ground_type = 2
+ground_type = 1
 has_trampoline = false
 has_helper_enemy = true
+has_fog = true
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
