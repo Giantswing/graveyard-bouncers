@@ -375,6 +375,7 @@ offset_top = -41.0
 offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 25
 
 [node name="Label" type="RichTextLabel" parent="Control/PauseScreen/VBoxContainer"]
 process_mode = 3
@@ -385,4 +386,28 @@ theme_override_font_sizes/normal_font_size = 91
 bbcode_enabled = true
 text = "[wave amp=50.0 freq=5.0 connected=1]GAME PAUSED[/wave]"
 fit_content = true
+horizontal_alignment = 1
+
+[node name="MenuOptions" type="VBoxContainer" parent="Control/PauseScreen/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Continue" type="Label" parent="Control/PauseScreen/VBoxContainer/MenuOptions"]
+layout_mode = 2
+theme = ExtResource("3_wm3ai")
+text = "CONTINUE"
+horizontal_alignment = 1
+
+[node name="Restart" type="Label" parent="Control/PauseScreen/VBoxContainer/MenuOptions"]
+modulate = Color(1, 1, 1, 0.266667)
+layout_mode = 2
+theme = ExtResource("3_wm3ai")
+text = "RESTART"
+horizontal_alignment = 1
+
+[node name="Exit" type="Label" parent="Control/PauseScreen/VBoxContainer/MenuOptions"]
+modulate = Color(1, 1, 1, 0.266667)
+layout_mode = 2
+theme = ExtResource("3_wm3ai")
+text = "EXIT"
 horizontal_alignment = 1

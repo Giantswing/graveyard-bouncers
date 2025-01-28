@@ -17,8 +17,12 @@ extends Control
 @onready var pause_screen: Control = %PauseScreen
 
 var hearts: Array[ui_heart] = []
+var selected_menu_option: int = 0
+var menu_options: Array[Node] = []
 
 func _ready() -> void:
+	menu_options = %MenuOptions.get_children()
+
 	death_screen.visible = false
 	pause_screen.visible = false
 
@@ -31,6 +35,42 @@ func _ready() -> void:
 	Events.round_counter_changed.connect(on_round_counter_changed)
 	Events.ability_gained.connect(on_ability_gained)
 	Events.game_paused.connect(on_game_paused)
+
+func update_menu_options() -> void:
+	for i in range(menu_options.size()):
+		if i == selected_menu_option:
+			menu_options[i].modulate = Color(1, 1, 1, 1)
+		else:
+			menu_options[i].modulate = Color(1, 1, 1, 0.3)
+
+
+func _process(_delta: float) -> void:
+	if GameManager.instance.game_paused == false:
+		return
+
+	if Input.is_action_just_pressed("Up"):
+		selected_menu_option -= 1
+		if selected_menu_option < 0:
+			selected_menu_option = menu_options.size() - 1
+		update_menu_options()
+
+	if Input.is_action_just_pressed("Down"):
+		selected_menu_option += 1
+		if selected_menu_option >= menu_options.size():
+			selected_menu_option = 0
+		update_menu_options()
+
+	if Input.is_action_just_pressed("Jump"):
+		process_menu_option(selected_menu_option)
+
+func process_menu_option(option: int) -> void:
+	match option:
+		0:
+			GameManager.get_instance().pause_game(false)
+		1:
+			GameManager.get_instance().restart_level()
+		2:
+			GameManager.get_instance().exit_game()
 
 func on_game_paused(paused: bool) -> void:
 	pause_screen.visible = paused

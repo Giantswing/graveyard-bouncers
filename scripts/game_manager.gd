@@ -157,6 +157,19 @@ func on_hp_changed(new_hp: int, _change: int) -> void:
 		Events.player_died.emit()
 
 
+func pause_game(is_paused: bool) -> void:
+	game_paused = is_paused 
+	get_tree().paused = is_paused
+	Events.game_paused.emit(is_paused)
+
+func restart_level() -> void:
+	get_tree().paused = false
+	Engine.time_scale = 1.0
+	get_tree().reload_current_scene()
+
+func exit_game() -> void:
+	get_tree().quit()
+
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Reset"):
@@ -166,14 +179,7 @@ func _process(delta: float) -> void:
 		get_tree().reload_current_scene()
 
 	if Input.is_action_just_pressed("Menu"):
-		if game_paused == false:
-			Engine.time_scale = 0.0
-			game_paused = true
-			Events.game_paused.emit(true)
-		else:
-			Engine.time_scale = 1.0
-			game_paused = false
-			Events.game_paused.emit(false)
+		pause_game(!game_paused)
 
 	if game_started:
 		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.1)
