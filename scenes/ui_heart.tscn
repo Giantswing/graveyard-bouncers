@@ -31,14 +31,16 @@ animations = [{
 }]
 
 [node name="UIHeart" type="MarginContainer"]
-custom_minimum_size = Vector2(102.395, 83.285)
+custom_minimum_size = Vector2(24, 24)
 offset_right = 101.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_6l0s0")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(38.5, 36.5)
-scale = Vector2(4.164, 4)
+position = Vector2(18, 14)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_aqsxy")
 animation = &"Filled"
 metadata/_aseprite_wizard_interface_config_ = {

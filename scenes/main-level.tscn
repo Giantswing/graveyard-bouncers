@@ -706,7 +706,6 @@ failed_attack_str_mult = 0.6
 parry_raycast_distance = 50.0
 
 [node name="MainCamera" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
 script = ExtResource("7_vrglu")
 on_hit_shake = 0.2
 max_y_increase = 0.0
