@@ -65,7 +65,7 @@ func on_max_hp_changed(new_max_hp: int) -> void:
 	hearts.clear()
 
 	for i in range(new_max_hp):
-		var heart = ui_heart_scene.instantiate() as ui_heart
+		var heart := ui_heart_scene.instantiate() as ui_heart
 		heart_container.add_child(heart)
 		heart.set_heart_state(true)
 		hearts.append(heart)

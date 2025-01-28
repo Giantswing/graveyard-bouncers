@@ -6,9 +6,11 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Sprite
 var direction: int = 0
 var timer: float = 0
+var game_manager: GameManager
 
 
-func _ready():
+func _ready() -> void:
+	game_manager = GameManager.instance
 	scale = Vector2(0, 0)
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "scale", Vector2(1.3, 1.3), 0.5)
@@ -25,13 +27,16 @@ func _ready():
 
 	velocity.x = speed * direction
 
-func _process(_delta):
-	timer += _delta * wobble_speed * Engine.time_scale
-	position.y += sin(timer) * wobble
+func _process(delta: float) -> void:
+	timer += delta * wobble_speed
 
 	if position.x > get_viewport_rect().size.x/2 + 40 or position.x < -get_viewport_rect().size.x/2 - 40:
 		queue_free()
 
 
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
+	if game_manager.game_paused:
+		return
+
+	position.y += sin(timer) * wobble
 	move_and_slide()

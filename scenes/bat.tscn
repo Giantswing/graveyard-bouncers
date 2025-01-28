@@ -53,6 +53,7 @@ animations = [{
 }]
 
 [node name="Bat" type="CharacterBody2D"]
+process_mode = 1
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_ss3tx")

@@ -32,6 +32,7 @@ has_helper_enemy = true
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_hwd4i")
 trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
@@ -44,3 +45,4 @@ chance_decay_rate = 0.5
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+process_mode = 1

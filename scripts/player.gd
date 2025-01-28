@@ -152,7 +152,7 @@ func _physics_process(_delta: float) -> void:
 
 
 	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
+		var collision := get_slide_collision(i)
 		handle_collision(collision)
 	
 
@@ -227,7 +227,7 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 
 func handle_ability() -> void:
-	var current_ability = GameManager.instance.player_ability
+	var current_ability := GameManager.instance.player_ability
 
 	if !current_ability or !ability_pressed:
 		return
@@ -240,7 +240,7 @@ func handle_ability() -> void:
 func process_dash() -> void:
 	is_attacking = 0
 
-	var direction = movement_input.normalized()
+	var direction := movement_input.normalized()
 	# velocity.x = 0
 	velocity.y = 0
 	# velocity.y = (direction * 500 * extra_speed_strength).y * 0.01
@@ -306,7 +306,7 @@ func handle_jump() -> void:
 				return
 
 func process_jump() -> void:
-	var collision = get_raycasts_collision_node([body_down_cast1, body_down_cast2])
+	var collision := get_raycasts_collision_node([body_down_cast1, body_down_cast2])
 
 	if collision != null:
 		var stats: Stats = collision.get_node_or_null("Stats")
@@ -331,7 +331,7 @@ func get_input() -> void:
 
 
 func get_raycasts_collision_node(raycasts: Array) -> Node2D:
-	for raycast in raycasts:
+	for raycast: RayCast2D in raycasts:
 		if raycast.is_colliding():
 			return raycast.get_collider()
 
@@ -351,4 +351,4 @@ func reset_can_get_hit() -> void:
 
 func deactivate_can_be_on_wall() -> void:
 	can_be_on_wall = false
-	get_tree().create_timer(0.1).timeout.connect(func(): can_be_on_wall = true)
+	get_tree().create_timer(0.1).timeout.connect(func() -> void: can_be_on_wall = true)

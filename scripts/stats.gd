@@ -24,7 +24,7 @@ enum DEATH_BEHAVIOUR_OPTIONS {
 
 @export var death_behaviour: DEATH_BEHAVIOUR_OPTIONS = DEATH_BEHAVIOUR_OPTIONS.DEFAULT
 
-var is_invulnerable = false
+var is_invulnerable: bool = false
 var parent: Node2D
 
 

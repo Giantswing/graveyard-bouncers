@@ -4,7 +4,7 @@ extends Node2D
 @export var spawn_timer_max: float = 2.0
 var spawn_timer: float = 0.0
 
-func _ready():
+func _ready() -> void:
 	spawn_timer = spawn_timer_max
 
 func _process(delta: float) -> void:

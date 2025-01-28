@@ -13,7 +13,7 @@ var active: bool = false
 
 var original_uses: int
 
-func init():
+func init() -> void:
 	uses = start_uses
 	original_uses = max_uses
 

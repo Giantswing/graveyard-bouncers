@@ -46,6 +46,7 @@ var trampoline: Node2D
 var grave: Node2D
 var can_restart: bool = false
 var ground_y_pos: float
+var game_paused: bool = false
 
 static var instance: GameManager
 
@@ -138,7 +139,7 @@ func update_current_round() -> void:
 func on_player_died() -> void:
 	seconds_timer.stop()
 	can_restart = false
-	get_tree().create_timer(0.5).timeout.connect(func(): can_restart = true)
+	get_tree().create_timer(0.5).timeout.connect(func() -> void: can_restart = true)
 
 
 func on_seconds_timer_timeout() -> void:
@@ -164,6 +165,16 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Jump") and can_restart:
 		get_tree().reload_current_scene()
 
+	if Input.is_action_just_pressed("Menu"):
+		if game_paused == false:
+			Engine.time_scale = 0.0
+			game_paused = true
+			Events.game_paused.emit(true)
+		else:
+			Engine.time_scale = 1.0
+			game_paused = false
+			Events.game_paused.emit(false)
+
 	if game_started:
 		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.1)
 		right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.1)
@@ -186,7 +197,7 @@ func _process(delta: float) -> void:
 
 
 
-func set_up_round():
+func set_up_round() -> void:
 	var ground_height: float = 180
 	var offset: float = 200
 
@@ -303,7 +314,7 @@ func end_round() -> void:
 	game_width = game_width_start
 	Utils.fast_tween(starting_ground, "position:y", ground_y_pos, 0.5)
 
-	get_tree().create_timer(0.5).timeout.connect(func():
+	get_tree().create_timer(0.5).timeout.connect(func() -> void:
 		activate(trampoline)
 		activate(grave)
 	)

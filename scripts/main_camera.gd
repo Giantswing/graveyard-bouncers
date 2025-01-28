@@ -15,7 +15,7 @@ var start_y_pos: float
 
 var current_shake_amount: float = 0
 
-func _ready():
+func _ready() -> void:
 	Events.hp_changed.connect(on_hp_change)
 	Events.player_parry.connect(on_player_parry)
 	target = get_parent().get_node_or_null("%Player")
@@ -23,13 +23,13 @@ func _ready():
 	# start_y_pos = global_position.y
 
 
-func on_hp_change(_hp: int, change: int):
+func on_hp_change(_hp: int, change: int) -> void:
 	if change >= 0:
 		return
 
 	current_shake_amount = on_hit_shake
 
-func on_player_parry():
+func on_player_parry() -> void:
 	current_shake_amount = on_parry_shake 
 
 	
@@ -41,11 +41,11 @@ func _process(delta: float) -> void:
 	point_target()
 
 
-func point_target():
+func point_target() -> void:
 	if !target:
 		return
 
-	var dist = target.global_position - global_position
+	var dist := target.global_position - global_position
 	var final_pos: float
 
 	if GameManager.get_instance().round_started:
@@ -59,7 +59,7 @@ func point_target():
 		position.y = start_y_pos
 	
 
-func shake():
+func shake() -> void:
 	var current_amount: float = pow(current_shake_amount, shake_power)
 	rotation = max_roll * current_amount * randf_range(-1, 1)
 	offset.x = max_offset.x * current_amount * randf_range(-1, 1)
