@@ -38,7 +38,8 @@ animations = [{
 size = Vector2(23.3333, 18.6667)
 
 [node name="Pumpkin" type="CharacterBody2D"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 9
 script = ExtResource("1_2inn6")
 speed = 80.0
 speed_variance = 30.0
@@ -82,4 +83,4 @@ shape = SubResource("RectangleShape2D_httt1")
 
 [node name="BodyForwardCast" type="RayCast2D" parent="."]
 target_position = Vector2(30, 0)
-collision_mask = 5
+collision_mask = 9
