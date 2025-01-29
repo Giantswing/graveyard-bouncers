@@ -48,6 +48,7 @@ var grave: Node2D
 var can_restart: bool = false
 var ground_y_pos: float
 var game_paused: bool = false
+var tutorial: Node2D
 
 static var instance: GameManager
 
@@ -57,6 +58,7 @@ static func get_instance() -> GameManager:
 func _ready() -> void:
 	instance = self
 
+	tutorial = $"/root/Level/Scenery/Tutorial"
 	player = $"/root/Level/Player"
 	normal_floor = $"/root/Level/Scenery/NormalFloor"
 	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
@@ -211,6 +213,11 @@ func _process(delta: float) -> void:
 
 
 func set_up_round() -> void:
+	if current_round < 3:
+		tutorial.visible = true
+	else:
+		tutorial.visible = false
+
 	var ground_height: float = 180
 	var offset: float = 200
 
@@ -303,6 +310,7 @@ func set_powerup_active(powerup_name: String, active: bool) -> void:
 
 
 func start_round() -> void:
+	tutorial.visible = false
 	game_width_start = right_wall.position.x - left_wall.position.x
 	game_width = game_width_start
 

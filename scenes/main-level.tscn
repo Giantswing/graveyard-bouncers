@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=55 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -26,6 +26,7 @@
 [ext_resource type="Shader" uid="uid://baxeibtcr3gqm" path="res://shaders/vignette.gdshader" id="14_vl0b8"]
 [ext_resource type="Resource" uid="uid://cggfuht13gbam" path="res://resources/powerups/dash-increase.tres" id="19_bpkkv"]
 [ext_resource type="Shader" uid="uid://kudihfw0f7up" path="res://shaders/fog.gdshader" id="23_4phqs"]
+[ext_resource type="Texture2D" uid="uid://dxnem6l05g3y8" path="res://sprites/tutorialx4.png" id="24_tjry1"]
 [ext_resource type="Texture2D" uid="uid://ds8timi0kmjdb" path="res://sprites/ui-heart.png" id="27_4phqs"]
 
 [sub_resource type="Gradient" id="Gradient_bpkkv"]
@@ -764,6 +765,15 @@ offset_left = -372.0
 offset_top = -500.0
 offset_right = 381.0
 offset_bottom = 253.0
+
+[node name="Tutorial" type="Node2D" parent="Scenery"]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Scenery/Tutorial"]
+texture_filter = 1
+position = Vector2(-212, -22)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("24_tjry1")
 
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
 unique_name_in_owner = true
