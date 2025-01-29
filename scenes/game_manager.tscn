@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=15 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
 [ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="8_k4jhu"]
 [ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="9_frtjd"]
+[ext_resource type="Resource" uid="uid://c7ykkjcjfwud5" path="res://resources/enemies/pumpkin.tres" id="12_lcbjr"]
 
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
@@ -20,7 +21,7 @@ time_limit = 25
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 60.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource("9_frtjd"), ExtResource("3_q8mjp")])
+enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource("9_frtjd"), ExtResource("3_q8mjp"), ExtResource("12_lcbjr")])
 enemy_spawn_rate = 1.0
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
@@ -29,7 +30,7 @@ max_rewards = 5
 ground_type = 1
 has_trampoline = false
 has_helper_enemy = true
-has_fog = true
+has_fog = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]

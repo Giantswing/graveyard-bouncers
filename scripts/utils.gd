@@ -40,6 +40,7 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 		var pos_x := randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
 		var pos_y := 147.0
 
+
 		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
 			pos_y = randf_range(90, 147)
 		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
@@ -70,6 +71,7 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 
 		new_prefab.position = spawn_pos
 		container.add_child(new_prefab)
+
 		return new_prefab
 
 	return null

@@ -10,7 +10,7 @@ uniform bool enable_pixelation = true;
 uniform int pixelation_amount = 150;
 uniform sampler2D fog_mask;  // Texture mask for fog control
 uniform vec2 fog_direction = vec2(1.0, 1.0); // Use -1 and 1 values to change direction. Increase the speed in that direction with values higher/lower than 1
-uniform bool scroll_noise_tex = false; 
+uniform bool scroll_noise_tex = false;
 uniform vec2 noise_scroll_direction = vec2(1.0, 0.0);  // Direction to scroll the noise texture
 
 float rand(vec2 coord){

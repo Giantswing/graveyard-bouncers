@@ -95,6 +95,8 @@ func _ready() -> void:
 	update_current_round()
 	set_up_round()
 
+	%UI.visible = true 
+
 
 func find_ability(ability_name: String) -> Ability:
 	for ability in all_abilities:

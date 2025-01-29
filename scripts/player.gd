@@ -130,6 +130,7 @@ func _process(delta: float) -> void:
 	else:
 		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.get_instance().round_data.gravity_multiplier
 
+
 	handle_jump()
 	handle_ability()
 
@@ -187,6 +188,8 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 
 				can_jump = false
 				get_tree().create_timer(0.1).timeout.connect(reset_jump)
+
+				velocity.y = clamp(velocity.y, -2000, 2000)
 			else: # Parry attack
 				GameManager.get_instance().set_powerup_active("double-jump", true)
 				velocity.y = -parry_bounce_str_mult * base_strength

@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3 uid="uid://cga8ah38nx1qb"]
+
+[ext_resource type="Script" uid="uid://bwuxvdyc0cd1n" path="res://scripts/pumpkin.gd" id="1_2inn6"]
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_kanjq"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_4siox"]
+[ext_resource type="Texture2D" uid="uid://cxsmncjh5gl0d" path="res://sprites/pumpkin.png" id="4_2inn6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kanjq"]
+atlas = ExtResource("4_2inn6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4siox"]
+atlas = ExtResource("4_2inn6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wx4lb"]
+atlas = ExtResource("4_2inn6")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fnlu4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kanjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4siox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wx4lb")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_httt1"]
+size = Vector2(23.3333, 18.6667)
+
+[node name="Pumpkin" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_2inn6")
+speed = 80.0
+speed_variance = 30.0
+jump_speed = 400.0
+
+[node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_kanjq")
+hp_max = 2
+damage = 1
+score_reward = 8
+sprite = NodePath("../Sprite")
+spawn_type = 2
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+material = ExtResource("3_4siox")
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_fnlu4")
+animation = &"Idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/pumpkin.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "411dc459664add95f597b3b9e463847f"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.8)
+scale = Vector2(1.2, 1.2)
+shape = SubResource("RectangleShape2D_httt1")
+
+[node name="BodyForwardCast" type="RayCast2D" parent="."]
+target_position = Vector2(30, 0)
+collision_mask = 5

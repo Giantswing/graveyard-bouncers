@@ -15,11 +15,18 @@ class_name Stats
 @export var damage_on_touch: bool = false
 @export var spawn_rate_reduction: float = 0
 @export var sprite: AnimatedSprite2D
+@export var spawn_type: SPAWN_TYPE_OPTIONS = SPAWN_TYPE_OPTIONS.DEFAULT
 var area: Area2D
 
 enum DEATH_BEHAVIOUR_OPTIONS {
 	DEFAULT,
 	START_ROUND
+}
+
+enum SPAWN_TYPE_OPTIONS {
+	DEFAULT,
+	AIR,
+	GROUND,
 }
 
 @export var death_behaviour: DEATH_BEHAVIOUR_OPTIONS = DEATH_BEHAVIOUR_OPTIONS.DEFAULT
@@ -37,9 +44,7 @@ func _ready() -> void:
 	parent = get_parent()
 
 	if !sprite:
-		sprite = get_node_or_null("Sprite")
-		if !sprite:
-			sprite = get_node_or_null("../Sprite")
+		sprite = owner.get_node_or_null("Sprite")
 
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
@@ -47,6 +52,20 @@ func _ready() -> void:
 	if damage_on_touch:
 		area = $Area2D
 		area.body_entered.connect(on_area_entered)
+
+	if spawn_type == SPAWN_TYPE_OPTIONS.GROUND:
+		owner.process_mode = Node.PROCESS_MODE_DISABLED
+
+		if sprite:
+			sprite.visible = false
+
+		FxSystem.play_fx("GroundExplosion", global_position - Vector2(0, 22))
+		get_tree().create_timer(0.7).timeout.connect(func() -> void:
+			owner.process_mode = Node.PROCESS_MODE_PAUSABLE
+
+			if sprite:
+				sprite.visible = true
+		)
 
 
 func on_area_entered(_body: Node) -> void:

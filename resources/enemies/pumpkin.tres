@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PrefabChance" load_steps=3 format=3 uid="uid://c7ykkjcjfwud5"]
+
+[ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="1_37lgp"]
+[ext_resource type="PackedScene" uid="uid://cga8ah38nx1qb" path="res://scenes/pumpkin.tscn" id="2_p5dcv"]
+
+[resource]
+script = ExtResource("1_37lgp")
+name = "Pumpkin"
+prefab = ExtResource("2_p5dcv")
+chance = 1.0
+free_space = 50.0
+spawn_type = 0
+metadata/_custom_type_script = ExtResource("1_37lgp")

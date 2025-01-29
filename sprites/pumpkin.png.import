@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds8timi0kmjdb"
-path="res://.godot/imported/ui-heart.png-d617267e4732731458826b7af0840161.ctex"
+uid="uid://cxsmncjh5gl0d"
+path="res://.godot/imported/pumpkin.png-191025bb779dbba008ba489096d526b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ui-heart.png"
-dest_files=["res://.godot/imported/ui-heart.png-d617267e4732731458826b7af0840161.ctex"]
+source_file="res://sprites/pumpkin.png"
+dest_files=["res://.godot/imported/pumpkin.png-191025bb779dbba008ba489096d526b6.ctex"]
 
 [params]
 

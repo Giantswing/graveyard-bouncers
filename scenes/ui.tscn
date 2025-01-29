@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c6av0eb8ypoap" path="res://sprites/coin.png" id="4_8dubc"]
 [ext_resource type="Material" uid="uid://b0xyk8m5xjeue" path="res://shaders/wavy.tres" id="4_gdt2y"]
 [ext_resource type="Script" uid="uid://vhpdoxaffmvo" path="res://scripts/version.gd" id="4_wm3ai"]
-[ext_resource type="Texture2D" uid="uid://ck8r7vf0xlv3p" path="res://scenes/ability-ui-cointainer.png" id="5_p7vwb"]
+[ext_resource type="Texture2D" uid="uid://ck8r7vf0xlv3p" path="res://sprites/ability-ui-cointainer.png" id="5_p7vwb"]
 [ext_resource type="SpriteFrames" uid="uid://bniyryg3serqv" path="res://resources/abilities/dash-frames.tres" id="6_ktti3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dubc"]

@@ -53,6 +53,7 @@ speed = 25.0
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_1l2iw")
 hp_max = 600
+spawn_type = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

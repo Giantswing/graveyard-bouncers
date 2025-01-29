@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0ic808y6826i"
-path="res://.godot/imported/tree-base.png-0e64f7234d4bf01d591b9a0473e21088.ctex"
+uid="uid://ck8r7vf0xlv3p"
+path="res://.godot/imported/ability-ui-cointainer.png-bea4d7c7afb89fbe7d697bef380b3fe1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/tree-base.png"
-dest_files=["res://.godot/imported/tree-base.png-0e64f7234d4bf01d591b9a0473e21088.ctex"]
+source_file="res://sprites/ability-ui-cointainer.png"
+dest_files=["res://.godot/imported/ability-ui-cointainer.png-bea4d7c7afb89fbe7d697bef380b3fe1.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck8r7vf0xlv3p"
-path="res://.godot/imported/ability-ui-cointainer.png-1a8733b91c9344404c175e3593ca34aa.ctex"
+uid="uid://b3jup4pypbisl"
+path="res://.godot/imported/ground-explosion.png-4d23f5b13ef407f2e7686c3262512274.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ability-ui-cointainer.png"
-dest_files=["res://.godot/imported/ability-ui-cointainer.png-1a8733b91c9344404c175e3593ca34aa.ctex"]
+source_file="res://sprites/ground-explosion.png"
+dest_files=["res://.godot/imported/ground-explosion.png-4d23f5b13ef407f2e7686c3262512274.ctex"]
 
 [params]
 
