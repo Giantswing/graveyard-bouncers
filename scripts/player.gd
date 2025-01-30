@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name PlayerCharacter
+
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_down_cast1: RayCast2D = $Raycasts/BodyDownCast1
 @onready var body_down_cast2: RayCast2D = $Raycasts/BodyDownCast2
@@ -65,7 +67,7 @@ func _ready() -> void:
 	Events.round_ended.connect(on_round_ended)
 
 func on_round_ended() -> void:
-	velocity.y = -base_strength * 2
+	velocity.y = -base_strength * 2.3
 	is_attacking = 0
 
 func on_picked_up_powerup(powerup: PowerUp) -> void:

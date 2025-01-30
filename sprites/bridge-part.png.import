@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0ic808y6826i"
-path="res://.godot/imported/tree-base.png-ca563e6ab4eca69b2473276f8f6537bc.ctex"
+uid="uid://c77yixvqkmkdw"
+path="res://.godot/imported/bridge-part.png-605a332e017cf347af5af9d44226aeb0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/tree-base.png"
-dest_files=["res://.godot/imported/tree-base.png-ca563e6ab4eca69b2473276f8f6537bc.ctex"]
+source_file="res://sprites/bridge-part.png"
+dest_files=["res://.godot/imported/bridge-part.png-605a332e017cf347af5af9d44226aeb0.ctex"]
 
 [params]
 

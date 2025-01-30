@@ -16,6 +16,7 @@ class_name GameManager
 
 @export var trampoline_prefab: PackedScene
 @export var helper_enemy_prefab: PackedScene
+@export var spikes_prefab: PackedScene
 
 var round_time: int = 0
 var round_data: GameRound = null
@@ -33,7 +34,7 @@ var reward_container: Node2D
 var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
-var game_width: float = 200
+var game_width: float = 300
 var player: Node2D
 var left_wall: Node2D
 var toxic_floor: Node2D
@@ -42,9 +43,11 @@ var normal_floor: Node2D
 var right_wall: Node2D
 var round_started: bool = false
 var game_started: bool = false
-var starting_ground: StaticBody2D
+var starting_ground: Bridge 
 var trampoline: Node2D
+var trampoline_start_pos: Vector2
 var grave: Node2D
+var grave_start_pos: Vector2
 var can_restart: bool = false
 var ground_y_pos: float
 var game_paused: bool = false
@@ -73,7 +76,13 @@ func _ready() -> void:
 	grave = $"/root/Level/Scenery/Grave"
 	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
 
+	left_wall.position.x = -game_width / 2
+	right_wall.position.x = game_width / 2
+	trampoline_start_pos = trampoline.position
+	grave_start_pos = grave.position
+
 	seconds_timer.timeout.connect(on_seconds_timer_timeout)
+	game_width_start = right_wall.position.x - left_wall.position.x
 
 	Events.round_started.connect(start_round)
 	Events.score_changed.connect(func(new_score: int) -> void: score = new_score)
@@ -191,8 +200,12 @@ func _process(delta: float) -> void:
 		pause_game(!game_paused)
 
 	if game_started and !game_paused:
-		left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.02)
-		right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.02)
+		if round_started:
+			left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.02)
+			right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.02)
+		else:
+			left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.5)
+			right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.5)
 
 
 	if round_started and !game_paused:
@@ -200,7 +213,10 @@ func _process(delta: float) -> void:
 		reward_spawn_countdown -= delta
 
 		game_width += round_data.game_width_speed_increase * delta
-		game_width = min(game_width, 620)
+
+		game_width = min(game_width, round_data.max_game_width)
+		if game_width > 620:
+			game_width = 620
 
 		if reward_spawn_countdown <= 0:
 			reward_spawn_countdown = round_data.reward_spawn_rate 
@@ -230,6 +246,15 @@ func set_up_round() -> void:
 		var new_obj: Node2D = Utils.spawn_prefab(helper_enemy_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
 		new_obj.scale = Vector2(0, 0)
 		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
+
+	if round_data.spike_amount > 0:
+		for i in range(round_data.spike_amount):
+			var new_obj: Node2D = Utils.spawn_prefab(spikes_prefab, other_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 42, true)
+			if new_obj:
+				new_obj.position.y = new_obj.position.y + 32
+				Utils.fast_tween(new_obj, "position:y", new_obj.position.y - 32, 0.5)
+		
+
 
 	if round_data.has_fog:
 		Utils.fast_tween(fog, "material:shader_parameter/alpha_multiplier", 3, 5)
@@ -311,11 +336,13 @@ func set_powerup_active(powerup_name: String, active: bool) -> void:
 
 func start_round() -> void:
 	tutorial.visible = false
-	game_width_start = right_wall.position.x - left_wall.position.x
-	game_width = game_width_start
+	# game_width_start = right_wall.position.x - left_wall.position.x
+	game_width = round_data.start_game_width
+	starting_ground.enable_bridge()
+
+	starting_ground.disable_bridge()
 
 	ground_y_pos = starting_ground.position.y
-	starting_ground.set_collision_layer_value(1, false)
 	Utils.fast_tween(starting_ground, "position:y", 220, 0.5)
 
 	current_round += 1
@@ -332,6 +359,7 @@ func start_round() -> void:
 
 func end_round() -> void:
 	Events.round_time_changed.emit(0)
+	starting_ground.disable_bridge()
 
 	round_started = false
 	round_time = 0
@@ -339,13 +367,18 @@ func end_round() -> void:
 	reward_spawn_countdown = 0
 
 	seconds_timer.stop()
-	starting_ground.set_collision_layer_value(1, true)
 	game_width = game_width_start
-	Utils.fast_tween(starting_ground, "position:y", ground_y_pos, 0.5)
+	Utils.fast_tween(starting_ground, "position:y", ground_y_pos, 1)
 
-	get_tree().create_timer(0.5).timeout.connect(func() -> void:
-		activate(trampoline)
+
+	starting_ground.enable_bridge()
+
+
+	get_tree().create_timer(1).timeout.connect(func() -> void:
 		activate(grave)
+		activate(trampoline)
+		grave.position = grave_start_pos
+		trampoline.position = trampoline_start_pos
 	)
 
 	for enemy in enemy_container.get_children():
@@ -354,6 +387,9 @@ func end_round() -> void:
 	for reward in reward_container.get_children():
 		reward.queue_free()
 
+	for other in other_container.get_children():
+		other.queue_free()
+
 	current_difficulty += 1
 
 	update_current_round()
@@ -361,18 +397,26 @@ func end_round() -> void:
 
 
 func deactivate(target: Node2D) -> void:
+	target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
+	target.set_collision_layer_value(4, false)
 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(target, "scale", Vector2(0, 0), 0.5)
 	tween.tween_callback(
 		func() -> void:
-			target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
 			target.visible = false
 	)
 
-func activate(target: Node2D) -> void:
-	target.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
+func activate(target: RigidBody2D) -> void:
+	print("activating ", target.name)
+	target.set_collision_layer_value(4, true)
+	target.process_mode = Node.ProcessMode.PROCESS_MODE_PAUSABLE
 	target.visible = true
 	target.scale = Vector2(0, 0)
+
+	print(target.position)
+	target.linear_velocity = Vector2(0, -200)
+	print(target.position)
+
 
 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(target, "scale", Vector2(1, 1), 0.5)

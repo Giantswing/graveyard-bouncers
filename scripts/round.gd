@@ -14,6 +14,8 @@ enum GROUND_TYPES {
 
 @export var gravity_multiplier: float = 0.5
 @export var game_width_speed_increase: float = 4 
+@export var start_game_width: float = 150
+@export var max_game_width: float = 250
 
 @export var enemy_list: Array[PrefabChance]
 @export var enemy_spawn_rate: float = 2
@@ -28,6 +30,7 @@ enum GROUND_TYPES {
 @export var has_trampoline: bool = false
 @export var has_helper_enemy: bool = false
 @export var has_fog: bool = false
+@export_range(0, 10, 0.99) var spike_amount: int = 0
 
 var original_chance: float
 var id: int = 0

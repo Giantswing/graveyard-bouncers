@@ -25,20 +25,23 @@ func spawn_prefab_from_list(list: Array[PrefabChance], container: Node2D, max_am
 
 
 
-func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float) -> Node2D:
+func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float, use_max_space: bool = false) -> Node2D:
 	var new_prefab: Node2D = prefab.instantiate()
 	var spawn_pos: Vector2 = Vector2.ZERO
 
 	if container == null:
 		container = $"/root/Level/Scenery/OtherContainer" 
 
-	var horizontal_wall_padding := 10
+	var horizontal_wall_padding := 20
 	var max_tries := 20
 	var game_width := GameManager.instance.game_width
 
+	if use_max_space:
+		game_width = GameManager.instance.round_data.max_game_width
+
 	for i in range(max_tries):
 		var pos_x := randf_range(-game_width / 2 + horizontal_wall_padding, game_width / 2 - horizontal_wall_padding)
-		var pos_y := 147.0
+		var pos_y := 145.0
 
 
 		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
@@ -75,3 +78,10 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 		return new_prefab
 
 	return null
+
+func spawn_prefab_in_position(prefab: PackedScene, container: Node2D, pos: Vector2) -> Node2D:
+	var new_prefab: Node2D = prefab.instantiate()
+	new_prefab.position = pos
+	container.add_child(new_prefab)
+
+	return new_prefab

@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=16 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
 [ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
+[ext_resource type="PackedScene" uid="uid://crvo25nosde06" path="res://scenes/spikes.tscn" id="4_30v7y"]
 [ext_resource type="Script" uid="uid://b2aahsk5r75xx" path="res://scripts/ability.gd" id="4_aonbx"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="4_jdad8"]
 [ext_resource type="Resource" uid="uid://ddj51yulhtpj7" path="res://resources/abilities/dash.tres" id="5_lcbjr"]
@@ -17,20 +18,23 @@
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
-time_limit = 25
+time_limit = 4
 chance = 1.0
 gravity_multiplier = 0.5
-game_width_speed_increase = 60.0
+game_width_speed_increase = 100.0
+start_game_width = 150.0
+max_game_width = 600.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8"), ExtResource("9_frtjd"), ExtResource("3_q8mjp"), ExtResource("12_lcbjr")])
-enemy_spawn_rate = 1.0
+enemy_spawn_rate = 10000.0
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
 reward_spawn_rate = 2.0
 max_rewards = 5
-ground_type = 1
+ground_type = 0
 has_trampoline = false
 has_helper_enemy = true
 has_fog = false
+spike_amount = 4
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [node name="GameManager" type="Node2D"]
@@ -38,6 +42,7 @@ process_mode = 3
 script = ExtResource("1_hwd4i")
 trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
+spikes_prefab = ExtResource("4_30v7y")
 all_abilities = Array[ExtResource("4_aonbx")]([ExtResource("5_lcbjr")])
 
 [node name="RoundManager" type="Node2D" parent="."]

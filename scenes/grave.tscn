@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://clbg6qul035bg"]
+[gd_scene load_steps=7 format=3 uid="uid://clbg6qul035bg"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_mlivn"]
 [ext_resource type="Texture2D" uid="uid://b6dbt3id4osjb" path="res://sprites/grave.png" id="1_qpo7b"]
@@ -18,11 +18,17 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyih8"]
-size = Vector2(22, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlivn"]
+size = Vector2(20, 3)
 
-[node name="Grave" type="StaticBody2D"]
-collision_layer = 4
+[sub_resource type="CircleShape2D" id="CircleShape2D_inmiy"]
+radius = 10.0499
+
+[node name="Grave" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 9
+lock_rotation = true
+angular_damp = 5.0
 
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_mlivn")
@@ -47,7 +53,14 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "883f994c856eab95b345bf79b684aaad"
 
-[node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
-shape = SubResource("RectangleShape2D_yyih8")
+[node name="Collision2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_mlivn")
+one_way_collision = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+rotation = 3.14159
+scale = Vector2(1, 0.119999)
+shape = SubResource("CircleShape2D_inmiy")
 one_way_collision = true

@@ -78,6 +78,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "c00164a8f01ff194fe778f6ef0a03de0"
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_hbk6c")
+one_way_collision = true
 
 [node name="BodyForwardCast" type="RayCast2D" parent="."]
 target_position = Vector2(25, 0)

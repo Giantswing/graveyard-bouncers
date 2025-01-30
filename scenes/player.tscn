@@ -313,15 +313,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_02re4"]
-size = Vector2(26, 21)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuyoq"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 13
+collision_mask = 29
+floor_stop_on_slope = false
 script = ExtResource("1_g2els")
 base_strength = 400.0
 attack_recoil_str_mult = 1.5
+jump_str_mult = 1.25
 normal_attack_bounce_str_mult = 1.4
 parry_bounce_str_mult = 1.8
 getting_hit_bounce_str_mult = 2.0
@@ -356,10 +357,10 @@ process_material = SubResource("ParticleProcessMaterial_dqkch")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_tuyoq")
-position = Vector2(0, -9)
+position = Vector2(0, -4)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_jc3p3")
-animation = &"dash"
+animation = &"idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "layer_section": true,
@@ -380,8 +381,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "cbdcad5f8529b464cfb81b5d870834b8"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_02re4")
+shape = SubResource("CapsuleShape2D_tuyoq")
 
 [node name="Raycasts" type="Node2D" parent="."]
 
