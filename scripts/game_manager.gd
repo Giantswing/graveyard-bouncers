@@ -407,15 +407,11 @@ func deactivate(target: Node2D) -> void:
 	)
 
 func activate(target: RigidBody2D) -> void:
-	print("activating ", target.name)
 	target.set_collision_layer_value(4, true)
 	target.process_mode = Node.ProcessMode.PROCESS_MODE_PAUSABLE
 	target.visible = true
 	target.scale = Vector2(0, 0)
-
-	print(target.position)
 	target.linear_velocity = Vector2(0, -200)
-	print(target.position)
 
 
 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)

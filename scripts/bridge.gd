@@ -49,7 +49,7 @@ func _process(delta: float) -> void:
 	old_distance = distance
 	old_bridge_count = bridge_count
 
-	current_sag += (sag_to_reach - current_sag) * 0.1 * delta * 60.0
+	current_sag += (sag_to_reach - current_sag) * 0.04 * delta * 60.0
 
 	start_point.position.x = -game_manager.game_width / 2 - 10.0
 	end_point.position.x = game_manager.game_width / 2 + 40.0
@@ -99,7 +99,7 @@ func is_player_on_bridge() -> bool:
 
 func get_dynamic_sag() -> void:
 	var base_sag: float = -20.0  
-	var extra_sag: float = -10.0
+	var extra_sag: float = -20.0
 	var sag_radius: float = distance * 0.3
 
 	if player and is_player_on_bridge():
