@@ -1,21 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://clbg6qul035bg"]
+[gd_scene load_steps=8 format=3 uid="uid://clbg6qul035bg"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_mlivn"]
 [ext_resource type="Texture2D" uid="uid://b6dbt3id4osjb" path="res://sprites/grave.png" id="1_qpo7b"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tl6x4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlivn"]
 atlas = ExtResource("1_qpo7b")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_dfkck"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_inmiy"]
+atlas = ExtResource("1_qpo7b")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhpym"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tl6x4")
+"texture": SubResource("AtlasTexture_mlivn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inmiy")
 }],
 "loop": true,
-"name": &"default",
-"speed": 10.0
+"name": &"Tag",
+"speed": 3.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlivn"]
@@ -36,7 +43,10 @@ death_behaviour = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_dfkck")
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_lhpym")
+animation = &"Tag"
+autoplay = "Tag"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}
@@ -51,7 +61,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/sprites/grave.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "883f994c856eab95b345bf79b684aaad"
+metadata/_aseprite_wizard_source_file_hash_ = "30469c8b18a1ec30a99c5866d312626c"
 
 [node name="Collision2" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
@@ -59,7 +69,7 @@ shape = SubResource("RectangleShape2D_mlivn")
 one_way_collision = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9)
+position = Vector2(0, 8)
 rotation = 3.14159
 scale = Vector2(1, 0.119999)
 shape = SubResource("CircleShape2D_inmiy")

@@ -535,5 +535,5 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 80)
+target_position = Vector2(0, 150)
 collision_mask = 2

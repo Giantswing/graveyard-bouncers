@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://blsjnmx74rvep" path="res://sprites/dash-frames-low.png" id="2_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://cd6xoetgdvp41" path="res://sprites/dash-frames-low-left.png" id="3_fjrip"]
 [ext_resource type="Shader" uid="uid://cmjti5oralsc0" path="res://shaders/outline.gdshader" id="5_tuyoq"]
-[ext_resource type="Texture2D" uid="uid://bq43wde6j07nb" path="res://sprites/new-player-low.png" id="6_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://d0ri3c7fn78uu" path="res://sprites/new-player-low-v2.png" id="6_tuyoq"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qlg0r"]
 particles_animation = true
@@ -21,9 +21,13 @@ gradient = SubResource("Gradient_g2els")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g2els"]
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(0, 0, 0)
+emission_shape_scale = Vector3(8, 12, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+inherit_velocity_ratio = 0.132
 gravity = Vector3(0, 2, 0)
 color_ramp = SubResource("GradientTexture1D_qhqgy")
+turbulence_enabled = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qhqgy"]
 particles_animation = true
@@ -32,7 +36,8 @@ particles_anim_v_frames = 1
 particles_anim_loop = true
 
 [sub_resource type="Gradient" id="Gradient_dqkch"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.697128)
+colors = PackedColorArray(1, 1, 1, 0.470588, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qlg0r"]
 gradient = SubResource("Gradient_dqkch")
@@ -190,7 +195,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 7.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -340,11 +345,10 @@ script = ExtResource("2_g2els")
 material = SubResource("CanvasItemMaterial_qlg0r")
 emitting = false
 amount = 32
-lifetime = 0.5
+lifetime = 0.6
 process_material = SubResource("ParticleProcessMaterial_g2els")
 
 [node name="DashParticles" type="GPUParticles2D" parent="."]
-modulate = Color(0, 1, 1, 0.294118)
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_qhqgy")
 amount = 100
@@ -373,9 +377,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": true,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/new-player-low.aseprite"
+"source": "/home/alex/Pictures/sprites/new-player-low-v2.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "94c76aa468dfbbc162767951b3c5e42e"
+metadata/_aseprite_wizard_source_file_hash_ = "971b94b9bac4fcecb272b8bb3126b8cd"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

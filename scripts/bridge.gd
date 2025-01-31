@@ -51,8 +51,8 @@ func _process(delta: float) -> void:
 
 	current_sag += (sag_to_reach - current_sag) * 0.04 * delta * 60.0
 
-	start_point.position.x = -game_manager.game_width / 2 - 10.0
-	end_point.position.x = game_manager.game_width / 2 + 40.0
+	start_point.position.x = -game_manager.current_game_width / 2 - 10.0
+	end_point.position.x = game_manager.current_game_width / 2 + 20.0
 
 	distance = end_point.position.x - start_point.position.x
 	bridge_count = ceil(distance / bridge_length)

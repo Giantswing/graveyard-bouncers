@@ -34,6 +34,7 @@ var reward_container: Node2D
 var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
+var current_game_width: float = 0
 var game_width: float = 300
 var player: Node2D
 var left_wall: Node2D
@@ -105,6 +106,8 @@ func _ready() -> void:
 
 	update_current_round()
 	set_up_round()
+
+	current_game_width = game_width
 
 	%UI.visible = true 
 
@@ -199,14 +202,12 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Menu"):
 		pause_game(!game_paused)
 
-	if game_started and !game_paused:
-		if round_started:
-			left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.02)
-			right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.02)
-		else:
-			left_wall.position.x = lerp(left_wall.position.x, -game_width / 2, 0.5)
-			right_wall.position.x = lerp(right_wall.position.x, game_width / 2, 0.5)
 
+	current_game_width = lerp(current_game_width, game_width, 0.01)
+
+	if game_started and !game_paused:
+		left_wall.position.x = -current_game_width / 2
+		right_wall.position.x = current_game_width / 2
 
 	if round_started and !game_paused:
 		enemy_spawn_countdown -= delta

@@ -57,6 +57,8 @@ var grounded: bool = false
 var on_wall: bool = false
 var can_be_on_wall: bool = true 
 
+var slide_fx_timer: float = 0
+
 
 func _ready() -> void:
 	speed_particles.emitting = false
@@ -127,6 +129,19 @@ func _process(delta: float) -> void:
 		if on_wall:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
+			slide_fx_timer += delta
+			if slide_fx_timer > 0.3 and velocity.y > 0:
+				var direction: int = 0
+				if movement_input.x > 0:
+					direction = 1
+					FxSystem.play_fx("SmokePuff", position + Vector2(direction * 7, -15), true) 
+				elif movement_input.x < 0:
+					direction = -1
+					FxSystem.play_fx("SmokePuffFlip", position + Vector2(direction * 7, -15), true) 
+
+
+				slide_fx_timer = 0
+
 
 
 		else:

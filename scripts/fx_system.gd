@@ -8,7 +8,7 @@ func _ready() -> void:
 		particles[child.name].emitting = false
 		particles[child.name].one_shot = true
 
-func play_fx(fx_name: String, spawn_position: Vector2) -> void:
+func play_fx(fx_name: String, spawn_position: Vector2, _flip: bool = false) -> void:
 	if particles.has(fx_name):
 		particles[fx_name].emitting = true
 		particles[fx_name].global_position = spawn_position

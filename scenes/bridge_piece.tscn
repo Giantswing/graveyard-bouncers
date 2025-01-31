@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://ctdg2ye1wh2ok" path="res://bridge_piece.gd" id="1_lqhcs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfddl"]
-size = Vector2(32, 17)
+size = Vector2(38, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lqhcs"]
 size = Vector2(38, 13)

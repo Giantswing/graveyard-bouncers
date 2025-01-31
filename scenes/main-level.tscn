@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=73 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b8iq2rdtnrvmj" path="res://sprites/wall-basic.png" id="3_bdrgs"]
 [ext_resource type="PackedScene" uid="uid://clbg6qul035bg" path="res://scenes/grave.tscn" id="4_yyih8"]
 [ext_resource type="PackedScene" uid="uid://c2s4o300l8sf4" path="res://scenes/toxic_ground.tscn" id="5_6rdlt"]
+[ext_resource type="Texture2D" uid="uid://dk1v0f6tauccv" path="res://sprites/bg-mountains.png" id="5_8k87t"]
 [ext_resource type="Script" uid="uid://bt6xn4f1iqusc" path="res://scripts/bridge.gd" id="6_3trw7"]
 [ext_resource type="PackedScene" uid="uid://dtyg2va2kyx66" path="res://scenes/lava_ground.tscn" id="6_bdk1c"]
 [ext_resource type="PackedScene" uid="uid://bkqyk14qxbjsd" path="res://scenes/bridge_piece.tscn" id="7_8k87t"]
@@ -30,43 +31,51 @@
 [ext_resource type="Resource" uid="uid://cggfuht13gbam" path="res://resources/powerups/dash-increase.tres" id="19_bpkkv"]
 [ext_resource type="Shader" uid="uid://kudihfw0f7up" path="res://shaders/fog.gdshader" id="23_4phqs"]
 [ext_resource type="Texture2D" uid="uid://dxnem6l05g3y8" path="res://sprites/tutorialx4.png" id="24_tjry1"]
-[ext_resource type="Texture2D" uid="uid://ds8timi0kmjdb" path="res://sprites/ui-heart.png" id="27_4phqs"]
+[ext_resource type="Texture2D" uid="uid://dg2rlx11t2iss" path="res://sprites/puff-particle-flip.png" id="32_8k87t"]
 
-[sub_resource type="Gradient" id="Gradient_bpkkv"]
-colors = PackedColorArray(0, 0, 0, 1, 0.0647376, 0.152202, 0.223641, 1)
+[sub_resource type="Gradient" id="Gradient_8k87t"]
+colors = PackedColorArray(0, 0, 0, 1, 0.1476, 0.29192, 0.41, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_64nxx"]
-gradient = SubResource("Gradient_bpkkv")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y4si7"]
+gradient = SubResource("Gradient_8k87t")
 fill_to = Vector2(0.752137, 0.0299145)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7wgpl"]
 shader = ExtResource("14_dr822")
-shader_parameter/rain_amount = 200.0
+shader_parameter/rain_amount = 50.0
 shader_parameter/near_rain_length = 0.04
 shader_parameter/far_rain_length = 0.01
-shader_parameter/near_rain_width = 0.15
-shader_parameter/far_rain_width = 0.02
+shader_parameter/near_rain_width = 0.08
+shader_parameter/far_rain_width = 0.04
 shader_parameter/near_rain_transparency = 1.0
-shader_parameter/far_rain_transparency = 1.0
-shader_parameter/rain_color = Color(0.86, 0.86, 0.86, 0.203922)
-shader_parameter/base_rain_speed = 0.1
-shader_parameter/additional_rain_speed = 0.5
-shader_parameter/slant = 0.176
+shader_parameter/far_rain_transparency = 0.111
+shader_parameter/rain_color = Color(0.86, 0.86, 0.86, 0.0666667)
+shader_parameter/base_rain_speed = 0.6
+shader_parameter/additional_rain_speed = 1.0
+shader_parameter/slant = 0.371
 
 [sub_resource type="Theme" id="Theme_yvcr4"]
+
+[sub_resource type="Gradient" id="Gradient_y5y5p"]
+offsets = PackedFloat32Array(0, 0.489461)
+colors = PackedColorArray(0, 0, 0, 0.454902, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_64nxx"]
+gradient = SubResource("Gradient_y5y5p")
+fill_to = Vector2(0.752137, 0.0299145)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpkkv"]
 size = Vector2(956, 20)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yl8gf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8012"]
 atlas = ExtResource("7_64nxx")
 region = Rect2(0, 0, 64, 128)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_4phqs"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_2sni1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yl8gf")
+"texture": SubResource("AtlasTexture_r8012")
 }],
 "loop": true,
 "name": &"default",
@@ -85,6 +94,21 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl8gf"]
+atlas = ExtResource("7_64nxx")
+region = Rect2(0, 0, 64, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4phqs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl8gf")
+}],
+"loop": true,
+"name": &"default",
 "speed": 10.0
 }]
 
@@ -154,22 +178,52 @@ shader_parameter/fog_direction = Vector2(-1, 1)
 shader_parameter/scroll_noise_tex = true
 shader_parameter/noise_scroll_direction = Vector2(-0.75, 0)
 
+[sub_resource type="Gradient" id="Gradient_3trw7"]
+offsets = PackedFloat32Array(0.00261097, 0.498695, 1)
+colors = PackedColorArray(1, 1, 1, 0.717647, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8k87t"]
+gradient = SubResource("Gradient_3trw7")
+
+[sub_resource type="Curve" id="Curve_3trw7"]
+_data = [Vector2(0.0660147, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8k87t"]
+curve = SubResource("Curve_3trw7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3trw7"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(640, 150, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0.355, 0.25, 0)
+spread = 0.1
+initial_velocity_min = 952.66
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 98, 0)
+scale_max = 1.5
+color = Color(0.9, 0.8559, 0.522, 0.592157)
+color_ramp = SubResource("GradientTexture1D_8k87t")
+emission_curve = SubResource("CurveTexture_8k87t")
+turbulence_enabled = true
+collision_use_scale = true
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dr822"]
 shader = ExtResource("14_vl0b8")
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/scan_line_amount = 0.0
-shader_parameter/warp_amount = 0.087
-shader_parameter/noise_amount = 0.03
-shader_parameter/interference_amount = 0.0
-shader_parameter/grille_amount = 0.1
-shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.156
-shader_parameter/vignette_intensity = 1.0
-shader_parameter/aberation_amount = 0.0
-shader_parameter/roll_line_amount = 0.0
-shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -1.0
-shader_parameter/pixel_strength = -4.0
+shader_parameter/angle = 0.2
+shader_parameter/position = 0.15
+shader_parameter/spread = 0.5
+shader_parameter/cutoff = 0.1
+shader_parameter/falloff = 0.2
+shader_parameter/edge_fade = 0.514
+shader_parameter/speed = 5.115
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.456
+shader_parameter/color = Color(0.62, 0.930333, 1, 0.109804)
+shader_parameter/hdr = true
+shader_parameter/seed = 6.375
 
 [sub_resource type="Gradient" id="Gradient_vl0b8"]
 
@@ -178,30 +232,60 @@ gradient = SubResource("Gradient_vl0b8")
 width = 1
 height = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tjry1"]
-atlas = ExtResource("27_4phqs")
-region = Rect2(24, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4si7"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(0, 0, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wehkj"]
-atlas = ExtResource("27_4phqs")
-region = Rect2(0, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5y5p"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(12, 0, 12, 12)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_yhn8s"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1g5w"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_628db"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(0, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0uf8"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(12, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sni1"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(24, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46jna"]
+atlas = ExtResource("32_8k87t")
+region = Rect2(0, 24, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ja4wt"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tjry1")
-}],
-"loop": true,
-"name": &"Empty",
-"speed": 10.0
+"texture": SubResource("AtlasTexture_y4si7")
 }, {
-"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wehkj")
+"texture": SubResource("AtlasTexture_y5y5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1g5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_628db")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0uf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sni1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46jna")
 }],
 "loop": true,
-"name": &"Filled",
+"name": &"default",
 "speed": 10.0
 }]
 
@@ -216,7 +300,9 @@ visible = false
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="TextureRect" type="TextureRect" parent="Scenery"]
+[node name="Background2" type="Node2D" parent="Scenery"]
+
+[node name="Gradient" type="TextureRect" parent="Scenery/Background2"]
 light_mask = 3
 z_index = -15
 offset_left = -362.0
@@ -224,19 +310,19 @@ offset_top = 207.0
 offset_right = 257.0
 offset_bottom = 939.0
 rotation = -1.57079
-texture = SubResource("GradientTexture2D_64nxx")
+texture = SubResource("GradientTexture2D_y4si7")
 
-[node name="Background" type="Sprite2D" parent="Scenery"]
+[node name="Image" type="Sprite2D" parent="Scenery/Background2"]
 modulate = Color(0.213453, 0.1932, 0.28, 0.0666667)
 light_mask = 2
 z_index = -10
 texture_filter = 1
+position = Vector2(0, -54)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_s2kee")
-metadata/_edit_lock_ = true
 
-[node name="Rain" type="ColorRect" parent="Scenery"]
-modulate = Color(1, 1, 1, 0.835294)
+[node name="Rain" type="ColorRect" parent="Scenery/Background2"]
+modulate = Color(1, 1, 1, 0.768627)
 light_mask = 2
 z_index = -9
 texture_filter = 1
@@ -255,6 +341,48 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_yvcr4")
 color = Color(0, 0, 0, 1)
+
+[node name="Parallax2D2" type="Parallax2D" parent="Scenery/Background2"]
+modulate = Color(0.1323, 0.41433, 0.63, 1)
+light_mask = 3
+z_index = -7
+texture_filter = 1
+scroll_scale = Vector2(0.9, 1.15)
+scroll_offset = Vector2(350, 21)
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(1, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Scenery/Background2/Parallax2D2"]
+light_mask = 3
+position = Vector2(0, 53)
+texture = ExtResource("5_8k87t")
+
+[node name="Parallax2D" type="Parallax2D" parent="Scenery/Background2"]
+modulate = Color(0.1988, 0.47144, 0.71, 1)
+light_mask = 3
+z_index = -5
+texture_filter = 1
+scroll_scale = Vector2(0.8, 1.25)
+scroll_offset = Vector2(-99, -62)
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(1, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Scenery/Background2/Parallax2D"]
+light_mask = 3
+position = Vector2(0, 100)
+texture = ExtResource("5_8k87t")
+
+[node name="Gradient2" type="TextureRect" parent="Scenery"]
+light_mask = 3
+z_index = -5
+offset_left = -362.0
+offset_top = 207.0
+offset_right = 257.0
+offset_bottom = 939.0
+rotation = -1.57079
+texture = SubResource("GradientTexture2D_64nxx")
 
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
 position = Vector2(-115, -73)
@@ -299,8 +427,9 @@ position = Vector2(-18, 0)
 light_mask = 2
 texture_filter = 1
 position = Vector2(0, 33)
-sprite_frames = SubResource("SpriteFrames_4phqs")
+sprite_frames = SubResource("SpriteFrames_2sni1")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -314,7 +443,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/sprites/tree-base.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+metadata/_aseprite_wizard_source_file_hash_ = "5ec0cf93acccbf0f6f2165292d1c9014"
 
 [node name="Bottom" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
 light_mask = 2
@@ -323,6 +452,7 @@ position = Vector2(-24, 129)
 sprite_frames = SubResource("SpriteFrames_tjry1")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -344,6 +474,7 @@ texture_filter = 1
 position = Vector2(0, -95)
 sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -365,6 +496,29 @@ texture_filter = 1
 position = Vector2(0, -223)
 sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Scenery/LeftWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -351)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -397,6 +551,7 @@ texture_filter = 1
 position = Vector2(0, 33)
 sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -419,6 +574,7 @@ position = Vector2(-24, 129)
 sprite_frames = SubResource("SpriteFrames_tjry1")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -440,6 +596,7 @@ texture_filter = 1
 position = Vector2(0, -95)
 sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -461,6 +618,29 @@ texture_filter = 1
 position = Vector2(0, -223)
 sprite_frames = SubResource("SpriteFrames_4phqs")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/tree-base.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "32d671c165948b6ad5044632a9a5723a"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Scenery/RightWall/Sprites"]
+light_mask = 2
+texture_filter = 1
+position = Vector2(0, -351)
+sprite_frames = SubResource("SpriteFrames_4phqs")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -712,6 +892,7 @@ texture_filter = 1
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_6g0xn")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -766,6 +947,9 @@ offset_bottom = 253.0
 
 [node name="Tutorial" type="Node2D" parent="Scenery"]
 unique_name_in_owner = true
+z_index = 5
+position = Vector2(-33, 0)
+scale = Vector2(0.8, 0.8)
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenery/Tutorial"]
 texture_filter = 1
@@ -773,30 +957,45 @@ position = Vector2(-212, -22)
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("24_tjry1")
 
+[node name="Rain2" type="GPUParticles2D" parent="Scenery"]
+position = Vector2(1, -256)
+amount = 45
+lifetime = 3.0
+collision_base_size = 0.0
+trail_lifetime = 0.02
+trail_sections = 2
+trail_section_subdivisions = 1
+process_material = SubResource("ParticleProcessMaterial_3trw7")
+
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
 unique_name_in_owner = true
 position = Vector2(0, -142)
 failed_attack_str_mult = 0.6
 parry_raycast_distance = 50.0
 
-[node name="MainCamera" type="Camera2D" parent="."]
-script = ExtResource("7_vrglu")
-on_hit_shake = 0.2
-max_y_increase = 0.0
-
-[node name="ScreenEffect" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="ScreenEffect"]
+[node name="GodRays" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_dr822")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -304.0
+offset_right = 442.0
+offset_bottom = 297.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_yvcr4")
 texture = SubResource("GradientTexture2D_dr822")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+script = ExtResource("7_vrglu")
+on_hit_shake = 0.2
+max_y_increase = 0.0
+before_round_speed = 0.08
+in_round_speed = 0.04
+zoom_speed = 0.05
 
 [node name="SpriteImporter" type="Node2D" parent="."]
 visible = false
@@ -805,9 +1004,9 @@ position = Vector2(-490, 0)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
 visible = false
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_yhn8s")
-animation = &"Empty"
+sprite_frames = SubResource("SpriteFrames_ja4wt")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -816,9 +1015,9 @@ metadata/_aseprite_wizard_config_ = {
 "o_ex_p": "",
 "o_folder": "res://sprites",
 "o_name": "",
-"only_visible": false,
+"only_visible": true,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/ui-heart.aseprite"
+"source": "/home/alex/Pictures/sprites/puff-particle-flip.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "270775a526bfc6b2e5a39ad38ae234e0"
+metadata/_aseprite_wizard_source_file_hash_ = "f468ada4307646e2bdf5b9bbc8bd5739"

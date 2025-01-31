@@ -13,9 +13,20 @@ var target: Node2D
 var start_y_pos: float
 @export var max_y_increase: float = 25
 
+@export var before_round_speed: float = 0.05
+@export var in_round_speed: float = 0.05
+
+var current_zoom: float = 1
+var current_zoom_to: float = 1
+@export var zoom_speed: float = 0.01
+@export var zoom_increase: float = 0.1
+
 var current_shake_amount: float = 0
 
 func _ready() -> void:
+	current_zoom = zoom.x
+	current_zoom_to = zoom.x
+
 	Events.hp_changed.connect(on_hp_change)
 	Events.player_parry.connect(on_player_parry)
 	target = get_parent().get_node_or_null("%Player")
@@ -34,6 +45,17 @@ func on_player_parry() -> void:
 
 	
 func _process(delta: float) -> void:
+	current_zoom = lerp(current_zoom, current_zoom_to, zoom_speed)
+
+	if GameManager.instance.round_started:
+		current_zoom_to = 1
+	else:
+		current_zoom_to = 1 + zoom_increase
+
+	zoom = Vector2(current_zoom, current_zoom)
+	if abs(current_zoom - current_zoom_to) < 0.005:
+		current_zoom = current_zoom_to
+
 	if current_shake_amount > 0:
 		current_shake_amount = max(0, current_shake_amount - delta * decay)
 		shake()
@@ -49,11 +71,11 @@ func point_target() -> void:
 	var final_pos: float
 
 	if GameManager.get_instance().round_started:
-		final_pos = min(start_y_pos + 25, start_y_pos + dist.y * 0.4)
-		position.y = lerp(position.y, final_pos, 0.05)
+		final_pos = min(start_y_pos + 45, start_y_pos + dist.y * 0.2)
+		position.y = lerp(position.y, final_pos, in_round_speed)
 	else:
-		final_pos = min(start_y_pos - 15, start_y_pos + dist.y * 0.7)
-		position.y = lerp(position.y, final_pos, 0.02)
+		final_pos = min(start_y_pos + 25, start_y_pos + dist.y)
+		position.y = lerp(position.y, final_pos, before_round_speed)
 
 	if position.y > start_y_pos:
 		position.y = start_y_pos

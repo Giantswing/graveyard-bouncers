@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://fvok74n3mel8" path="res://sprites/spikes.png" id="2_xbcdo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
-size = Vector2(28, 15)
+size = Vector2(28, 10.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xbcdo"]
 atlas = ExtResource("2_xbcdo")
@@ -33,7 +33,7 @@ can_be_parried = false
 metadata/_custom_type_script = ExtResource("1_xbcdo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.22127e-06, 5.5)
+position = Vector2(-2.22127e-06, -10)
 shape = SubResource("RectangleShape2D_bdrgs")
 one_way_collision = true
 

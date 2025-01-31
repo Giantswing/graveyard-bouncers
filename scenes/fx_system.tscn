@@ -1,11 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://bqem8f0lk2r2y"]
+[gd_scene load_steps=27 format=3 uid="uid://bqem8f0lk2r2y"]
 
 [ext_resource type="Script" uid="uid://dagqrdhdib5v1" path="res://scripts/fx_system.gd" id="1_6qabg"]
 [ext_resource type="Texture2D" uid="uid://4ink0fxv6y70" path="res://sprites/smoke.png" id="1_try75"]
 [ext_resource type="Material" uid="uid://c082kptv3ycp5" path="res://shaders/basic_particle_sprite_animation.tres" id="2_6qabg"]
 [ext_resource type="Texture2D" uid="uid://du6it06j6pkub" path="res://sprites/smoke-small.png" id="3_liso6"]
+[ext_resource type="Texture2D" uid="uid://dvj6gq1c8rqco" path="res://sprites/puff-particle.png" id="4_d0x28"]
 [ext_resource type="Texture2D" uid="uid://b3jup4pypbisl" path="res://sprites/ground-explosion.png" id="4_iu1vk"]
 [ext_resource type="Texture2D" uid="uid://bo8q2khfdtga3" path="res://sprites/coin-collect.png" id="5_liso6"]
+[ext_resource type="Texture2D" uid="uid://dg2rlx11t2iss" path="res://sprites/puff-particle-flip.png" id="5_tcnpv"]
 [ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="6_qip3y"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aqsxy"]
@@ -13,6 +15,18 @@ particles_animation = true
 particles_anim_h_frames = 3
 particles_anim_v_frames = 3
 particles_anim_loop = false
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tcnpv"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_myy5r"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.5
+anim_speed_max = 1.5
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d0x28"]
 particles_animation = true
@@ -102,6 +116,24 @@ material = SubResource("CanvasItemMaterial_aqsxy")
 amount = 1
 texture = ExtResource("1_try75")
 process_material = ExtResource("2_6qabg")
+
+[node name="SmokePuff" type="GPUParticles2D" parent="."]
+z_index = 5
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_tcnpv")
+position = Vector2(-81, 0)
+amount = 1
+texture = ExtResource("4_d0x28")
+process_material = SubResource("ParticleProcessMaterial_myy5r")
+
+[node name="SmokePuffFlip" type="GPUParticles2D" parent="."]
+z_index = 5
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_tcnpv")
+position = Vector2(-130, 0)
+amount = 1
+texture = ExtResource("5_tcnpv")
+process_material = SubResource("ParticleProcessMaterial_myy5r")
 
 [node name="GroundExplosion" type="GPUParticles2D" parent="."]
 z_index = 3

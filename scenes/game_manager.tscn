@@ -18,7 +18,7 @@
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 difficulty = 1.0
-time_limit = 45
+time_limit = 8
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 100.0
