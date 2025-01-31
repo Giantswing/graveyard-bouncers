@@ -30,7 +30,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	timer += delta * wobble_speed
 
-	if position.x > get_viewport_rect().size.x/2 + 40 or position.x < -get_viewport_rect().size.x/2 - 40:
+	if position.x > get_viewport_rect().size.x/2 + 100 or position.x < -get_viewport_rect().size.x/2 - 100:
 		queue_free()
 
 

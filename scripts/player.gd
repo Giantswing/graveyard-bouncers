@@ -3,8 +3,12 @@ extends CharacterBody2D
 class_name PlayerCharacter
 
 @onready var sprite: AnimatedSprite2D = $Sprite
-@onready var body_down_cast1: RayCast2D = $Raycasts/BodyDownCast1
-@onready var body_down_cast2: RayCast2D = $Raycasts/BodyDownCast2
+
+@onready var parry_cast1: RayCast2D = $Raycasts/ParryCast1
+@onready var parry_cast2: RayCast2D = $Raycasts/ParryCast2
+@onready var attack_cast1: RayCast2D = $Raycasts/AttackCast1
+@onready var attack_cast2: RayCast2D = $Raycasts/AttackCast2
+
 @onready var body_forward_cast: RayCast2D = $Raycasts/BodyForwardCast
 @onready var dash_cast: RayCast2D = $Raycasts/DashCast
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
@@ -58,8 +62,8 @@ func _ready() -> void:
 	speed_particles.emitting = false
 	dash_particles.emitting = false
 	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
-	body_down_cast1.target_position.y = parry_raycast_distance
-	body_down_cast2.target_position.y = parry_raycast_distance
+	parry_cast1.target_position.y = parry_raycast_distance
+	parry_cast2.target_position.y = parry_raycast_distance
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
@@ -91,7 +95,7 @@ func on_ability_gained(new_ability: Ability) -> void:
 		elif ability_uses == 3: # White
 			sprite.material.set_shader_parameter("color", Color(1, 1, 1, 1))
 
-		sprite.material.set_shader_parameter("width", 2.0)
+		sprite.material.set_shader_parameter("width", 1.0)
 
 func on_player_died() -> void:
 	Engine.time_scale = 0.5
@@ -121,7 +125,6 @@ func _process(delta: float) -> void:
 
 	if is_attacking == 0:
 		if on_wall:
-			hspeed = 0
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 
@@ -304,7 +307,7 @@ func handle_jump() -> void:
 			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
 
-		else:
+		else: # If we are in the air and jump again, we attack
 			if is_attacking == 0:
 				animation_controller.play_animation("attack")
 				process_jump()
@@ -317,7 +320,7 @@ func handle_jump() -> void:
 				return
 
 func process_jump() -> void:
-	var collision := get_raycasts_collision_node([body_down_cast1, body_down_cast2])
+	var collision := get_raycasts_collision_node([parry_cast1, parry_cast2])
 
 	if collision != null and is_attacking == 0:
 		var stats: Stats = collision.get_node_or_null("Stats")

@@ -252,7 +252,7 @@ func set_up_round() -> void:
 			var new_obj: Node2D = Utils.spawn_prefab(spikes_prefab, other_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 42, true)
 			if new_obj:
 				new_obj.position.y = new_obj.position.y + 32
-				Utils.fast_tween(new_obj, "position:y", new_obj.position.y - 32, 0.5)
+				Utils.fast_tween(new_obj, "position:y", new_obj.position.y - 18, 0.5)
 		
 
 
