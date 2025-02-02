@@ -20,6 +20,7 @@ var old_bridge_count: int
 var bridge_enabled: bool = true
 
 @export var default_max_sag: float = -20.0
+@export var player_max_sag: float = -20.0
 var current_sag: float
 var sag_to_reach: float
 
@@ -98,8 +99,8 @@ func is_player_on_bridge() -> bool:
 
 
 func get_dynamic_sag() -> void:
-	var base_sag: float = -20.0  
-	var extra_sag: float = -20.0
+	var base_sag: float = default_max_sag
+	var extra_sag: float = player_max_sag
 	var sag_radius: float = distance * 0.3
 
 	if player and is_player_on_bridge():

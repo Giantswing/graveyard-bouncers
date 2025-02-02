@@ -31,6 +31,7 @@ enum GROUND_TYPES {
 @export var has_helper_enemy: bool = false
 @export var has_fog: bool = false
 @export_range(0, 10, 0.99) var spike_amount: int = 0
+@export var debug: bool = false
 
 var original_chance: float
 var id: int = 0

@@ -12,6 +12,10 @@ func _ready() -> void:
 
 func get_round(difficulty: float) -> GameRound:
     # Calculate total weighted chance for all rounds
+    for game_round in game_rounds:
+        if game_round.debug == true:
+            return game_round
+
     var weighted_chances := []
     var total_weighted_chance: float = 0
 

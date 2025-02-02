@@ -36,7 +36,7 @@ var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
 var current_game_width: float = 0
 var game_width: float = 300
-var player: Node2D
+var player: PlayerCharacter 
 var player_screen_pos: Vector2
 var left_wall: Node2D
 var toxic_floor: Node2D
@@ -147,8 +147,11 @@ func use_current_ability() -> void:
 		Events.ability_gained.emit(player_ability)
 
 
+
 func update_current_round() -> void:
 	round_data = round_manager.get_round(current_difficulty)
+	if player:
+		player.base_strength = 285 * sqrt(round_data.gravity_multiplier)
 	print("Current difficulty: ", current_difficulty)
 	print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
 	

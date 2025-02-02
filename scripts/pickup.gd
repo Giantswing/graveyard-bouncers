@@ -39,7 +39,7 @@ func pickup(body: Node2D) -> void:
 	if pickup_state != 0:
 		return
 
-	reparent_pickup.call_deferred()
+	# reparent_pickup.call_deferred()
 	pickup_state = 1
 	target = body
 	player = body as PlayerCharacter

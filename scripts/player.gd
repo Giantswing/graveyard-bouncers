@@ -69,7 +69,6 @@ var attack_targets: Array[Stats]
 func _ready() -> void:
 	speed_particles.emitting = false
 	dash_particles.emitting = false
-	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
@@ -100,7 +99,6 @@ func handle_dash_attack(body: Node2D) -> void:
 	var stats: Stats = body.get_node_or_null("Stats")
 
 	if stats != null and stats.can_take_damage:
-		print("Dashing attack")
 		stats.take_damage(1)
 		velocity.x = 0
 		velocity.y = 0
@@ -133,6 +131,15 @@ func _process(delta: float) -> void:
 	velocity.x = hspeed + extra_speed.x
 	velocity.y = velocity.y + extra_speed.y
 
+
+
+	handle_jump()
+	handle_ability()
+
+
+func _physics_process(delta: float) -> void:
+	previous_velocity = velocity
+
 	if is_attacking == 0:
 		if on_wall:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
@@ -156,15 +163,10 @@ func _process(delta: float) -> void:
 	else:
 		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.get_instance().round_data.gravity_multiplier
 
-
-	handle_jump()
-	handle_ability()
-
-
-func _physics_process(_delta: float) -> void:
-	previous_velocity = velocity
-
 	move_and_slide()
+
+	if previous_velocity.y < 0 and velocity.y >= 0:
+		print(position.y)
 
 	if is_dashing == false:
 		grounded = is_on_floor()
@@ -253,15 +255,13 @@ func process_jump() -> void:
 			parry_target = target
 
 
-	if parry_target != null and is_attacking == 0:
+	if parry_target != null and is_attacking == 0 and can_attack:
 		received_damage = false
 		process_parry(parry_target)
 	else:
 		is_attacking = 1
 		received_damage = false
 		velocity.y = -attack_recoil_str_mult * base_strength
-
-
 
 
 func process_attack() -> void:
@@ -281,14 +281,17 @@ func process_attack() -> void:
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
 			if target:
+				velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
 				target.take_damage(1)
+			else:
+				velocity.y = -normal_attack_bounce_str_mult * base_strength
+
 			can_get_hit = false
 			is_attacking = 0
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			speed_particles.emitting = false
-			velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
 
 			Engine.time_scale = 0.4
 			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
