@@ -37,7 +37,11 @@ func _physics_process(delta: float) -> void:
 
 	jump_timer += delta
 
+	if jump_timer > (jump_timer_max - 0.5):
+		scale = Vector2(1, 0.6)
+
 	if is_on_floor() and jump_timer > jump_timer_max:
+		scale = Vector2(1, 1)
 		velocity.y = -jump_speed
 		jump_timer = 0
 

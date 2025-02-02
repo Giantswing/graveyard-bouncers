@@ -100,9 +100,17 @@ func handle_dash_attack(body: Node2D) -> void:
 	var stats: Stats = body.get_node_or_null("Stats")
 
 	if stats != null and stats.can_take_damage:
+		print("Dashing attack")
 		stats.take_damage(1)
-		velocity.y = -base_strength * 2.3
+		velocity.x = 0
+		velocity.y = 0
+		velocity.y = -parry_bounce_str_mult * base_strength * 0.7
 		is_attacking = 0
+		animation_controller.play_animation("parry")
+		GameManager.get_instance().set_powerup_active("double-jump", true)
+		Engine.time_scale = 0.1
+		get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
+		FxSystem.play_fx("SmokeHit", position)
 
 func _process(delta: float) -> void:
 	get_input()
@@ -158,7 +166,11 @@ func _physics_process(_delta: float) -> void:
 
 	move_and_slide()
 
-	grounded = is_on_floor()
+	if is_dashing == false:
+		grounded = is_on_floor()
+	else:
+		grounded = false
+
 	on_wall = false
 
 	body_forward_cast.target_position.x = 20 if movement_input.x > 0 else -20
@@ -429,7 +441,7 @@ func on_ability_gained(new_ability: Ability) -> void:
 		if ability_uses == 1: # Blue
 			sprite.material.set_shader_parameter("color", Color(0, 1, 1, 0.8))
 		elif ability_uses == 2: # Orange
-			sprite.material.set_shader_parameter("color", Color(1, 0.5, 0, 0.8))
+			sprite.material.set_shader_parameter("color", Color(1, 0.5, 0, 1))
 		elif ability_uses == 3: # White
 			sprite.material.set_shader_parameter("color", Color(1, 1, 1, 1))
 

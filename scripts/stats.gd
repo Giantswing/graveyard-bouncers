@@ -107,6 +107,9 @@ func hit_flash() -> void:
 	)
 
 func take_damage(amount: int) -> void:
+	if !can_take_damage or is_invulnerable:
+		return
+
 	hp -= amount
 
 	emit_signal("on_hit")
