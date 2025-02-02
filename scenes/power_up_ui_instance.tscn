@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp5xi8kgww8wi"]
+
+[ext_resource type="SpriteFrames" uid="uid://yxgadxtne4k5" path="res://resources/powerups/powerup-life-frames.tres" id="1_auvvt"]
+
+[node name="PowerUpUiInstance" type="Control"]
+custom_minimum_size = Vector2(16, 12)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, 6)
+sprite_frames = ExtResource("1_auvvt")
+autoplay = "default"

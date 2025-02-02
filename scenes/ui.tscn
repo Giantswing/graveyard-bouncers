@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://50wu1jt67mqg"]
+[gd_scene load_steps=17 format=3 uid="uid://50wu1jt67mqg"]
 
 [ext_resource type="Script" uid="uid://dtqbfcsfon5fk" path="res://scripts/ui.gd" id="1_yev5y"]
 [ext_resource type="PackedScene" uid="uid://bh2e3rf6yppxo" path="res://scenes/ui_heart.tscn" id="2_gdt2y"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://vhpdoxaffmvo" path="res://scripts/version.gd" id="4_wm3ai"]
 [ext_resource type="Texture2D" uid="uid://ck8r7vf0xlv3p" path="res://sprites/ability-ui-cointainer.png" id="5_p7vwb"]
 [ext_resource type="SpriteFrames" uid="uid://bniyryg3serqv" path="res://resources/abilities/dash-frames.tres" id="6_ktti3"]
+[ext_resource type="PackedScene" uid="uid://bp5xi8kgww8wi" path="res://scenes/power_up_ui_instance.tscn" id="7_cgfq5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dubc"]
 
@@ -72,6 +73,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_yev5y")
 ui_heart_scene = ExtResource("2_gdt2y")
+ui_pickup_scene = ExtResource("7_cgfq5")
 
 [node name="TopLeft" type="Control" parent="MarginContainer/Control"]
 unique_name_in_owner = true
@@ -306,30 +308,47 @@ uppercase = true
 
 [node name="BottomRight" type="Control" parent="MarginContainer/Control"]
 unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VersionLabel" type="Label" parent="MarginContainer/Control/BottomRight"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 567.0
-offset_top = 276.0
-offset_right = 580.0
-offset_bottom = 300.0
+offset_left = -40.0
+offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control/BottomRight"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="PowerUpList" type="VBoxContainer" parent="MarginContainer/Control/BottomRight/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 22.28)
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="VersionLabel" type="Label" parent="MarginContainer/Control/BottomRight/VBoxContainer2"]
+layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme = ExtResource("3_wm3ai")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 12
 text = "v"
 horizontal_alignment = 2
 vertical_alignment = 2
@@ -337,6 +356,7 @@ script = ExtResource("4_wm3ai")
 
 [node name="DeathScreen" type="VBoxContainer" parent="MarginContainer/Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -384,6 +404,7 @@ text = "Press jump to restart"
 [node name="PauseScreen" type="Control" parent="MarginContainer/Control"]
 unique_name_in_owner = true
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

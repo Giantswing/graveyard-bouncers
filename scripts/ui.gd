@@ -13,8 +13,10 @@ extends Control
 @onready var ability_uses: Label = %AbilityAmount
 
 @export var ui_heart_scene: PackedScene
+@export var ui_pickup_scene: PackedScene
 
 @onready var pause_screen: Control = %PauseScreen
+@onready var powerup_list: Control = %PowerUpList
 
 @onready var top_left_container: Control = %TopLeft
 @onready var top_right_container: Control = %TopRight
@@ -40,6 +42,14 @@ func _ready() -> void:
 	Events.round_counter_changed.connect(on_round_counter_changed)
 	Events.ability_gained.connect(on_ability_gained)
 	Events.game_paused.connect(on_game_paused)
+	Events.picked_up_powerup.connect(on_picked_up_powerup)
+
+
+func on_picked_up_powerup(powerup: PowerUp) -> void:
+	var pickup: Control =  ui_pickup_scene.instantiate()
+	var pickup_sprite: AnimatedSprite2D = pickup.get_node("AnimatedSprite2D") as AnimatedSprite2D
+	pickup_sprite.sprite_frames = powerup.frames
+	powerup_list.add_child(pickup)
 
 func update_menu_options() -> void:
 	for i in range(menu_options.size()):
