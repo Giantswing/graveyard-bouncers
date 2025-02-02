@@ -165,8 +165,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if previous_velocity.y < 0 and velocity.y >= 0:
-		print(position.y)
+	# if previous_velocity.y < 0 and velocity.y >= 0:
+	# 	print(position.y)
 
 	if is_dashing == false:
 		grounded = is_on_floor()

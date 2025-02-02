@@ -16,3 +16,5 @@ signal round_time_changed(time: int)
 signal score_changed(score: int)
 signal ability_gained(ability: Ability)
 signal game_paused(paused: bool)
+
+signal on_shockwave(force: float, duration: float, size: float, decay_time: float)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=70 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -34,7 +34,16 @@
 [ext_resource type="Resource" uid="uid://be4oofmp6ntom" path="res://resources/powerups/reward-magnet.tres" id="26_y4si7"]
 [ext_resource type="Resource" uid="uid://busstvxy65x2v" path="res://resources/powerups/easy-parry.tres" id="27_y5y5p"]
 [ext_resource type="Resource" uid="uid://ct8tk3r2msvyt" path="res://resources/powerups/dash-attack.tres" id="28_r1g5w"]
+[ext_resource type="Shader" uid="uid://cjsb0sixv56et" path="res://shaders/shockwave.gdshader" id="32_628db"]
 [ext_resource type="SpriteFrames" uid="uid://vo6hgadv8do3" path="res://resources/powerups/dash-attack-frames.tres" id="34_y5y5p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0uf8"]
+shader = ExtResource("32_628db")
+shader_parameter/global_position = Vector2(320, 180)
+shader_parameter/screen_size = Vector2(640, 360)
+shader_parameter/force = 0.0
+shader_parameter/size = 0.0
+shader_parameter/thickness = 0.001
 
 [sub_resource type="Gradient" id="Gradient_8k87t"]
 colors = PackedColorArray(0, 0, 0, 1, 0.1476, 0.29192, 0.41, 1)
@@ -242,6 +251,26 @@ unique_name_in_owner = true
 visible = false
 
 [node name="GameManager" parent="." instance=ExtResource("1_u8x35")]
+
+[node name="MainCamera" type="Camera2D" parent="."]
+script = ExtResource("7_vrglu")
+on_hit_shake = 0.2
+max_y_increase = 0.0
+before_round_speed = 0.08
+in_round_speed = 0.04
+zoom_speed = 0.05
+
+[node name="ScreenShockWave" type="ColorRect" parent="MainCamera"]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
+z_index = 20
+material = SubResource("ShaderMaterial_i0uf8")
+custom_minimum_size = Vector2(640, 360)
+offset_left = -320.0
+offset_top = -180.0
+offset_right = -280.0
+offset_bottom = -140.0
+color = Color(0, 0, 0, 0)
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -913,8 +942,12 @@ trail_sections = 2
 trail_section_subdivisions = 1
 process_material = SubResource("ParticleProcessMaterial_3trw7")
 
+[node name="Shockwave" type="Node2D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("1_djt6b")]
 unique_name_in_owner = true
+z_index = 20
+z_as_relative = false
 position = Vector2(0, -142)
 failed_attack_str_mult = 0.6
 
@@ -933,14 +966,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_yvcr4")
 texture = SubResource("GradientTexture2D_dr822")
-
-[node name="MainCamera" type="Camera2D" parent="."]
-script = ExtResource("7_vrglu")
-on_hit_shake = 0.2
-max_y_increase = 0.0
-before_round_speed = 0.08
-in_round_speed = 0.04
-zoom_speed = 0.05
 
 [node name="SpriteImporter" type="Node2D" parent="."]
 visible = false
