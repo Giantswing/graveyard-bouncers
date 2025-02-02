@@ -30,6 +30,7 @@ func _ready() -> void:
 
 	Events.hp_changed.connect(on_hp_change)
 	Events.player_parry.connect(on_player_parry)
+	Events.player_dash.connect(on_player_parry)
 	target = get_parent().get_node_or_null("%Player")
 	start_y_pos = 0
 	# start_y_pos = global_position.y
@@ -67,10 +68,10 @@ func _process(delta: float) -> void:
 
 func on_player_parry() -> void:
 	current_shake_amount = on_parry_shake 
-	make_shockwave(0.1, 1, 0.25, 0.75)
+	make_shockwave(0.2, 1, 0.3, 0.45)
 
 func make_shockwave(force: float, duration: float, size: float, decay_time: float) -> void:
-	wave.material.set_shader_parameter("size", size * 0.35)
+	wave.material.set_shader_parameter("size", size * 0.25)
 	wave.material.set_shader_parameter("force", force)
 
 	Utils.fast_tween(wave, "material:shader_parameter/size", size, duration * 0.2, Tween.TRANS_QUAD)

@@ -95,8 +95,9 @@ shape = SubResource("RectangleShape2D_veat2")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 light_mask = 2
 texture_filter = 1
+position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_tca38")
-animation = &"Spawn"
+animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
 "pending_changes": {}

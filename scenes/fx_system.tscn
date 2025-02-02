@@ -118,7 +118,7 @@ texture = ExtResource("1_try75")
 process_material = ExtResource("2_6qabg")
 
 [node name="SmokePuff" type="GPUParticles2D" parent="."]
-z_index = 5
+z_index = 25
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_tcnpv")
 position = Vector2(-81, 0)
@@ -127,7 +127,7 @@ texture = ExtResource("4_d0x28")
 process_material = SubResource("ParticleProcessMaterial_myy5r")
 
 [node name="SmokePuffFlip" type="GPUParticles2D" parent="."]
-z_index = 5
+z_index = 25
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_tcnpv")
 position = Vector2(-130, 0)

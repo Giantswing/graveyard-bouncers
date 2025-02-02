@@ -149,6 +149,7 @@ func _physics_process(delta: float) -> void:
 				var direction: int = 0
 				if movement_input.x > 0:
 					direction = 1
+					print("puff")
 					FxSystem.play_fx("SmokePuff", position + Vector2(direction * 7, -15), true) 
 				elif movement_input.x < 0:
 					direction = -1
@@ -318,7 +319,7 @@ func process_parry(target: Stats) -> void:
 		func() -> void:
 			target.take_damage(1)
 			can_get_hit = false
-			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
+			get_tree().create_timer(0.2).timeout.connect(reset_can_get_hit)
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
@@ -378,6 +379,7 @@ func process_dash() -> void:
 
 	dash_particles.emitting = true
 
+	Events.player_dash.emit()
 	get_tree().create_timer(0.15).timeout.connect(reset_time_scale)
 	get_tree().create_timer(0.15).timeout.connect(func() -> void: is_dashing = false)
 	get_tree().create_timer(0.06).timeout.connect(func() -> void: dash_particles.emitting = false)
@@ -477,8 +479,10 @@ func get_hit(from: Stats) -> void:
 	received_damage = true
 
 	sprite.material.set_shader_parameter("tint", Color(1, 1, 1, 0.5))
+
 	can_attack = false
-	get_tree().create_timer(0.2).timeout.connect(func() -> void: can_attack = true)
+	get_tree().create_timer(0.5).timeout.connect(func() -> void: can_attack = true)
+
 	get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
 	get_tree().create_timer(1.0).timeout.connect(func() -> void: received_damage = false)
 

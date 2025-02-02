@@ -9,6 +9,7 @@ signal picked_up_powerup(powerup: PowerUp)
 signal player_died
 signal player_hit
 signal player_parry
+signal player_dash
 signal round_counter_changed(round: int)
 signal round_ended
 signal round_started
