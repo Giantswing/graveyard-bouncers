@@ -37,6 +37,7 @@ var reward_spawn_countdown: float = 0
 var current_game_width: float = 0
 var game_width: float = 300
 var player: Node2D
+var player_screen_pos: Vector2
 var left_wall: Node2D
 var toxic_floor: Node2D
 var lava_floor: Node2D
@@ -193,6 +194,13 @@ func exit_game() -> void:
 
 
 func _process(delta: float) -> void:
+	if player:
+		var player_canvas := player.get_global_transform_with_canvas().origin
+		var screen_size := get_viewport_rect().size
+		player_screen_pos = player_canvas / screen_size
+	else:
+		player_screen_pos = Vector2(0.5, 0.5)
+
 	if Input.is_action_just_pressed("Reset"):
 		get_tree().reload_current_scene()
 

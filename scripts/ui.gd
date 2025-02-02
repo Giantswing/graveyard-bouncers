@@ -16,6 +16,11 @@ extends Control
 
 @onready var pause_screen: Control = %PauseScreen
 
+@onready var top_left_container: Control = %TopLeft
+@onready var top_right_container: Control = %TopRight
+@onready var bottom_left_container: Control = %BottomLeft
+@onready var bottom_right_container: Control = %BottomRight
+
 var hearts: Array[ui_heart] = []
 var selected_menu_option: int = 0
 var menu_options: Array[Node] = []
@@ -42,9 +47,11 @@ func update_menu_options() -> void:
 			menu_options[i].modulate = Color(1, 1, 1, 1)
 		else:
 			menu_options[i].modulate = Color(1, 1, 1, 0.3)
-
+	
 
 func _process(_delta: float) -> void:
+	update_ui_transparency()
+
 	if GameManager.instance.game_paused == false:
 		return
 
@@ -104,6 +111,33 @@ func on_player_died() -> void:
 	
 func on_score_changed(new_score: int) -> void:
 	score_label.text = "Score: " + str(new_score)
+
+
+func update_ui_transparency() -> void:
+	var player_screen_pos: Vector2 = GameManager.instance.player_screen_pos
+	var x_offset: float = 0.25
+	var y_offset: float = 0.25
+
+	if player_screen_pos.x < x_offset && player_screen_pos.y < y_offset:
+		top_left_container.modulate = lerp(top_left_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+	else:
+		top_left_container.modulate = lerp(top_left_container.modulate, Color(1, 1, 1, 1), 0.1)
+
+	if player_screen_pos.x > 1 - x_offset && player_screen_pos.y < y_offset:
+		top_right_container.modulate = lerp(top_right_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+	else:
+		top_right_container.modulate = lerp(top_right_container.modulate, Color(1, 1, 1, 1), 0.1)
+	
+	if player_screen_pos.x < x_offset && player_screen_pos.y > 1 - y_offset:
+		bottom_left_container.modulate = lerp(bottom_left_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+	else:
+		bottom_left_container.modulate = lerp(bottom_left_container.modulate, Color(1, 1, 1, 1), 0.1)
+
+	if player_screen_pos.x > 1 - x_offset && player_screen_pos.y > 1 - y_offset:
+		bottom_right_container.modulate = lerp(bottom_right_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+	else:
+		bottom_right_container.modulate = lerp(bottom_right_container.modulate, Color(1, 1, 1, 1), 0.1)
+
 
 func on_max_hp_changed(new_max_hp: int) -> void:
 	for i in range(hearts.size()):
