@@ -52,6 +52,7 @@ angular_damp = 5.0
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_nytqh")
 hp_max = 99999999
+bounciness = 1.2
 invulnerable_time = 0.1
 sprite = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = ExtResource("1_nytqh")

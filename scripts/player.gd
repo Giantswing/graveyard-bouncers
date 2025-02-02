@@ -288,7 +288,10 @@ func process_attack() -> void:
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			speed_particles.emitting = false
-			velocity.y = -normal_attack_bounce_str_mult * base_strength
+			velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
+
+			Engine.time_scale = 0.4
+			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
 
 			FxSystem.play_fx("SmokeHitSmall", position)
 
@@ -315,7 +318,7 @@ func process_parry(target: Stats) -> void:
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
-			velocity.y = -parry_bounce_str_mult * base_strength
+			velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
 			grounded = false
 
 			animation_controller.play_animation("parry")

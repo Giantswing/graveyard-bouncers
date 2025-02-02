@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Pickup
+
 @onready var area: Area2D = $Area2D
 
 @export var pickup_option: PICKUP_OPTIONS = PICKUP_OPTIONS.COIN
@@ -34,11 +36,10 @@ func reparent_pickup() -> void:
 	self.reparent(get_tree().root)
 
 func pickup(body: Node2D) -> void:
-	reparent_pickup.call_deferred()
-
 	if pickup_state != 0:
 		return
 
+	reparent_pickup.call_deferred()
 	pickup_state = 1
 	target = body
 	player = body as PlayerCharacter
@@ -70,7 +71,7 @@ func _process(delta: float) -> void:
 		time_following += delta
 		velocity += direction * speed * 2
 
-		if my_pos.distance_to(other_pos) < 24 or time_following > 2:
+		if my_pos.distance_to(other_pos) < 32 or time_following > 3:
 			if pickup_option == PICKUP_OPTIONS.COIN:
 				Events.coins_changed.emit(GameManager.get_instance().coins + 1)
 				FxSystem.play_fx("CoinCollect", global_position)

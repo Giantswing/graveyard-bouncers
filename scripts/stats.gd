@@ -133,12 +133,11 @@ func die() -> void:
 	if sprite:
 		sprite.material.set_shader_parameter("active", 1)
 
-	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.1, Tween.TRANS_ELASTIC).tween_callback(
+	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.2, Tween.TRANS_ELASTIC).tween_callback(
 		func() -> void:
 		emit_signal("on_death")
 		parent.queue_free()
 	)
-
 
 	if hurt_area:
 		hurt_area.queue_free()

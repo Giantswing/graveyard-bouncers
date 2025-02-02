@@ -382,9 +382,7 @@ func end_round() -> void:
 	game_width = game_width_start
 	Utils.fast_tween(starting_ground, "position:y", ground_y_pos, 1)
 
-
 	starting_ground.enable_bridge()
-
 
 	get_tree().create_timer(1).timeout.connect(func() -> void:
 		activate(grave)
@@ -397,6 +395,11 @@ func end_round() -> void:
 		enemy.queue_free()
 
 	for reward in reward_container.get_children():
+		if reward is Pickup:
+			var pickup_reward: Pickup = reward as Pickup
+			if pickup_reward.pickup_state != 0:
+				continue
+
 		reward.queue_free()
 
 	for other in other_container.get_children():
