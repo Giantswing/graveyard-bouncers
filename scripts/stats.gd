@@ -75,11 +75,11 @@ func _ready() -> void:
 		)
 
 
-func on_area_entered(_body: Node) -> void:
-	if coin_reward != 0:
-		Events.coins_changed.emit(GameManager.get_instance().coins + coin_reward)
-		FxSystem.play_fx("CoinCollect", global_position)
-		get_parent().queue_free()
+# func on_area_entered(_body: Node) -> void:
+# 	if coin_reward != 0:
+# 		Events.coins_changed.emit(GameManager.get_instance().coins + coin_reward)
+# 		FxSystem.play_fx("CoinCollect", global_position)
+# 		get_parent().queue_free()
 	
 	
 
@@ -109,6 +109,7 @@ func hit_flash() -> void:
 func take_damage(amount: int) -> void:
 	hp -= amount
 
+	emit_signal("on_hit")
 	is_invulnerable = true
 	get_tree().create_timer(invulnerable_time).timeout.connect(reset_invulnerable)
 

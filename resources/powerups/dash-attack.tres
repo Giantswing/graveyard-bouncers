@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://ct8tk3r2msvyt"]
+
+[ext_resource type="SpriteFrames" uid="uid://vo6hgadv8do3" path="res://resources/powerups/dash-attack-frames.tres" id="1_d07pm"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_jp7r2"]
+
+[resource]
+script = ExtResource("2_jp7r2")
+frames = ExtResource("1_d07pm")
+power_up_name = "dash-attack"
+power_up_description = "dash into your enemies"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_jp7r2")

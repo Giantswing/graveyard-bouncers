@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://vo6hgadv8do3"]
+
+[ext_resource type="Texture2D" uid="uid://fh7q3tat7l3i" path="res://sprites/powerup-dash-attack.png" id="1_vekme"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1g5w"]
+atlas = ExtResource("1_vekme")
+region = Rect2(0, 0, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1g5w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

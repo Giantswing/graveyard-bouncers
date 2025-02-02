@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://be4oofmp6ntom"]
+
+[ext_resource type="SpriteFrames" uid="uid://dynl2th1xomt3" path="res://resources/powerups/reward-magnet-frames.tres" id="1_lnsie"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_ex74r"]
+
+[resource]
+script = ExtResource("2_ex74r")
+frames = ExtResource("1_lnsie")
+power_up_name = "reward-magnet"
+power_up_description = "get them coins"
+chance = 1.0
+cost = 4
+amount = 1
+metadata/_custom_type_script = ExtResource("2_ex74r")

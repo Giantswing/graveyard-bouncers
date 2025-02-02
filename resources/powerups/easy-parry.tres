@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://busstvxy65x2v"]
+
+[ext_resource type="SpriteFrames" uid="uid://5gn4kvtvsgyh" path="res://resources/powerups/easy-parry-frames.tres" id="1_ddlb4"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_6id3x"]
+
+[resource]
+script = ExtResource("2_6id3x")
+frames = ExtResource("1_ddlb4")
+power_up_name = "easy-parry"
+power_up_description = "easier parries"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_6id3x")

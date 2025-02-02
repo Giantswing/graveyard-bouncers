@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var jump_timer_variance: float = 1
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_forward_cast: RayCast2D = $BodyForwardCast
+@onready var stats: Stats = $Stats
 var jump_timer: float = 0
 var raycast_distance: float = 15
 
@@ -20,6 +21,12 @@ func _ready() -> void:
 	sprite.play("Idle")
 	raycast_distance = body_forward_cast.target_position.x
 	change_direction(1 if randi() % 2 == 0 else -1)
+	
+	stats.on_hit.connect(
+		func() -> void:
+			velocity.y = jump_speed
+			jump_timer = 0
+	)
 
 func _physics_process(delta: float) -> void:
 	if !is_on_floor():

@@ -9,6 +9,7 @@ class_name PlayerCharacter
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
 @onready var dash_particles: GPUParticles2D = $DashParticles
 @onready var animation_controller: PlayerAnimationController = $AnimationController 
+@onready var parry_collision: CollisionShape2D = $ParryArea/CollisionShape2D
 
 @export var acceleration: float = 0.1 
 @export var base_strength: float = 300
@@ -53,6 +54,7 @@ var can_attack: bool = true
 
 var is_attacking: int = 0 # 0 = not attacking, 1 = preparing attack, 2 = attacking
 var is_parrying: bool = false
+var is_dashing: bool = false
 
 var slide_fx_timer: float = 0
 
@@ -61,6 +63,7 @@ var attack_targets: Array[Stats]
 
 @onready var parry_area: Area2D = %ParryArea
 @onready var attack_area: Area2D = %AttackArea
+@onready var dash_attack_area: Area2D = %DashAttackArea
 
 
 func _ready() -> void:
@@ -81,6 +84,8 @@ func _ready() -> void:
 	attack_area.body_entered.connect(on_attack_area_body_entered)
 	attack_area.body_exited.connect(on_attack_area_body_exited)
 
+	dash_attack_area.body_entered.connect(handle_dash_attack)
+
 
 func get_input() -> void:
 	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
@@ -88,6 +93,16 @@ func get_input() -> void:
 	ability_pressed = Input.is_action_just_pressed("Ability")
 
 
+func handle_dash_attack(body: Node2D) -> void:
+	if !is_dashing or !GameManager.instance.has_powerup("dash-attack"):
+		return
+
+	var stats: Stats = body.get_node_or_null("Stats")
+
+	if stats != null and stats.can_take_damage:
+		stats.take_damage(1)
+		velocity.y = -base_strength * 2.3
+		is_attacking = 0
 
 func _process(delta: float) -> void:
 	get_input()
@@ -253,8 +268,8 @@ func process_attack() -> void:
 
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
-			print("Attacking")
-			target.take_damage(1)
+			if target:
+				target.take_damage(1)
 			can_get_hit = false
 			is_attacking = 0
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
@@ -321,6 +336,7 @@ func process_dash() -> void:
 
 	extra_speed.x = direction.x * 50 * extra_speed_strength
 	extra_speed.y = direction.y * 10 * extra_speed_strength
+	is_dashing = true
 
 	var target_position: Vector2 = direction * dash_distance
 	var new_position: Vector2 = Vector2.ZERO
@@ -345,6 +361,7 @@ func process_dash() -> void:
 	dash_particles.emitting = true
 
 	get_tree().create_timer(0.15).timeout.connect(reset_time_scale)
+	get_tree().create_timer(0.15).timeout.connect(func() -> void: is_dashing = false)
 	get_tree().create_timer(0.06).timeout.connect(func() -> void: dash_particles.emitting = false)
 
 	Utils.fast_tween(self, "position", new_position, 0.05)
@@ -395,6 +412,9 @@ func on_round_ended() -> void:
 func on_picked_up_powerup(powerup: PowerUp) -> void:
 	if powerup.power_up_name == "sticky-boots":
 		slide_down_max_speed *= 0.3
+	if powerup.power_up_name == "easy-parry":
+		parry_collision.position.y += 10
+		parry_collision.scale = Vector2(1, 1.7)
 
 
 func on_ability_gained(new_ability: Ability) -> void:
@@ -423,6 +443,9 @@ func on_player_died() -> void:
 
 func get_hit(from: Stats) -> void:
 	if !can_get_hit:
+		return
+
+	if is_dashing and GameManager.instance.has_powerup("dash-attack"):
 		return
 
 	if (grounded or velocity.y < 0) and from.only_damage_when_moving_down:

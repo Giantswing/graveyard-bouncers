@@ -21,14 +21,14 @@ func _ready() -> void:
 	set_up_powerups()
 	# display_shop()
 
-# func _process(_delta: float) -> void:
-# 	if Input.is_action_just_pressed("Menu"):
-# 		Events.coins_changed.emit(20)
-#
-# 		if is_active:
-# 			close_shop()
-# 		else:
-# 			display_shop()
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("Options"):
+		Events.coins_changed.emit(20)
+
+		if is_active:
+			close_shop()
+		else:
+			display_shop()
 
 func set_up_powerups() -> void:
 	for powerup in all_powerups:

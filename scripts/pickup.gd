@@ -26,6 +26,9 @@ func _ready() -> void:
 				pickup(body)
 	)
 
+	if GameManager.instance.has_powerup("reward-magnet"):
+		area.scale = Vector2(3, 3)
+
 func reparent_pickup() -> void:
 	self.reparent(get_tree().root)
 
