@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc3x6txpt86pv"]
+[gd_scene load_steps=12 format=3 uid="uid://bc3x6txpt86pv"]
 
-[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_i64fm"]
+[ext_resource type="Script" uid="uid://cptbcymtbucys" path="res://scripts/pickup.gd" id="1_i64fm"]
 [ext_resource type="Texture2D" uid="uid://c6av0eb8ypoap" path="res://sprites/coin.png" id="2_11l1o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aqsxy"]
-radius = 9.0
+radius = 21.59
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aqsxy"]
 atlas = ExtResource("2_11l1o")
@@ -38,21 +38,36 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i64fm"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_i64fm"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_11l1o"]
+gradient = SubResource("Gradient_i64fm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d14el"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(4, 4, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+inherit_velocity_ratio = 0.132
+gravity = Vector3(0, 2, 0)
+color_ramp = SubResource("GradientTexture1D_11l1o")
+turbulence_enabled = true
+
 [node name="Coin" type="Node2D"]
-
-[node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_i64fm")
-coin_reward = 1
-can_take_damage = false
-can_be_parried = false
-damage_on_touch = true
-metadata/_custom_type_script = ExtResource("1_i64fm")
 
-[node name="Area2D" type="Area2D" parent="Stats"]
-collision_layer = 4
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_aqsxy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -76,3 +91,10 @@ metadata/_aseprite_wizard_config_ = {
 "source": "/home/alex/Pictures/sprites/coin.aseprite"
 }
 metadata/_aseprite_wizard_source_file_hash_ = "1560cd3b4c4ba0aa7d3134ac3cbb489a"
+
+[node name="FollowParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(1, 0.966667, 0, 1)
+material = SubResource("CanvasItemMaterial_i64fm")
+amount = 32
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_d14el")

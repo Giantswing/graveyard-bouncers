@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=13 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scripts/round_manager.gd" id="6_ternb"]
 [ext_resource type="PackedScene" uid="uid://xejrp383li1a" path="res://scenes/turtle.tscn" id="7_0rse5"]
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
+[ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="8_k4jhu"]
 
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
@@ -23,8 +24,8 @@ max_game_width = 600.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("4_jdad8")])
 enemy_spawn_rate = 3.0
 max_enemies = 30
-reward_list = Array[ExtResource("2_udu3i")]([])
-reward_spawn_rate = 4.0
+reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu")])
+reward_spawn_rate = 1.0
 max_rewards = 5
 ground_type = 0
 has_trampoline = false

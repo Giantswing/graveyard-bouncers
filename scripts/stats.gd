@@ -12,7 +12,6 @@ class_name Stats
 @export var wall_reward: int = 0
 @export var can_take_damage: bool = true
 @export var can_be_parried: bool = true
-@export var damage_on_touch: bool = false
 @export var spawn_rate_reduction: float = 0
 @export var sprite: AnimatedSprite2D
 @export var spawn_type: SPAWN_TYPE_OPTIONS = SPAWN_TYPE_OPTIONS.DEFAULT
@@ -60,10 +59,6 @@ func _ready() -> void:
 
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
-
-	if damage_on_touch:
-		area = $Area2D
-		area.body_entered.connect(on_area_entered)
 
 	if spawn_type == SPAWN_TYPE_OPTIONS.GROUND:
 		owner.process_mode = Node.PROCESS_MODE_DISABLED
