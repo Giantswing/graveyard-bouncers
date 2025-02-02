@@ -1,10 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2s4o300l8sf4"]
+[gd_scene load_steps=10 format=3 uid="uid://c2s4o300l8sf4"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_2fdja"]
 [ext_resource type="Texture2D" uid="uid://b8w4bysn5spcc" path="res://sprites/toxic-ground.png" id="2_ul2i7"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
-size = Vector2(24, 21)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2fdja"]
 atlas = ExtResource("2_ul2i7")
@@ -42,19 +39,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fdja"]
+size = Vector2(24, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdrgs"]
+size = Vector2(24, 21)
+
 [node name="ToxicGround" type="StaticBody2D"]
 collision_mask = 0
-
-[node name="Stats" type="Node2D" parent="."]
-script = ExtResource("1_2fdja")
-damage = 1
-can_take_damage = false
-can_be_parried = false
-metadata/_custom_type_script = ExtResource("1_2fdja")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_bdrgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 2
@@ -76,3 +68,22 @@ metadata/_aseprite_wizard_config_ = {
 "source": "/home/alex/Pictures/sprites/toxic-ground.aseprite"
 }
 metadata/_aseprite_wizard_source_file_hash_ = "623d19d6a259c8be34306ed52bf4e4bf"
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("1_2fdja")
+damage = 1
+can_take_damage = false
+can_be_parried = false
+metadata/_custom_type_script = ExtResource("1_2fdja")
+
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+shape = SubResource("RectangleShape2D_2fdja")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_bdrgs")

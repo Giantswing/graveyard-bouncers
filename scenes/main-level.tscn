@@ -971,7 +971,6 @@ process_material = SubResource("ParticleProcessMaterial_3trw7")
 unique_name_in_owner = true
 position = Vector2(0, -142)
 failed_attack_str_mult = 0.6
-parry_raycast_distance = 50.0
 
 [node name="GodRays" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_dr822")

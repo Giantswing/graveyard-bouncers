@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://ywgdf87hvv7a"]
+[gd_scene load_steps=14 format=3 uid="uid://ywgdf87hvv7a"]
 
 [ext_resource type="Script" uid="uid://cxk2hkqb5d5ft" path="res://scripts/bat.gd" id="1_ss3tx"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_lv0ya"]
 [ext_resource type="Texture2D" uid="uid://crvysj4la2qsn" path="res://sprites/bat.png" id="3_5fn3r"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_lv0ya"]
 [ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="4_8qtcx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lv0ya"]
+size = Vector2(16, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
 size = Vector2(18, 8)
@@ -60,14 +63,20 @@ script = ExtResource("1_ss3tx")
 wobble = 0.2
 
 [node name="Stats" type="Node2D" parent="."]
-position = Vector2(-3, 0)
 script = ExtResource("2_lv0ya")
 damage = 1
 score_reward = 15
 metadata/_custom_type_script = ExtResource("2_lv0ya")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 1)
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+shape = SubResource("RectangleShape2D_lv0ya")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cvmw5")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

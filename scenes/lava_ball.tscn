@@ -1,9 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://ewq68vpmsm17"]
+[gd_scene load_steps=14 format=3 uid="uid://ewq68vpmsm17"]
 
 [ext_resource type="Script" uid="uid://bx2kfpcnxvte7" path="res://scripts/lava_ball.gd" id="1_wo57b"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_uxo8x"]
 [ext_resource type="Texture2D" uid="uid://bifoq8aierf30" path="res://sprites/lava-ball.png" id="3_wo57b"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="4_wo57b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wo57b"]
+size = Vector2(12, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
 size = Vector2(16, 16)
@@ -64,7 +67,7 @@ animations = [{
 }]
 
 [node name="LavaBall" type="CharacterBody2D"]
-collision_layer = 8
+collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_wo57b")
 speed = 175.0
@@ -77,6 +80,14 @@ hp_max = 100
 damage = 1
 can_take_damage = false
 can_be_parried = false
+
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+shape = SubResource("RectangleShape2D_wo57b")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_veat2")

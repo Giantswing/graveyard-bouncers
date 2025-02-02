@@ -4,11 +4,6 @@ class_name PlayerCharacter
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 
-@onready var parry_cast1: RayCast2D = $Raycasts/ParryCast1
-@onready var parry_cast2: RayCast2D = $Raycasts/ParryCast2
-@onready var attack_cast1: RayCast2D = $Raycasts/AttackCast1
-@onready var attack_cast2: RayCast2D = $Raycasts/AttackCast2
-
 @onready var body_forward_cast: RayCast2D = $Raycasts/BodyForwardCast
 @onready var dash_cast: RayCast2D = $Raycasts/DashCast
 @onready var speed_particles: GPUParticles2D = $SpeedParticles
@@ -28,9 +23,8 @@ class_name PlayerCharacter
 @export var getting_hit_bounce_str_mult: float = 1.5
 @export var slide_down_max_speed: float = 30
 
-@export var hit_invincibility_time: float = 0.5
+@export var hit_invincibility_time: float = 1.5
 @export var mov_speed: float = 100
-@export var parry_raycast_distance: float = 30
 
 @export var extra_speed_decay: float = 0.1
 @export var extra_speed_strength: float = 1
@@ -41,68 +35,59 @@ class_name PlayerCharacter
 
 var extra_speed: Vector2 = Vector2.ZERO
 
-var can_jump: bool = true
 var hspeed: float = 0
 var hspeed_to: float = 0
 
-var is_attacking: int = 0 # 0 = not attacking, 1 = preparing attack, 2 = attacking
-var is_parrying: bool = false
 var jump_pressed: bool = false 
 var ability_pressed: bool = false
 var movement_input: Vector2
-var can_get_hit: bool = true
 var received_damage: bool = false
 var previous_velocity: Vector2 = Vector2.ZERO
 var grounded: bool = false
 var on_wall: bool = false
+
 var can_be_on_wall: bool = true 
+var can_jump: bool = true
+var can_get_hit: bool = true
+var can_attack: bool = true
+
+var is_attacking: int = 0 # 0 = not attacking, 1 = preparing attack, 2 = attacking
+var is_parrying: bool = false
 
 var slide_fx_timer: float = 0
+
+var parry_targets: Array[Stats]
+var attack_targets: Array[Stats]
+
+@onready var parry_area: Area2D = %ParryArea
+@onready var attack_area: Area2D = %AttackArea
 
 
 func _ready() -> void:
 	speed_particles.emitting = false
 	dash_particles.emitting = false
 	base_strength *= GameManager.get_instance().round_data.gravity_multiplier
-	parry_cast1.target_position.y = parry_raycast_distance
-	parry_cast2.target_position.y = parry_raycast_distance
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
 	Events.round_ended.connect(on_round_ended)
 
-func on_round_ended() -> void:
-	velocity.y = -base_strength * 2.3
-	is_attacking = 0
+	parry_targets = []
+	parry_area.body_entered.connect(on_parry_area_body_entered)
+	parry_area.body_exited.connect(on_parry_area_body_exited)
 
-func on_picked_up_powerup(powerup: PowerUp) -> void:
-	if powerup.power_up_name == "sticky-boots":
-		slide_down_max_speed *= 0.3
+	attack_targets = []
+	attack_area.body_entered.connect(on_attack_area_body_entered)
+	attack_area.body_exited.connect(on_attack_area_body_exited)
 
-func on_ability_gained(new_ability: Ability) -> void:
-	if new_ability == null:
-		sprite.material.set_shader_parameter("width", 0)
 
-		return
+func get_input() -> void:
+	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
+	jump_pressed = Input.is_action_just_pressed("Jump")
+	ability_pressed = Input.is_action_just_pressed("Ability")
 
-	var ability_name: String = new_ability.name
-	var ability_uses: int = new_ability.uses
 
-	if ability_name == "dash":
-		if ability_uses == 1: # Blue
-			sprite.material.set_shader_parameter("color", Color(0, 1, 1, 0.8))
-		elif ability_uses == 2: # Orange
-			sprite.material.set_shader_parameter("color", Color(1, 0.5, 0, 0.8))
-		elif ability_uses == 3: # White
-			sprite.material.set_shader_parameter("color", Color(1, 1, 1, 1))
-
-		sprite.material.set_shader_parameter("width", 1.0)
-
-func on_player_died() -> void:
-	Engine.time_scale = 0.5
-
-	queue_free()
 
 func _process(delta: float) -> void:
 	get_input()
@@ -142,8 +127,6 @@ func _process(delta: float) -> void:
 
 				slide_fx_timer = 0
 
-
-
 		else:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			
@@ -172,86 +155,18 @@ func _physics_process(_delta: float) -> void:
 		on_wall = body_forward_cast.is_colliding()
 
 
-	for i in range(get_slide_collision_count()):
-		var collision := get_slide_collision(i)
-		handle_collision(collision)
+	# for i in range(get_slide_collision_count()):
+	# 	var collision := get_slide_collision(i)
+	# 	handle_collision(collision)
 	
+	if (attack_targets.size() > 0 and is_attacking == 2 and can_attack and velocity.y > 0):
+		process_attack()
 
-	if(grounded and is_attacking == 2): # Failed attack
+	elif (grounded and is_attacking == 2 and !is_parrying): # Failed attack
 		velocity.y = -failed_attack_str_mult * base_strength
 		is_attacking = 0
 		is_parrying = false
 		FxSystem.play_fx("SmokeHitSmall", position)
-
-
-func handle_collision(collision: KinematicCollision2D) -> void:
-	var parent := collision.get_collider()
-	var stats: Stats = parent.get_node_or_null("Stats")
-
-	var am_i_above: bool = position.y < parent.get_position().y
-	var am_i_moving_down: bool = previous_velocity.y > 0
-	var will_atack: bool = is_attacking == 2 and am_i_above and am_i_moving_down
-
-	if stats != null:
-		if will_atack and stats.can_take_damage:
-			stats.take_damage(1)
-
-			can_get_hit = false
-			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
-
-			if is_parrying == false: # Normal attack
-				GameManager.get_instance().set_powerup_active("double-jump", true)
-				speed_particles.emitting = false
-				velocity.y = -normal_attack_bounce_str_mult * base_strength
-
-				FxSystem.play_fx("SmokeHitSmall", position)
-
-				can_jump = false
-				get_tree().create_timer(0.1).timeout.connect(reset_jump)
-
-				velocity.y = clamp(velocity.y, -2000, 2000)
-			else: # Parry attack
-				GameManager.get_instance().set_powerup_active("double-jump", true)
-				velocity.y = -parry_bounce_str_mult * base_strength
-				grounded = false
-
-				animation_controller.play_animation("parry")
-
-				GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
-
-				Engine.time_scale = 0.1
-				get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
-				
-				Events.player_parry.emit()
-				speed_particles.emitting = true
-				
-				FxSystem.play_fx("SmokeHit", position)
-
-				can_jump = false
-				get_tree().create_timer(0.1).timeout.connect(reset_jump)
-
-
-			is_attacking = 0
-			is_parrying = false
-
-		else:
-			if can_get_hit and stats.damage > 0: # Take damage get hit
-				can_get_hit = false
-				received_damage = true
-
-				set_collision_mask_value(3, false)
-				get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
-
-				velocity.y = -getting_hit_bounce_str_mult * base_strength
-				is_attacking = 0
-				can_jump = false
-
-				Events.hp_changed.emit(GameManager.get_instance().player_hp - stats.damage, -stats.damage)
-
-				if(GameManager.get_instance().player_hp > 0):
-					Engine.time_scale = 0.1
-					get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
-					get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 
 
@@ -265,6 +180,136 @@ func handle_ability() -> void:
 		process_dash()
 
 	GameManager.instance.use_current_ability()
+
+
+
+func handle_jump() -> void:
+	if jump_pressed and can_jump:
+		can_jump = false
+		get_tree().create_timer(0.1).timeout.connect(reset_jump)
+
+		if grounded:
+			GameManager.get_instance().set_powerup_active("double-jump", true)
+			velocity.y = -base_strength * jump_str_mult
+			grounded = false
+			animation_controller.play_animation("jump")
+
+		elif on_wall:
+			deactivate_can_be_on_wall()
+			extra_speed = Vector2.ZERO
+			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
+			velocity.y = -base_strength * jump_str_mult
+
+		else: # If we are in the air and jump again, we attack
+			if is_attacking == 0:
+				animation_controller.play_animation("attack")
+				process_jump()
+				return
+			
+			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
+				animation_controller.play_animation("attack")
+				GameManager.get_instance().set_powerup_active("double-jump", false)
+				process_jump()
+				return
+
+
+
+
+func process_jump() -> void:
+	var parry_target: Node2D = null
+	var max_distance: float = 10000
+
+	for target: Stats in parry_targets:
+		var distance: float = target.global_position.distance_to(global_position)
+		if distance < max_distance:
+			max_distance = distance
+			parry_target = target
+
+
+	if parry_target != null and is_attacking == 0:
+		received_damage = false
+		process_parry(parry_target)
+	else:
+		is_attacking = 1
+		received_damage = false
+		velocity.y = -attack_recoil_str_mult * base_strength
+
+
+
+
+func process_attack() -> void:
+	var target: Stats = null
+	var max_distance: float = 10000
+
+	for attack_target: Stats in attack_targets:
+		var distance: float = attack_target.global_position.distance_to(global_position)
+		if distance < max_distance:
+			max_distance = distance
+			target = attack_target
+
+	velocity.y = 0
+	can_attack = false
+	can_get_hit = false
+
+	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
+		func() -> void:
+			print("Attacking")
+			target.take_damage(1)
+			can_get_hit = false
+			is_attacking = 0
+			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
+
+			GameManager.get_instance().set_powerup_active("double-jump", true)
+			speed_particles.emitting = false
+			velocity.y = -normal_attack_bounce_str_mult * base_strength
+
+			FxSystem.play_fx("SmokeHitSmall", position)
+
+			can_jump = false
+			get_tree().create_timer(0.2).timeout.connect(
+				func() -> void:
+					can_get_hit = true
+					can_attack = true
+					can_jump = true
+			)
+	)
+	
+
+
+
+func process_parry(target: Stats) -> void:
+	velocity.y = 0
+	is_parrying = true
+
+	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
+		func() -> void:
+			target.take_damage(1)
+			can_get_hit = false
+			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
+
+			GameManager.get_instance().set_powerup_active("double-jump", true)
+			velocity.y = -parry_bounce_str_mult * base_strength
+			grounded = false
+
+			animation_controller.play_animation("parry")
+
+			GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
+
+			Engine.time_scale = 0.1
+			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
+
+			Events.player_parry.emit()
+			speed_particles.emitting = true
+
+			FxSystem.play_fx("SmokeHit", position)
+
+			can_jump = false
+			is_parrying = false
+			get_tree().create_timer(0.1).timeout.connect(reset_jump)
+	)
+
+
+
 
 func process_dash() -> void:
 	is_attacking = 0
@@ -305,80 +350,113 @@ func process_dash() -> void:
 	Utils.fast_tween(self, "position", new_position, 0.05)
 
 
-func handle_jump() -> void:
-	if jump_pressed and can_jump:
-		can_jump = false
-		get_tree().create_timer(0.1).timeout.connect(reset_jump)
-
-		if grounded:
-			GameManager.get_instance().set_powerup_active("double-jump", true)
-			velocity.y = -base_strength * jump_str_mult
-			grounded = false
-			animation_controller.play_animation("jump")
-
-		elif on_wall:
-			deactivate_can_be_on_wall()
-			extra_speed = Vector2.ZERO
-			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
-			velocity.y = -base_strength * jump_str_mult
-
-		else: # If we are in the air and jump again, we attack
-			if is_attacking == 0:
-				animation_controller.play_animation("attack")
-				process_jump()
-				return
-			
-			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
-				animation_controller.play_animation("attack")
-				GameManager.get_instance().set_powerup_active("double-jump", false)
-				process_jump()
-				return
-
-func process_jump() -> void:
-	var collision := get_raycasts_collision_node([parry_cast1, parry_cast2])
-
-	if collision != null and is_attacking == 0:
-		var stats: Stats = collision.get_node_or_null("Stats")
-
-		if stats != null and stats.can_be_parried: # Start parry
-			is_parrying = true
-			if velocity.y < parry_downward_str_mult * base_strength:
-				velocity.y = parry_downward_str_mult * base_strength
-			else:
-				velocity.y *= parry_downward_str_mult * 2
-
-			is_attacking = 2
-			return
-
-
-	is_attacking = 1
-	velocity.y = -attack_recoil_str_mult * base_strength
-
-func get_input() -> void:
-	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
-	jump_pressed = Input.is_action_just_pressed("Jump")
-	ability_pressed = Input.is_action_just_pressed("Ability")
-
-
-func get_raycasts_collision_node(raycasts: Array) -> Node2D:
-	for raycast: RayCast2D in raycasts:
-		if raycast.is_colliding():
-			return raycast.get_collider()
-
-	return null
-
 
 func reset_jump() -> void:
 	can_jump = true
 
+
 func reset_time_scale() -> void:
 	Engine.time_scale = 1.0
 
-func reset_can_get_hit() -> void:
-	set_collision_mask_value(3, true)
-	received_damage = false
-	can_get_hit = true
 
 func deactivate_can_be_on_wall() -> void:
 	can_be_on_wall = false
 	get_tree().create_timer(0.1).timeout.connect(func() -> void: can_be_on_wall = true)
+
+
+func on_parry_area_body_entered(body: Node2D) -> void:
+	var stats: Stats = body.get_node_or_null("Stats")
+
+	if stats != null && stats.can_be_parried && parry_targets.find(stats) == -1:
+		parry_targets.append(stats)
+
+func on_parry_area_body_exited(body: Node2D) -> void:
+	var stats: Stats = body.get_node_or_null("Stats")
+	if stats != null:
+		parry_targets.erase(stats)
+
+func on_attack_area_body_entered(body: Node2D) -> void:
+	var stats: Stats = body.get_node_or_null("Stats")
+
+	if stats != null && stats.can_take_damage && attack_targets.find(stats) == -1:
+		attack_targets.append(stats)
+
+func on_attack_area_body_exited(body: Node2D) -> void:
+	var stats: Stats = body.get_node_or_null("Stats")
+	if stats != null:
+		attack_targets.erase(stats)
+
+
+func on_round_ended() -> void:
+	velocity.y = -base_strength * 2.3
+	is_attacking = 0
+
+
+func on_picked_up_powerup(powerup: PowerUp) -> void:
+	if powerup.power_up_name == "sticky-boots":
+		slide_down_max_speed *= 0.3
+
+
+func on_ability_gained(new_ability: Ability) -> void:
+	if new_ability == null:
+		sprite.material.set_shader_parameter("width", 0)
+		return
+
+	var ability_name: String = new_ability.name
+	var ability_uses: int = new_ability.uses
+
+	if ability_name == "dash":
+		if ability_uses == 1: # Blue
+			sprite.material.set_shader_parameter("color", Color(0, 1, 1, 0.8))
+		elif ability_uses == 2: # Orange
+			sprite.material.set_shader_parameter("color", Color(1, 0.5, 0, 0.8))
+		elif ability_uses == 3: # White
+			sprite.material.set_shader_parameter("color", Color(1, 1, 1, 1))
+
+		sprite.material.set_shader_parameter("width", 1.0)
+
+
+func on_player_died() -> void:
+	Engine.time_scale = 0.5
+	queue_free()
+
+
+func get_hit(from: Stats) -> void:
+	if !can_get_hit:
+		return
+
+	if (grounded or velocity.y < 0) and from.only_damage_when_moving_down:
+		return
+
+	# if from.only_damage_when_moving_down:
+	# 	if velocity.y < 0 or grounded:
+	# 		return
+
+	can_get_hit = false
+	received_damage = true
+
+	sprite.material.set_shader_parameter("tint", Color(1, 1, 1, 0.5))
+	get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
+	get_tree().create_timer(1.0).timeout.connect(func() -> void: received_damage = false)
+
+	velocity.y = -getting_hit_bounce_str_mult * base_strength
+	is_attacking = 0
+	can_jump = false
+
+	Events.hp_changed.emit(GameManager.get_instance().player_hp - from.damage, -from.damage)
+
+	if(GameManager.get_instance().player_hp > 0):
+		Engine.time_scale = 0.1
+		get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
+		get_tree().create_timer(0.1).timeout.connect(reset_jump)
+
+
+func reset_can_get_hit() -> void:
+	can_get_hit = true
+	sprite.material.set_shader_parameter("tint", Color(1, 1, 1, 1))
+
+
+# func handle_collision(collision: KinematicCollision2D) -> void:
+# 	var am_i_above: bool = position.y < parent.get_position().y
+# 	var am_i_moving_down: bool = previous_velocity.y > 0
+# 	var will_atack: bool = is_attacking == 2 and am_i_above and am_i_moving_down

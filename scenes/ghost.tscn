@@ -1,13 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvapbvjvt7sng"]
+[gd_scene load_steps=13 format=3 uid="uid://bvapbvjvt7sng"]
 
 [ext_resource type="Script" uid="uid://d1kww0kwpsiej" path="res://scripts/ghost.gd" id="1_bbnym"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_l5lq6"]
 [ext_resource type="Texture2D" uid="uid://b784kk44rak2v" path="res://sprites/ghost.png" id="2_bbnym"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_5mfnq"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="5_5mfnq"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
-size = Vector2(16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aqsxy"]
 atlas = ExtResource("2_bbnym")
@@ -45,20 +42,17 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mfnq"]
+size = Vector2(12, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
+size = Vector2(16, 16)
+
 [node name="Ghost" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_bbnym")
 max_time_alive = 10.0
 spawn_time = 0.5
-
-[node name="Stats" type="Node2D" parent="."]
-script = ExtResource("1_l5lq6")
-damage = 1
-score_reward = 10
-
-[node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_veat2")
-one_way_collision = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -80,6 +74,23 @@ metadata/_aseprite_wizard_config_ = {
 "source": "/home/alex/Pictures/sprites/ghost.aseprite"
 }
 metadata/_aseprite_wizard_source_file_hash_ = "ffb127f4e21468d9e2ffefec6dc62b07"
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("1_l5lq6")
+damage = 1
+score_reward = 10
+only_damage_when_moving_down = true
+
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+shape = SubResource("RectangleShape2D_5mfnq")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_veat2")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture_filter = 1

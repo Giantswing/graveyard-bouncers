@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dsdtpug2sa4g0"]
+[gd_scene load_steps=50 format=3 uid="uid://dsdtpug2sa4g0"]
 
 [ext_resource type="Script" uid="uid://bx8m8lkkpx4xl" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://cfho5mbhojlvc" path="res://scripts/player_animation_controller.gd" id="2_g2els"]
@@ -57,6 +57,7 @@ shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
 shader_parameter/number_of_images = Vector2(1, 1)
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
 atlas = ExtResource("6_tuyoq")
@@ -320,9 +321,14 @@ animations = [{
 radius = 9.0
 height = 25.33
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
+size = Vector2(34, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjrip"]
+size = Vector2(34, 17)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 29
 floor_stop_on_slope = false
 script = ExtResource("1_g2els")
 base_strength = 400.0
@@ -333,7 +339,6 @@ parry_bounce_str_mult = 1.8
 getting_hit_bounce_str_mult = 2.0
 slide_down_max_speed = 90.0
 mov_speed = 150.0
-parry_raycast_distance = 40.0
 extra_speed_decay = 0.3
 dash_frames_left = ExtResource("3_fjrip")
 dash_frames_right = ExtResource("2_tuyoq")
@@ -361,7 +366,7 @@ process_material = SubResource("ParticleProcessMaterial_dqkch")
 texture_filter = 1
 material = SubResource("ShaderMaterial_tuyoq")
 sprite_frames = SubResource("SpriteFrames_jc3p3")
-animation = &"wallslide"
+animation = &"fall"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "layer_section": true,
@@ -385,31 +390,27 @@ metadata/_aseprite_wizard_source_file_hash_ = "971b94b9bac4fcecb272b8bb3126b8cd"
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_tuyoq")
 
+[node name="ParryArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParryArea"]
+position = Vector2(0, 31)
+shape = SubResource("RectangleShape2D_tuyoq")
+debug_color = Color(0.973165, 0.134581, 0.241487, 0.42)
+
+[node name="AttackArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(0, 19.5)
+shape = SubResource("RectangleShape2D_fjrip")
+debug_color = Color(0.805982, 0.415632, 0, 0.42)
+
 [node name="Raycasts" type="Node2D" parent="."]
-
-[node name="ParryCast1" type="RayCast2D" parent="Raycasts"]
-position = Vector2(-8, 0)
-target_position = Vector2(0, 35)
-collision_mask = 12
-collide_with_areas = true
-
-[node name="ParryCast2" type="RayCast2D" parent="Raycasts"]
-position = Vector2(8, 0)
-target_position = Vector2(0, 35)
-collision_mask = 12
-collide_with_areas = true
-
-[node name="AttackCast1" type="RayCast2D" parent="Raycasts"]
-position = Vector2(-8, 0)
-target_position = Vector2(0, 20)
-collision_mask = 12
-collide_with_areas = true
-
-[node name="AttackCast2" type="RayCast2D" parent="Raycasts"]
-position = Vector2(8, 0)
-target_position = Vector2(0, 20)
-collision_mask = 12
-collide_with_areas = true
 
 [node name="BodyForwardCast" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(23, 0)

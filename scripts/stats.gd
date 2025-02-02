@@ -16,7 +16,11 @@ class_name Stats
 @export var spawn_rate_reduction: float = 0
 @export var sprite: AnimatedSprite2D
 @export var spawn_type: SPAWN_TYPE_OPTIONS = SPAWN_TYPE_OPTIONS.DEFAULT
+@export var only_damage_when_moving_down: bool = false
+
+var hurt_area: Area2D
 var area: Area2D
+@export var height: int = 24
 
 enum DEATH_BEHAVIOUR_OPTIONS {
 	DEFAULT,
@@ -42,6 +46,14 @@ signal on_hit
 func _ready() -> void:
 	hp = hp_max
 	parent = get_parent()
+	hurt_area = get_node_or_null("HurtArea")
+
+	if hurt_area and damage > 0:
+		hurt_area.body_entered.connect(
+			func(body: Node2D) -> void:
+				if body is PlayerCharacter:
+					body.get_hit(self)
+	)
 
 	if !sprite:
 		sprite = owner.get_node_or_null("Sprite")
