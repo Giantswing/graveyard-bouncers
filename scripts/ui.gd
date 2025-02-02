@@ -115,8 +115,8 @@ func on_score_changed(new_score: int) -> void:
 
 func update_ui_transparency() -> void:
 	var player_screen_pos: Vector2 = GameManager.instance.player_screen_pos
-	var x_offset: float = 0.25
-	var y_offset: float = 0.25
+	var x_offset: float = 0.3
+	var y_offset: float = 0.3
 
 	if player_screen_pos.x < x_offset && player_screen_pos.y < y_offset:
 		top_left_container.modulate = lerp(top_left_container.modulate, Color(1, 1, 1, 0.3), 0.1)

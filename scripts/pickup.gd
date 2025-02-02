@@ -10,6 +10,7 @@ var time_following: float = 0
 var speed: float = 15
 var max_speed: float = 600
 var follow_particles: GPUParticles2D = null
+var player: PlayerCharacter = null
 
 enum PICKUP_OPTIONS {
 	COIN,
@@ -40,6 +41,7 @@ func pickup(body: Node2D) -> void:
 
 	pickup_state = 1
 	target = body
+	player = body as PlayerCharacter
 
 	if follow_particles:
 		follow_particles.emitting = true 
@@ -62,6 +64,9 @@ func _process(delta: float) -> void:
 			time_following = 0
 
 	elif pickup_state == 2:
+		other_pos = target.global_position + player.velocity * 0.1
+		direction = (other_pos - my_pos).normalized()
+
 		time_following += delta
 		velocity += direction * speed * 2
 

@@ -471,6 +471,8 @@ func get_hit(from: Stats) -> void:
 	received_damage = true
 
 	sprite.material.set_shader_parameter("tint", Color(1, 1, 1, 0.5))
+	can_attack = false
+	get_tree().create_timer(0.2).timeout.connect(func() -> void: can_attack = true)
 	get_tree().create_timer(hit_invincibility_time).timeout.connect(reset_can_get_hit)
 	get_tree().create_timer(1.0).timeout.connect(func() -> void: received_damage = false)
 

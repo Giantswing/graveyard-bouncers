@@ -23,7 +23,6 @@ var area: Area2D
 
 enum DEATH_BEHAVIOUR_OPTIONS {
 	DEFAULT,
-	START_ROUND
 }
 
 enum SPAWN_TYPE_OPTIONS {
@@ -35,6 +34,7 @@ enum SPAWN_TYPE_OPTIONS {
 @export var death_behaviour: DEATH_BEHAVIOUR_OPTIONS = DEATH_BEHAVIOUR_OPTIONS.DEFAULT
 
 var is_invulnerable: bool = false
+var is_alive: bool = true
 var parent: Node2D
 
 
@@ -120,28 +120,38 @@ func take_damage(amount: int) -> void:
 		sprite.play("GetHit")
 
 	if hp <= 0:
-		if spawn_rate_reduction > 0:
-			GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
-		
-		if score_reward != 0:
-			Events.score_changed.emit(GameManager.get_instance().score + score_reward * 10)
-
-		if wall_reward != 0:
-			GameManager.get_instance().game_width -= wall_reward
-
-		emit_signal("on_death")
-
-		if death_behaviour == DEATH_BEHAVIOUR_OPTIONS.START_ROUND:
-			hp = hp_max
-			death_behaviour_start_round()
-		else:
-			parent.queue_free()
+		die()
 	else:
 		hit_flash()
 
+func die() -> void:
+	if !is_alive:
+		return
 
-func death_behaviour_start_round() -> void:
-	Events.round_started.emit()
+	is_alive = false
+
+	if sprite:
+		sprite.material.set_shader_parameter("active", 1)
+
+	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.1, Tween.TRANS_ELASTIC).tween_callback(
+		func() -> void:
+		emit_signal("on_death")
+		parent.queue_free()
+	)
+
+
+	if hurt_area:
+		hurt_area.queue_free()
+
+	if spawn_rate_reduction > 0:
+		GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
+	
+	if score_reward != 0:
+		Events.score_changed.emit(GameManager.get_instance().score + score_reward * 10)
+
+	if wall_reward != 0:
+		GameManager.get_instance().game_width -= wall_reward
+
 
 func reset_invulnerable() -> void:
 	is_invulnerable = false

@@ -247,9 +247,12 @@ func set_up_round() -> void:
 	var offset: float = 200
 
 	if round_data.has_trampoline:
-		var new_obj: Node2D = Utils.spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
-		new_obj.scale = Vector2(0, 0)
-		Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
+		get_tree().create_timer(1).timeout.connect(
+			func() -> void:
+				var new_obj: Node2D = Utils.spawn_prefab(trampoline_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)
+				new_obj.scale = Vector2(0, 0)
+				Utils.fast_tween(new_obj, "scale", Vector2(1, 1), 0.4)
+		)
 
 	if round_data.has_helper_enemy:
 		var new_obj: Node2D = Utils.spawn_prefab(helper_enemy_prefab, reward_container, PrefabChance.SPAWN_POS_OPTIONS.GROUND, 20)

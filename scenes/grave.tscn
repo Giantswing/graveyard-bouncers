@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://clbg6qul035bg"]
+[gd_scene load_steps=9 format=3 uid="uid://clbg6qul035bg"]
 
+[ext_resource type="Script" uid="uid://bhhfau3nf0qvs" path="res://scripts/grave.gd" id="1_inmiy"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_mlivn"]
 [ext_resource type="Texture2D" uid="uid://b6dbt3id4osjb" path="res://sprites/grave.png" id="1_qpo7b"]
 
@@ -36,9 +37,13 @@ collision_layer = 8
 collision_mask = 9
 lock_rotation = true
 angular_damp = 5.0
+script = ExtResource("1_inmiy")
 
 [node name="Stats" type="Node2D" parent="."]
+position = Vector2(-2, 0)
 script = ExtResource("1_mlivn")
+hp = 9999
+hp_max = 9999
 death_behaviour = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
