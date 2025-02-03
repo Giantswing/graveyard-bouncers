@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=97 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -20,7 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="8_y4si7"]
 [ext_resource type="Texture2D" uid="uid://2r8vgnwl11tu" path="res://sprites/tree-bottom.png" id="8_yl8gf"]
 [ext_resource type="PackedScene" uid="uid://50wu1jt67mqg" path="res://scenes/ui.tscn" id="9_6g0xn"]
+[ext_resource type="Shader" uid="uid://baxudooxtptqv" path="res://shaders/challenge-transition.gdshader" id="9_6qoa1"]
 [ext_resource type="PackedScene" uid="uid://ewq68vpmsm17" path="res://scenes/lava_ball.tscn" id="9_aksw0"]
+[ext_resource type="Texture2D" uid="uid://fvok74n3mel8" path="res://sprites/spikes.png" id="10_5itvi"]
 [ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
 [ext_resource type="Script" uid="uid://c2ii2mke1pk65" path="res://scripts/power_up_shop.gd" id="11_aqsxy"]
 [ext_resource type="Resource" uid="uid://bmx4tbxu0gfdu" path="res://resources/powerups/jumpy-shovel.tres" id="11_cvmw5"]
@@ -53,6 +55,22 @@ shader_parameter/thickness = 0.001
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja4wt"]
 size = Vector2(74, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5itvi"]
+shader = ExtResource("9_6qoa1")
+shader_parameter/bottom_color = Color(0, 0, 0, 1)
+shader_parameter/top_color = Color(0.882904, 0, 0.15724, 1)
+shader_parameter/tex = ExtResource("10_5itvi")
+shader_parameter/layer_count = 20
+shader_parameter/time_scale = 3.384
+shader_parameter/base_intensity = 0.128
+shader_parameter/size = 0.06501
+
+[sub_resource type="Gradient" id="Gradient_bh8c8"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7keex"]
+gradient = SubResource("Gradient_bh8c8")
 
 [sub_resource type="Gradient" id="Gradient_8k87t"]
 colors = PackedColorArray(0, 0, 0, 1, 0.1476, 0.29192, 0.41, 1)
@@ -444,7 +462,7 @@ offset_right = -280.0
 offset_bottom = -140.0
 
 [node name="ChallengeContainer" type="Node2D" parent="."]
-position = Vector2(0, -3000)
+position = Vector2(0, -5000)
 script = ExtResource("3_ja4wt")
 
 [node name="ChallengeScene" type="Node2D" parent="ChallengeContainer"]
@@ -513,6 +531,32 @@ position = Vector2(272, 62)
 
 [node name="Coin3" parent="ChallengeContainer/ChallengeScene" instance=ExtResource("6_qycv7")]
 position = Vector2(377, -6)
+
+[node name="Transition" type="Node2D" parent="ChallengeContainer"]
+position = Vector2(0, 810)
+
+[node name="ColorRect" type="ColorRect" parent="ChallengeContainer/Transition"]
+material = SubResource("ShaderMaterial_5itvi")
+offset_left = -2129.0
+offset_top = 47.0
+offset_right = 2129.0
+offset_bottom = 3233.0
+
+[node name="TextureRect" type="TextureRect" parent="ChallengeContainer/Transition"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2325.0
+offset_right = 3071.0
+offset_bottom = 4657.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+texture = SubResource("GradientTexture1D_7keex")
+
+[node name="Background" type="Node2D" parent="ChallengeContainer"]
 
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true

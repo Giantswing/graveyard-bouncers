@@ -55,7 +55,7 @@ func _ready() -> void:
 
 	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void:
 		current_mode = MODES.CHALLENGE_MODE
-		extra_speed = 1
+		extra_speed = 0.1
 	)
 
 	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void:
@@ -75,7 +75,7 @@ func on_hp_change(_hp: int, change: int) -> void:
 	
 func _process(delta: float) -> void:
 	# return
-	extra_speed = lerp(extra_speed, 0.0, 0.1)
+	extra_speed = lerp(extra_speed, 0.0, 0.02)
 
 	current_zoom = lerp(current_zoom, current_zoom_to, zoom_speed)
 
