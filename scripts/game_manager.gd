@@ -20,6 +20,7 @@ class_name GameManager
 
 var round_time: int = 0
 var round_data: GameRound = null
+var challenge_data: Challenge = null
 var score: int = 0
 @export var coins: int = 0
 
@@ -106,6 +107,8 @@ func _ready() -> void:
 	Engine.time_scale = 1.0
 
 	update_current_round()
+	update_current_challenge()
+
 	set_up_round()
 
 	current_game_width = game_width
@@ -147,6 +150,10 @@ func use_current_ability() -> void:
 		Events.ability_gained.emit(player_ability)
 
 
+func update_current_challenge() -> void:
+	challenge_data = round_manager.get_challenge()
+	print(challenge_data)
+	Events.set_up_challenge.emit(challenge_data)
 
 func update_current_round() -> void:
 	round_data = round_manager.get_round(current_difficulty)
@@ -411,6 +418,7 @@ func end_round() -> void:
 	current_difficulty += 1
 
 	update_current_round()
+	update_current_challenge()
 	set_up_round()
 
 

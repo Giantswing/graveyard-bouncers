@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=22 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
@@ -15,6 +15,8 @@
 [ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="12_5xtl8"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="13_cjvif"]
 [ext_resource type="PackedScene" uid="uid://dwtuqnyewxvhv" path="res://scenes/cloud.tscn" id="15_5xtl8"]
+[ext_resource type="Script" uid="uid://dnww2wfp0co8y" path="res://scripts/challenge.gd" id="16_ry0e6"]
+[ext_resource type="PackedScene" uid="uid://cox3qad5bb5gk" path="res://scenes/challenge_scenes/challenge_basic_01.tscn" id="17_pc0jn"]
 
 [sub_resource type="Resource" id="Resource_cjvif"]
 script = ExtResource("2_udu3i")
@@ -71,6 +73,13 @@ spike_amount = 0
 debug = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
+[sub_resource type="Resource" id="Resource_c7a3q"]
+script = ExtResource("16_ry0e6")
+scene = ExtResource("17_pc0jn")
+chance = 1.0
+debug = false
+metadata/_custom_type_script = ExtResource("16_ry0e6")
+
 [node name="GameManager" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_hwd4i")
@@ -84,6 +93,7 @@ position = Vector2(-14, 0)
 script = ExtResource("6_ternb")
 game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_q8mjp"), SubResource("Resource_30v7y")])
 chance_decay_rate = 0.5
+game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q")])
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

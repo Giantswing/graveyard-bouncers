@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3vk8vkybg3nr"]
+
+[ext_resource type="Texture2D" uid="uid://snuc62jdldom" path="res://scenes/center-platform.png" id="1_deq7b"]
+[ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="2_s3rrv"]
+[ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="3_1rmuf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja4wt"]
+size = Vector2(74, 20)
+
+[node name="ChallengeBasic01" type="Node2D"]
+
+[node name="StartPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 101)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_ja4wt")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture_filter = 1
+texture = ExtResource("1_deq7b")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(152, 51)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("RectangleShape2D_ja4wt")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+texture_filter = 1
+texture = ExtResource("1_deq7b")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(272, 112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_ja4wt")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+texture_filter = 1
+texture = ExtResource("1_deq7b")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(381, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("RectangleShape2D_ja4wt")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4"]
+texture_filter = 1
+texture = ExtResource("1_deq7b")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(559, 29)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+shape = SubResource("RectangleShape2D_ja4wt")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5"]
+texture_filter = 1
+texture = ExtResource("1_deq7b")
+
+[node name="ChallengePortal" parent="." instance=ExtResource("2_s3rrv")]
+position = Vector2(581, -8)
+enter = false
+
+[node name="Coin" parent="." instance=ExtResource("3_1rmuf")]
+position = Vector2(154, -2)
+
+[node name="Coin2" parent="." instance=ExtResource("3_1rmuf")]
+position = Vector2(272, 62)
+
+[node name="Coin3" parent="." instance=ExtResource("3_1rmuf")]
+position = Vector2(377, -6)

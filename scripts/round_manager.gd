@@ -6,9 +6,35 @@ class_name RoundManager
 @export var chance_decay_rate: float = 0.4
 @export var difficulty_match_strictness: float = 10
 
+@export var game_challenges: Array[Challenge]
+
 func _ready() -> void:
     for game_round in game_rounds:
         game_round.init()
+
+
+func get_challenge() -> Challenge:
+    for challenge in game_challenges:
+        if challenge.debug == true:
+            return challenge
+
+    var weighted_chances := []
+    var total_weighted_chance: float = 0
+
+    for challenge in game_challenges:
+        weighted_chances.append(challenge.chance)
+        total_weighted_chance += challenge.chance
+
+    var random_value := randf() * total_weighted_chance
+    var cumulative_chance := 0.0
+
+    for i in range(weighted_chances.size()):
+        cumulative_chance += weighted_chances[i]
+        if random_value <= cumulative_chance:
+            game_challenges[i].chance *= chance_decay_rate
+            return game_challenges[i]
+
+    return game_challenges[0]
 
 func get_round(difficulty: float) -> GameRound:
     # Calculate total weighted chance for all rounds

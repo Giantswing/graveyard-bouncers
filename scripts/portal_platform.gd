@@ -20,6 +20,7 @@ func show_platform() -> void:
 		func() -> void:
 			portal.show()
 			portal.process_mode = Node.PROCESS_MODE_PAUSABLE
+			portal.active = true
 			set_collision_layer_value(1, true)
 			Utils.fast_tween(self, "rotation_degrees", 180, 0.5).tween_property(sprite, "position", Vector2(-36, -1), 0.5)
 	)

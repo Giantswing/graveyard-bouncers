@@ -19,5 +19,5 @@ signal ability_gained(ability: Ability)
 signal game_paused(paused: bool)
 signal enter_challenge_mode(player: PlayerCharacter)
 signal exit_challenge_mode(player: PlayerCharacter)
-
+signal set_up_challenge(challenge: Challenge)
 signal on_shockwave(force: float, duration: float, size: float, decay_time: float)
