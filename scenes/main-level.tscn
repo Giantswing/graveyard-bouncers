@@ -799,7 +799,7 @@ position = Vector2(-36, -3)
 shape = SubResource("RectangleShape2D_2sni1")
 
 [node name="ChallengePortal" parent="Scenery/RightWall/PortalPlatform" instance=ExtResource("5_ja4wt")]
-position = Vector2(-14, -38)
+position = Vector2(-18.0001, -33)
 
 [node name="RightBranch" type="StaticBody2D" parent="Scenery/RightWall"]
 position = Vector2(120, -265)

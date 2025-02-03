@@ -63,7 +63,7 @@ texture_filter = 1
 texture = ExtResource("1_qhcmd")
 
 [node name="ChallengePortal" parent="." instance=ExtResource("2_17by3")]
-position = Vector2(581, -8)
+position = Vector2(578, -4)
 enter = false
 
 [node name="Coin" parent="." instance=ExtResource("3_av3au")]
