@@ -26,9 +26,10 @@ func _ready() -> void:
 
 	if position.x > 0:
 		direction = -1
+		sprite.flip_h = true
 	else:
-		sprite.flip_h = 1
 		direction = 1
+		sprite.flip_h = false
 
 
 func on_body_entered(body: Node2D) -> void:

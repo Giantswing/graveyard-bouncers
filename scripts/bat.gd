@@ -11,10 +11,6 @@ var game_manager: GameManager
 
 func _ready() -> void:
 	game_manager = GameManager.instance
-	scale = Vector2(0, 0)
-	var tween := get_tree().create_tween()
-	tween.tween_property(self, "scale", Vector2(1.3, 1.3), 0.5)
-
 	speed = speed * randf_range(0.8, 1.2)
 	wobble = wobble * randf_range(0.9, 1.1)
 	wobble_speed = wobble_speed * randf_range(0.9, 1.1)

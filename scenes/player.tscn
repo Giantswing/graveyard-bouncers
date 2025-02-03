@@ -312,7 +312,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 7.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -328,7 +328,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuyoq"]
 radius = 9.0
-height = 25.33
+height = 28.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
 size = Vector2(34, 40)
@@ -397,9 +397,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": true,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/new-player-low-v2.aseprite"
+"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/new-player-low-v2.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "971b94b9bac4fcecb272b8bb3126b8cd"
+metadata/_aseprite_wizard_source_file_hash_ = "b60ee4161c9b5f5ca4ff9f2848ee1ccf"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

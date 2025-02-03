@@ -6,36 +6,36 @@
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_5mfnq"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="5_5mfnq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aqsxy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mfnq"]
 atlas = ExtResource("2_bbnym")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bdk1c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv6vd"]
 atlas = ExtResource("2_bbnym")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u8x35"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sv5gc"]
 atlas = ExtResource("2_bbnym")
 region = Rect2(0, 24, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mhu1n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wj1r3"]
 atlas = ExtResource("2_bbnym")
 region = Rect2(24, 24, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_aksw0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_seks5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aqsxy")
+"texture": SubResource("AtlasTexture_5mfnq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bdk1c")
+"texture": SubResource("AtlasTexture_lv6vd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u8x35")
+"texture": SubResource("AtlasTexture_sv5gc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mhu1n")
+"texture": SubResource("AtlasTexture_wj1r3")
 }],
 "loop": true,
 "name": &"Idle",
@@ -57,7 +57,7 @@ spawn_time = 0.5
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_5mfnq")
-sprite_frames = SubResource("SpriteFrames_aksw0")
+sprite_frames = SubResource("SpriteFrames_seks5")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "output_section": true,
@@ -71,9 +71,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/ghost.aseprite"
+"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/ghost.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "ffb127f4e21468d9e2ffefec6dc62b07"
+metadata/_aseprite_wizard_source_file_hash_ = "e403ab9135c04635009165612993a0cf"
 
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_l5lq6")

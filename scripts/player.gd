@@ -465,6 +465,9 @@ func get_hit(from: Stats) -> void:
 	if !can_get_hit:
 		return
 
+	if is_attacking == 2 and from.global_position.y > global_position.y:
+		return
+
 	if is_dashing and GameManager.instance.has_powerup("dash-attack"):
 		return
 

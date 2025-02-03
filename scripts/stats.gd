@@ -73,6 +73,10 @@ func _ready() -> void:
 			if sprite:
 				sprite.visible = true
 		)
+	else:
+		# var original_scale: Vector2 = owner.scale
+		owner.scale = Vector2.ZERO
+		Utils.fast_tween(owner, "scale", Vector2(1.0, 1.0), 0.5, Tween.TRANS_QUAD)
 
 
 # func on_area_entered(_body: Node) -> void:

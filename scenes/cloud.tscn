@@ -1,33 +1,45 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwtuqnyewxvhv"]
+[gd_scene load_steps=15 format=3 uid="uid://dwtuqnyewxvhv"]
 
 [ext_resource type="Script" uid="uid://7imm2sx64ocy" path="res://scripts/cloud.gd" id="1_2kyfr"]
 [ext_resource type="Texture2D" uid="uid://t8683yetlany" path="res://scenes/cloud.png" id="2_2kyfr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2kyfr"]
 atlas = ExtResource("2_2kyfr")
-region = Rect2(50, 0, 50, 18)
+region = Rect2(50, 18, 50, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1qj5"]
 atlas = ExtResource("2_2kyfr")
-region = Rect2(100, 0, 50, 18)
+region = Rect2(100, 18, 50, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fubt3"]
 atlas = ExtResource("2_2kyfr")
-region = Rect2(0, 18, 50, 18)
+region = Rect2(0, 36, 50, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sk0fm"]
 atlas = ExtResource("2_2kyfr")
-region = Rect2(50, 18, 50, 18)
+region = Rect2(50, 36, 50, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6omnh"]
 atlas = ExtResource("2_2kyfr")
-region = Rect2(100, 18, 50, 18)
+region = Rect2(100, 36, 50, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ky362"]
 atlas = ExtResource("2_2kyfr")
 region = Rect2(0, 0, 50, 18)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_7oeba"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7oeba"]
+atlas = ExtResource("2_2kyfr")
+region = Rect2(50, 0, 50, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmfw7"]
+atlas = ExtResource("2_2kyfr")
+region = Rect2(100, 0, 50, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5fms"]
+atlas = ExtResource("2_2kyfr")
+region = Rect2(0, 18, 50, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ywrhv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -52,10 +64,19 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ky362")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7oeba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmfw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5fms")
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 10.0
+"speed": 4.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2kyfr"]
@@ -76,7 +97,7 @@ speed = 45.0
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(0, 3)
-sprite_frames = SubResource("SpriteFrames_7oeba")
+sprite_frames = SubResource("SpriteFrames_ywrhv")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
@@ -91,7 +112,7 @@ metadata/_aseprite_wizard_config_ = {
 "slice": "",
 "source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/cloud.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "a7c85fb9fda76d340bc73fd7eac87d19"
+metadata/_aseprite_wizard_source_file_hash_ = "ade1de323022fe7e79a72103f5ba8100"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_2kyfr")

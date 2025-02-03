@@ -1,50 +1,58 @@
-[gd_scene load_steps=11 format=3 uid="uid://xejrp383li1a"]
+[gd_scene load_steps=12 format=3 uid="uid://xejrp383li1a"]
 
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1l2iw"]
-[ext_resource type="Texture2D" uid="uid://djhacfugb8twm" path="res://sprites/turtle.png" id="1_diba4"]
 [ext_resource type="Script" uid="uid://cy38ea17p502" path="res://scripts/turtle.gd" id="1_hbk6c"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_7kcg0"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1l2iw"]
-atlas = ExtResource("1_diba4")
-region = Rect2(0, 0, 36, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hbk6c"]
-atlas = ExtResource("1_diba4")
-region = Rect2(36, 0, 36, 36)
+[ext_resource type="Texture2D" uid="uid://2bfkr3qx5a4n" path="res://scenes/turtle-v2.png" id="4_7kcg0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kcg0"]
-atlas = ExtResource("1_diba4")
-region = Rect2(0, 36, 36, 36)
+atlas = ExtResource("4_7kcg0")
+region = Rect2(0, 0, 36, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xrtyu"]
-atlas = ExtResource("1_diba4")
+atlas = ExtResource("4_7kcg0")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2r5w"]
+atlas = ExtResource("4_7kcg0")
+region = Rect2(72, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lu78"]
+atlas = ExtResource("4_7kcg0")
+region = Rect2(0, 36, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc3fs"]
+atlas = ExtResource("4_7kcg0")
 region = Rect2(36, 36, 36, 36)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_f2r5w"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_86a57"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1l2iw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hbk6c")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7kcg0")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xrtyu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2r5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lu78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bc3fs")
 }],
 "loop": true,
 "name": &"Walk",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hbk6c"]
 size = Vector2(34, 18)
 
 [node name="Turtle" type="CharacterBody2D"]
+z_index = -1
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_hbk6c")
@@ -58,7 +66,8 @@ spawn_type = 2
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = ExtResource("3_7kcg0")
-sprite_frames = SubResource("SpriteFrames_f2r5w")
+position = Vector2(0, 3)
+sprite_frames = SubResource("SpriteFrames_86a57")
 animation = &"Walk"
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
@@ -71,12 +80,12 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/sprites/turtle.aseprite"
+"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/turtle-v2.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "c00164a8f01ff194fe778f6ef0a03de0"
+metadata/_aseprite_wizard_source_file_hash_ = "ac1032f78459a2528fe872b5be2466fb"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_hbk6c")
 one_way_collision = true
 
