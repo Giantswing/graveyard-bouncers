@@ -61,6 +61,9 @@ var slide_fx_timer: float = 0
 var parry_targets: Array[Stats]
 var attack_targets: Array[Stats]
 
+var coyote_time: float = 0.0
+@export var coyote_time_max: float = 0.5
+
 @onready var parry_area: Area2D = %ParryArea
 @onready var attack_area: Area2D = %AttackArea
 @onready var dash_attack_area: Area2D = %DashAttackArea
@@ -113,6 +116,11 @@ func handle_dash_attack(body: Node2D) -> void:
 func _process(delta: float) -> void:
 	get_input()
 
+	if grounded:
+		coyote_time = 0
+	else:
+		coyote_time += delta
+
 	animation_controller.handle_animation(movement_input, velocity, grounded, on_wall, is_attacking, received_damage)
 
 	if velocity.y > 0 and is_attacking == 1:
@@ -132,7 +140,6 @@ func _process(delta: float) -> void:
 	velocity.y = velocity.y + extra_speed.y
 
 
-
 	handle_jump()
 	handle_ability()
 
@@ -145,11 +152,10 @@ func _physics_process(delta: float) -> void:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 			slide_fx_timer += delta
-			if slide_fx_timer > 0.3 and velocity.y > 0:
+			if slide_fx_timer > 0.3 and velocity.y > 10:
 				var direction: int = 0
 				if movement_input.x > 0:
 					direction = 1
-					print("puff")
 					FxSystem.play_fx("SmokePuff", position + Vector2(direction * 7, -15), true) 
 				elif movement_input.x < 0:
 					direction = -1
@@ -218,7 +224,7 @@ func handle_jump() -> void:
 		can_jump = false
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
-		if grounded:
+		if grounded or coyote_time < coyote_time_max:
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
 			grounded = false
@@ -226,9 +232,11 @@ func handle_jump() -> void:
 
 		elif on_wall:
 			deactivate_can_be_on_wall()
+
 			extra_speed = Vector2.ZERO
 			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
+			coyote_time = 100
 
 		else: # If we are in the air and jump again, we attack
 			if is_attacking == 0:
@@ -248,6 +256,7 @@ func handle_jump() -> void:
 func process_jump() -> void:
 	var parry_target: Node2D = null
 	var max_distance: float = 10000
+	coyote_time = 100
 
 	for target: Stats in parry_targets:
 		var distance: float = target.global_position.distance_to(global_position)

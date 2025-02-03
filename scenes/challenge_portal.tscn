@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpbg107alh8ou"]
+
+[ext_resource type="Script" uid="uid://cof0l32nrruj3" path="res://scripts/challenge_portal.gd" id="1_wclm1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46jna"]
+size = Vector2(20, 44)
+
+[node name="ChallengePortal" type="Node2D"]
+script = ExtResource("1_wclm1")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(6, 2)
+shape = SubResource("RectangleShape2D_46jna")
+debug_color = Color(0.609306, 0.00430847, 0.996338, 0.42)

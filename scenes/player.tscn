@@ -355,6 +355,7 @@ mov_speed = 150.0
 extra_speed_decay = 0.3
 dash_frames_left = ExtResource("3_fjrip")
 dash_frames_right = ExtResource("2_tuyoq")
+coyote_time_max = 0.1
 
 [node name="AnimationController" type="Node2D" parent="."]
 script = ExtResource("2_g2els")

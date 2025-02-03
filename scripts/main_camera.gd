@@ -19,8 +19,18 @@ var start_y_pos: float
 
 var current_zoom: float = 1
 var current_zoom_to: float = 1
+var extra_speed: float = 0.0
 @export var zoom_speed: float = 0.01
 @export var zoom_increase: float = 0.1
+
+
+enum MODES { 
+	BEFORE_ROUND,
+	IN_ROUND,
+	CHALLENGE_MODE,
+}
+
+var current_mode: MODES = MODES.BEFORE_ROUND
 
 var current_shake_amount: float = 0
 
@@ -33,6 +43,26 @@ func _ready() -> void:
 	Events.player_dash.connect(on_player_parry)
 	target = get_parent().get_node_or_null("%Player")
 	start_y_pos = 0
+
+	Events.round_started.connect(func() -> void:
+		current_mode = MODES.IN_ROUND
+	)
+
+	Events.round_ended.connect(func() -> void:
+		current_mode = MODES.BEFORE_ROUND
+	)
+
+
+	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void:
+		current_mode = MODES.CHALLENGE_MODE
+		extra_speed = 1
+	)
+
+	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void:
+		current_mode = MODES.BEFORE_ROUND
+		extra_speed = 2
+	)
+
 	# start_y_pos = global_position.y
 
 
@@ -45,14 +75,16 @@ func on_hp_change(_hp: int, change: int) -> void:
 	
 func _process(delta: float) -> void:
 	# return
-
+	extra_speed = lerp(extra_speed, 0.0, 0.1)
 
 	current_zoom = lerp(current_zoom, current_zoom_to, zoom_speed)
 
-	if GameManager.instance.round_started:
+	if current_mode == MODES.IN_ROUND:
 		current_zoom_to = 1
-	else:
+	elif current_mode == MODES.BEFORE_ROUND:
 		current_zoom_to = 1 + zoom_increase
+	elif current_mode == MODES.CHALLENGE_MODE:
+		current_zoom_to = 1
 
 	zoom = Vector2(current_zoom, current_zoom)
 	if abs(current_zoom - current_zoom_to) < 0.005:
@@ -62,7 +94,7 @@ func _process(delta: float) -> void:
 		current_shake_amount = max(0, current_shake_amount - delta * decay)
 		shake()
 
-	point_target()
+	point_target(delta)
 
 
 
@@ -77,7 +109,7 @@ func make_shockwave(force: float, duration: float, size: float, decay_time: floa
 	Utils.fast_tween(wave, "material:shader_parameter/size", size, duration * 0.2, Tween.TRANS_QUAD)
 	Utils.fast_tween(wave, "material:shader_parameter/force", 0.0, decay_time, Tween.TRANS_QUAD)
 
-func point_target() -> void:
+func point_target(delta: float) -> void:
 	if !target:
 		return
 
@@ -87,15 +119,23 @@ func point_target() -> void:
 	var dist := target.global_position - global_position
 	var final_pos: float
 
-	if GameManager.get_instance().round_started:
+	if current_mode == MODES.IN_ROUND:
 		final_pos = min(start_y_pos + 45, start_y_pos + dist.y * 0.2)
-		position.y = lerp(position.y, final_pos, in_round_speed)
-	else:
-		final_pos = min(start_y_pos + 25, start_y_pos + dist.y)
-		position.y = lerp(position.y, final_pos, before_round_speed)
+		position.y = lerp(position.y, final_pos, in_round_speed * delta * 60.0)
+		if position.y > start_y_pos:
+			position.y = start_y_pos
 
-	if position.y > start_y_pos:
-		position.y = start_y_pos
+	elif current_mode == MODES.BEFORE_ROUND:
+		final_pos = min(start_y_pos + 25, start_y_pos + dist.y)
+		position.y = lerp(position.y, final_pos, before_round_speed * delta * 60.0)
+		position.x = lerp(position.x, 0.0, (before_round_speed + extra_speed) * delta * 60.0)
+
+		if position.y > start_y_pos:
+			position.y = start_y_pos
+	elif current_mode == MODES.CHALLENGE_MODE:
+		position.x = lerp(position.x, target.global_position.x, 0.05 * delta * 60.0)
+		position.y = lerp(position.y, target.global_position.y, (0.01 + extra_speed) * delta * 60.0)
+
 	
 
 func shake() -> void:

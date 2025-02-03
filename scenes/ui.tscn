@@ -110,7 +110,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_8dubc")
 
 [node name="CoinSprite" type="AnimatedSprite2D" parent="MarginContainer/Control/TopLeft/VBoxContainer/HBoxContainer/Container"]
 texture_filter = 1
-position = Vector2(12, 15)
+position = Vector2(12, 18)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_7dvkv")
 animation = &"Idle"
