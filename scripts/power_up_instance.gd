@@ -25,7 +25,11 @@ func _process(_delta: float) -> void:
 	if GameManager.get_instance().coins < powerup.cost and active:
 		active = false
 		set_collision_layer_value(3, false)
-		# sprite.modulate = Color(1, 1, 1, 0.5)
+		sprite.modulate = Color(1, 1, 1, 0.7)
+	elif GameManager.get_instance().coins >= powerup.cost and !active:
+		active = true
+		set_collision_layer_value(3, true)
+		sprite.modulate = Color(1, 1, 1, 1)
 
 	if raycast.is_colliding():
 		description_label.show()

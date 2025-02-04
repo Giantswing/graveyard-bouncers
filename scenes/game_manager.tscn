@@ -29,15 +29,16 @@ metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
+debug = true
 difficulty = 999.0
-time_limit = 5
+time_limit = 30
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 100.0
 start_game_width = 150.0
 max_game_width = 600.0
 enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp"), ExtResource("11_30v7y"), ExtResource("12_5xtl8"), ExtResource("13_cjvif")])
-enemy_spawn_rate = 2.0
+enemy_spawn_rate = 1.5
 max_enemies = 30
 reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu"), SubResource("Resource_cjvif")])
 reward_spawn_rate = 1.5
@@ -47,11 +48,11 @@ has_trampoline = false
 has_helper_enemy = true
 has_fog = false
 spike_amount = 0
-debug = true
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_30v7y"]
 script = ExtResource("7_frtjd")
+debug = false
 difficulty = 1.0
 time_limit = 25
 chance = 1.0
@@ -70,7 +71,6 @@ has_trampoline = false
 has_helper_enemy = false
 has_fog = false
 spike_amount = 0
-debug = false
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_c7a3q"]

@@ -333,7 +333,7 @@ shader_parameter/noise_scroll_direction = Vector2(-0.75, 0)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tjry1"]
 shader = SubResource("Shader_r8012")
 shader_parameter/color = Color(0.0266667, 0, 0.1, 0.337255)
-shader_parameter/alpha_multiplier = 2.83
+shader_parameter/alpha_multiplier = 4.05
 shader_parameter/OCTAVES = 4
 shader_parameter/enable_pixelation = true
 shader_parameter/pixelation_amount = 512
@@ -1242,7 +1242,7 @@ top_level = true
 light_mask = 3
 visibility_layer = 3
 z_index = 50
-position = Vector2(15, -22)
+position = Vector2(15, -17)
 rotation = 3.14159
 
 [node name="FogRect2" type="ColorRect" parent="Scenery/FogTop"]

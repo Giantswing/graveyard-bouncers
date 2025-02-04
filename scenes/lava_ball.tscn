@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ewq68vpmsm17"]
+[gd_scene load_steps=13 format=3 uid="uid://ewq68vpmsm17"]
 
 [ext_resource type="Script" uid="uid://bx2kfpcnxvte7" path="res://scripts/lava_ball.gd" id="1_wo57b"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_uxo8x"]
@@ -7,9 +7,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wo57b"]
 size = Vector2(12, 12)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_veat2"]
-size = Vector2(16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wo57b"]
 atlas = ExtResource("3_wo57b")
@@ -88,9 +85,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
 shape = SubResource("RectangleShape2D_wo57b")
 debug_color = Color(0.842005, 0, 0.0479336, 0.42)
-
-[node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_veat2")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 light_mask = 2
