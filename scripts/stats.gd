@@ -37,6 +37,8 @@ var is_invulnerable: bool = false
 var is_alive: bool = true
 var parent: Node2D
 
+@export var hit_sound: String = ""
+
 
 @warning_ignore_start("unused_signal")
 signal on_death
@@ -115,6 +117,8 @@ func take_damage(amount: int) -> void:
 		return
 
 	hp -= amount
+	if hit_sound != "":
+		SoundSystem.play_audio(hit_sound)
 
 	emit_signal("on_hit")
 	is_invulnerable = true

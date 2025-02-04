@@ -151,8 +151,7 @@ func use_current_ability() -> void:
 
 
 func update_current_challenge() -> void:
-	challenge_data = round_manager.get_challenge()
-	print(challenge_data)
+	challenge_data = round_manager.get_challenge(current_difficulty)
 	Events.set_up_challenge.emit(challenge_data)
 
 func update_current_round() -> void:

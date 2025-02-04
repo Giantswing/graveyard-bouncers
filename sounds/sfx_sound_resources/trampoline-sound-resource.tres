@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://c7vjpm34ltrtp"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_mq54e"]
+[ext_resource type="AudioStream" uid="uid://dfpxjfxj8m5pb" path="res://trampoline.wav" id="2_mq54e"]
+
+[resource]
+script = ExtResource("1_mq54e")
+key_name = "trampoline"
+stream = ExtResource("2_mq54e")
+volume_db = 0.0
+metadata/_custom_type_script = ExtResource("1_mq54e")

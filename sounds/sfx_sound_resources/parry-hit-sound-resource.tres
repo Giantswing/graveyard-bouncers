@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://bsq50jip6dxee"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_ga6xi"]
+[ext_resource type="AudioStream" uid="uid://d1tqsf05ukprn" path="res://sounds/library/parry-hit.wav" id="2_ga6xi"]
+
+[resource]
+script = ExtResource("1_ga6xi")
+key_name = "parry-hit"
+stream = ExtResource("2_ga6xi")
+volume_db = 0.0
+base_pitch = 1.4
+pitch_range = 0.0
+metadata/_custom_type_script = ExtResource("1_ga6xi")

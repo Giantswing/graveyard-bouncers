@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dody5mnu86q71"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_gy3m5"]
+[ext_resource type="AudioStream" uid="uid://bdg80kynbunip" path="res://sounds/library/fall-01.wav" id="2_gy3m5"]
+
+[resource]
+script = ExtResource("1_gy3m5")
+key_name = "fall"
+stream = ExtResource("2_gy3m5")
+volume_db = 5.0
+base_pitch = 1.0
+pitch_range = 0.2
+metadata/_custom_type_script = ExtResource("1_gy3m5")

@@ -13,7 +13,7 @@ func _ready() -> void:
         game_round.init()
 
 
-func get_challenge() -> Challenge:
+func get_challenge(difficulty: float) -> Challenge:
     for challenge in game_challenges:
         if challenge.debug == true:
             return challenge
@@ -22,8 +22,12 @@ func get_challenge() -> Challenge:
     var total_weighted_chance: float = 0
 
     for challenge in game_challenges:
-        weighted_chances.append(challenge.chance)
-        total_weighted_chance += challenge.chance
+        var difficulty_difference: float = abs(challenge.difficulty - difficulty)
+        var difficulty_weight: float = exp(-difficulty_difference * difficulty_match_strictness)
+        var weighted_chance: float = challenge.chance * difficulty_weight
+
+        weighted_chances.append(weighted_chance)
+        total_weighted_chance += weighted_chance
 
     var random_value := randf() * total_weighted_chance
     var cumulative_chance := 0.0

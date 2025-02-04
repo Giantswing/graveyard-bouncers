@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://cq1jd61r70qqn"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_s3owa"]
+[ext_resource type="AudioStream" uid="uid://ce7dr2tim0d4a" path="res://sounds/library/jump.wav" id="2_615ud"]
+
+[resource]
+script = ExtResource("1_s3owa")
+key_name = "jump"
+stream = ExtResource("2_615ud")
+volume_db = 0.0
+metadata/_custom_type_script = ExtResource("1_s3owa")

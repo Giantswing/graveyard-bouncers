@@ -773,9 +773,13 @@ rotation = 3.14159
 scale = Vector2(1, -1)
 script = ExtResource("16_2sni1")
 
-[node name="Sprite" type="Sprite2D" parent="Scenery/RightWall/PortalPlatform"]
+[node name="Collision" type="CollisionShape2D" parent="Scenery/RightWall/PortalPlatform"]
+position = Vector2(-36, -3)
+shape = SubResource("RectangleShape2D_2sni1")
+
+[node name="Sprite" type="Sprite2D" parent="Scenery/RightWall/PortalPlatform/Collision"]
 texture_filter = 1
-position = Vector2(-36, -1)
+position = Vector2(-7.62939e-06, 2)
 texture = ExtResource("36_2sni1")
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
@@ -794,12 +798,8 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "ff11123084bfb39735a0fafd549c39f9"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/RightWall/PortalPlatform"]
-position = Vector2(-36, -3)
-shape = SubResource("RectangleShape2D_2sni1")
-
-[node name="ChallengePortal" parent="Scenery/RightWall/PortalPlatform" instance=ExtResource("5_ja4wt")]
-position = Vector2(-18.0001, -33)
+[node name="ChallengePortal" parent="Scenery/RightWall/PortalPlatform/Collision" instance=ExtResource("5_ja4wt")]
+position = Vector2(17.9999, -30)
 
 [node name="RightBranch" type="StaticBody2D" parent="Scenery/RightWall"]
 position = Vector2(120, -265)

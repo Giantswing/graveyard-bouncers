@@ -176,6 +176,9 @@ func _physics_process(delta: float) -> void:
 	# 	print(position.y)
 
 	if is_dashing == false:
+		if is_on_floor() and grounded == false:
+			SoundSystem.play_audio("fall")
+
 		grounded = is_on_floor()
 	else:
 		grounded = false
@@ -203,6 +206,7 @@ func _physics_process(delta: float) -> void:
 		is_attacking = 0
 		is_parrying = false
 		FxSystem.play_fx("SmokeHitSmall", position)
+		SoundSystem.play_audio("shovel-hit")
 
 
 
@@ -229,6 +233,7 @@ func handle_jump() -> void:
 			velocity.y = -base_strength * jump_str_mult
 			grounded = false
 			animation_controller.play_animation("jump")
+			SoundSystem.play_audio("jump")
 
 		elif on_wall:
 			deactivate_can_be_on_wall()
@@ -293,6 +298,7 @@ func process_attack() -> void:
 			if target:
 				velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
 				target.take_damage(1)
+				SoundSystem.play_audio("shovel-hit")
 			else:
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
 
@@ -319,7 +325,6 @@ func process_attack() -> void:
 	
 
 
-
 func process_parry(target: Stats) -> void:
 	velocity.y = 0
 	is_parrying = true
@@ -327,6 +332,7 @@ func process_parry(target: Stats) -> void:
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
 			target.take_damage(1)
+			SoundSystem.play_audio("parry-hit")
 			can_get_hit = false
 			get_tree().create_timer(0.2).timeout.connect(reset_can_get_hit)
 

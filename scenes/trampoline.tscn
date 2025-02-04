@@ -55,6 +55,7 @@ hp_max = 99999999
 bounciness = 1.25
 invulnerable_time = 0.1
 sprite = NodePath("../AnimatedSprite2D")
+hit_sound = "trampoline"
 metadata/_custom_type_script = ExtResource("1_nytqh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -30,7 +30,7 @@ metadata/_custom_type_script = ExtResource("2_udu3i")
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 difficulty = 999.0
-time_limit = 30
+time_limit = 5
 chance = 1.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 100.0
@@ -75,9 +75,10 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_c7a3q"]
 script = ExtResource("16_ry0e6")
+debug = false
 scene = ExtResource("17_pc0jn")
 chance = 1.0
-debug = false
+difficulty = 1.0
 metadata/_custom_type_script = ExtResource("16_ry0e6")
 
 [node name="GameManager" type="Node2D"]
