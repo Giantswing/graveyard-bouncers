@@ -68,7 +68,7 @@ func play_audio(audio_name: String) -> void:
 
 	var audio_resource: SoundResource = sfx_dict[audio_name]
 
-	audio_player.stream = audio_resource.stream
+	audio_player.stream = audio_resource.select_stream()
 	audio_player.volume_db = audio_resource.volume_db
 
 	audio_player.pitch_scale = audio_resource.base_pitch + randf_range(-audio_resource.pitch_range, audio_resource.pitch_range)

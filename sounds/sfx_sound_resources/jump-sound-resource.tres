@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_s3owa")
 key_name = "jump"
-stream = ExtResource("2_615ud")
+streams = Array[AudioStream]([ExtResource("2_615ud")])
+seq_type = 0
 volume_db = 0.0
+base_pitch = 1.0
+pitch_range = 0.0
 metadata/_custom_type_script = ExtResource("1_s3owa")

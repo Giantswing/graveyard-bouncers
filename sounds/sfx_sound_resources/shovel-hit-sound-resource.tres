@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_dqwym")
 key_name = "shovel-hit"
-stream = ExtResource("2_0nine")
+streams = Array[AudioStream]([ExtResource("2_0nine")])
+seq_type = 0
 volume_db = -5.0
 base_pitch = 1.25
 pitch_range = 0.1

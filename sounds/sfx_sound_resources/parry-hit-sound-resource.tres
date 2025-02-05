@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_ga6xi")
 key_name = "parry-hit"
-stream = ExtResource("2_ga6xi")
+streams = Array[AudioStream]([ExtResource("2_ga6xi")])
+seq_type = 0
 volume_db = 0.0
 base_pitch = 1.4
 pitch_range = 0.0
