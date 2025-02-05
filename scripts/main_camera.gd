@@ -55,7 +55,7 @@ func _ready() -> void:
 
 	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void:
 		current_mode = MODES.CHALLENGE_MODE
-		extra_speed = 0.1
+		extra_speed = 0.3
 	)
 
 	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void:

@@ -1,76 +1,68 @@
-[gd_scene load_steps=5 format=3 uid="uid://cox3qad5bb5gk"]
+[gd_scene load_steps=6 format=4 uid="uid://cox3qad5bb5gk"]
 
-[ext_resource type="Texture2D" uid="uid://snuc62jdldom" path="res://scenes/center-platform.png" id="1_qhcmd"]
 [ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="2_17by3"]
 [ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="3_av3au"]
+[ext_resource type="Texture2D" uid="uid://d2qvellbe5l61" path="res://tiles/tile-set.png" id="4_17by3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja4wt"]
-size = Vector2(74, 20)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_av3au"]
+resource_name = "Caves"
+texture = ExtResource("4_17by3")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_geywk"]
+tile_size = Vector2i(24, 24)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_av3au")
 
 [node name="ChallengeBasic01" type="Node2D"]
 
 [node name="StartPoint" type="Node2D" parent="."]
 unique_name_in_owner = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(0, 101)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_ja4wt")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-texture_filter = 1
-texture = ExtResource("1_qhcmd")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(152, 51)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-shape = SubResource("RectangleShape2D_ja4wt")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
-texture_filter = 1
-texture = ExtResource("1_qhcmd")
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(272, 112)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-shape = SubResource("RectangleShape2D_ja4wt")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
-texture_filter = 1
-texture = ExtResource("1_qhcmd")
-
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
-position = Vector2(381, 40)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
-shape = SubResource("RectangleShape2D_ja4wt")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4"]
-texture_filter = 1
-texture = ExtResource("1_qhcmd")
-
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
-position = Vector2(559, 29)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
-shape = SubResource("RectangleShape2D_ja4wt")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5"]
-texture_filter = 1
-texture = ExtResource("1_qhcmd")
+position = Vector2(-30, 38)
 
 [node name="ChallengePortal" parent="." instance=ExtResource("2_17by3")]
-position = Vector2(578, -4)
+position = Vector2(624, 1)
 enter = false
 
 [node name="Coin" parent="." instance=ExtResource("3_av3au")]
 position = Vector2(154, -2)
 
+[node name="Coin4" parent="." instance=ExtResource("3_av3au")]
+position = Vector2(144, -203)
+
 [node name="Coin2" parent="." instance=ExtResource("3_av3au")]
 position = Vector2(272, 62)
 
 [node name="Coin3" parent="." instance=ExtResource("3_av3au")]
-position = Vector2(377, -6)
+position = Vector2(498, -37)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAIAAIAAAAAAAAAABAHAAIAAAABAAAAAAAGAAIAAAABAAAAAAAFAAIAAAABAAAAAAAIAAMAAAAAAAEAABAIAAQAAAACAAAAABAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAALAAQAAAABAAAAAAAMAAQAAAAAAAAAABAMAAUAAAAAAAEAABAMAAYAAAAAAAEAABAMAAcAAAAAAAIAABALAAcAAAABAAIAAAAKAAcAAAABAAIAAAAJAAcAAAABAAIAAAAIAAcAAAABAAIAAAAHAAcAAAABAAIAAAAGAAcAAAABAAIAAAAFAAcAAAABAAIAAAAEAAcAAAAAAAIAAAAEAAYAAAAAAAEAAAAEAAUAAAAAAAEAAAAEAAQAAAAAAAEAAAAEAAMAAAAAAAEAAAAQAAEAAAABAAAAAAARAAEAAAABAAAAAAASAAEAAAAAAAAAABAPAAEAAAAAAAAAAAAPAAIAAAAAAAEAAAAPAAMAAAAAAAEAAAAPAAQAAAAAAAEAAAAPAAUAAAAAAAEAAAAPAAYAAAAAAAEAAAAPAAcAAAAAAAIAAAAQAAcAAAABAAIAAAARAAcAAAABAAIAAAASAAcAAAAAAAIAABASAAYAAAAAAAEAABASAAUAAAAAAAEAABASAAQAAAAAAAEAABASAAMAAAAAAAEAABASAAIAAAAAAAEAABAXAAEAAAAAAAAAAAAYAAEAAAABAAAAAAAZAAEAAAABAAAAAAAaAAEAAAAAAAAAABAXAAIAAAAAAAIAAAAaAAIAAAAAAAIAABAYAAIAAAABAAIAAAAZAAIAAAABAAIAAAD9/wMAAAAAAAAAABD9/wQAAAACAAAAABD9/wUAAAABAAIAAAD+/wQAAAABAAAAAAD+/wUAAAABAAIAABD//wQAAAABAAAAAAD//wUAAAABAAIAAAAAAAQAAAACAAAAAAAAAAUAAAABAAIAAAABAAMAAAAAAAAAABABAAQAAAAAAAEAABABAAUAAAAAAAIAABD8/wMAAAAAAAAAAAD8/wQAAAAAAAEAAAD8/wUAAAAAAAIAAAAAAAMAAAAAAAAAAAADAPr/AAAAAAAAAAADAPv/AAAAAAIAAAAEAPr/AAABAAAAAAAEAPv/AAABAAIAAAAFAPr/AAABAAAAAAAFAPv/AAABAAIAAAAGAPr/AAABAAAAAAAGAPv/AAABAAIAAAAHAPr/AAABAAAAAAAHAPv/AAABAAIAAAAIAPr/AAAAAAAAABAIAPv/AAAAAAIAABA=")
+tile_set = SubResource("TileSet_geywk")

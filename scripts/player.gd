@@ -47,6 +47,7 @@ var previous_velocity: Vector2 = Vector2.ZERO
 var grounded: bool = false
 var on_wall: bool = false
 
+var can_move: bool = true
 var can_be_on_wall: bool = true 
 var can_jump: bool = true
 var can_get_hit: bool = true
@@ -77,6 +78,8 @@ func _ready() -> void:
 	Events.ability_gained.connect(on_ability_gained)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
 	Events.round_ended.connect(on_round_ended)
+	Events.enter_challenge_mode.connect(disable_movement)
+	Events.exit_challenge_mode.connect(disable_movement)
 
 	parry_targets = []
 	parry_area.body_entered.connect(on_parry_area_body_entered)
@@ -90,6 +93,12 @@ func _ready() -> void:
 
 
 func get_input() -> void:
+	if !can_move:
+		movement_input = Vector2.ZERO
+		velocity.x = 0
+		extra_speed = Vector2.ZERO
+		return
+
 	movement_input = Input.get_vector("Left", "Right", "Up", "Down")
 	jump_pressed = Input.is_action_just_pressed("Jump")
 	ability_pressed = Input.is_action_just_pressed("Ability")
@@ -102,7 +111,7 @@ func handle_dash_attack(body: Node2D) -> void:
 	var stats: Stats = body.get_node_or_null("Stats")
 
 	if stats != null and stats.can_take_damage:
-		stats.take_damage(1)
+		stats.take_damage(2)
 		velocity.x = 0
 		velocity.y = 0
 		velocity.y = -parry_bounce_str_mult * base_strength * 0.7
@@ -152,7 +161,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 			slide_fx_timer += delta
-			if slide_fx_timer > 0.1 and velocity.y > 10:
+			if slide_fx_timer > 0.2 and velocity.y > 10:
 				var direction: int = 0
 				if movement_input.x > 0:
 					direction = 1
@@ -326,13 +335,16 @@ func process_parry(target: Stats) -> void:
 
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
-			target.take_damage(1)
+			
+			if target:
+				target.take_damage(1)
+				velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
+
 			SoundSystem.play_audio("parry-hit")
 			can_get_hit = false
 			get_tree().create_timer(0.2).timeout.connect(reset_can_get_hit)
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
-			velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
 			grounded = false
 
 			animation_controller.play_animation("parry")
@@ -510,6 +522,10 @@ func get_hit(from: Stats) -> void:
 		get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
+
+func disable_movement(_player: PlayerCharacter) -> void:
+	can_move = false
+	get_tree().create_timer(1.2).timeout.connect(func() -> void:can_move = true)
 
 func reset_can_get_hit() -> void:
 	can_get_hit = true

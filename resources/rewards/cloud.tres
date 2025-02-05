@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PrefabChance" load_steps=3 format=3 uid="uid://ckjhpcb231yu0"]
+
+[ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="1_7ou5h"]
+[ext_resource type="PackedScene" uid="uid://dwtuqnyewxvhv" path="res://scenes/cloud.tscn" id="2_yjgye"]
+
+[resource]
+script = ExtResource("1_7ou5h")
+name = "Cloud"
+prefab = ExtResource("2_yjgye")
+chance = 1.0
+free_space = 30.0
+spawn_type = 2
+metadata/_custom_type_script = ExtResource("1_7ou5h")

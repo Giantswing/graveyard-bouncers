@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwrolyj1o1c3d"]
+[gd_scene load_steps=4 format=3 uid="uid://b53pe0vsapdb6"]
 
-[ext_resource type="Texture2D" uid="uid://dvj6gq1c8rqco" path="res://sprites/puff-particle.png" id="1_usroe"]
+[ext_resource type="Texture2D" uid="uid://dg2rlx11t2iss" path="res://sprites/puff-particle-flip.png" id="1_ehxoc"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tcnpv"]
 particles_animation = true
@@ -14,10 +14,10 @@ gravity = Vector3(0, 0, 0)
 anim_speed_min = 1.5
 anim_speed_max = 1.5
 
-[node name="SmokePuff" type="GPUParticles2D"]
+[node name="SmokePuffFlip" type="GPUParticles2D"]
 z_index = 25
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_tcnpv")
 amount = 1
-texture = ExtResource("1_usroe")
+texture = ExtResource("1_ehxoc")
 process_material = SubResource("ParticleProcessMaterial_myy5r")

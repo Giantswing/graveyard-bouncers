@@ -402,8 +402,8 @@ scale_over_velocity_curve = SubResource("CurveTexture_r8012")
 turbulence_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_ja4wt"]
-offsets = PackedFloat32Array(0.387755, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0.387755, 0.419476)
+colors = PackedColorArray(0.0705882, 0.0627451, 0.0941176, 1, 0.0705882, 0.0627451, 0.0941176, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qycv7"]
 gradient = SubResource("Gradient_ja4wt")
@@ -438,13 +438,14 @@ unique_name_in_owner = true
 visible = false
 
 [node name="ChallengeContainer" type="Node2D" parent="."]
-position = Vector2(0, -5000)
+position = Vector2(0, 5000)
 script = ExtResource("3_ja4wt")
 
 [node name="SceneContainer" type="Node2D" parent="ChallengeContainer"]
 
 [node name="Transition" type="Node2D" parent="ChallengeContainer"]
-position = Vector2(0, 810)
+position = Vector2(0, -810)
+rotation = 3.14159
 
 [node name="ColorRect" type="ColorRect" parent="ChallengeContainer/Transition"]
 material = SubResource("ShaderMaterial_5itvi")
@@ -1293,11 +1294,26 @@ trail_section_subdivisions = 32
 process_material = SubResource("ParticleProcessMaterial_r8012")
 script = ExtResource("34_i0uf8")
 
-[node name="GradientTop" type="Node2D" parent="Scenery"]
+[node name="GradientBottom" type="Node2D" parent="Scenery"]
+position = Vector2(-270, 230)
+rotation = 1.57079
+scale = Vector2(-1, -1)
+
+[node name="TextureRect" type="TextureRect" parent="Scenery/GradientBottom"]
+z_index = 100
+z_as_relative = false
+offset_left = -6.99759
+offset_top = -384.0
+offset_right = 249.003
+offset_bottom = 390.0
+scale = Vector2(0.590487, 1.92379)
+texture = SubResource("GradientTexture1D_qycv7")
+
+[node name="GradientBottom2" type="Node2D" parent="Scenery"]
 position = Vector2(0, -415)
 rotation = 1.57079
 
-[node name="TextureRect" type="TextureRect" parent="Scenery/GradientTop"]
+[node name="TextureRect" type="TextureRect" parent="Scenery/GradientBottom2"]
 z_index = 100
 z_as_relative = false
 offset_left = -19.9991

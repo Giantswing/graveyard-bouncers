@@ -104,7 +104,7 @@ func hit_flash() -> void:
 
 	sprite.material.set_shader_parameter("active", 1)
 	sprite.offset = Vector2(0, 3.0)
-	sprite.scale = Vector2(1.0, 0.8)
+	sprite.scale = Vector2(1.2, 0.8)
 
 	get_tree().create_timer(0.1).connect("timeout", func() -> void:
 		sprite.material.set_shader_parameter("active", 0)

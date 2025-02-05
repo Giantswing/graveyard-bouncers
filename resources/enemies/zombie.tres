@@ -8,5 +8,6 @@ script = ExtResource("1_mdsr3")
 name = "Zombie"
 prefab = ExtResource("2_v7am5")
 chance = 1.0
+free_space = 30.0
 spawn_type = 0
 metadata/_custom_type_script = ExtResource("1_mdsr3")

@@ -47,7 +47,7 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 		if pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR:
 			pos_y = randf_range(90, 147)
 		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.REWARD:
-			pos_y = randf_range(0, -150)
+			pos_y = randf_range(30, -150)
 		elif pos_type == PrefabChance.SPAWN_POS_OPTIONS.AIR_OUTSIDE:
 			pos_y = randf_range(90, -120)
 			var side := randf() < 0.5

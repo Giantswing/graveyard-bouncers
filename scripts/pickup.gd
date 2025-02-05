@@ -16,9 +16,13 @@ var player: PlayerCharacter = null
 
 enum PICKUP_OPTIONS {
 	COIN,
+	ABILITY_ORB,
 }
 
 func _ready() -> void:
+	scale = Vector2.ZERO
+	Utils.fast_tween(self, "scale", Vector2(1.0, 1.0), 0.15, Tween.TRANS_QUAD)
+
 	follow_particles = get_node_or_null("FollowParticles")
 	if follow_particles:
 		follow_particles.emitting = false
@@ -39,7 +43,6 @@ func pickup(body: Node2D) -> void:
 	if pickup_state != 0:
 		return
 
-	# reparent_pickup.call_deferred()
 	pickup_state = 1
 	target = body
 	player = body as PlayerCharacter
@@ -76,31 +79,13 @@ func _process(delta: float) -> void:
 				Events.coins_changed.emit(GameManager.get_instance().coins + 1)
 				FxSystem.play_fx("coin-collect", global_position)
 
+			elif pickup_option == PICKUP_OPTIONS.ABILITY_ORB:
+				GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
+				FxSystem.play_fx("power-up-picked", global_position)
+
 			queue_free()
 
 	if velocity.length() > max_speed:
 		velocity = velocity.normalized() * max_speed
 
 	global_position += velocity * delta
-		
-		
-
-	# var player: CharacterBody2D = body as CharacterBody2D
-	# is_picked_up = true
-	# print("Picked up by: ", body.name)
-	# var my_pos: Vector2 = global_position
-	# var other_pos: Vector2 = body.global_position
-	# var direction: Vector2 = (other_pos - my_pos).normalized()
-	#
-	# var tween := get_tree().create_tween()
-	# tween.set_trans(Tween.TRANS_SINE)
-	# tween.tween_property(self, "position", my_pos + direction * -80, 0.2)
-	# tween.tween_property(self, "position", body.global_position, 0.1)
-	# tween.tween_callback(func() -> void:
-	# 	if pickup_option == PICKUP_OPTIONS.COIN:
-	# 		Events.coins_changed.emit(GameManager.get_instance().coins + 1)
-	# 		FxSystem.play_fx("CoinCollect", global_position)
-	#
-	# 	queue_free()
-	# )
-	

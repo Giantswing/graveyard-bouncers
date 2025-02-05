@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://rtsmum8empr3"]
 
 [ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_dpa0i"]
-[ext_resource type="PackedScene" uid="uid://sw10s5h2us6m" path="res://scenes/fx/ground_explosion.tscn" id="2_dpa0i"]
+[ext_resource type="PackedScene" uid="uid://sw10s5h2us6m" path="res://scenes/fx/library/ground_explosion.tscn" id="2_dpa0i"]
 
 [resource]
 script = ExtResource("1_dpa0i")
 key_name = "ground-explosion"
 scene = ExtResource("2_dpa0i")
-amount = 1
+amount = 2
 metadata/_custom_type_script = ExtResource("1_dpa0i")

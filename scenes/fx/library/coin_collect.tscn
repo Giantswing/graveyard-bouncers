@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dpogofn8hrvqs"]
 
-[ext_resource type="Texture2D" uid="uid://bo8q2khfdtga3" path="res://sprites/coin-collect.png" id="1_fqci1"]
+[ext_resource type="Texture2D" uid="uid://bo8q2khfdtga3" path="res://sprites/coin-collect.png" id="1_11oe3"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qip3y"]
 particles_animation = true
@@ -18,5 +18,5 @@ anim_speed_max = 3.0
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_qip3y")
 amount = 1
-texture = ExtResource("1_fqci1")
+texture = ExtResource("1_11oe3")
 process_material = SubResource("ParticleProcessMaterial_iu1vk")

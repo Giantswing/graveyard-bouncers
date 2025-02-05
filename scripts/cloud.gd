@@ -36,6 +36,8 @@ func on_body_entered(body: Node2D) -> void:
 	if body is PlayerCharacter:
 		if (body.is_attacking == 2) and is_dead == false:
 			die()
+		elif (body.is_attacking != 2 and body.grounded) and is_dead == false:
+			get_tree().create_timer(0.5).timeout.connect(die)
 
 func die() -> void:
 	is_dead = true
