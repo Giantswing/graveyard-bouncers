@@ -12,8 +12,6 @@ func _ready() -> void:
 	for sound_resource in sound_resources:
 		sfx_dict[sound_resource.key_name] = sound_resource
 
-	print(sfx_dict)
-
 	set_up_audio_players()
 
 func get_sound_resources(path: String) -> Array[SoundResource]:

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3mymc0c5fewp"]
+
+[ext_resource type="Texture2D" uid="uid://du6it06j6pkub" path="res://sprites/smoke-small.png" id="1_y1xkk"]
+[ext_resource type="Material" uid="uid://c082kptv3ycp5" path="res://shaders/basic_particle_sprite_animation.tres" id="2_dcnat"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aqsxy"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[node name="SmokeHitSmall" type="GPUParticles2D"]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_aqsxy")
+amount = 1
+texture = ExtResource("1_y1xkk")
+process_material = ExtResource("2_dcnat")

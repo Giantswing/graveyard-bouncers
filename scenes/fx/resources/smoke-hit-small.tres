@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://dsfgykvra2yh1"]
+
+[ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_otbca"]
+[ext_resource type="PackedScene" uid="uid://d3mymc0c5fewp" path="res://scenes/fx/smoke_hit_small.tscn" id="2_iyugj"]
+
+[resource]
+script = ExtResource("1_otbca")
+key_name = "smoke-hit-small"
+scene = ExtResource("2_iyugj")
+amount = 1
+metadata/_custom_type_script = ExtResource("1_otbca")

@@ -74,7 +74,7 @@ func _process(delta: float) -> void:
 		if my_pos.distance_to(other_pos) < 32 or time_following > 3:
 			if pickup_option == PICKUP_OPTIONS.COIN:
 				Events.coins_changed.emit(GameManager.get_instance().coins + 1)
-				FxSystem.play_fx("CoinCollect", global_position)
+				FxSystem.play_fx("coin-collect", global_position)
 
 			queue_free()
 

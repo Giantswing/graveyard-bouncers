@@ -68,7 +68,7 @@ func _ready() -> void:
 		if sprite:
 			sprite.visible = false
 
-		FxSystem.play_fx("GroundExplosion", global_position - Vector2(0, 18))
+		FxSystem.play_fx("ground-explosion", global_position - Vector2(0, 18))
 		get_tree().create_timer(0.7).timeout.connect(func() -> void:
 			owner.process_mode = Node.PROCESS_MODE_PAUSABLE
 

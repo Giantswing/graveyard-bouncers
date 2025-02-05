@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://ckfk87wfq35em"]
+
+[ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_w6im3"]
+[ext_resource type="PackedScene" uid="uid://julhdduyfhk4" path="res://scenes/fx/power_up_picked.tscn" id="2_w6im3"]
+
+[resource]
+script = ExtResource("1_w6im3")
+key_name = "power-up-picked"
+scene = ExtResource("2_w6im3")
+amount = 1
+metadata/_custom_type_script = ExtResource("1_w6im3")

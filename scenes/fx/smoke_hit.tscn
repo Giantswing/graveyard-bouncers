@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjrylhqd3lbiq"]
+
+[ext_resource type="Texture2D" uid="uid://4ink0fxv6y70" path="res://sprites/smoke.png" id="1_568og"]
+[ext_resource type="Material" uid="uid://c082kptv3ycp5" path="res://shaders/basic_particle_sprite_animation.tres" id="2_bkd67"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aqsxy"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[node name="SmokeHit" type="GPUParticles2D"]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_aqsxy")
+amount = 1
+texture = ExtResource("1_568og")
+process_material = ExtResource("2_bkd67")

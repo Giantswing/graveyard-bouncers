@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://dxqnh0ljmd5wp"]
+
+[ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_tddk0"]
+[ext_resource type="PackedScene" uid="uid://b53pe0vsapdb6" path="res://scenes/fx/smoke_puff_flip.tscn" id="2_tddk0"]
+
+[resource]
+script = ExtResource("1_tddk0")
+key_name = "smoke-puff-flip"
+scene = ExtResource("2_tddk0")
+amount = 5
+metadata/_custom_type_script = ExtResource("1_tddk0")

@@ -37,6 +37,6 @@ func _process(_delta: float) -> void:
 		description_label.hide()
 	
 func on_pickup() -> void:
-	FxSystem.play_fx("PowerUpPicked", global_position)
+	FxSystem.play_fx("power-up-picked", global_position)
 	Events.coins_changed.emit(GameManager.get_instance().coins - powerup.cost)
 	Events.picked_up_powerup.emit(powerup)

@@ -111,7 +111,7 @@ func handle_dash_attack(body: Node2D) -> void:
 		GameManager.get_instance().set_powerup_active("double-jump", true)
 		Engine.time_scale = 0.1
 		get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
-		FxSystem.play_fx("SmokeHit", position)
+		FxSystem.play_fx("smoke-hit", position)
 
 func _process(delta: float) -> void:
 	get_input()
@@ -152,14 +152,14 @@ func _physics_process(delta: float) -> void:
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 			slide_fx_timer += delta
-			if slide_fx_timer > 0.3 and velocity.y > 10:
+			if slide_fx_timer > 0.1 and velocity.y > 10:
 				var direction: int = 0
 				if movement_input.x > 0:
 					direction = 1
-					FxSystem.play_fx("SmokePuff", position + Vector2(direction * 7, -15), true) 
+					FxSystem.play_fx("smoke-puff", position + Vector2(direction * 7, -15)) 
 				elif movement_input.x < 0:
 					direction = -1
-					FxSystem.play_fx("SmokePuffFlip", position + Vector2(direction * 7, -15), true) 
+					FxSystem.play_fx("smoke-puff-flip", position + Vector2(direction * 7, -15)) 
 
 
 				slide_fx_timer = 0
@@ -189,15 +189,10 @@ func _physics_process(delta: float) -> void:
 	if movement_input.x == 0:
 		body_forward_cast.target_position.x = 0
 
-	# if is_attacking == 0 and velocity.y > 0 and movement_input.x != 0:
 	if is_attacking == 0 and movement_input.x != 0 and can_be_on_wall:
 		on_wall = body_forward_cast.is_colliding()
 
 
-	# for i in range(get_slide_collision_count()):
-	# 	var collision := get_slide_collision(i)
-	# 	handle_collision(collision)
-	
 	if (attack_targets.size() > 0 and is_attacking == 2 and can_attack and velocity.y > 0):
 		process_attack()
 
@@ -205,7 +200,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -failed_attack_str_mult * base_strength
 		is_attacking = 0
 		is_parrying = false
-		FxSystem.play_fx("SmokeHitSmall", position)
+		FxSystem.play_fx("smoke-hit-small", position)
 		SoundSystem.play_audio("shovel-hit")
 
 
@@ -312,7 +307,7 @@ func process_attack() -> void:
 			Engine.time_scale = 0.4
 			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
 
-			FxSystem.play_fx("SmokeHitSmall", position)
+			FxSystem.play_fx("smoke-hit-small", position)
 
 			can_jump = false
 			get_tree().create_timer(0.2).timeout.connect(
@@ -350,7 +345,7 @@ func process_parry(target: Stats) -> void:
 			Events.player_parry.emit()
 			speed_particles.emitting = true
 
-			FxSystem.play_fx("SmokeHit", position)
+			FxSystem.play_fx("smoke-hit", position)
 
 			can_jump = false
 			is_parrying = false
