@@ -1,0 +1,96 @@
+[gd_scene load_steps=12 format=3 uid="uid://dd1tc4t4v24k0"]
+
+[ext_resource type="Script" uid="uid://cptbcymtbucys" path="res://scripts/pickup.gd" id="1_qharg"]
+[ext_resource type="Texture2D" uid="uid://bw3jqm7lfabwe" path="res://sprites/heart-reward.png" id="2_qharg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aqsxy"]
+radius = 21.59
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i64fm"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_i64fm"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_11l1o"]
+gradient = SubResource("Gradient_i64fm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrrbq"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(4, 4, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+inherit_velocity_ratio = 0.132
+gravity = Vector3(0, 2, 0)
+color_ramp = SubResource("GradientTexture1D_11l1o")
+turbulence_enabled = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efb7o"]
+atlas = ExtResource("2_qharg")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6vwp"]
+atlas = ExtResource("2_qharg")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhu4x"]
+atlas = ExtResource("2_qharg")
+region = Rect2(0, 18, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oua1n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efb7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6vwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhu4x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Heart" type="Node2D"]
+script = ExtResource("1_qharg")
+pickup_option = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_aqsxy")
+
+[node name="FollowParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.756863, 0.266667, 0.266667, 1)
+material = SubResource("CanvasItemMaterial_i64fm")
+amount = 32
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_mrrbq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_oua1n")
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/heart-reward.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "cf3499af155df6bb2b48c86df72e876e"

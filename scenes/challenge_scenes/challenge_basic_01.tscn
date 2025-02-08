@@ -1,44 +1,7 @@
-[gd_scene load_steps=6 format=4 uid="uid://cox3qad5bb5gk"]
+[gd_scene load_steps=3 format=3 uid="uid://cox3qad5bb5gk"]
 
 [ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="2_17by3"]
 [ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="3_av3au"]
-[ext_resource type="Texture2D" uid="uid://d2qvellbe5l61" path="res://tiles/tile-set.png" id="4_17by3"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_av3au"]
-resource_name = "Caves"
-texture = ExtResource("4_17by3")
-texture_region_size = Vector2i(24, 24)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-3:0/0 = 0
-4:0/0 = 0
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
-2:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_geywk"]
-tile_size = Vector2i(24, 24)
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_av3au")
 
 [node name="ChallengeBasic01" type="Node2D"]
 
@@ -61,8 +24,3 @@ position = Vector2(272, 62)
 
 [node name="Coin3" parent="." instance=ExtResource("3_av3au")]
 position = Vector2(498, -37)
-
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-texture_filter = 1
-tile_map_data = PackedByteArray("AAAEAAIAAAAAAAAAAAAIAAIAAAAAAAAAABAHAAIAAAABAAAAAAAGAAIAAAABAAAAAAAFAAIAAAABAAAAAAAIAAMAAAAAAAEAABAIAAQAAAACAAAAABAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAALAAQAAAABAAAAAAAMAAQAAAAAAAAAABAMAAUAAAAAAAEAABAMAAYAAAAAAAEAABAMAAcAAAAAAAIAABALAAcAAAABAAIAAAAKAAcAAAABAAIAAAAJAAcAAAABAAIAAAAIAAcAAAABAAIAAAAHAAcAAAABAAIAAAAGAAcAAAABAAIAAAAFAAcAAAABAAIAAAAEAAcAAAAAAAIAAAAEAAYAAAAAAAEAAAAEAAUAAAAAAAEAAAAEAAQAAAAAAAEAAAAEAAMAAAAAAAEAAAAQAAEAAAABAAAAAAARAAEAAAABAAAAAAASAAEAAAAAAAAAABAPAAEAAAAAAAAAAAAPAAIAAAAAAAEAAAAPAAMAAAAAAAEAAAAPAAQAAAAAAAEAAAAPAAUAAAAAAAEAAAAPAAYAAAAAAAEAAAAPAAcAAAAAAAIAAAAQAAcAAAABAAIAAAARAAcAAAABAAIAAAASAAcAAAAAAAIAABASAAYAAAAAAAEAABASAAUAAAAAAAEAABASAAQAAAAAAAEAABASAAMAAAAAAAEAABASAAIAAAAAAAEAABAXAAEAAAAAAAAAAAAYAAEAAAABAAAAAAAZAAEAAAABAAAAAAAaAAEAAAAAAAAAABAXAAIAAAAAAAIAAAAaAAIAAAAAAAIAABAYAAIAAAABAAIAAAAZAAIAAAABAAIAAAD9/wMAAAAAAAAAABD9/wQAAAACAAAAABD9/wUAAAABAAIAAAD+/wQAAAABAAAAAAD+/wUAAAABAAIAABD//wQAAAABAAAAAAD//wUAAAABAAIAAAAAAAQAAAACAAAAAAAAAAUAAAABAAIAAAABAAMAAAAAAAAAABABAAQAAAAAAAEAABABAAUAAAAAAAIAABD8/wMAAAAAAAAAAAD8/wQAAAAAAAEAAAD8/wUAAAAAAAIAAAAAAAMAAAAAAAAAAAADAPr/AAAAAAAAAAADAPv/AAAAAAIAAAAEAPr/AAABAAAAAAAEAPv/AAABAAIAAAAFAPr/AAABAAAAAAAFAPv/AAABAAIAAAAGAPr/AAABAAAAAAAGAPv/AAABAAIAAAAHAPr/AAABAAAAAAAHAPv/AAABAAIAAAAIAPr/AAAAAAAAABAIAPv/AAAAAAIAABA=")
-tile_set = SubResource("TileSet_geywk")

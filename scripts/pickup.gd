@@ -17,6 +17,7 @@ var player: PlayerCharacter = null
 enum PICKUP_OPTIONS {
 	COIN,
 	ABILITY_ORB,
+	HEART,
 }
 
 func _ready() -> void:
@@ -81,6 +82,10 @@ func _process(delta: float) -> void:
 
 			elif pickup_option == PICKUP_OPTIONS.ABILITY_ORB:
 				GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
+				FxSystem.play_fx("power-up-picked", global_position)
+
+			elif pickup_option == PICKUP_OPTIONS.HEART:
+				Events.hp_changed.emit(GameManager.instance.player_hp_max, 0)
 				FxSystem.play_fx("power-up-picked", global_position)
 
 			queue_free()

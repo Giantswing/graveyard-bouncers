@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://vcjlnsnxysjs"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_ll43j"]
+[ext_resource type="Texture2D" uid="uid://bqkj7kfpdstf3" path="res://sprites/parry-ball.png" id="1_trf6q"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="2_lh4t1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lh4t1"]
+radius = 12.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ll43j"]
+atlas = ExtResource("1_trf6q")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh4t1"]
+atlas = ExtResource("1_trf6q")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sqgr0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ll43j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh4t1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="ParryBall" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_ll43j")
+hp = 9999
+hp_max = 9999
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lh4t1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("2_lh4t1")
+sprite_frames = SubResource("SpriteFrames_sqgr0")
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/parry-ball.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "b18ed7d5dc2b203b85378d06d2fe99e3"
