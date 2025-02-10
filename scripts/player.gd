@@ -61,6 +61,7 @@ var slide_fx_timer: float = 0
 
 var parry_targets: Array[Stats]
 var attack_targets: Array[Stats]
+var walk_counter: float = 0
 
 var coyote_time: float = 0.0
 @export var coyote_time_max: float = 0.5
@@ -163,6 +164,10 @@ func _physics_process(delta: float) -> void:
 			slide_fx_timer += delta
 			if slide_fx_timer > 0.2 and velocity.y > 10:
 				var direction: int = 0
+
+				if movement_input.x > 0 or movement_input.x < 0:
+					SoundSystem.play_audio("scratch")
+
 				if movement_input.x > 0:
 					direction = 1
 					FxSystem.play_fx("smoke-puff", position + Vector2(direction * 7, -15)) 
@@ -191,6 +196,13 @@ func _physics_process(delta: float) -> void:
 		grounded = is_on_floor()
 	else:
 		grounded = false
+
+
+	if grounded and movement_input.x != 0:
+		walk_counter += delta
+		if walk_counter > 0.3:
+			SoundSystem.play_audio("fall")
+			walk_counter = 0
 
 	on_wall = false
 
@@ -246,14 +258,19 @@ func handle_jump() -> void:
 			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
 			coyote_time = 100
+			SoundSystem.play_audio("jump")
+
+			
 
 		else: # If we are in the air and jump again, we attack
 			if is_attacking == 0:
+				SoundSystem.play_audio("charge-hit")
 				animation_controller.play_animation("attack")
 				process_jump()
 				return
 			
 			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
+				SoundSystem.play_audio("charge-hit")
 				animation_controller.play_animation("attack")
 				GameManager.get_instance().set_powerup_active("double-jump", false)
 				process_jump()
@@ -406,6 +423,7 @@ func process_dash() -> void:
 	get_tree().create_timer(0.15).timeout.connect(func() -> void: is_dashing = false)
 	get_tree().create_timer(0.06).timeout.connect(func() -> void: dash_particles.emitting = false)
 
+	SoundSystem.play_audio("dash")
 	Utils.fast_tween(self, "position", new_position, 0.05)
 
 
@@ -516,7 +534,8 @@ func get_hit(from: Stats) -> void:
 	can_jump = false
 
 	Events.hp_changed.emit(GameManager.get_instance().player_hp - from.damage, -from.damage)
-
+	SoundSystem.play_audio("get-hit")
+	
 	if(GameManager.get_instance().player_hp > 0):
 		Engine.time_scale = 0.1
 		get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
@@ -525,7 +544,7 @@ func get_hit(from: Stats) -> void:
 
 func disable_movement(_player: PlayerCharacter) -> void:
 	can_move = false
-	get_tree().create_timer(1.2).timeout.connect(func() -> void:can_move = true)
+	get_tree().create_timer(0.8).timeout.connect(func() -> void:can_move = true)
 
 func reset_can_get_hit() -> void:
 	can_get_hit = true

@@ -57,6 +57,8 @@ func display_shop() -> void:
 		powerup.chance = powerup.original_chance
 
 	for i in range(amount_of_powerups):
+		if i > 0:
+			await get_tree().create_timer(0.2).timeout
 		spawn_powerup(i)
 
 func close_shop() -> void:
@@ -68,6 +70,7 @@ func close_shop() -> void:
 
 
 func spawn_powerup(i: int) -> void:
+	SoundSystem.play_audio("powerup-appear")
 	var total_chance: float = 0
 
 	for powerup in all_powerups:

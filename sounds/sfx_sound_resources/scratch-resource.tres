@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dv6j07xed6iam"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_8g7ux"]
+[ext_resource type="AudioStream" uid="uid://c1qbkic11igle" path="res://sounds/library/scratch.ogg" id="2_8g7ux"]
+
+[resource]
+script = ExtResource("1_8g7ux")
+key_name = "scratch"
+streams = Array[AudioStream]([ExtResource("2_8g7ux")])
+seq_type = 0
+volume_db = -3.0
+base_pitch = null
+pitch_range = 0.1
+metadata/_custom_type_script = ExtResource("1_8g7ux")

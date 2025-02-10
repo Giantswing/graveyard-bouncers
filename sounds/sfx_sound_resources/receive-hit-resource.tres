@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dpawdt1dkvygd"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_lcxkt"]
+[ext_resource type="AudioStream" uid="uid://ct8ih2j3cwkl0" path="res://sounds/library/receive-hit.ogg" id="2_lcxkt"]
+
+[resource]
+script = ExtResource("1_lcxkt")
+key_name = "get-hit"
+streams = Array[AudioStream]([ExtResource("2_lcxkt")])
+seq_type = 0
+volume_db = 8.0
+base_pitch = 1.0
+pitch_range = 0.2
+metadata/_custom_type_script = ExtResource("1_lcxkt")

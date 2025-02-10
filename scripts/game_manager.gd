@@ -381,6 +381,7 @@ func start_round() -> void:
 func end_round() -> void:
 	Events.round_time_changed.emit(0)
 	starting_ground.disable_bridge()
+	SoundSystem.play_audio("round-end")
 
 	round_started = false
 	round_time = 0

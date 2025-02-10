@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t8683yetlany"
-path="res://.godot/imported/cloud.png-d430ce45b0281423fbb5c6fc14282ca8.ctex"
+uid="uid://cdnx1fdnt5dgi"
+path="res://.godot/imported/portal-inside.png-2b0f671dc94659f6206d5ea33efa8e57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/cloud.png"
-dest_files=["res://.godot/imported/cloud.png-d430ce45b0281423fbb5c6fc14282ca8.ctex"]
+source_file="res://sprites/portal-inside.png"
+dest_files=["res://.godot/imported/portal-inside.png-2b0f671dc94659f6206d5ea33efa8e57.ctex"]
 
 [params]
 

@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b3vk8vkybg3nr"]
 
-[ext_resource type="Texture2D" uid="uid://snuc62jdldom" path="res://scenes/center-platform.png" id="1_deq7b"]
+[ext_resource type="Texture2D" uid="uid://snuc62jdldom" path="res://sprites/center-platform.png" id="1_deq7b"]
 [ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="2_s3rrv"]
 [ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="3_1rmuf"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja4wt"]
 size = Vector2(74, 20)

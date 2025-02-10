@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://bsq50jip6dxee"]
 
 [ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_ga6xi"]
-[ext_resource type="AudioStream" uid="uid://d1tqsf05ukprn" path="res://sounds/library/parry-hit.wav" id="2_ga6xi"]
+[ext_resource type="AudioStream" uid="uid://di81e3tg274sj" path="res://sounds/library/parry.ogg" id="2_kl2af"]
 
 [resource]
 script = ExtResource("1_ga6xi")
 key_name = "parry-hit"
-streams = Array[AudioStream]([ExtResource("2_ga6xi")])
+streams = Array[AudioStream]([ExtResource("2_kl2af")])
 seq_type = 0
 volume_db = 0.0
 base_pitch = 1.4

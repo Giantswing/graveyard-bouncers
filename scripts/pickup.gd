@@ -14,14 +14,27 @@ var max_speed: float = 600
 var follow_particles: GPUParticles2D = null
 var player: PlayerCharacter = null
 
+var timer: float = 0
+var start_pos: Vector2 = Vector2.ZERO
+
+@export var mode: IDLE_MODE = IDLE_MODE.BOUNCE
+@export var start_follow_sound: String = ""
+@export var pickup_sound: String = ""
+
 enum PICKUP_OPTIONS {
 	COIN,
 	ABILITY_ORB,
 	HEART,
 }
 
+enum IDLE_MODE {
+	STATIC,
+	BOUNCE,
+}
+
 func _ready() -> void:
 	scale = Vector2.ZERO
+	start_pos = position
 	Utils.fast_tween(self, "scale", Vector2(1.0, 1.0), 0.15, Tween.TRANS_QUAD)
 
 	follow_particles = get_node_or_null("FollowParticles")
@@ -44,6 +57,9 @@ func pickup(body: Node2D) -> void:
 	if pickup_state != 0:
 		return
 
+	if start_follow_sound != "":
+		SoundSystem.play_audio(start_follow_sound)
+		
 	pickup_state = 1
 	target = body
 	player = body as PlayerCharacter
@@ -52,6 +68,14 @@ func pickup(body: Node2D) -> void:
 		follow_particles.emitting = true 
 
 func _process(delta: float) -> void:
+	timer += delta
+
+	if pickup_state == 0:
+		if mode == IDLE_MODE.BOUNCE:
+			var offset: float = 8.0 * (sin(timer * 2) + 1)
+			position.y = start_pos.y + offset
+
+
 	if !target or pickup_state == 0:
 		return
 
@@ -76,6 +100,9 @@ func _process(delta: float) -> void:
 		velocity += direction * speed * 2
 
 		if my_pos.distance_to(other_pos) < 32 or time_following > 3:
+			if pickup_sound != "":
+				SoundSystem.play_audio(pickup_sound)
+			
 			if pickup_option == PICKUP_OPTIONS.COIN:
 				Events.coins_changed.emit(GameManager.get_instance().coins + 1)
 				FxSystem.play_fx("coin-collect", global_position)

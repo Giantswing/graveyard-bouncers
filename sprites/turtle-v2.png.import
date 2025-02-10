@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8ncwfa21ij1m"
-path="res://.godot/imported/tree-branch.png-1bed612336f38ca98f45cf2adbe6d37b.ctex"
+uid="uid://2bfkr3qx5a4n"
+path="res://.godot/imported/turtle-v2.png-e0f23f9ef990580047ba8fcd25a3a938.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/tree-branch.png"
-dest_files=["res://.godot/imported/tree-branch.png-1bed612336f38ca98f45cf2adbe6d37b.ctex"]
+source_file="res://sprites/turtle-v2.png"
+dest_files=["res://.godot/imported/turtle-v2.png-e0f23f9ef990580047ba8fcd25a3a938.ctex"]
 
 [params]
 

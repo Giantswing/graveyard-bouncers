@@ -80,6 +80,7 @@ script = ExtResource("1_l5lq6")
 damage = 1
 score_reward = 10
 only_damage_when_moving_down = true
+death_sound = "enemy-death"
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
 collision_layer = 0

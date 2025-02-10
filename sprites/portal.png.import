@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://snuc62jdldom"
-path="res://.godot/imported/center-platform.png-8dc4688f5a07e6a5b258d4d050160d6b.ctex"
+uid="uid://x4r04ners3je"
+path="res://.godot/imported/portal.png-86bafd05a4c603423f6c00ccead4be4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/center-platform.png"
-dest_files=["res://.godot/imported/center-platform.png-8dc4688f5a07e6a5b258d4d050160d6b.ctex"]
+source_file="res://sprites/portal.png"
+dest_files=["res://.godot/imported/portal.png-86bafd05a4c603423f6c00ccead4be4a.ctex"]
 
 [params]
 

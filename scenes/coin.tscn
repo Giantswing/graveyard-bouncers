@@ -61,7 +61,10 @@ color_ramp = SubResource("GradientTexture1D_11l1o")
 turbulence_enabled = true
 
 [node name="Coin" type="Node2D"]
+z_index = 1
 script = ExtResource("1_i64fm")
+start_follow_sound = "coin-follow"
+pickup_sound = "coin-pickup"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0

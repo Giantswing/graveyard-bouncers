@@ -87,6 +87,7 @@ damage = 1
 score_reward = 8
 sprite = NodePath("../Sprite")
 spawn_type = 2
+death_sound = "enemy-death"
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
 position = Vector2(0, 4)

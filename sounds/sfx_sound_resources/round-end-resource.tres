@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://cjck2cb60gdn"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_8rfbg"]
+[ext_resource type="AudioStream" uid="uid://bw5rxanvcl7hj" path="res://sounds/library/round-end.ogg" id="2_8rfbg"]
+
+[resource]
+script = ExtResource("1_8rfbg")
+key_name = "round-end"
+streams = Array[AudioStream]([ExtResource("2_8rfbg")])
+seq_type = 0
+volume_db = 1.0
+base_pitch = 1.0
+pitch_range = 0.0
+metadata/_custom_type_script = ExtResource("1_8rfbg")

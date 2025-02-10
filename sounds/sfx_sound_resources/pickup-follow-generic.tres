@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://b08ak4jiv7vqy"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_7pqpx"]
+[ext_resource type="AudioStream" uid="uid://bw682kmkdmdcx" path="res://sounds/library/pickup-follow-generic.ogg" id="2_7pqpx"]
+
+[resource]
+script = ExtResource("1_7pqpx")
+key_name = "pickup-follow"
+streams = Array[AudioStream]([ExtResource("2_7pqpx")])
+seq_type = 0
+volume_db = -4.0
+base_pitch = 1.0
+pitch_range = 0.1
+metadata/_custom_type_script = ExtResource("1_7pqpx")

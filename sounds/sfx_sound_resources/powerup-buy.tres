@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://devydj3dsrnod"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_4fvks"]
+[ext_resource type="AudioStream" uid="uid://c3vf4r080lb1o" path="res://sounds/library/powerup-major.ogg" id="2_22jy8"]
+
+[resource]
+script = ExtResource("1_4fvks")
+key_name = "powerup-buy"
+streams = Array[AudioStream]([ExtResource("2_22jy8")])
+seq_type = 0
+volume_db = 0.0
+base_pitch = 1.0
+pitch_range = 0.0
+metadata/_custom_type_script = ExtResource("1_4fvks")

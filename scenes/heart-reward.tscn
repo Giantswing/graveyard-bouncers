@@ -60,6 +60,8 @@ animations = [{
 [node name="Heart" type="Node2D"]
 script = ExtResource("1_qharg")
 pickup_option = 2
+start_follow_sound = "pickup-follow"
+pickup_sound = "heal-pickup"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -76,8 +78,10 @@ lifetime = 0.6
 process_material = SubResource("ParticleProcessMaterial_mrrbq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_oua1n")
+autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "output_section": true,

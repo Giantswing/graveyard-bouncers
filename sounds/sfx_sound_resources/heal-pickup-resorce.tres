@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://bpom2xvklm1rb"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_l53fi"]
+[ext_resource type="AudioStream" uid="uid://ygpfs13ilj6r" path="res://sounds/library/heal.ogg" id="2_l53fi"]
+
+[resource]
+script = ExtResource("1_l53fi")
+key_name = "heal-pickup"
+streams = Array[AudioStream]([ExtResource("2_l53fi")])
+seq_type = 0
+volume_db = -4.0
+base_pitch = 1.0
+pitch_range = 0.1
+metadata/_custom_type_script = ExtResource("1_l53fi")

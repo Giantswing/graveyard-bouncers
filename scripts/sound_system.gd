@@ -11,6 +11,8 @@ func _ready() -> void:
 
 	for sound_resource in sound_resources:
 		sfx_dict[sound_resource.key_name] = sound_resource
+	
+	print(sfx_dict)
 
 	set_up_audio_players()
 
@@ -47,7 +49,7 @@ func set_up_audio_players() -> void:
 		audio_player.volume_db = 0 
 		audio_player.autoplay = false
 		audio_player.bus = "SFX"
-		audio_player.max_distance = 100000.0
+		audio_player.max_distance = 2000.0
 		audio_player.name = "audio_player_" + str(i)
 		audio_players.append(audio_player)
 		add_child(audio_player)
@@ -71,5 +73,15 @@ func play_audio(audio_name: String) -> void:
 
 	audio_player.pitch_scale = audio_resource.base_pitch + randf_range(-audio_resource.pitch_range, audio_resource.pitch_range)
 
+	if GameManager.instance.player != null:
+		audio_player.global_position = GameManager.instance.player.global_position
+
 	if audio_player.stream != null:
 		audio_player.play()
+
+
+func stop_audio(audio_name: String) -> void:
+	for audio_player in audio_players:
+		if audio_player.stream != null and audio_player.stream.name == audio_name:
+			audio_player.stop()
+			return

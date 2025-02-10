@@ -24,6 +24,9 @@ func detect_player(body: Node) -> void:
 
 	if body is PlayerCharacter:
 		active = false
+		get_tree().create_timer(0.25).timeout.connect(func() -> void:
+			SoundSystem.play_audio("portal-enter")
+		)
 
 		if enter:
 			Events.enter_challenge_mode.emit(body as PlayerCharacter)

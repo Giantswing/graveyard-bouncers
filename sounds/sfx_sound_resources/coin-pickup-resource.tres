@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dxmaf7bqkjyy4"]
+
+[ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_mlgqs"]
+[ext_resource type="AudioStream" uid="uid://df04jisyfrl36" path="res://sounds/library/coin-pickup.ogg" id="2_mlgqs"]
+
+[resource]
+script = ExtResource("1_mlgqs")
+key_name = "coin-pickup"
+streams = Array[AudioStream]([ExtResource("2_mlgqs")])
+seq_type = 0
+volume_db = -10.0
+base_pitch = 1.0
+pitch_range = 0.1
+metadata/_custom_type_script = ExtResource("1_mlgqs")

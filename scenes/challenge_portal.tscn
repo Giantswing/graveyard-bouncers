@@ -1,8 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://bpbg107alh8ou"]
 
 [ext_resource type="Script" uid="uid://cof0l32nrruj3" path="res://scripts/challenge_portal.gd" id="1_wclm1"]
-[ext_resource type="Texture2D" uid="uid://x4r04ners3je" path="res://scenes/portal.png" id="2_7eida"]
-[ext_resource type="Texture2D" uid="uid://cdnx1fdnt5dgi" path="res://scenes/portal-inside.png" id="3_yf1hf"]
+[ext_resource type="Texture2D" uid="uid://x4r04ners3je" path="res://sprites/portal.png" id="2_7eida"]
+[ext_resource type="Texture2D" uid="uid://cdnx1fdnt5dgi" path="res://sprites/portal-inside.png" id="3_yf1hf"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_in8hx"]
 atlas = ExtResource("3_yf1hf")

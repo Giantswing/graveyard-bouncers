@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dhd4d0bdog4kw"]
 
 [ext_resource type="Script" uid="uid://dbx7hsckrkhbv" path="res://scripts/sound_resource.gd" id="1_dqwym"]
-[ext_resource type="AudioStream" uid="uid://duncrl6ivqqj2" path="res://sounds/library/shovel-hit.wav" id="2_0nine"]
+[ext_resource type="AudioStream" uid="uid://bvi0vhxddq5ce" path="res://sounds/library/hit.ogg" id="2_0nine"]
 
 [resource]
 script = ExtResource("1_dqwym")
@@ -9,6 +9,6 @@ key_name = "shovel-hit"
 streams = Array[AudioStream]([ExtResource("2_0nine")])
 seq_type = 0
 volume_db = -5.0
-base_pitch = 1.25
-pitch_range = 0.1
+base_pitch = 1.1
+pitch_range = 0.3
 metadata/_custom_type_script = ExtResource("1_dqwym")

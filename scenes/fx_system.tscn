@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://dagqrdhdib5v1" path="res://scripts/fx_system.gd" id="1_6qabg"]
 
 [node name="FxSystem" type="Node2D"]
+z_index = 2
 script = ExtResource("1_6qabg")

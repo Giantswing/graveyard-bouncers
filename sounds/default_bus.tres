@@ -5,7 +5,9 @@ resource_name = "Compressor"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_01nt7"]
 resource_name = "Reverb"
-room_size = 0.37
+room_size = 0.09
+damping = 0.21
+spread = 0.3
 wet = 0.1
 
 [resource]

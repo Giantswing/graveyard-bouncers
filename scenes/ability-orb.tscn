@@ -79,8 +79,11 @@ animations = [{
 }]
 
 [node name="AbilityOrb" type="Node2D"]
+z_index = 1
 script = ExtResource("1_mrrbq")
 pickup_option = 1
+start_follow_sound = "pickup-follow"
+pickup_sound = "ability-orb-pickup"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -99,6 +102,7 @@ process_material = SubResource("ParticleProcessMaterial_mrrbq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_quts5")
+autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "output_section": true,

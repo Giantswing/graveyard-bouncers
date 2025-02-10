@@ -73,6 +73,7 @@ wobble = 0.2
 script = ExtResource("2_lv0ya")
 damage = 1
 score_reward = 15
+death_sound = "enemy-death"
 metadata/_custom_type_script = ExtResource("2_lv0ya")
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
