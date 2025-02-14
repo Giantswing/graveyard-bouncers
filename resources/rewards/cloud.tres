@@ -7,7 +7,7 @@
 script = ExtResource("1_7ou5h")
 name = "Cloud"
 prefab = ExtResource("2_yjgye")
-chance = 0.25
+chance = 1.0
 free_space = 30.0
 spawn_type = 2
 metadata/_custom_type_script = ExtResource("1_7ou5h")

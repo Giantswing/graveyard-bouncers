@@ -295,7 +295,8 @@ func process_jump() -> void:
 		received_damage = false
 		process_parry(parry_target)
 	else:
-		is_attacking = 1
+		# is_attacking = 1
+		is_attacking = 2
 		received_damage = false
 		velocity.y = -attack_recoil_str_mult * base_strength
 

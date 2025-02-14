@@ -21,6 +21,9 @@ func _ready() -> void:
 		if body is PlayerCharacter and detect_exit:
 			print("Player has exited the challenge")
 			Events.exit_challenge_mode.emit(body as PlayerCharacter)
+			get_tree().create_timer(0.25).timeout.connect(func() -> void:
+				SoundSystem.play_audio("portal-enter")
+			)
 	)
 	
 	transition.hide()

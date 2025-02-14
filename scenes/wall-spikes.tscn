@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://brehjpamjrjui"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_episo"]
+[ext_resource type="Texture2D" uid="uid://fvok74n3mel8" path="res://sprites/spikes.png" id="2_ekf3u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbcdo"]
+size = Vector2(24, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbcdo"]
+atlas = ExtResource("2_ekf3u")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bflj7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbcdo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Spikes" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Stats" type="Node2D" parent="."]
+position = Vector2(0, 11)
+script = ExtResource("1_episo")
+damage = 1
+can_take_damage = false
+can_be_parried = false
+metadata/_custom_type_script = ExtResource("1_episo")
+
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+position = Vector2(-1.57361e-06, -12.5)
+shape = SubResource("RectangleShape2D_xbcdo")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.637909, 0.417983, 0.507062, 1)
+light_mask = 2
+z_index = -4
+texture_filter = 1
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_bflj7")
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": true,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/sprites/spikes.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "c92a9a7d1f51db7b1bb2356d77cc2153"

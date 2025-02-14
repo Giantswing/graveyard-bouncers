@@ -120,7 +120,7 @@ func point_target(delta: float) -> void:
 	var final_pos: float
 
 	if current_mode == MODES.IN_ROUND:
-		final_pos = min(start_y_pos + 45, start_y_pos + dist.y * 0.2)
+		final_pos = min(start_y_pos + 45, start_y_pos + dist.y * 0.6)
 		position.y = lerp(position.y, final_pos, in_round_speed * delta * 60.0)
 		if position.y > start_y_pos:
 			position.y = start_y_pos
@@ -134,7 +134,7 @@ func point_target(delta: float) -> void:
 			position.y = start_y_pos
 	elif current_mode == MODES.CHALLENGE_MODE:
 		position.x = lerp(position.x, target.global_position.x, 0.05 * delta * 60.0)
-		position.y = lerp(position.y, target.global_position.y, (0.01 + extra_speed) * delta * 60.0)
+		position.y = lerp(position.y, target.global_position.y, (0.04 + extra_speed) * delta * 60.0)
 
 	
 

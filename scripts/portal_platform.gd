@@ -7,7 +7,7 @@ extends StaticBody2D
 func _ready() -> void:
 	Events.round_ended.connect(show_platform)
 	Events.round_started.connect(hide_platform)
-	# hide_platform()
+	hide_platform()
 
 
 func hide_platform() -> void:

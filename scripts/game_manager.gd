@@ -61,6 +61,12 @@ static var instance: GameManager
 static func get_instance() -> GameManager:
 	return instance
 
+static func get_player_position() -> Vector2:
+	if instance:
+		if instance.player:
+			return instance.player.global_position
+	return Vector2(0, 0)
+
 func _ready() -> void:
 	instance = self
 

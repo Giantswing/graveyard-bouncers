@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdm8pk6rehmd4"]
+
+[ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="1_cw3wi"]
+
+[node name="MoverMovePoint" type="Sprite2D"]
+modulate = Color(0.789021, 0.0128277, 0.357444, 1)
+scale = Vector2(2, 2)
+texture = ExtResource("1_cw3wi")

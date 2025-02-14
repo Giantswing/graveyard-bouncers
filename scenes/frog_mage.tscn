@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://t23cpsfafot7"]
 
-[ext_resource type="Script" uid="uid://bwuxvdyc0cd1n" path="res://scripts/pumpkin.gd" id="1_r08ax"]
+[ext_resource type="Script" uid="uid://c1t630f486ew3" path="res://scripts/frog_mage.gd" id="1_r08ax"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_2l6al"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_2hyaq"]
 [ext_resource type="Texture2D" uid="uid://cs30wn4svo8sr" path="res://sprites/frog-mage.png" id="4_r08ax"]
@@ -8,15 +8,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2inn6"]
 size = Vector2(20, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2l6al"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r08ax"]
 atlas = ExtResource("4_r08ax")
 region = Rect2(0, 0, 40, 40)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2hyaq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_2l6al"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2l6al")
+"texture": SubResource("AtlasTexture_r08ax")
 }],
 "loop": true,
 "name": &"default",
@@ -24,29 +24,26 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_httt1"]
-size = Vector2(23.3333, 18.6667)
+size = Vector2(23.3333, 21)
 
 [node name="FrogMage" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_r08ax")
-speed = 80.0
-speed_variance = 30.0
-jump_speed = 400.0
+rotation_speed_to = 10.0
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_2l6al")
-hp_max = 2
+hp_max = 4
 damage = 1
 score_reward = 8
 sprite = NodePath("../Sprite")
-spawn_type = 2
+spawn_type = 1
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
-position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_2inn6")
 debug_color = Color(0.842005, 0, 0.0479336, 0.42)
 
@@ -54,8 +51,9 @@ debug_color = Color(0.842005, 0, 0.0479336, 0.42)
 z_index = -1
 texture_filter = 1
 material = ExtResource("3_2hyaq")
-sprite_frames = SubResource("SpriteFrames_2hyaq")
+sprite_frames = SubResource("SpriteFrames_2l6al")
 metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
 "output_section": true,
 "pending_changes": {}
 }
@@ -64,7 +62,7 @@ metadata/_aseprite_wizard_config_ = {
 "o_ex_p": "",
 "o_folder": "res://sprites",
 "o_name": "",
-"only_visible": false,
+"only_visible": true,
 "should_round_fps": true,
 "slice": "",
 "source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/frog-mage.aseprite"
@@ -72,10 +70,26 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "870e5ce1c0a1ea2713c5f1108cb2e01b"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2.8)
+position = Vector2(0, 0.60001)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_httt1")
 
-[node name="BodyForwardCast" type="RayCast2D" parent="."]
-target_position = Vector2(30, 0)
-collision_mask = 9
+[node name="Raycast" type="RayCast2D" parent="."]
+position = Vector2(14, -12)
+target_position = Vector2(120, 0)
+collision_mask = 11
+
+[node name="Raycast2" type="RayCast2D" parent="."]
+position = Vector2(14, 13)
+target_position = Vector2(120, 0)
+collision_mask = 11
+
+[node name="Raycast3" type="RayCast2D" parent="."]
+position = Vector2(-14, -12)
+target_position = Vector2(120, 0)
+collision_mask = 11
+
+[node name="Raycast4" type="RayCast2D" parent="."]
+position = Vector2(-14, 13)
+target_position = Vector2(120, 0)
+collision_mask = 11
