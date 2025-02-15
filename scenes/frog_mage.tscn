@@ -33,9 +33,10 @@ rotation_speed_to = 10.0
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_2l6al")
-hp_max = 4
+hp_max = 3
 damage = 1
 score_reward = 8
+spawn_rate_reduction = 30.0
 sprite = NodePath("../Sprite")
 spawn_type = 1
 

@@ -1,0 +1,46 @@
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://cffohnh8f5q37"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_j3pel"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
+resource_name = "Reverb"
+room_size = 0.09
+damping = 0.21
+spread = 0.3
+wet = 0.1
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_j3pel"]
+resource_name = "EQ"
+band_db/100_hz = -2.9
+band_db/320_hz = -11.0
+band_db/1000_hz = -11.3
+band_db/3200_hz = -4.2
+
+[sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_j3pel"]
+resource_name = "StereoEnhance"
+pan_pullout = 3.04
+time_pullout_ms = 3.4
+surround = 1.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_j3pel")
+bus/0/effect/0/enabled = true
+bus/1/name = &"SFX"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_j3pel")
+bus/1/effect/0/enabled = true
+bus/2/name = &"Music"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -8.00903
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectEQ_j3pel")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectStereoEnhance_j3pel")
+bus/2/effect/1/enabled = true

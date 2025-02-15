@@ -15,10 +15,6 @@ config/version="0.0.7"
 run/main_scene="uid://btuvbhvc412un"
 config/features=PackedStringArray("4.4", "Mobile")
 
-[audio]
-
-buses/default_bus_layout="uid://dogbv31wa5t6a"
-
 [autoload]
 
 Events="*res://scenes/events.tscn"

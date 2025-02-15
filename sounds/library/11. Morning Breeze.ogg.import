@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bnltbqmdvt625"
+path="res://.godot/imported/11. Morning Breeze.ogg-8e965e95b4eda5c4174312a82a471986.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/library/11. Morning Breeze.ogg"
+dest_files=["res://.godot/imported/11. Morning Breeze.ogg-8e965e95b4eda5c4174312a82a471986.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
