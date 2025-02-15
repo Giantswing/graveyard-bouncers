@@ -8,6 +8,7 @@ script = ExtResource("1_37lgp")
 name = "Pumpkin"
 prefab = ExtResource("2_p5dcv")
 chance = 0.5
+chance_decay = 1.0
 free_space = 50.0
 spawn_type = 0
 metadata/_custom_type_script = ExtResource("1_37lgp")
