@@ -8,7 +8,7 @@ extends Camera2D
 @export var max_roll: float = 0.1
 @export var shake_power: float = 2
 @export var on_hit_shake: float = 0.1
-@export var on_parry_shake: float = 0.1
+@export var on_parry_shake: float = 0.2
 
 var target: Node2D
 var start_y_pos: float

@@ -496,8 +496,7 @@ autoplay = true
 [node name="MainCamera" type="Camera2D" parent="."]
 position_smoothing_enabled = true
 script = ExtResource("7_vrglu")
-on_hit_shake = 0.2
-on_parry_shake = 0.12
+on_hit_shake = 0.25
 max_y_increase = 0.0
 before_round_speed = 0.08
 in_round_speed = 0.04
