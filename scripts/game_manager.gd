@@ -18,6 +18,8 @@ class_name GameManager
 @export var helper_enemy_prefab: PackedScene
 @export var spikes_prefab: PackedScene
 
+@export var countdown_timer: int = 3
+
 var round_time: int = 0
 var round_data: GameRound = null
 var challenge_data: Challenge = null
@@ -25,6 +27,7 @@ var challenge_data: Challenge = null
 enum MODES { 
 	BEFORE_ROUND,
 	IN_ROUND,
+	COUNTDOWN,
 	CHALLENGE_MODE,
 }
 
