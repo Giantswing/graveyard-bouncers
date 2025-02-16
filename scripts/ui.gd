@@ -20,6 +20,7 @@ extends Control
 
 @onready var countdown_screen: Control = %CountdownScreen
 @onready var countdown_label: Label = %CountdownLabel
+@onready var objective_label: Label = %ObjectiveLabel
 @onready var countdown_timer: Timer = %CountdownTimer
 
 @onready var top_left_container: Control = %TopLeft
@@ -38,6 +39,7 @@ func _ready() -> void:
 	death_screen.visible = false
 	pause_screen.visible = false
 	countdown_screen.visible = false
+	objective_label.visible = false
 
 	Events.score_changed.connect(on_score_changed)
 	Events.hp_changed.connect(on_hp_changed)
@@ -50,6 +52,7 @@ func _ready() -> void:
 	Events.game_paused.connect(on_game_paused)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
 	Events.round_countdown_start.connect(start_countdown)
+	Events.round_ended.connect(on_round_ended)
 
 	var original_countdown_font_size: float = countdown_label.label_settings.font_size
 	var increased_countdown_font_size: int = roundi(original_countdown_font_size * 1.5)
@@ -64,11 +67,29 @@ func _ready() -> void:
 		if current_countdown_time <= 0:
 			countdown_screen.visible = false
 			countdown_timer.stop()
+			var tween := get_tree().create_tween()
+			
+			tween.set_parallel(true)
+			tween.set_trans(Tween.TRANS_SINE)
+			tween.set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(objective_label, "position", Vector2(246, 64), 0.3)
+			tween.tween_property(objective_label, "label_settings:font_size", 12, 0.3)
 	)
+
+func on_round_ended() -> void:
+	objective_label.visible = false
+	objective_label.position = Vector2(124.5, 226)
+	objective_label.label_settings.font_size = 30
 
 func start_countdown(time: int) -> void:
 	var original_countdown_font_size: float = countdown_label.label_settings.font_size
 	var increased_countdown_font_size: int = roundi(original_countdown_font_size * 1.5)
+	objective_label.visible = true
+	var objective: String = ""
+	if GameManager.get_instance().round_data.time_limit > 0:
+		objective = "Survive for " + str(GameManager.get_instance().round_data.time_limit) + " seconds"
+
+	objective_label.text = objective
 
 	countdown_label.label_settings.font_size = increased_countdown_font_size
 	var tween: Tween = get_tree().create_tween()
@@ -156,7 +177,7 @@ func on_player_died() -> void:
 	death_screen.visible = true
 	
 func on_score_changed(new_score: int) -> void:
-	score_label.text = "Score: " + str(new_score)
+	score_label.text = "Souls " + str(new_score)
 
 
 func update_ui_transparency() -> void:

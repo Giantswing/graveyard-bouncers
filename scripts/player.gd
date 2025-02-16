@@ -379,6 +379,8 @@ func process_parry(target: Stats) -> void:
 
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
+			if !can_attack:
+				return
 			
 			if target:
 				target.take_damage(1)

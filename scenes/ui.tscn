@@ -10,6 +10,10 @@
 [ext_resource type="SpriteFrames" uid="uid://bniyryg3serqv" path="res://resources/abilities/dash-frames.tres" id="6_ktti3"]
 [ext_resource type="PackedScene" uid="uid://bp5xi8kgww8wi" path="res://scenes/power_up_ui_instance.tscn" id="7_cgfq5"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_7dvkv"]
+font_size = 30
+font_color = Color(1, 1, 1, 0.403922)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dubc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p7vwb"]
@@ -55,10 +59,6 @@ gradient = SubResource("Gradient_ktti3")
 font_size = 110
 font_color = Color(1, 1, 1, 0.733333)
 
-[sub_resource type="LabelSettings" id="LabelSettings_7dvkv"]
-font_size = 30
-font_color = Color(1, 1, 1, 0.733333)
-
 [node name="UI" type="CanvasLayer"]
 layer = 2
 
@@ -82,6 +82,30 @@ size_flags_vertical = 3
 script = ExtResource("1_yev5y")
 ui_heart_scene = ExtResource("2_gdt2y")
 ui_pickup_scene = ExtResource("7_cgfq5")
+
+[node name="ObjectiveLabel" type="Label" parent="MarginContainer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.5
+offset_top = 56.0
+offset_right = 185.5
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(185, 19)
+size_flags_horizontal = 4
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "Survive for 45 seconds"
+label_settings = SubResource("LabelSettings_7dvkv")
+horizontal_alignment = 2
 
 [node name="TopLeft" type="Control" parent="MarginContainer/Control"]
 unique_name_in_owner = true
@@ -433,17 +457,6 @@ theme_override_constants/shadow_offset_y = 3
 text = "3"
 label_settings = SubResource("LabelSettings_cgfq5")
 vertical_alignment = 1
-
-[node name="ObjectiveLabel" type="Label" parent="MarginContainer/Control/CountdownScreen"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("3_wm3ai")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-text = "Survive 45 seconds"
-label_settings = SubResource("LabelSettings_7dvkv")
 
 [node name="CountdownTimer" type="Timer" parent="MarginContainer/Control/CountdownScreen"]
 unique_name_in_owner = true

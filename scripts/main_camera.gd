@@ -105,7 +105,7 @@ func point_target_v2(_delta: float) -> void:
 		target_pos += (target.global_position + target.offset) * target.importance
 		target_count += 1
 		var target_screen_pos := target.get_global_transform_with_canvas().origin / get_viewport_rect().size
-		var padding: float = 0.1
+		var padding: float = 0.01
 
 		if target_screen_pos.x < padding or target_screen_pos.x > 1 - padding or target_screen_pos.y < padding or target_screen_pos.y > 1 - padding:
 			targets_out += 1

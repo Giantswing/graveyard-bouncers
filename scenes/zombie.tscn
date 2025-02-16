@@ -79,7 +79,7 @@ size = Vector2(16, 23.6667)
 [node name="Zombie" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_xepks")
-speed = 40.0
+speed = 60.0
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_1vlb3")

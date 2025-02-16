@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var max_speed: float = 180
 
-@export var rotation_speed_to: float = 1.0  # Controls how fast the enemy rotates when colliding
+@export var rotation_speed_to: float = 6.0  # Controls how fast the enemy rotates when colliding
 var rotation_speed: float = 0
 
 @export var acceleration: float = 10
@@ -30,7 +30,7 @@ func _ready() -> void:
 func on_hit() -> void:
 	# var new_rotation_value := 1 if randf() > 0.5 else -1
 	var new_rotation_value := last_rotation * -1
-	Utils.fast_tween(self, "last_rotation", new_rotation_value, 3)
+	Utils.fast_tween(self, "last_rotation", new_rotation_value, 0.5)
 	var player_position := GameManager.get_player_position()
 	var direction := (global_position - player_position).normalized()
 	impulse = direction * (100 + 25 * randf()) 
@@ -53,13 +53,15 @@ func _process(delta: float) -> void:
 	if raycast.is_colliding() or raycast2.is_colliding() or raycast3.is_colliding() or raycast4.is_colliding():
 		movement_angle += rotation_speed_to * last_rotation * delta * (randf() * 0.5 + 0.5)
 	else:
+		movement_angle += (rotation_speed_to * last_rotation * delta * (randf() * 0.5 + 0.5)) * 0.2
 		change_rotation_timer += delta
 		speed += acceleration * delta * 60
 		if speed > max_speed:
 			speed = max_speed
 
 	var target_velocity := Vector2.RIGHT.rotated(movement_angle) * speed 
-	velocity = velocity.lerp(target_velocity, acceleration * delta)
+	velocity.x = lerpf(velocity.x, target_velocity.x * 0.8, acceleration * delta)
+	velocity.y = lerpf(velocity.y, target_velocity.y, acceleration * delta)
 	velocity += impulse
 
 	# Keep raycast aligned with movement direction

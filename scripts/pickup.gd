@@ -86,9 +86,9 @@ func _process(delta: float) -> void:
 	time_following += delta
 
 	if pickup_state == 1:
-		velocity += -direction * speed
+		velocity += -direction * speed * 2
 
-		if time_following > 0.2:
+		if time_following > 0.1:
 			pickup_state = 2
 			time_following = 0
 
@@ -99,7 +99,7 @@ func _process(delta: float) -> void:
 		time_following += delta
 		velocity += direction * speed * 2
 
-		if my_pos.distance_to(other_pos) < 32 or time_following > 3:
+		if my_pos.distance_to(other_pos) < 22 or time_following > 1.5:
 			if pickup_sound != "":
 				SoundSystem.play_audio(pickup_sound)
 			
