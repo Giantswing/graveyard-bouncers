@@ -21,7 +21,7 @@ var zoom_speed: float = 0.01
 
 
 @export var bottom_limit: float = 0
-@export var follow_speed: Vector2 = Vector2(0.08, 0.1)
+@export var follow_speed: Vector2 = Vector2(0.08, 0.06)
 
 
 var current_shake_amount: float = 0
@@ -105,15 +105,16 @@ func point_target_v2(_delta: float) -> void:
 		target_pos += (target.global_position + target.offset) * target.importance
 		target_count += 1
 		var target_screen_pos := target.get_global_transform_with_canvas().origin / get_viewport_rect().size
+		var padding: float = 0.1
 
-		if target_screen_pos.x < 0 or target_screen_pos.x > 1 or target_screen_pos.y < 0 or target_screen_pos.y > 1:
+		if target_screen_pos.x < padding or target_screen_pos.x > 1 - padding or target_screen_pos.y < padding or target_screen_pos.y > 1 - padding:
 			targets_out += 1
 		else:
 			targets_in += 1
 		
 
 	if targets_out > 0:
-		targets_zoom = lerp(targets_zoom, max_targets_zoom, 0.005)
+		targets_zoom = lerp(targets_zoom, max_targets_zoom, 0.0025)
 	else:
 		targets_zoom = 0
 
@@ -123,8 +124,10 @@ func point_target_v2(_delta: float) -> void:
 
 	final_target_pos = target_pos
 
-	if final_target_pos.y > bottom_limit:
-		final_target_pos.y = bottom_limit
+	var computed_bottom_limit: float = bottom_limit + (1 - zoom.x) * -100
+
+	if final_target_pos.y > computed_bottom_limit:
+		final_target_pos.y = computed_bottom_limit
 
 	global_position.x = lerp(global_position.x, final_target_pos.x, follow_speed.x * _delta * 60.0)
 	global_position.y = lerp(global_position.y, final_target_pos.y, follow_speed.y * _delta * 60.0)

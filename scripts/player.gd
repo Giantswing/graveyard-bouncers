@@ -82,6 +82,11 @@ func _ready() -> void:
 	Events.ability_gained.connect(on_ability_gained)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
 	Events.round_ended.connect(on_round_ended)
+	Events.round_started.connect(func() -> void:
+		velocity.y = -base_strength * 1.5
+		is_attacking = 0
+	)
+
 
 	Events.enter_challenge_mode.connect(func(_player: PlayerCharacter) -> void: disable_movement())
 	Events.exit_challenge_mode.connect(func(_player: PlayerCharacter) -> void:	disable_movement())

@@ -12,6 +12,7 @@ enum GROUND_TYPES {
 
 @export var difficulty: float = 1
 @export var time_limit: int = 45
+@export var enemy_count: int = 0
 @export var chance: float = 1
 
 @export var gravity_multiplier: float = 0.5

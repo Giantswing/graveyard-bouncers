@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://50wu1jt67mqg"]
+[gd_scene load_steps=19 format=3 uid="uid://50wu1jt67mqg"]
 
 [ext_resource type="Script" uid="uid://dtqbfcsfon5fk" path="res://scripts/ui.gd" id="1_yev5y"]
 [ext_resource type="PackedScene" uid="uid://bh2e3rf6yppxo" path="res://scenes/ui_heart.tscn" id="2_gdt2y"]
@@ -53,6 +53,10 @@ gradient = SubResource("Gradient_ktti3")
 
 [sub_resource type="LabelSettings" id="LabelSettings_cgfq5"]
 font_size = 110
+font_color = Color(1, 1, 1, 0.733333)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7dvkv"]
+font_size = 30
 font_color = Color(1, 1, 1, 0.733333)
 
 [node name="UI" type="CanvasLayer"]
@@ -415,9 +419,11 @@ offset_top = -46.0
 offset_bottom = 46.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = -45
 
 [node name="CountdownLabel" type="Label" parent="MarginContainer/Control/CountdownScreen"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_wm3ai")
@@ -426,6 +432,18 @@ theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 text = "3"
 label_settings = SubResource("LabelSettings_cgfq5")
+vertical_alignment = 1
+
+[node name="ObjectiveLabel" type="Label" parent="MarginContainer/Control/CountdownScreen"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_wm3ai")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+text = "Survive 45 seconds"
+label_settings = SubResource("LabelSettings_7dvkv")
 
 [node name="CountdownTimer" type="Timer" parent="MarginContainer/Control/CountdownScreen"]
 unique_name_in_owner = true
