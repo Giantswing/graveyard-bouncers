@@ -8,6 +8,3 @@ func _ready() -> void:
 func start_round() -> void:
 	stats.hp = stats.hp_max
 	Events.round_countdown_start.emit(GameManager.instance.countdown_timer)
-	# get_tree().create_timer(3.0).timeout.connect(func() -> void:
-	# 	Events.round_started.emit()
-	# )

@@ -169,6 +169,10 @@ func _process(delta: float) -> void:
 		ctarget.importance.x = 0
 		ctarget.offset.x = 0
 		ctarget.offset.y = 0.0
+	elif GameManager.instance.game_mode == GameManager.MODES.COUNTDOWN:
+		ctarget.importance.x = 0
+		ctarget.offset.x = 0
+		ctarget.offset.y = 100.0
 
 
 func _physics_process(delta: float) -> void:

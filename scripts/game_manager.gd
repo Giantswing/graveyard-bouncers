@@ -18,7 +18,7 @@ class_name GameManager
 @export var helper_enemy_prefab: PackedScene
 @export var spikes_prefab: PackedScene
 
-@export var countdown_timer: int = 3
+@export var countdown_timer: int = 5
 
 var round_time: int = 0
 var round_data: GameRound = null
@@ -137,8 +137,20 @@ func _ready() -> void:
 	Events.round_ended.connect(func() -> void: change_mode(MODES.BEFORE_ROUND))
 	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void: change_mode(MODES.CHALLENGE_MODE))
 	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void: change_mode(MODES.BEFORE_ROUND))
+	Events.round_countdown_start.connect(start_countdown)
 
 	change_mode(MODES.BEFORE_ROUND)
+
+func start_countdown(time: int) -> void:
+	change_mode(MODES.COUNTDOWN)
+	deactivate(trampoline)
+	deactivate(grave)
+
+	get_tree().create_timer(time).timeout.connect(func() -> void:
+		if game_mode == MODES.COUNTDOWN:
+			Events.round_started.emit()
+	)
+		
 
 func change_mode(mode: MODES) -> void:
 	game_mode = mode
@@ -200,7 +212,7 @@ func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
-	if round_time >= round_data.time_limit:
+	if round_time >= round_data.time_limit && round_data.time_limit > 0:
 		Events.round_ended.emit()
 
 
@@ -395,9 +407,6 @@ func start_round() -> void:
 
 	current_round += 1
 	Events.round_counter_changed.emit(current_round)
-
-	deactivate(trampoline)
-	deactivate(grave)
 
 	seconds_timer.start()
 

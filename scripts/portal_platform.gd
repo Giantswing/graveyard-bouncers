@@ -6,11 +6,11 @@ extends StaticBody2D
 
 func _ready() -> void:
 	Events.round_ended.connect(show_platform)
-	Events.round_started.connect(hide_platform)
-	# hide_platform()
+	Events.round_countdown_start.connect(hide_platform)
+	hide_platform(1)
 
 
-func hide_platform() -> void:
+func hide_platform(_time: int) -> void:
 	set_collision_layer_value(1, false)
 	portal.hide()
 	portal.process_mode = Node.PROCESS_MODE_DISABLED

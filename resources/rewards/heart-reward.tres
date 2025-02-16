@@ -7,7 +7,7 @@
 script = ExtResource("1_pm2in")
 name = "Heart"
 prefab = ExtResource("2_j74or")
-chance = 0.25
+chance = 0.35
 chance_decay = 1.0
 free_space = 30.0
 spawn_type = 3

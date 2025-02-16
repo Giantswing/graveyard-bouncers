@@ -18,6 +18,10 @@ extends Control
 @onready var pause_screen: Control = %PauseScreen
 @onready var powerup_list: Control = %PowerUpList
 
+@onready var countdown_screen: Control = %CountdownScreen
+@onready var countdown_label: Label = %CountdownLabel
+@onready var countdown_timer: Timer = %CountdownTimer
+
 @onready var top_left_container: Control = %TopLeft
 @onready var top_right_container: Control = %TopRight
 @onready var bottom_left_container: Control = %BottomLeft
@@ -26,12 +30,14 @@ extends Control
 var hearts: Array[ui_heart] = []
 var selected_menu_option: int = 0
 var menu_options: Array[Node] = []
+var current_countdown_time: int = 0
 
 func _ready() -> void:
 	menu_options = %MenuOptions.get_children()
 
 	death_screen.visible = false
 	pause_screen.visible = false
+	countdown_screen.visible = false
 
 	Events.score_changed.connect(on_score_changed)
 	Events.hp_changed.connect(on_hp_changed)
@@ -43,6 +49,36 @@ func _ready() -> void:
 	Events.ability_gained.connect(on_ability_gained)
 	Events.game_paused.connect(on_game_paused)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
+	Events.round_countdown_start.connect(start_countdown)
+
+	var original_countdown_font_size: float = countdown_label.label_settings.font_size
+	var increased_countdown_font_size: int = roundi(original_countdown_font_size * 1.5)
+	countdown_timer.timeout.connect(func() -> void:
+		current_countdown_time -= 1
+
+		countdown_label.label_settings.font_size = increased_countdown_font_size
+		var tween2: Tween = get_tree().create_tween()
+		tween2.tween_property(countdown_label.label_settings, "font_size", original_countdown_font_size, 0.25)
+
+		countdown_label.text = str(current_countdown_time)
+		if current_countdown_time <= 0:
+			countdown_screen.visible = false
+			countdown_timer.stop()
+	)
+
+func start_countdown(time: int) -> void:
+	var original_countdown_font_size: float = countdown_label.label_settings.font_size
+	var increased_countdown_font_size: int = roundi(original_countdown_font_size * 1.5)
+
+	countdown_label.label_settings.font_size = increased_countdown_font_size
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(countdown_label.label_settings, "font_size", original_countdown_font_size, 0.25)
+	countdown_timer.start()
+	countdown_timer.wait_time = 1
+	countdown_screen.visible = true
+	current_countdown_time = time
+	countdown_label.text = str(current_countdown_time)
+
 
 
 func on_picked_up_powerup(powerup: PowerUp) -> void:

@@ -24,6 +24,7 @@ SoundSystem="*res://scenes/sound_system.tscn"
 
 [debug]
 
+gdscript/warnings/unused_variable=0
 gdscript/warnings/untyped_declaration=2
 
 [display]

@@ -20,6 +20,7 @@ var round_zoom: float = 1
 var zoom_speed: float = 0.01
 
 
+@export var bottom_limit: float = 0
 @export var follow_speed: Vector2 = Vector2(0.08, 0.1)
 
 
@@ -56,8 +57,10 @@ func _process(delta: float) -> void:
 		round_zoom = 1.3
 	elif GameManager.instance.game_mode == GameManager.MODES.CHALLENGE_MODE:
 		round_zoom = 1
+	else:
+		round_zoom = 1
 
-	var zoom_target: float = round_zoom + targets_zoom
+	var zoom_target: float = round_zoom + (targets_zoom * -1)
 	zoom = Vector2(lerp(zoom.x, zoom_target, zoom_speed), lerp(zoom.y, zoom_target, zoom_speed))
 
 	if abs(zoom.x - zoom_target) < 0.005:
@@ -92,7 +95,8 @@ func point_target_v2(_delta: float) -> void:
 
 	var target_pos: Vector2 = Vector2()
 	var target_count: float = 0
-	var should_zoom_out: bool = false
+	var targets_out: int = 0
+	var targets_in: int = 0
 
 	for target in targets:
 		if global_position.distance_to(target.global_position) > target.max_distance:
@@ -103,11 +107,13 @@ func point_target_v2(_delta: float) -> void:
 		var target_screen_pos := target.get_global_transform_with_canvas().origin / get_viewport_rect().size
 
 		if target_screen_pos.x < 0 or target_screen_pos.x > 1 or target_screen_pos.y < 0 or target_screen_pos.y > 1:
-			should_zoom_out = true
+			targets_out += 1
+		else:
+			targets_in += 1
 		
 
-	if should_zoom_out:
-		targets_zoom = lerp(targets_zoom, -max_targets_zoom, 0.005)
+	if targets_out > 0:
+		targets_zoom = lerp(targets_zoom, max_targets_zoom, 0.005)
 	else:
 		targets_zoom = 0
 
@@ -116,6 +122,10 @@ func point_target_v2(_delta: float) -> void:
 		target_pos /= target_count
 
 	final_target_pos = target_pos
+
+	if final_target_pos.y > bottom_limit:
+		final_target_pos.y = bottom_limit
+
 	global_position.x = lerp(global_position.x, final_target_pos.x, follow_speed.x * _delta * 60.0)
 	global_position.y = lerp(global_position.y, final_target_pos.y, follow_speed.y * _delta * 60.0)
 
