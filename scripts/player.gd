@@ -64,11 +64,14 @@ var attack_targets: Array[Stats]
 var walk_counter: float = 0
 
 var coyote_time: float = 0.0
+
 @export var coyote_time_max: float = 0.5
 
 @onready var parry_area: Area2D = %ParryArea
 @onready var attack_area: Area2D = %AttackArea
 @onready var dash_attack_area: Area2D = %DashAttackArea
+
+@onready var ctarget: CameraTarget = $CameraTarget
 
 
 func _ready() -> void:
@@ -79,8 +82,9 @@ func _ready() -> void:
 	Events.ability_gained.connect(on_ability_gained)
 	Events.picked_up_powerup.connect(on_picked_up_powerup)
 	Events.round_ended.connect(on_round_ended)
-	Events.enter_challenge_mode.connect(disable_movement)
-	Events.exit_challenge_mode.connect(disable_movement)
+
+	Events.enter_challenge_mode.connect(func(_player: PlayerCharacter) -> void: disable_movement())
+	Events.exit_challenge_mode.connect(func(_player: PlayerCharacter) -> void:	disable_movement())
 
 	parry_targets = []
 	parry_area.body_entered.connect(on_parry_area_body_entered)
@@ -149,9 +153,22 @@ func _process(delta: float) -> void:
 	velocity.x = hspeed + extra_speed.x
 	velocity.y = velocity.y + extra_speed.y
 
-
 	handle_jump()
 	handle_ability()
+
+	if GameManager.instance.game_mode == GameManager.MODES.CHALLENGE_MODE:
+		ctarget.importance.x = 1
+		var look: float = -1 if sprite.flip_h else 1
+		ctarget.offset.y = 0.0
+		ctarget.offset.x = lerpf(ctarget.offset.x, 45.0 * look, 0.01)
+	elif GameManager.instance.game_mode == GameManager.MODES.BEFORE_ROUND:
+		ctarget.importance.x = 0
+		ctarget.offset.x = 0
+		ctarget.offset.y = -130.0
+	elif GameManager.instance.game_mode == GameManager.MODES.IN_ROUND:
+		ctarget.importance.x = 0
+		ctarget.offset.x = 0
+		ctarget.offset.y = 0.0
 
 
 func _physics_process(delta: float) -> void:
@@ -543,7 +560,7 @@ func get_hit(from: Stats) -> void:
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 
-func disable_movement(_player: PlayerCharacter) -> void:
+func disable_movement() -> void:
 	can_move = false
 	get_tree().create_timer(0.8).timeout.connect(func() -> void:can_move = true)
 

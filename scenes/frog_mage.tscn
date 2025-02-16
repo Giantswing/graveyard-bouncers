@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://t23cpsfafot7"]
+[gd_scene load_steps=10 format=3 uid="uid://t23cpsfafot7"]
 
 [ext_resource type="Script" uid="uid://c1t630f486ew3" path="res://scripts/frog_mage.gd" id="1_r08ax"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_2l6al"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_2hyaq"]
 [ext_resource type="Texture2D" uid="uid://cs30wn4svo8sr" path="res://sprites/frog-mage.png" id="4_r08ax"]
+[ext_resource type="Script" uid="uid://dyrp2u2bq2wh5" path="res://scripts/camera_target.gd" id="5_2l6al"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2inn6"]
 size = Vector2(20, 16)
@@ -94,3 +95,8 @@ collision_mask = 11
 position = Vector2(-14, 13)
 target_position = Vector2(120, 0)
 collision_mask = 11
+
+[node name="CameraTarget" type="Node2D" parent="."]
+script = ExtResource("5_2l6al")
+importance = Vector2(0, 0.5)
+metadata/_custom_type_script = ExtResource("5_2l6al")

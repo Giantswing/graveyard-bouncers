@@ -17,12 +17,14 @@ func _ready() -> void:
 	for sound_resource in sound_resources:
 		sfx_dict[sound_resource.key_name] = sound_resource
 	
-	print(sfx_dict)
+	# print(sfx_dict)
 
 	set_up_audio_players()
 	set_up_track_players()
 
-	play_music("song-end-round")
+	Events.level_restart.connect(func() -> void:
+		play_music("song-end-round")
+	)
 	Events.round_started.connect(func() -> void:
 		play_music("song-round")
 	)

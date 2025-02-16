@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=105 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -40,6 +40,7 @@
 [ext_resource type="Resource" uid="uid://be4oofmp6ntom" path="res://resources/powerups/reward-magnet.tres" id="26_y4si7"]
 [ext_resource type="Resource" uid="uid://busstvxy65x2v" path="res://resources/powerups/easy-parry.tres" id="27_y5y5p"]
 [ext_resource type="Resource" uid="uid://ct8tk3r2msvyt" path="res://resources/powerups/dash-attack.tres" id="28_r1g5w"]
+[ext_resource type="Script" uid="uid://dyrp2u2bq2wh5" path="res://scripts/camera_target.gd" id="30_7keex"]
 [ext_resource type="Shader" uid="uid://cjsb0sixv56et" path="res://shaders/shockwave.gdshader" id="32_628db"]
 [ext_resource type="Script" uid="uid://coulipeo5jorf" path="res://scripts/round_end_wind.gd" id="34_i0uf8"]
 [ext_resource type="SpriteFrames" uid="uid://vo6hgadv8do3" path="res://resources/powerups/dash-attack-frames.tres" id="34_y5y5p"]
@@ -601,13 +602,10 @@ autoplay = true
 [node name="GameManager" parent="." instance=ExtResource("1_u8x35")]
 
 [node name="MainCamera" type="Camera2D" parent="."]
-position_smoothing_enabled = true
+limit_bottom = 178
+position_smoothing_speed = 1.0
 script = ExtResource("7_vrglu")
 on_hit_shake = 0.25
-max_y_increase = 0.0
-before_round_speed = 0.08
-in_round_speed = 0.04
-zoom_speed = 0.05
 
 [node name="ScreenShockWave" type="ColorRect" parent="MainCamera"]
 unique_name_in_owner = true
@@ -630,11 +628,12 @@ unique_name_in_owner = true
 [node name="Gradient" type="TextureRect" parent="Scenery/Background2"]
 light_mask = 3
 z_index = -15
-offset_left = -362.0
+offset_left = -577.0
 offset_top = 207.0
-offset_right = 257.0
+offset_right = 42.0
 offset_bottom = 939.0
 rotation = -1.57079
+scale = Vector2(1.56, 1.56)
 texture = SubResource("GradientTexture2D_y4si7")
 
 [node name="Image" type="Sprite2D" parent="Scenery/Background2"]
@@ -706,11 +705,12 @@ autoplay = true
 [node name="Gradient2" type="TextureRect" parent="Scenery"]
 light_mask = 3
 z_index = -5
-offset_left = -362.0
+offset_left = -599.0
 offset_top = 207.0
-offset_right = 257.0
+offset_right = 20.0
 offset_bottom = 939.0
 rotation = -1.57079
+scale = Vector2(1.6, 1.6)
 texture = SubResource("GradientTexture2D_64nxx")
 
 [node name="Trampoline" parent="Scenery" instance=ExtResource("3_6rdlt")]
@@ -1330,6 +1330,16 @@ metadata/_aseprite_wizard_source_file_hash_ = "ce21a8c23547eda88827e5370fa21a5e"
 [node name="Collision" type="CollisionShape2D" parent="Scenery/NormalFloor"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_bdrgs")
+
+[node name="CameraTarget" type="Node2D" parent="Scenery"]
+position = Vector2(0, 157)
+script = ExtResource("30_7keex")
+importance = Vector2(0, 0.35)
+max_distance = 580.0
+metadata/_custom_type_script = ExtResource("30_7keex")
+
+[node name="FloorMarker" type="Marker2D" parent="Scenery"]
+position = Vector2(0, 157)
 
 [node name="RewardContainer" type="Node2D" parent="Scenery"]
 unique_name_in_owner = true

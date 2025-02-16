@@ -21,6 +21,14 @@ class_name GameManager
 var round_time: int = 0
 var round_data: GameRound = null
 var challenge_data: Challenge = null
+
+enum MODES { 
+	BEFORE_ROUND,
+	IN_ROUND,
+	CHALLENGE_MODE,
+}
+
+var game_mode: MODES = MODES.BEFORE_ROUND
 var score: int = 0
 @export var coins: int = 0
 
@@ -107,6 +115,7 @@ func _ready() -> void:
 	Events.max_hp_changed.emit(player_hp_max)
 	Events.coins_changed.emit(coins)
 	Events.round_counter_changed.emit(current_round)
+	Events.level_restart.emit()
 
 	gain_ability(player_ability)
 
@@ -121,6 +130,15 @@ func _ready() -> void:
 
 	%UI.visible = true 
 
+	Events.round_started.connect(func() -> void: change_mode(MODES.IN_ROUND))
+	Events.round_ended.connect(func() -> void: change_mode(MODES.BEFORE_ROUND))
+	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void: change_mode(MODES.CHALLENGE_MODE))
+	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void: change_mode(MODES.BEFORE_ROUND))
+
+	change_mode(MODES.BEFORE_ROUND)
+
+func change_mode(mode: MODES) -> void:
+	game_mode = mode
 
 func find_ability(ability_name: String) -> Ability:
 	for ability in all_abilities:
@@ -164,8 +182,8 @@ func update_current_round() -> void:
 	round_data = round_manager.get_round(current_difficulty)
 	if player:
 		player.base_strength = 285 * sqrt(round_data.gravity_multiplier)
-	print("Current difficulty: ", current_difficulty)
-	print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
+	# print("Current difficulty: ", current_difficulty)
+	# print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
 	
 
 	

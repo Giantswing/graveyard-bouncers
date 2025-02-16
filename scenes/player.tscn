@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dsdtpug2sa4g0"]
+[gd_scene load_steps=54 format=3 uid="uid://dsdtpug2sa4g0"]
 
 [ext_resource type="Script" uid="uid://bx8m8lkkpx4xl" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://cfho5mbhojlvc" path="res://scripts/player_animation_controller.gd" id="2_g2els"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cd6xoetgdvp41" path="res://sprites/dash-frames-low-left.png" id="3_fjrip"]
 [ext_resource type="Shader" uid="uid://cmjti5oralsc0" path="res://shaders/outline.gdshader" id="5_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://d0ri3c7fn78uu" path="res://sprites/new-player-low-v2.png" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://dyrp2u2bq2wh5" path="res://scripts/camera_target.gd" id="7_fjrip"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qlg0r"]
 particles_animation = true
@@ -442,3 +443,8 @@ target_position = Vector2(23, 0)
 
 [node name="DashCast" type="RayCast2D" parent="Raycasts"]
 collision_mask = 13
+
+[node name="CameraTarget" type="Node2D" parent="."]
+script = ExtResource("7_fjrip")
+importance = Vector2(0, 1)
+max_distance = 100000.0

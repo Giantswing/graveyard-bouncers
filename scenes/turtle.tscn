@@ -5,7 +5,6 @@
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_7kcg0"]
 [ext_resource type="Texture2D" uid="uid://2bfkr3qx5a4n" path="res://sprites/turtle-v2.png" id="4_7kcg0"]
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kcg0"]
 atlas = ExtResource("4_7kcg0")
 region = Rect2(0, 0, 36, 36)

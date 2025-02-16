@@ -3,6 +3,7 @@ extends Node2D
 @warning_ignore_start("unused_signal")
 
 signal coins_changed(score: int)
+signal level_restart
 signal hp_changed(new_hp: int, change: int)
 signal max_hp_changed(new_max_hp: int, change: int)
 signal picked_up_powerup(powerup: PowerUp)
@@ -21,3 +22,5 @@ signal enter_challenge_mode(player: PlayerCharacter)
 signal exit_challenge_mode(player: PlayerCharacter)
 signal set_up_challenge(challenge: Challenge)
 signal on_shockwave(force: float, duration: float, size: float, decay_time: float)
+signal ctarget_add(target: CameraTarget)
+signal ctarget_remove(target: CameraTarget)
