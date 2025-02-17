@@ -40,7 +40,6 @@ func _ready() -> void:
 	pause_screen.visible = false
 	countdown_screen.visible = false
 	objective_label.visible = false
-
 	Events.score_changed.connect(on_score_changed)
 	Events.hp_changed.connect(on_hp_changed)
 	Events.max_hp_changed.connect(on_max_hp_changed)
@@ -85,6 +84,9 @@ func start_countdown(time: int) -> void:
 	var original_countdown_font_size: float = countdown_label.label_settings.font_size
 	var increased_countdown_font_size: int = roundi(original_countdown_font_size * 1.5)
 	objective_label.visible = true
+	objective_label.position = Vector2(124.5, 226)
+	objective_label.label_settings.font_size = 30
+
 	var objective: String = ""
 	if GameManager.get_instance().round_data.time_limit > 0:
 		objective = "Survive for " + str(GameManager.get_instance().round_data.time_limit) + " seconds"
@@ -107,6 +109,7 @@ func on_picked_up_powerup(powerup: PowerUp) -> void:
 	var pickup_sprite: AnimatedSprite2D = pickup.get_node("AnimatedSprite2D") as AnimatedSprite2D
 	pickup_sprite.sprite_frames = powerup.frames
 	powerup_list.add_child(pickup)
+
 
 func update_menu_options() -> void:
 	for i in range(menu_options.size()):

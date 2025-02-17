@@ -22,6 +22,15 @@ var speed: float = 0
 var change_rotation_timer: float = 0
 var change_rotation_time: float = 3.5
 
+var state: states = states.FLOATING
+
+enum states {
+	FLOATING,
+	ATTACKING
+}
+
+var is_attacking: int = 0
+
 func _ready() -> void:
 	stats.on_hit.connect(on_hit)
 	movement_angle = rotation
@@ -41,6 +50,33 @@ func _process(delta: float) -> void:
 
 	rotation_speed += (rotation_speed_to - rotation_speed) * 0.05
 
+	if state == states.FLOATING:
+		handle_floating(delta)
+	elif state == states.ATTACKING:
+		handle_attacking(delta)
+
+	var target_velocity := Vector2.RIGHT.rotated(movement_angle) * speed 
+	velocity.x = lerpf(velocity.x, target_velocity.x * 0.8, acceleration * delta)
+	velocity.y = lerpf(velocity.y, target_velocity.y, acceleration * delta)
+	velocity += impulse
+
+	raycast.rotation = movement_angle
+	raycast2.rotation = movement_angle
+	raycast3.rotation = movement_angle
+	raycast4.rotation = movement_angle
+
+	if velocity.length() > 0.1:
+		sprite.flip_h = velocity.x > 0
+
+func handle_attacking(delta: float) -> void:
+	pass
+	# if is_attacking == 0:
+	# 	is_attacking = 1
+	# 	var new_rotation_value := last_rotation * -1
+	# 	Utils.fast_tween(self, "last_rotation", new_rotation_value, 0.5)
+	# 	impulse = Vector2.RIGHT.rotated(movement_angle) * 100
+
+func handle_floating(delta: float) -> void:
 	if global_position.y < GameManager.get_player_position().y:
 		# rotation_speed += rotation_speed * 2 * delta
 		movement_angle += rotation_speed_to * 0.15 * last_rotation * delta * (randf() * 0.5 + 0.5)
@@ -59,21 +95,6 @@ func _process(delta: float) -> void:
 		if speed > max_speed:
 			speed = max_speed
 
-	var target_velocity := Vector2.RIGHT.rotated(movement_angle) * speed 
-	velocity.x = lerpf(velocity.x, target_velocity.x * 0.8, acceleration * delta)
-	velocity.y = lerpf(velocity.y, target_velocity.y, acceleration * delta)
-	velocity += impulse
-
-	# Keep raycast aligned with movement direction
-	raycast.rotation = movement_angle
-	raycast2.rotation = movement_angle
-	raycast3.rotation = movement_angle
-	raycast4.rotation = movement_angle
-
-	if velocity.length() > 0.1:
-		sprite.flip_h = velocity.x > 0
-
-	# sprite.rotation = movement_angle * 0.05 * (1 if sprite.flip_h else -1)
 
 func _physics_process(_delta: float) -> void:
 	move_and_slide()

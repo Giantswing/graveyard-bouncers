@@ -28,7 +28,7 @@
 [sub_resource type="Resource" id="Resource_q8mjp"]
 script = ExtResource("7_frtjd")
 debug = false
-difficulty = 999.0
+difficulty = 8.0
 time_limit = 30
 enemy_count = 0
 chance = 1.0

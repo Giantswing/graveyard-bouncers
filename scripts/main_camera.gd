@@ -15,7 +15,7 @@ var targets: Array[CameraTarget] = []
 var final_target_pos: Vector2
 
 var targets_zoom: float = 0
-var max_targets_zoom: float = 0.25
+var max_targets_zoom: float = 0.35
 var round_zoom: float = 1
 var zoom_speed: float = 0.01
 
@@ -30,6 +30,12 @@ func _ready() -> void:
 	Events.hp_changed.connect(on_hp_change)
 	Events.player_parry.connect(on_player_parry)
 	Events.player_dash.connect(on_player_parry)
+
+	Events.enemy_died.connect(func(stats: Stats) -> void:
+		current_shake_amount = on_parry_shake * 0.2 
+		make_shockwave(0.06, 1, 0.35, 0.45)
+	)
+
 
 	Events.ctarget_add.connect(add_camera_target)
 	Events.ctarget_remove.connect(remove_camera_target)
@@ -87,7 +93,7 @@ func make_shockwave(force: float, duration: float, size: float, decay_time: floa
 
 
 func point_target_v2(_delta: float) -> void:
-	var wave_position: Vector2 = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y))
+	var wave_position: Vector2 = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y) - 30)
 	wave.material.set_shader_parameter("global_position", wave_position)
 
 	if targets.size() == 0:

@@ -15,7 +15,7 @@ func _ready() -> void:
 		all_powerups[i] = all_powerups[i].duplicate(true)
 
 	displayed_powerups.resize(amount_of_powerups)
-	Events.round_started.connect(close_shop)
+	Events.round_countdown_start.connect(func(_i: int) -> void: close_shop())
 	Events.round_ended.connect(on_round_ended)
 	Events.picked_up_powerup.connect(on_powerup_picked_up)
 	set_up_powerups()

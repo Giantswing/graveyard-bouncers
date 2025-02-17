@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqem8f0lk2r2y"]
+[gd_scene load_steps=4 format=3 uid="uid://bqem8f0lk2r2y"]
 
 [ext_resource type="Script" uid="uid://dagqrdhdib5v1" path="res://scripts/fx_system.gd" id="1_6qabg"]
+[ext_resource type="Script" uid="uid://b61umfye0stqp" path="res://scripts/soul_holder.gd" id="2_5q2uk"]
+[ext_resource type="PackedScene" uid="uid://cwcbu3uib6leo" path="res://scenes/fx/library/soul_spawn.tscn" id="3_try75"]
 
 [node name="FxSystem" type="Node2D"]
 z_index = 2
 script = ExtResource("1_6qabg")
+
+[node name="SoulHolder" type="Node2D" parent="."]
+script = ExtResource("2_5q2uk")
+soul_scene = ExtResource("3_try75")
+outwards_time = 0.3
+inwards_time = 0.4

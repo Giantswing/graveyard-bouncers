@@ -318,9 +318,11 @@ func set_up_round() -> void:
 
 
 	if round_data.has_fog:
-		Utils.fast_tween(fog, "material:shader_parameter/alpha_multiplier", 3, 5)
+		var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 3, 2)
 	else:
-		Utils.fast_tween(fog, "material:shader_parameter/alpha_multiplier", 0.3, 5)
+		var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 0.3, 2)
 
 	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:
@@ -431,7 +433,7 @@ func end_round() -> void:
 
 	starting_ground.enable_bridge()
 
-	get_tree().create_timer(1).timeout.connect(func() -> void:
+	get_tree().create_timer(3).timeout.connect(func() -> void:
 		activate(grave)
 		activate(trampoline)
 		grave.position = grave_start_pos

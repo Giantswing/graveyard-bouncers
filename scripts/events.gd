@@ -25,3 +25,4 @@ signal on_shockwave(force: float, duration: float, size: float, decay_time: floa
 signal ctarget_add(target: CameraTarget)
 signal ctarget_remove(target: CameraTarget)
 signal round_countdown_start(time: int)
+signal enemy_died(enemy: Stats)

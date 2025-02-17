@@ -154,6 +154,8 @@ func die() -> void:
 	if hurt_area:
 		hurt_area.queue_free()
 
+	Events.enemy_died.emit(self)
+
 	if spawn_rate_reduction > 0:
 		GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
 	
