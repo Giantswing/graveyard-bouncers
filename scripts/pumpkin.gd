@@ -18,6 +18,7 @@ func _ready() -> void:
 	speed += randf_range(-speed_variance, speed_variance)
 	jump_speed += randf_range(-jump_speed_variance, jump_speed_variance)
 	jump_timer_max += randf_range(-jump_timer_variance, jump_timer_variance)
+	jump_timer = jump_timer_max * 0.5
 	sprite.play("Idle")
 	raycast_distance = body_forward_cast.target_position.x
 	change_direction(1 if randi() % 2 == 0 else -1)
@@ -25,7 +26,7 @@ func _ready() -> void:
 	stats.on_hit.connect(
 		func() -> void:
 			velocity.y = jump_speed
-			jump_timer *= 0.5
+			jump_timer *= 0.8
 	)
 
 func _physics_process(delta: float) -> void:

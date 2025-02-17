@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 				FxSystem.play_fx("power-up-picked", global_position)
 
 			elif pickup_option == PICKUP_OPTIONS.HEART:
-				Events.hp_changed.emit(GameManager.instance.player_hp_max, 0)
+				Events.hp_changed.emit(GameManager.instance.player_hp + 1, 0)
 				FxSystem.play_fx("power-up-picked", global_position)
 
 			queue_free()
