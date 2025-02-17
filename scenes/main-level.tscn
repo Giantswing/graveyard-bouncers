@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://btuvbhvc412un"]
+[gd_scene load_steps=96 format=3 uid="uid://btuvbhvc412un"]
 
 [ext_resource type="PackedScene" uid="uid://dsdtpug2sa4g0" path="res://scenes/player.tscn" id="1_djt6b"]
 [ext_resource type="PackedScene" uid="uid://b2woo3o5u7plh" path="res://scenes/game_manager.tscn" id="1_u8x35"]
@@ -36,7 +36,7 @@
 [ext_resource type="Script" uid="uid://coulipeo5jorf" path="res://scripts/round_end_wind.gd" id="34_i0uf8"]
 [ext_resource type="Texture2D" uid="uid://b8ncwfa21ij1m" path="res://sprites/tree-branch.png" id="35_r8012"]
 [ext_resource type="Texture2D" uid="uid://snuc62jdldom" path="res://sprites/center-platform.png" id="36_2sni1"]
-[ext_resource type="Texture2D" uid="uid://bsh4sia1du4ba" path="res://sprites/walk-smoke-puff.png" id="37_i0uf8"]
+[ext_resource type="SpriteFrames" uid="uid://dols51aptxixp" path="res://resources/powerups/powerup-shield-frames.tres" id="37_i0uf8"]
 
 [sub_resource type="Shader" id="Shader_bh8c8"]
 resource_local_to_scene = true
@@ -529,56 +529,6 @@ shader_parameter/seed = 6.375
 gradient = SubResource("Gradient_vl0b8")
 width = 1
 height = 1
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i0uf8"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(0, 0, 18, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6qoa1"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(18, 0, 18, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5itvi"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(36, 0, 18, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bh8c8"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(0, 8, 18, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7keex"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(18, 8, 18, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmffu"]
-atlas = ExtResource("37_i0uf8")
-region = Rect2(36, 8, 18, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1ku6t"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i0uf8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6qoa1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5itvi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bh8c8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7keex")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmffu")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
 
 [node name="Level" type="Node2D"]
 
@@ -1595,7 +1545,7 @@ position = Vector2(-490, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteImporter"]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_1ku6t")
+sprite_frames = ExtResource("37_i0uf8")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
@@ -1611,6 +1561,6 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": true,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/walk-smoke-puff.aseprite"
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/powerup-shield.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "ff5970258ced082e5294c0347938ca90"
+metadata/_aseprite_wizard_source_file_hash_ = "dc78d37d8414be7e901e9451d59d6b2e"

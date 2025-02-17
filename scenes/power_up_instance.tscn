@@ -373,8 +373,8 @@ animations = [{
 }]
 
 [sub_resource type="LabelSettings" id="LabelSettings_po57t"]
-line_spacing = -52.355
-font_size = 86
+line_spacing = -29.23
+font_size = 70
 shadow_size = 25
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3, 3)
@@ -526,9 +526,9 @@ offset_bottom = 589.0
 scale = Vector2(0.15, 0.15)
 theme = ExtResource("5_74416")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = -10
+theme_override_constants/line_spacing = 5
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 22
+theme_override_constants/shadow_outline_size = 0
 theme_override_font_sizes/font_size = 94
 text = "This is an item"
 label_settings = SubResource("LabelSettings_po57t")

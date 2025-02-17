@@ -26,7 +26,8 @@ var base_strength: float # this is calculated each frame in the game manager
 @export var slide_down_max_speed: float = 30
 @export var all_jumps_str_mult: float = 1
 
-@export var hit_invincibility_time: float = 1.5
+@export var hit_invincibility_time_original: float = 1.5
+var hit_invincibility_time: float = 1.5
 @export var mov_speed_original: float = 100
 var mov_speed: float = 100
 
@@ -84,6 +85,7 @@ func _ready() -> void:
 	mov_speed = mov_speed_original
 	dash_distance = dash_distance_original
 	jump_str_mult = jump_str_mult_original
+	hit_invincibility_time = hit_invincibility_time_original
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
@@ -529,6 +531,9 @@ func on_picked_up_powerup(powerup: PowerUp) -> void:
 
 	elif powerup.power_up_name == "jump-higher":
 		all_jumps_str_mult = all_jumps_str_mult * 1.2
+
+	elif powerup.power_up_name == "shield":
+		hit_invincibility_time = hit_invincibility_time_original * 2.5
 
 func on_ability_gained(new_ability: Ability) -> void:
 	if new_ability == null:
