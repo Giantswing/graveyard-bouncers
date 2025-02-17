@@ -10,6 +10,8 @@ size = Vector2(38, 17)
 size = Vector2(38, 13)
 
 [node name="BridgePiece" type="StaticBody2D"]
+z_index = -2
+collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_lqhcs")
 
@@ -33,13 +35,14 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "19c315c09e4447a14ff54448209382de"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_cfddl")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="AreaShape" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_lqhcs")

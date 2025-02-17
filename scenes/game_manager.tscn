@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=58 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://b6crnacouyp0q" path="res://scenes/ability-orb.tscn" id="21_2j6ol"]
 [ext_resource type="Resource" uid="uid://roytb33qa56o" path="res://resources/powerups/powerup-shield.tres" id="21_d3www"]
 [ext_resource type="PackedScene" uid="uid://cwg3c6c5cpi4w" path="res://scenes/challenge_scenes/challenge_basic_02.tscn" id="22_jrl6a"]
+[ext_resource type="PackedScene" uid="uid://mw252vf27v4x" path="res://scenes/challenge_scenes/challenge_basic_03.tscn" id="40_u168d"]
 
 [sub_resource type="Resource" id="Resource_30v7y"]
 script = ExtResource("7_frtjd")
@@ -324,7 +325,15 @@ script = ExtResource("16_ry0e6")
 debug = false
 scene = ExtResource("22_jrl6a")
 chance = 1.0
-difficulty = 1.0
+difficulty = 3.0
+metadata/_custom_type_script = ExtResource("16_ry0e6")
+
+[sub_resource type="Resource" id="Resource_fmt0c"]
+script = ExtResource("16_ry0e6")
+debug = true
+scene = ExtResource("40_u168d")
+chance = 1.0
+difficulty = 5.0
 metadata/_custom_type_script = ExtResource("16_ry0e6")
 
 [node name="GameManager" type="Node2D"]
@@ -342,7 +351,7 @@ position = Vector2(-13, 0)
 script = ExtResource("6_ternb")
 game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_30v7y"), SubResource("Resource_ry0e6"), SubResource("Resource_pc0jn"), SubResource("Resource_4vth2"), SubResource("Resource_jrl6a"), SubResource("Resource_2j6ol"), SubResource("Resource_8ldib"), SubResource("Resource_dlmsr"), SubResource("Resource_q8mjp")])
 chance_decay_rate = 0.5
-game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q"), SubResource("Resource_kvitc")])
+game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q"), SubResource("Resource_kvitc"), SubResource("Resource_fmt0c")])
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://ot8wl4noujsw" path="res://tiles/tileset01.tres" id="4_lfov8"]
 [ext_resource type="PackedScene" uid="uid://brehjpamjrjui" path="res://scenes/wall-spikes.tscn" id="5_7aboe"]
 
-[node name="ChallengeBasic01" type="Node2D"]
+[node name="ChallengeBasic02" type="Node2D"]
 
 [node name="StartPoint" type="Node2D" parent="."]
 unique_name_in_owner = true

@@ -430,9 +430,7 @@ func process_dash() -> void:
 	is_attacking = 0
 
 	var direction := movement_input.normalized()
-	# velocity.x = 0
 	velocity.y = 0
-	# velocity.y = (direction * 500 * extra_speed_strength).y * 0.01
 
 	extra_speed.x = direction.x * 50 * extra_speed_strength
 	extra_speed.y = direction.y * 10 * extra_speed_strength

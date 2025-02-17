@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Bridge
 
-@export var bridge_piece: PackedScene
+@export var bridge_piece_prefab: PackedScene
 @export var bridge_length: int = 32
 
 @onready var start_point: Node2D = $StartPoint
@@ -14,6 +14,9 @@ var distance: float
 var old_distance: float
 var bridge_pieces: Array[BridgePiece]
 var player: Node2D
+
+@export var allow_from_below: bool = true
+@export var main_bridge: bool = false
 
 var bridge_count: int
 var old_bridge_count: int
@@ -52,8 +55,9 @@ func _process(delta: float) -> void:
 
 	current_sag += (sag_to_reach - current_sag) * 0.04 * delta * 60.0
 
-	start_point.position.x = -game_manager.current_game_width / 2 - 10.0
-	end_point.position.x = game_manager.current_game_width / 2 + 20.0
+	if main_bridge:
+		start_point.position.x = -game_manager.current_game_width / 2 - 10.0
+		end_point.position.x = game_manager.current_game_width / 2 + 20.0
 
 	distance = end_point.position.x - start_point.position.x
 	bridge_count = ceil(distance / bridge_length)
@@ -104,8 +108,8 @@ func get_dynamic_sag() -> void:
 	var sag_radius: float = distance * 0.3
 
 	if player and is_player_on_bridge():
-		var bridge_center_x: float = (start_point.position.x + end_point.position.x) / 2
-		var player_distance_from_center: float = abs(player.position.x - bridge_center_x)
+		var bridge_center_x: float = (start_point.global_position.x + end_point.global_position.x) / 2
+		var player_distance_from_center: float = abs(player.global_position.x - bridge_center_x)
 
 		var sag_factor: float = clamp(1.0 - (player_distance_from_center / sag_radius), 0.0, 1.0)
 		sag_to_reach = base_sag + extra_sag * sag_factor
@@ -115,16 +119,24 @@ func get_dynamic_sag() -> void:
 func construct_bridge() -> void:
 	for child in bridge_pieces_container.get_children():
 		child.queue_free()
+
 	bridge_pieces.clear()
 
 	for i in range(bridge_count):
-		var bridge: StaticBody2D = bridge_piece.instantiate()
-		bridge_pieces_container.add_child(bridge)
-		bridge_pieces.append(bridge)
+		var bridge_piece: BridgePiece = bridge_piece_prefab.instantiate()
+		bridge_pieces_container.add_child(bridge_piece)
+		bridge_pieces.append(bridge_piece)
+
+		if allow_from_below:
+			bridge_piece.allow_from_below()
 
 		if bridge_enabled:
-			bridge.set_collision_layer_value(1, true)
+			bridge_piece.set_collision_layer_value(7, true)
+			if main_bridge:
+				bridge_piece.set_collision_layer_value(1, true)
 		else:
-			bridge.set_collision_layer_value(1, false)
+			bridge_piece.set_collision_layer_value(7, false)
+			if main_bridge:
+				bridge_piece.set_collision_layer_value(1, false)
 
 	update_bridge()
