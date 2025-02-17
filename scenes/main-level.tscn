@@ -1528,7 +1528,13 @@ unique_name_in_owner = true
 z_index = 20
 z_as_relative = false
 position = Vector2(0, -142)
+acceleration = null
 failed_attack_str_mult = 0.6
+attack_gravity_mult = null
+parry_downward_str_mult = null
+hit_invincibility_time = null
+extra_speed_strength = null
+dash_distance = null
 
 [node name="GodRays" type="TextureRect" parent="."]
 z_index = 11

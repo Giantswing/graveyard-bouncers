@@ -16,6 +16,7 @@ class_name Stats
 @export var sprite: AnimatedSprite2D
 @export var spawn_type: SPAWN_TYPE_OPTIONS = SPAWN_TYPE_OPTIONS.DEFAULT
 @export var only_damage_when_moving_down: bool = false
+@export var dies_when_deal_damage: bool = false
 
 var hurt_area: Area2D
 var area: Area2D
@@ -44,6 +45,7 @@ var parent: Node2D
 @warning_ignore_start("unused_signal")
 signal on_death
 signal on_hit
+signal on_parry
 
 func _ready() -> void:
 	hp = hp_max
@@ -82,13 +84,6 @@ func _ready() -> void:
 		Utils.fast_tween(owner, "scale", Vector2(1.0, 1.0), 0.15, Tween.TRANS_QUAD)
 
 
-# func on_area_entered(_body: Node) -> void:
-# 	if coin_reward != 0:
-# 		Events.coins_changed.emit(GameManager.get_instance().coins + coin_reward)
-# 		FxSystem.play_fx("CoinCollect", global_position)
-# 		get_parent().queue_free()
-	
-	
 
 func on_spawn_finished() -> void:
 	pass
@@ -113,8 +108,11 @@ func hit_flash() -> void:
 		sprite.scale = Vector2(1.0, 1.0)
 	)
 
-func take_damage(amount: int) -> void:
-	if !can_take_damage or is_invulnerable:
+func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> void:
+	if from_parry and can_be_parried:
+		emit_signal("on_parry")
+		
+	if (!can_take_damage or is_invulnerable) and force == false:
 		return
 
 	hp -= amount

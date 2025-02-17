@@ -24,6 +24,7 @@ var round_time: int = 0
 var enemy_count: int = 0
 var round_data: GameRound = null
 var challenge_data: Challenge = null
+var camera: Camera2D = null
 
 enum MODES { 
 	BEFORE_ROUND,
@@ -433,7 +434,7 @@ func end_round() -> void:
 
 	starting_ground.enable_bridge()
 
-	get_tree().create_timer(3).timeout.connect(func() -> void:
+	get_tree().create_timer(2).timeout.connect(func() -> void:
 		activate(grave)
 		activate(trampoline)
 		grave.position = grave_start_pos

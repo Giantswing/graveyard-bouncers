@@ -1,10 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwcbu3uib6leo"]
+[gd_scene load_steps=4 format=3 uid="uid://cwcbu3uib6leo"]
 
 [ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="1_b4ril"]
-[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="2_b4ril"]
 
 [sub_resource type="Curve" id="Curve_l56v6"]
-_data = [Vector2(0, 0.173291), 0.0, 0.0, 0, 0, Vector2(0.616052, 1), -0.0838334, -0.0838334, 0, 0, Vector2(1, 0.684817), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.264327), 0.0, 0.0, 0, 0, Vector2(0.616052, 1), -0.0838334, -0.0838334, 0, 0, Vector2(1, 0.837034), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_l56v6"]
@@ -12,7 +11,7 @@ offsets = PackedFloat32Array(0, 0.820331, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.698039)
 
 [node name="Soul" type="Line2D"]
-modulate = Color(1, 1, 1, 0.227451)
+modulate = Color(1, 1, 1, 0.52549)
 width = 2.0
 width_curve = SubResource("Curve_l56v6")
 gradient = SubResource("Gradient_l56v6")
@@ -24,8 +23,3 @@ sharp_limit = 10.0
 antialiased = true
 
 [node name="TrailTarget" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="TrailTarget"]
-visible = false
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_b4ril")

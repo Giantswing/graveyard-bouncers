@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://t23cpsfafot7"]
+[gd_scene load_steps=12 format=3 uid="uid://t23cpsfafot7"]
 
 [ext_resource type="Script" uid="uid://c1t630f486ew3" path="res://scripts/frog_mage.gd" id="1_r08ax"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_2l6al"]
+[ext_resource type="PackedScene" uid="uid://d2m1ppe2i60x2" path="res://scenes/enemy_projectile.tscn" id="2_of6xu"]
 [ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_2hyaq"]
 [ext_resource type="Texture2D" uid="uid://cs30wn4svo8sr" path="res://sprites/frog-mage.png" id="4_r08ax"]
+[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="5_2hyaq"]
 [ext_resource type="Script" uid="uid://dyrp2u2bq2wh5" path="res://scripts/camera_target.gd" id="5_2l6al"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2inn6"]
@@ -30,6 +32,7 @@ size = Vector2(23.3333, 21)
 [node name="FrogMage" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_r08ax")
+projectile = ExtResource("2_of6xu")
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_2l6al")
@@ -47,6 +50,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
 shape = SubResource("RectangleShape2D_2inn6")
 debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="StaffLight" type="PointLight2D" parent="."]
+position = Vector2(-12, -12)
+color = Color(0.0922206, 0.768115, 0.849031, 1)
+texture = ExtResource("5_2hyaq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = -1

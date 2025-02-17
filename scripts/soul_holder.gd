@@ -8,9 +8,10 @@ class_name SoulHolder
 @export var dispersion_amount: float = 50
 @export var outwards_time: float = 0.5
 @export var inwards_time: float = 2
+@export var screen_pos: Vector2 = Vector2(1, 0)
 
 var souls: Array[SoulInstance] = []
-var target_pos: Vector2 = Vector2(-270, -150)
+var target_pos: Vector2 = Vector2.ZERO
 var timer: float = 0
 var souls_to_spawn: Array[Vector2] = []
 var soul_spawn_timer: float = 0
@@ -34,6 +35,7 @@ func _ready() -> void:
 	Events.enemy_died.connect(spawn_souls)
 	deactivate_all_souls()
 
+	# target_pos = get_viewport().get_canvas_transform().affine_inverse() * Vector2(0, 0)
 
 func spawn_soul(spawn_pos: Vector2) -> void:
 	for soul in souls:
@@ -56,10 +58,11 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			var tween_y: Tween = get_tree().create_tween()
 			tween_x.set_trans(Tween.TRANS_EXPO)
 			tween_x.set_ease(Tween.EASE_IN if arc_type == 0 else Tween.EASE_OUT)
-			tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
-			tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
-			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * randf_range(0.8, 1.2))
-			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-1, 1), inwards_time * randf_range(0.8, 1.2))
+			# tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
+			# tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
+			var speed: float = randf_range(0.7, 1.3)
+			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * speed)
+			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-10, 10), inwards_time * speed)
 
 			get_tree().create_timer((outwards_time + inwards_time) + 0.2).timeout.connect(func() -> void: deactivate_soul(soul))
 
@@ -83,6 +86,17 @@ func deactivate_all_souls() -> void:
 		deactivate_soul(soul)
 
 func _process(delta: float) -> void:
+	var camera: Camera2D = GameManager.get_instance().camera
+
+	if !camera:
+		return
+
+	var visible_rect := get_viewport().get_visible_rect()
+	var position_in_screen := visible_rect.position + (visible_rect.size * screen_pos)
+	var canvas_transform := get_viewport().get_canvas_transform()
+	var world_position: Vector2 = canvas_transform.affine_inverse() * position_in_screen 
+	target_pos = world_position
+
 	timer += delta * 1
 
 	if souls_to_spawn.size() > 0:

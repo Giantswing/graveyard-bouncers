@@ -25,30 +25,6 @@
 [ext_resource type="PackedScene" uid="uid://b6crnacouyp0q" path="res://scenes/ability-orb.tscn" id="21_2j6ol"]
 [ext_resource type="PackedScene" uid="uid://cwg3c6c5cpi4w" path="res://scenes/challenge_scenes/challenge_basic_02.tscn" id="22_jrl6a"]
 
-[sub_resource type="Resource" id="Resource_q8mjp"]
-script = ExtResource("7_frtjd")
-debug = false
-difficulty = 8.0
-time_limit = 30
-enemy_count = 0
-chance = 1.0
-gravity_multiplier = 0.5
-game_width_speed_increase = 100.0
-start_game_width = 150.0
-max_game_width = 600.0
-enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp"), ExtResource("11_30v7y"), ExtResource("12_5xtl8"), ExtResource("13_cjvif")])
-enemy_spawn_rate = 1.5
-max_enemies = 30
-reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu"), ExtResource("15_ry0e6")])
-reward_spawn_rate = 1.5
-max_rewards = 10
-ground_type = 2
-has_trampoline = false
-has_helper_enemy = true
-has_fog = false
-spike_amount = 0
-metadata/_custom_type_script = ExtResource("7_frtjd")
-
 [sub_resource type="Resource" id="Resource_30v7y"]
 script = ExtResource("7_frtjd")
 debug = false
@@ -291,6 +267,30 @@ has_fog = false
 spike_amount = 0
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
+[sub_resource type="Resource" id="Resource_q8mjp"]
+script = ExtResource("7_frtjd")
+debug = false
+difficulty = 8.0
+time_limit = 30
+enemy_count = 0
+chance = 1.0
+gravity_multiplier = 0.5
+game_width_speed_increase = 100.0
+start_game_width = 150.0
+max_game_width = 600.0
+enemy_list = Array[ExtResource("2_udu3i")]([ExtResource("3_q8mjp"), ExtResource("11_30v7y"), ExtResource("12_5xtl8"), ExtResource("13_cjvif")])
+enemy_spawn_rate = 1.5
+max_enemies = 30
+reward_list = Array[ExtResource("2_udu3i")]([ExtResource("8_k4jhu"), ExtResource("15_ry0e6")])
+reward_spawn_rate = 1.5
+max_rewards = 10
+ground_type = 2
+has_trampoline = false
+has_helper_enemy = true
+has_fog = false
+spike_amount = 0
+metadata/_custom_type_script = ExtResource("7_frtjd")
+
 [sub_resource type="Resource" id="Resource_c7a3q"]
 script = ExtResource("16_ry0e6")
 debug = false
@@ -318,7 +318,7 @@ all_abilities = Array[ExtResource("4_aonbx")]([ExtResource("5_lcbjr")])
 [node name="RoundManager" type="Node2D" parent="."]
 position = Vector2(-13, 0)
 script = ExtResource("6_ternb")
-game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_q8mjp"), SubResource("Resource_30v7y"), SubResource("Resource_ry0e6"), SubResource("Resource_pc0jn"), SubResource("Resource_4vth2"), SubResource("Resource_jrl6a"), SubResource("Resource_2j6ol"), SubResource("Resource_8ldib"), SubResource("Resource_dlmsr")])
+game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_30v7y"), SubResource("Resource_ry0e6"), SubResource("Resource_pc0jn"), SubResource("Resource_4vth2"), SubResource("Resource_jrl6a"), SubResource("Resource_2j6ol"), SubResource("Resource_8ldib"), SubResource("Resource_dlmsr"), SubResource("Resource_q8mjp")])
 chance_decay_rate = 0.5
 game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q"), SubResource("Resource_kvitc")])
 

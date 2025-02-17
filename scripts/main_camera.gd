@@ -13,6 +13,7 @@ extends Camera2D
 var simple_target: Node2D
 var targets: Array[CameraTarget] = []
 var final_target_pos: Vector2
+var shockwave_offset: Vector2 = Vector2()
 
 var targets_zoom: float = 0
 var max_targets_zoom: float = 0.35
@@ -31,6 +32,11 @@ func _ready() -> void:
 	Events.player_parry.connect(on_player_parry)
 	Events.player_dash.connect(on_player_parry)
 
+	Events.player_dash.connect(func() -> void:
+		current_shake_amount = on_parry_shake * 0.2 
+		make_shockwave(0.3, 1, 0.35, 0.10, Vector2(0, 0))
+	)
+
 	Events.enemy_died.connect(func(stats: Stats) -> void:
 		current_shake_amount = on_parry_shake * 0.2 
 		make_shockwave(0.06, 1, 0.35, 0.45)
@@ -39,6 +45,7 @@ func _ready() -> void:
 
 	Events.ctarget_add.connect(add_camera_target)
 	Events.ctarget_remove.connect(remove_camera_target)
+	GameManager.get_instance().camera = self
 
 
 func add_camera_target(new_target: CameraTarget) -> void:
@@ -84,16 +91,17 @@ func on_player_parry() -> void:
 	make_shockwave(0.2, 1, 0.3, 0.45)
 
 
-func make_shockwave(force: float, duration: float, size: float, decay_time: float) -> void:
+func make_shockwave(force: float, duration: float, size: float, decay_time: float, shock_offset:Vector2 = Vector2(0, -37)) -> void:
 	wave.material.set_shader_parameter("size", size * 0.25)
 	wave.material.set_shader_parameter("force", force)
+	shockwave_offset = shock_offset
 
 	Utils.fast_tween(wave, "material:shader_parameter/size", size, duration * 0.2, Tween.TRANS_QUAD)
 	Utils.fast_tween(wave, "material:shader_parameter/force", 0.0, decay_time, Tween.TRANS_QUAD)
 
 
 func point_target_v2(_delta: float) -> void:
-	var wave_position: Vector2 = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y) - 30)
+	var wave_position: Vector2 = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x + shockwave_offset.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y) + shockwave_offset.y)
 	wave.material.set_shader_parameter("global_position", wave_position)
 
 	if targets.size() == 0:

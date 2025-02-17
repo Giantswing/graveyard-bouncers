@@ -185,6 +185,7 @@ func _physics_process(delta: float) -> void:
 
 	if is_attacking == 0:
 		if on_wall:
+			set_collision_mask_value(8, false)
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			velocity.y = clamp(velocity.y, -4000, slide_down_max_speed)
 			slide_fx_timer += delta
@@ -205,15 +206,13 @@ func _physics_process(delta: float) -> void:
 				slide_fx_timer = 0
 
 		else:
+			set_collision_mask_value(8, true)
 			velocity.y += get_gravity().y * delta * GameManager.get_instance().round_data.gravity_multiplier
 			
 	else:
 		velocity.y += get_gravity().y * delta * attack_gravity_mult * GameManager.get_instance().round_data.gravity_multiplier
 
 	move_and_slide()
-
-	# if previous_velocity.y < 0 and velocity.y >= 0:
-	# 	print(position.y)
 
 	if is_dashing == false:
 		if is_on_floor() and grounded == false:
@@ -383,7 +382,8 @@ func process_parry(target: Stats) -> void:
 				return
 			
 			if target:
-				target.take_damage(1)
+				var from_parry: bool = true
+				target.take_damage(1, from_parry)
 				velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
 
 			SoundSystem.play_audio("parry-hit")
@@ -534,7 +534,7 @@ func get_hit(from: Stats) -> void:
 	if !can_get_hit:
 		return
 
-	if is_attacking == 2 and from.global_position.y > global_position.y:
+	if is_attacking == 2 and from.global_position.y > global_position.y and from.can_take_damage:
 		return
 
 	if is_dashing and GameManager.instance.has_powerup("dash-attack"):
@@ -570,6 +570,8 @@ func get_hit(from: Stats) -> void:
 		get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
+	if (from.dies_when_deal_damage):
+		from.take_damage(1000)
 
 func disable_movement() -> void:
 	can_move = false
