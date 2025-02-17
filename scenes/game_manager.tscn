@@ -317,7 +317,7 @@ script = ExtResource("16_ry0e6")
 debug = false
 scene = ExtResource("17_pc0jn")
 chance = 1.0
-difficulty = 1.0
+difficulty = 2.0
 metadata/_custom_type_script = ExtResource("16_ry0e6")
 
 [sub_resource type="Resource" id="Resource_kvitc"]
