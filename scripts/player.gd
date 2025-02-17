@@ -12,10 +12,11 @@ class_name PlayerCharacter
 @onready var parry_collision: CollisionShape2D = $ParryArea/CollisionShape2D
 
 @export var acceleration: float = 0.1 
-@export var base_strength: float = 300
+var base_strength: float # this is calculated each frame in the game manager
 
 @export var attack_recoil_str_mult: float = 1
-@export var jump_str_mult: float = 1
+@export var jump_str_mult_original: float = 1.25
+@export var jump_str_mult: float
 @export var failed_attack_str_mult: float = 0.3
 @export var normal_attack_bounce_str_mult: float = 1
 @export var attack_gravity_mult: float = 2
@@ -23,13 +24,16 @@ class_name PlayerCharacter
 @export var parry_downward_str_mult: float = 1
 @export var getting_hit_bounce_str_mult: float = 1.5
 @export var slide_down_max_speed: float = 30
+@export var all_jumps_str_mult: float = 1
 
 @export var hit_invincibility_time: float = 1.5
-@export var mov_speed: float = 100
+@export var mov_speed_original: float = 100
+var mov_speed: float = 100
 
 @export var extra_speed_decay: float = 0.1
 @export var extra_speed_strength: float = 1
-@export var dash_distance: float = 100
+@export var dash_distance_original: float = 100
+var dash_distance: float = 100
 
 @export var dash_frames_left: Texture2D
 @export var dash_frames_right: Texture2D
@@ -77,6 +81,9 @@ var coyote_time: float = 0.0
 func _ready() -> void:
 	speed_particles.emitting = false
 	dash_particles.emitting = false
+	mov_speed = mov_speed_original
+	dash_distance = dash_distance_original
+	jump_str_mult = jump_str_mult_original
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
@@ -100,6 +107,8 @@ func _ready() -> void:
 	attack_area.body_exited.connect(on_attack_area_body_exited)
 
 	dash_attack_area.body_entered.connect(handle_dash_attack)
+
+	on_ability_gained(null)
 
 
 func get_input() -> void:
@@ -217,6 +226,7 @@ func _physics_process(delta: float) -> void:
 	if is_dashing == false:
 		if is_on_floor() and grounded == false:
 			SoundSystem.play_audio("fall")
+			FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 
 		grounded = is_on_floor()
 	else:
@@ -227,6 +237,7 @@ func _physics_process(delta: float) -> void:
 		walk_counter += delta
 		if walk_counter > 0.3:
 			SoundSystem.play_audio("fall")
+			FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 			walk_counter = 0
 
 	on_wall = false
@@ -423,9 +434,13 @@ func process_dash() -> void:
 
 	extra_speed.x = direction.x * 50 * extra_speed_strength
 	extra_speed.y = direction.y * 10 * extra_speed_strength
+
 	is_dashing = true
 
-	var target_position: Vector2 = direction * dash_distance
+	var target_position: Vector2 = Vector2.ZERO
+
+	target_position = direction * dash_distance
+
 	var new_position: Vector2 = Vector2.ZERO
 
 	dash_cast.target_position = target_position
@@ -501,10 +516,19 @@ func on_round_ended() -> void:
 func on_picked_up_powerup(powerup: PowerUp) -> void:
 	if powerup.power_up_name == "sticky-boots":
 		slide_down_max_speed *= 0.3
-	if powerup.power_up_name == "easy-parry":
+
+	elif powerup.power_up_name == "easy-parry":
 		parry_collision.position.y += 10
 		parry_collision.scale = Vector2(1, 1.7)
 
+	elif powerup.power_up_name == "long-dash":
+		dash_distance = dash_distance_original * 1.6
+
+	elif powerup.power_up_name == "move-faster":
+		mov_speed = mov_speed_original * 1.25
+
+	elif powerup.power_up_name == "jump-higher":
+		all_jumps_str_mult = all_jumps_str_mult * 1.2
 
 func on_ability_gained(new_ability: Ability) -> void:
 	if new_ability == null:

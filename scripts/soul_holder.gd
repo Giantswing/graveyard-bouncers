@@ -15,13 +15,14 @@ var target_pos: Vector2 = Vector2.ZERO
 var timer: float = 0
 var souls_to_spawn: Array[Vector2] = []
 var soul_spawn_timer: float = 0
-var trail_max_points: int = 20
+@export var trail_max_points: int = 20
 
 class SoulInstance:
 	var trail: Line2D
 	var trail_target: Node2D
 	var trail_points: Array[Vector2] = []
 	var active: bool = false
+	var sprite: AnimatedSprite2D
 
 func _ready() -> void:
 	for i in range(max_soul_spawn):
@@ -29,6 +30,7 @@ func _ready() -> void:
 		var new_soul_scene: Line2D = soul_scene.instantiate()
 		new_soul_instance.trail = new_soul_scene
 		new_soul_instance.trail_target = new_soul_scene.get_node("TrailTarget")
+		new_soul_instance.sprite = new_soul_instance.trail_target.get_node("Sprite")
 		add_child(new_soul_instance.trail)
 		souls.append(new_soul_instance)
 
@@ -58,15 +60,17 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			var tween_y: Tween = get_tree().create_tween()
 			tween_x.set_trans(Tween.TRANS_EXPO)
 			tween_x.set_ease(Tween.EASE_IN if arc_type == 0 else Tween.EASE_OUT)
-			# tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
-			# tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
+			tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
+			tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
+
 			var speed: float = randf_range(0.7, 1.3)
 			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * speed)
 			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-10, 10), inwards_time * speed)
 
-			get_tree().create_timer((outwards_time + inwards_time) + 0.2).timeout.connect(func() -> void: deactivate_soul(soul))
+			get_tree().create_timer((outwards_time + (inwards_time * 0.95))).timeout.connect(func() -> void: deactivate_soul(soul))
 
 			break
+
 
 func deactivate_soul(target_soul: SoulInstance) -> void:
 	target_soul.trail_target.position = target_soul.trail.global_position
@@ -110,5 +114,12 @@ func _process(delta: float) -> void:
 			continue
 
 		soul.trail.add_point(soul.trail_target.position)
+
 		if soul.trail.points.size() > trail_max_points:
 			soul.trail.remove_point(0)
+
+		if soul.trail.points.size() > 2:
+			var direction: Vector2 = soul.trail.points[soul.trail.points.size() - 1] - soul.trail.points[soul.trail.points.size() - 2]
+			soul.sprite.rotation = direction.angle()
+			soul.sprite.rotation_degrees += 90
+

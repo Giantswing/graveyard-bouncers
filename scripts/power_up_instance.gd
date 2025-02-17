@@ -8,6 +8,8 @@ class_name PowerUpInstance
 @onready var stats: Stats = $Stats
 @onready var cost_label: Label = %PowerUpCostLabel
 @onready var raycast: RayCast2D = $RayCast2D
+@onready var raycast2: RayCast2D = $RayCast2D2
+@onready var raycast3: RayCast2D = $RayCast2D3
 @onready var description_label: Label = %DescriptionLabel
 
 var active: bool = true
@@ -31,7 +33,7 @@ func _process(_delta: float) -> void:
 		set_collision_layer_value(3, true)
 		sprite.modulate = Color(1, 1, 1, 1)
 
-	if raycast.is_colliding():
+	if raycast.is_colliding() or raycast2.is_colliding() or raycast3.is_colliding():
 		description_label.show()
 	else:
 		description_label.hide()

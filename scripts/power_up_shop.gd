@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var all_powerups: Array[PowerUp]
+var all_powerups: Array[PowerUp]
 
 @export var instance: PackedScene
 @export var instance_width: int = 24
@@ -11,6 +11,8 @@ var is_active: bool = false
 var displayed_powerups: Array[PowerUpInstance] = []
 
 func _ready() -> void:
+	all_powerups = GameManager.get_instance().all_powerups
+
 	for i in range(all_powerups.size()):
 		all_powerups[i] = all_powerups[i].duplicate(true)
 

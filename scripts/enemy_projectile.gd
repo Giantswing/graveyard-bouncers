@@ -11,6 +11,8 @@ var target_scale: Vector2 = Vector2(1, 1)
 var alive_max_time: float = 5
 var last_pos: Vector2 = Vector2()
 var returning: bool = false
+var points: Array[Vector2] = []
+
 @onready var stats: Stats = $Stats
 
 func _ready() -> void:
@@ -35,9 +37,13 @@ func process_parry() -> void:
 
 func _process(delta: float) -> void:
 	position += velocity * delta
+	points.append(global_position)
 
-	if point_to_velocity:
-		var dir := (global_position - last_pos).angle()
+	if(points.size() > 3):
+		points.remove_at(0)
+
+	if point_to_velocity and points.size() > 2:
+		var dir := (points[1] - points[0]).angle()
 		sprite.rotation = dir
 		sprite.rotation_degrees += 90
 

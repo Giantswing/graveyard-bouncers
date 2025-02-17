@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://bjmobqrf56puv"]
+
+[ext_resource type="Texture2D" uid="uid://2fxs2a6badur" path="res://sprites/powerup-vampiric.png" id="1_2m61c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ku6t"]
+atlas = ExtResource("1_2m61c")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1f2vb"]
+atlas = ExtResource("1_2m61c")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctoqo"]
+atlas = ExtResource("1_2m61c")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr8vw"]
+atlas = ExtResource("1_2m61c")
+region = Rect2(24, 24, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ku6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f2vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctoqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gr8vw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

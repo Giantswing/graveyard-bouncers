@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://ci7nug6pfyhir"]
+
+[ext_resource type="SpriteFrames" uid="uid://bm6opwsilgvyw" path="res://resources/powerups/powerup-longer-dash-frames.tres" id="1_qmu7w"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_c7lo7"]
+
+[resource]
+script = ExtResource("2_c7lo7")
+frames = ExtResource("1_qmu7w")
+power_up_name = "long-dash"
+power_up_description = "Longer dash"
+chance = 1.0
+cost = 8
+amount = 1
+metadata/_custom_type_script = ExtResource("2_c7lo7")

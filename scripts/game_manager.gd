@@ -14,6 +14,7 @@ class_name GameManager
 
 @export var powerups: Array[PowerUp]
 
+@export var heart_reward: PackedScene
 @export var trampoline_prefab: PackedScene
 @export var helper_enemy_prefab: PackedScene
 @export var spikes_prefab: PackedScene
@@ -41,6 +42,7 @@ var player_hp: int = 3
 
 @export var player_ability: Ability = null
 @export var all_abilities: Array[Ability]
+@export var all_powerups: Array[PowerUp]
 
 var enemy_container: Node2D
 var other_container: Node2D
@@ -194,13 +196,6 @@ func use_current_ability() -> void:
 func update_current_challenge() -> void:
 	challenge_data = round_manager.get_challenge(current_difficulty)
 	Events.set_up_challenge.emit(challenge_data)
-
-func update_current_round() -> void:
-	round_data = round_manager.get_round(current_difficulty)
-	if player:
-		player.base_strength = 285 * sqrt(round_data.gravity_multiplier)
-	# print("Current difficulty: ", current_difficulty)
-	# print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
 	
 
 	
@@ -353,16 +348,13 @@ func should_spawn(current_amount: int, max_amount: int) -> bool:
 
 	return true
 
-	# var spawn_chance = 1.0 - float(current_amount) / float(max_amount)
-	# 
-	# var roll = randf()
-	# 
-	# if roll < spawn_chance:
-	# 	return true
-	# else:
-	# 	return false
 
-
+func update_current_round() -> void:
+	round_data = round_manager.get_round(current_difficulty)
+	if player:
+		player.base_strength = 285 * sqrt(round_data.gravity_multiplier) * player.all_jumps_str_mult
+	# print("Current difficulty: ", current_difficulty)
+	# print("Current round: ", "dif: ", round_data.difficulty, ", time: ", round_data.time_limit, ", enemies: ", round_data.max_enemies, ", rewards: ", round_data.max_rewards)
 
 func add_powerup(powerup: PowerUp) -> void:
 	powerups.append(powerup)
@@ -375,6 +367,11 @@ func add_powerup(powerup: PowerUp) -> void:
 		player_hp_max += 1
 		Events.max_hp_changed.emit(player_hp_max)
 		Events.hp_changed.emit(player_hp_max, 0)
+
+	if player:
+		get_tree().create_timer(0.1).timeout.connect(func() -> void:
+			player.base_strength = 285 * sqrt(round_data.gravity_multiplier) * player.all_jumps_str_mult
+		)
 
 
 func has_powerup(powerup_name: String, ignore_active: bool = false) -> bool:
@@ -395,7 +392,6 @@ func set_powerup_active(powerup_name: String, active: bool) -> void:
 		if powerup.power_up_name == powerup_name:
 			powerup.active = active
 			break
-
 
 
 func start_round() -> void:

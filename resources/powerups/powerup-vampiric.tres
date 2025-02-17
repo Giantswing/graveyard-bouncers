@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://c4dtdjwhakotw"]
+
+[ext_resource type="SpriteFrames" uid="uid://bjmobqrf56puv" path="res://resources/powerups/powerup-vampiric-frames.tres" id="1_rx58b"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_yjrlp"]
+
+[resource]
+script = ExtResource("2_yjrlp")
+frames = ExtResource("1_rx58b")
+power_up_name = "vampiric"
+power_up_description = "Enemies can drop HP"
+chance = 1.0
+cost = 12
+amount = 1
+metadata/_custom_type_script = ExtResource("2_yjrlp")

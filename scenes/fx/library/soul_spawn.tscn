@@ -1,14 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwcbu3uib6leo"]
+[gd_scene load_steps=10 format=3 uid="uid://cwcbu3uib6leo"]
 
 [ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="1_b4ril"]
+[ext_resource type="Texture2D" uid="uid://ce3uye0bj7c55" path="res://scenes/fx/library/soul.png" id="2_b4ril"]
 
 [sub_resource type="Curve" id="Curve_l56v6"]
-_data = [Vector2(0, 0.264327), 0.0, 0.0, 0, 0, Vector2(0.616052, 1), -0.0838334, -0.0838334, 0, 0, Vector2(1, 0.837034), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.264327), 0.0, 0.0, 0, 0, Vector2(0.616052, 1), -0.0838334, -0.0838334, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_l56v6"]
 offsets = PackedFloat32Array(0, 0.820331, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.698039)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4ril"]
+atlas = ExtResource("2_b4ril")
+region = Rect2(0, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6ipk"]
+atlas = ExtResource("2_b4ril")
+region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrnhs"]
+atlas = ExtResource("2_b4ril")
+region = Rect2(0, 15, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0870"]
+atlas = ExtResource("2_b4ril")
+region = Rect2(15, 15, 15, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2n1rb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4ril")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6ipk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrnhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0870")
+}],
+"loop": true,
+"name": &"floating",
+"speed": 10.0
+}]
 
 [node name="Soul" type="Line2D"]
 modulate = Color(1, 1, 1, 0.52549)
@@ -23,3 +60,23 @@ sharp_limit = 10.0
 antialiased = true
 
 [node name="TrailTarget" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="TrailTarget"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2n1rb")
+animation = &"floating"
+autoplay = "floating"
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/soul.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "b2d7e726b4cf6a8ae487471b873a00fb"

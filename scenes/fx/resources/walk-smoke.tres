@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://drfcnfd807gtf"]
+
+[ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_2qx37"]
+[ext_resource type="PackedScene" uid="uid://b14mmbk4g7qnk" path="res://scenes/fx/library/walk_smoke.tscn" id="2_2qx37"]
+
+[resource]
+script = ExtResource("1_2qx37")
+key_name = "walk-smoke"
+scene = ExtResource("2_2qx37")
+amount = 1
+metadata/_custom_type_script = ExtResource("1_2qx37")

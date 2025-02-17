@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://0pu46hoksjqo"]
+
+[ext_resource type="SpriteFrames" uid="uid://k8ldc8e8iwgh" path="res://resources/powerups/powerup-increase-speed-frames.tres" id="1_ttu08"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_syn5w"]
+
+[resource]
+script = ExtResource("2_syn5w")
+frames = ExtResource("1_ttu08")
+power_up_name = "move-faster"
+power_up_description = "Move faster"
+chance = 1.0
+cost = 12
+amount = 1
+metadata/_custom_type_script = ExtResource("2_syn5w")

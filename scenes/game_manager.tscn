@@ -1,6 +1,7 @@
-[gd_scene load_steps=41 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=55 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
+[ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
 [ext_resource type="Script" uid="uid://l0ip5ekbn1cd" path="res://scripts/prefab_chance.gd" id="2_udu3i"]
 [ext_resource type="Resource" uid="uid://me5h58b0iyyq" path="res://resources/enemies/zombie.tres" id="3_q8mjp"]
 [ext_resource type="PackedScene" uid="uid://crvo25nosde06" path="res://scenes/spikes.tscn" id="4_30v7y"]
@@ -9,19 +10,32 @@
 [ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="6_q8mjp"]
 [ext_resource type="Script" uid="uid://qtaa8f2f6x64" path="res://scripts/round_manager.gd" id="6_ternb"]
 [ext_resource type="PackedScene" uid="uid://xejrp383li1a" path="res://scenes/turtle.tscn" id="7_0rse5"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="7_1llei"]
 [ext_resource type="Script" uid="uid://b6bm2tl34chp6" path="res://scripts/round.gd" id="7_frtjd"]
 [ext_resource type="Resource" uid="uid://da2cajaly4sfq" path="res://resources/rewards/coin.tres" id="8_k4jhu"]
+[ext_resource type="Resource" uid="uid://dmhulh2ca188t" path="res://resources/powerups/potion.tres" id="8_rtxrx"]
+[ext_resource type="Resource" uid="uid://bmx4tbxu0gfdu" path="res://resources/powerups/jumpy-shovel.tres" id="9_x4ngh"]
+[ext_resource type="Resource" uid="uid://bvyautccwn7xh" path="res://resources/powerups/powerup-life.tres" id="10_5it8k"]
 [ext_resource type="Resource" uid="uid://c7ykkjcjfwud5" path="res://resources/enemies/pumpkin.tres" id="11_30v7y"]
+[ext_resource type="Resource" uid="uid://bkih55vqd3qcg" path="res://resources/powerups/powerup-sticky-boots.tres" id="11_d231i"]
 [ext_resource type="Resource" uid="uid://dqjt5c0gd5xnf" path="res://resources/enemies/bat.tres" id="12_5xtl8"]
+[ext_resource type="Resource" uid="uid://cggfuht13gbam" path="res://resources/powerups/dash-increase.tres" id="12_d3www"]
 [ext_resource type="Resource" uid="uid://ddgjdp27dbqwv" path="res://resources/enemies/ghost.tres" id="13_cjvif"]
+[ext_resource type="Resource" uid="uid://be4oofmp6ntom" path="res://resources/powerups/reward-magnet.tres" id="13_u168d"]
+[ext_resource type="Resource" uid="uid://busstvxy65x2v" path="res://resources/powerups/easy-parry.tres" id="14_fmt0c"]
+[ext_resource type="Resource" uid="uid://ct8tk3r2msvyt" path="res://resources/powerups/dash-attack.tres" id="15_o8s1w"]
 [ext_resource type="Resource" uid="uid://ckjhpcb231yu0" path="res://resources/rewards/cloud.tres" id="15_ry0e6"]
+[ext_resource type="Resource" uid="uid://ci7nug6pfyhir" path="res://resources/powerups/powerup-longer-dash.tres" id="16_cqgt4"]
 [ext_resource type="PackedScene" uid="uid://cbqjx7lp0mmbo" path="res://scenes/zombie.tscn" id="16_pc0jn"]
 [ext_resource type="Script" uid="uid://dnww2wfp0co8y" path="res://scripts/challenge.gd" id="16_ry0e6"]
 [ext_resource type="PackedScene" uid="uid://cga8ah38nx1qb" path="res://scenes/pumpkin.tscn" id="17_c7a3q"]
 [ext_resource type="PackedScene" uid="uid://cox3qad5bb5gk" path="res://scenes/challenge_scenes/challenge_basic_01.tscn" id="17_pc0jn"]
 [ext_resource type="Resource" uid="uid://djifm0rtinot8" path="res://resources/rewards/ability-orb.tres" id="18_4vth2"]
+[ext_resource type="Resource" uid="uid://c4dtdjwhakotw" path="res://resources/powerups/powerup-vampiric.tres" id="18_x4ngh"]
+[ext_resource type="Resource" uid="uid://0pu46hoksjqo" path="res://resources/powerups/powerup-increase-speed.tres" id="19_5it8k"]
 [ext_resource type="Resource" uid="uid://b703uef77idq1" path="res://resources/rewards/heart-reward.tres" id="19_yxe1x"]
 [ext_resource type="PackedScene" uid="uid://t23cpsfafot7" path="res://scenes/frog_mage.tscn" id="20_2j6ol"]
+[ext_resource type="Resource" uid="uid://bsqc5jllx7ugk" path="res://resources/powerups/powerup-increase-jump.tres" id="20_d231i"]
 [ext_resource type="PackedScene" uid="uid://b6crnacouyp0q" path="res://scenes/ability-orb.tscn" id="21_2j6ol"]
 [ext_resource type="PackedScene" uid="uid://cwg3c6c5cpi4w" path="res://scenes/challenge_scenes/challenge_basic_02.tscn" id="22_jrl6a"]
 
@@ -310,10 +324,12 @@ metadata/_custom_type_script = ExtResource("16_ry0e6")
 [node name="GameManager" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_hwd4i")
+heart_reward = ExtResource("2_rtxrx")
 trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
 spikes_prefab = ExtResource("4_30v7y")
 all_abilities = Array[ExtResource("4_aonbx")]([ExtResource("5_lcbjr")])
+all_powerups = Array[ExtResource("7_1llei")]([ExtResource("8_rtxrx"), ExtResource("9_x4ngh"), ExtResource("10_5it8k"), ExtResource("11_d231i"), ExtResource("12_d3www"), ExtResource("13_u168d"), ExtResource("14_fmt0c"), ExtResource("15_o8s1w"), ExtResource("16_cqgt4"), ExtResource("18_x4ngh"), ExtResource("19_5it8k"), ExtResource("20_d231i")])
 
 [node name="RoundManager" type="Node2D" parent="."]
 position = Vector2(-13, 0)

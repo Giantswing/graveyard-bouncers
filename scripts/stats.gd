@@ -154,6 +154,14 @@ func die() -> void:
 
 	Events.enemy_died.emit(self)
 
+	if GameManager.get_instance().has_powerup("vampiric") and can_take_damage:
+		var chance: float = 0.1
+		if randf() < chance:
+			var heart: Node2D = GameManager.get_instance().heart_reward.instantiate()
+			heart.global_position = global_position
+			owner.get_parent().add_child(heart)
+		
+
 	if spawn_rate_reduction > 0:
 		GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
 	

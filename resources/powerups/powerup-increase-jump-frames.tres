@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://eqefh8rnmmgh"]
+
+[ext_resource type="Texture2D" uid="uid://doeghlpx156kr" path="res://sprites/powerup-increase-jump.png" id="1_1cqc2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qoa1"]
+atlas = ExtResource("1_1cqc2")
+region = Rect2(0, 0, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qoa1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
