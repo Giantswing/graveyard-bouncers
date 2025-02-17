@@ -1,0 +1,125 @@
+[gd_scene load_steps=15 format=3 uid="uid://dtpr0aex8m86l"]
+
+[ext_resource type="Script" uid="uid://cxk2hkqb5d5ft" path="res://scripts/bat.gd" id="1_3hija"]
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_ffty0"]
+[ext_resource type="Material" uid="uid://m2vs4tep0oyn" path="res://shaders/hit_flash_material.tres" id="3_w36co"]
+[ext_resource type="Texture2D" uid="uid://dvcucpm77bsgj" path="res://sprites/bat-champion1.png" id="4_3hija"]
+[ext_resource type="Texture2D" uid="uid://dbolep4yymu6j" path="res://sprites/light-basic.png" id="5_ckj51"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lv0ya"]
+size = Vector2(25.3333, 9.33333)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvmw5"]
+size = Vector2(29.3333, 13.3333)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hija"]
+atlas = ExtResource("4_3hija")
+region = Rect2(0, 0, 36, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffty0"]
+atlas = ExtResource("4_3hija")
+region = Rect2(36, 0, 36, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w36co"]
+atlas = ExtResource("4_3hija")
+region = Rect2(72, 0, 36, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y3jv"]
+atlas = ExtResource("4_3hija")
+region = Rect2(0, 30, 36, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckj51"]
+atlas = ExtResource("4_3hija")
+region = Rect2(36, 30, 36, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scjr1"]
+atlas = ExtResource("4_3hija")
+region = Rect2(72, 30, 36, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0y2qc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hija")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffty0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w36co")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y3jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckj51")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scjr1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 14.0
+}]
+
+[node name="BatChampion01" type="CharacterBody2D"]
+process_mode = 1
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_3hija")
+speed = 120.0
+wobble = 1.0
+wobble_speed = 5.0
+
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("2_ffty0")
+damage = 1
+score_reward = 5
+spawn_type = 1
+death_sound = "enemy-death"
+metadata/_custom_type_script = ExtResource("2_ffty0")
+
+[node name="HurtArea" type="Area2D" parent="Stats"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stats/HurtArea"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_lv0ya")
+debug_color = Color(0.842005, 0, 0.0479336, 0.42)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_cvmw5")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("3_w36co")
+sprite_frames = SubResource("SpriteFrames_0y2qc")
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": true,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/bat-champion1.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "7716489a63cc2e7571a8ee0f2e6478d2"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.36, 1)
+color = Color(0.768032, 0.444793, 0.017804, 1)
+energy = 0.0
+range_item_cull_mask = 2
+texture = ExtResource("5_ckj51")
+texture_scale = 0.8

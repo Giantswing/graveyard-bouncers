@@ -67,7 +67,10 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * speed)
 			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-10, 10), inwards_time * speed)
 
-			get_tree().create_timer((outwards_time + (inwards_time * 0.95))).timeout.connect(func() -> void: deactivate_soul(soul))
+			get_tree().create_timer((outwards_time + (inwards_time * 0.95))).timeout.connect(func() -> void:
+				deactivate_soul(soul)
+				Events.score_changed.emit(GameManager.get_instance().score + 1)
+			)
 
 			break
 
@@ -79,7 +82,7 @@ func deactivate_soul(target_soul: SoulInstance) -> void:
 	target_soul.trail.clear_points()
 
 func spawn_souls(stats: Stats) -> void:
-	var amount: int = roundi(stats.score_reward * 0.5)
+	var amount: int = roundi(stats.score_reward)
 
 	if amount > 0:
 		for i in range(amount):
@@ -105,7 +108,7 @@ func _process(delta: float) -> void:
 
 	if souls_to_spawn.size() > 0:
 		soul_spawn_timer += delta
-		if soul_spawn_timer > 0.02:
+		if soul_spawn_timer > 0.05:
 			spawn_soul(souls_to_spawn.pop_front())
 			soul_spawn_timer = 0
 

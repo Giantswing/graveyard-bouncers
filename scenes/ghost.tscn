@@ -78,7 +78,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "e403ab9135c04635009165612993a0cf"
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("1_l5lq6")
 damage = 1
-score_reward = 10
+score_reward = 2
 only_damage_when_moving_down = true
 death_sound = "enemy-death"
 

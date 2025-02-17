@@ -20,13 +20,12 @@ func spawn_prefab_from_list(list: Array[PrefabChance], container: Node2D, max_am
 	for prefab_chance in list:
 		current_chance += prefab_chance.chance
 		if chance <= current_chance:
-			spawn_prefab(prefab_chance.prefab, container, prefab_chance.spawn_type, prefab_chance.free_space)
+			spawn_prefab(prefab_chance.prefab, container, prefab_chance.spawn_type, prefab_chance.free_space, false, prefab_chance)
 			return
 
 
 
-func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float, use_max_space: bool = false) -> Node2D:
-	var new_prefab: Node2D = prefab.instantiate()
+func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance.SPAWN_POS_OPTIONS, free_space: float, use_max_space: bool = false, chance_container: PrefabChance = null) -> Node2D:
 	var spawn_pos: Vector2 = Vector2.ZERO
 
 	if container == null:
@@ -71,6 +70,18 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 
 		if not is_free:
 			continue
+
+		# Variation selection
+		var new_prefab: Node2D
+
+		if chance_container != null and chance_container.variations.size() > 0:
+			var variation_chance: float = randf()
+			if variation_chance <= chance_container.variations[0].chance:
+				new_prefab = chance_container.variations[0].prefab.instantiate()
+			else:
+				new_prefab = prefab.instantiate()
+		else:
+			new_prefab = prefab.instantiate()
 
 		new_prefab.position = spawn_pos
 		container.add_child(new_prefab)

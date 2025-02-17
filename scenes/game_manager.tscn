@@ -120,6 +120,7 @@ chance = 0.5
 chance_decay = 1.0
 free_space = 30.0
 spawn_type = 0
+variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_4vth2"]
@@ -154,6 +155,7 @@ chance = 0.25
 chance_decay = 1.0
 free_space = 50.0
 spawn_type = 0
+variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_jrl6a"]
@@ -182,7 +184,7 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_2j6ol"]
 script = ExtResource("7_frtjd")
-debug = false
+debug = true
 difficulty = 6.0
 time_limit = 40
 enemy_count = 0
@@ -212,6 +214,7 @@ chance = 0.25
 chance_decay = 1.0
 free_space = 30.0
 spawn_type = 1
+variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_8ldib"]
@@ -246,6 +249,7 @@ chance = 1.0
 chance_decay = 1.0
 free_space = 80.0
 spawn_type = 1
+variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_uiwhc"]
@@ -256,6 +260,7 @@ chance = 1.0
 chance_decay = 1.0
 free_space = 120.0
 spawn_type = 3
+variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_dlmsr"]

@@ -165,8 +165,8 @@ func die() -> void:
 	if spawn_rate_reduction > 0:
 		GameManager.get_instance().enemy_spawn_countdown -= spawn_rate_reduction
 	
-	if score_reward != 0:
-		Events.score_changed.emit(GameManager.get_instance().score + score_reward * 10)
+	# if score_reward != 0:
+	# 	Events.score_changed.emit(GameManager.get_instance().score + score_reward)
 
 	if wall_reward != 0:
 		GameManager.get_instance().game_width -= wall_reward

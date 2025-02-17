@@ -17,6 +17,9 @@ enum SPAWN_POS_OPTIONS {
 @export var free_space: float = 30.0
 @export var spawn_type: SPAWN_POS_OPTIONS = SPAWN_POS_OPTIONS.GROUND
 
+
+@export var variations: Array[PrefabChance] = []
+
 var original_chance: float
 
 func init() -> void:

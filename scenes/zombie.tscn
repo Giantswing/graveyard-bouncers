@@ -84,7 +84,7 @@ speed = 60.0
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_1vlb3")
 damage = 1
-score_reward = 8
+score_reward = 1
 sprite = NodePath("../Sprite")
 spawn_type = 2
 death_sound = "enemy-death"
