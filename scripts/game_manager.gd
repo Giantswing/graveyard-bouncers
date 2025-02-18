@@ -227,6 +227,10 @@ func on_seconds_timer_timeout() -> void:
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
 	player_hp = new_hp
+
+	if player_hp > player_hp_max:
+		player_hp = player_hp_max
+
 	if player_hp <= 0:
 		Events.player_died.emit()
 

@@ -26,7 +26,7 @@ func _ready() -> void:
 	stats.on_hit.connect(
 		func() -> void:
 			velocity.y = jump_speed
-			jump_timer *= 0.8
+			jump_timer *= 0.6
 	)
 
 func _physics_process(delta: float) -> void:
