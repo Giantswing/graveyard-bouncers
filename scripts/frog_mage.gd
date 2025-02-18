@@ -47,6 +47,7 @@ func _ready() -> void:
 	raycast.rotation = rotation
 	changing_state = true
 	light.energy = 0
+	sprite.play("Idle")
 
 	get_tree().create_timer(floating_length).timeout.connect(func() -> void:
 		changing_state = false
@@ -58,9 +59,7 @@ func change_state() -> void:
 		return
 
 	changing_state = true
-
 	var new_state := states.FLOATING if state == states.ATTACKING else states.ATTACKING
-	print("Changing state to: ", new_state)
 
 	if new_state == states.FLOATING:
 		state = states.FLOATING
@@ -71,16 +70,19 @@ func change_state() -> void:
 	elif new_state == states.ATTACKING:
 		state = states.ATTACKING
 		light.scale = Vector2(0, 0)
+		sprite.play("PrepareAttack")
 		Utils.fast_tween(light, "energy", 2, attack_charge_length - 0.1)
 		Utils.fast_tween(light, "scale", Vector2(1, 1), attack_charge_length * 0.75)
 
 		get_tree().create_timer(attack_charge_length).timeout.connect(func() -> void:
 			spawn_projectile()
 			light.energy = 0
+			sprite.play("Cooldown")
 			get_tree().create_timer(attack_cooldown).timeout.connect(func() -> void:
 				state = states.FLOATING
 				get_tree().create_timer(floating_length).timeout.connect(func() -> void:
 					changing_state = false
+					sprite.play("Idle")
 				)
 			)
 		)

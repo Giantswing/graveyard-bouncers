@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://t23cpsfafot7"]
+[gd_scene load_steps=17 format=3 uid="uid://t23cpsfafot7"]
 
 [ext_resource type="Script" uid="uid://c1t630f486ew3" path="res://scripts/frog_mage.gd" id="1_r08ax"]
 [ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="2_2l6al"]
@@ -11,19 +11,64 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2inn6"]
 size = Vector2(20, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r08ax"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_of6xu"]
+atlas = ExtResource("4_r08ax")
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emniq"]
+atlas = ExtResource("4_r08ax")
+region = Rect2(40, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1uxd"]
+atlas = ExtResource("4_r08ax")
+region = Rect2(80, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spotf"]
 atlas = ExtResource("4_r08ax")
 region = Rect2(0, 0, 40, 40)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2l6al"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ethui"]
+atlas = ExtResource("4_r08ax")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s6wk"]
+atlas = ExtResource("4_r08ax")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8y5rn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r08ax")
+"texture": SubResource("AtlasTexture_of6xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emniq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1uxd")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Cooldown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spotf")
+}],
+"loop": true,
+"name": &"Idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ethui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1s6wk")
+}],
+"loop": true,
+"name": &"PrepareAttack",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_httt1"]
@@ -60,7 +105,8 @@ texture = ExtResource("5_2hyaq")
 z_index = -1
 texture_filter = 1
 material = ExtResource("3_2hyaq")
-sprite_frames = SubResource("SpriteFrames_2l6al")
+sprite_frames = SubResource("SpriteFrames_8y5rn")
+animation = &"Cooldown"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -74,9 +120,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": true,
 "should_round_fps": true,
 "slice": "",
-"source": "/home/alex/Pictures/graveyardbouncers-sprites/sprites/frog-mage.aseprite"
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/frog-mage.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "870e5ce1c0a1ea2713c5f1108cb2e01b"
+metadata/_aseprite_wizard_source_file_hash_ = "06102363c5b45342e3a651bd31a5f38c"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.60001)
