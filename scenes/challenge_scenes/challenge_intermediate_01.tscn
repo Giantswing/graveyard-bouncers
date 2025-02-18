@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=4 uid="uid://7e7505bm2uvk"]
+
+[ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="1_4pgoa"]
+[ext_resource type="TileSet" uid="uid://ot8wl4noujsw" path="res://tiles/tileset01.tres" id="2_64pxc"]
+[ext_resource type="PackedScene" uid="uid://cbqjx7lp0mmbo" path="res://scenes/zombie.tscn" id="3_fx5oa"]
+[ext_resource type="PackedScene" uid="uid://vcjlnsnxysjs" path="res://scenes/parry_ball.tscn" id="4_77xs3"]
+[ext_resource type="PackedScene" uid="uid://65lfj6gmngyw" path="res://scenes/trampoline.tscn" id="4_vklig"]
+[ext_resource type="PackedScene" uid="uid://brehjpamjrjui" path="res://scenes/wall-spikes.tscn" id="5_pgkgj"]
+[ext_resource type="PackedScene" uid="uid://b6crnacouyp0q" path="res://scenes/ability-orb.tscn" id="7_64pxc"]
+[ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="7_ejvvu"]
+[ext_resource type="PackedScene" uid="uid://dtyg2va2kyx66" path="res://scenes/lava_ground.tscn" id="8_7occ3"]
+[ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="10_77xs3"]
+
+[node name="ChallengeIntermediate01" type="Node2D"]
+
+[node name="StartPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-468, 128)
+
+[node name="ChallengePortal" parent="." instance=ExtResource("1_4pgoa")]
+position = Vector2(317, -215)
+enter = false
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_map_data = PackedByteArray("AADo/wgAAQABAAIAAADp/wgAAQABAAIAAADq/wgAAQABAAIAAADr/wgAAQABAAIAAADs/wgAAQABAAIAAADt/wgAAQABAAIAAADu/wgAAQABAAIAAADv/wgAAQABAAIAAADw/wgAAQABAAIAAADx/wgAAQABAAIAAADy/wgAAQABAAIAAADy/wcAAQADAAAAAADx/wcAAQADAAAAAADw/wcAAQADAAAAAADv/wcAAQADAAAAAADu/wcAAQADAAAAAADt/wcAAQADAAAAAADs/wcAAQADAAAAAADr/wcAAQADAAAAAADq/wcAAQADAAAAAADp/wcAAQADAAAAAADo/wcAAQADAAAAAADn/wcAAQADAAAAAADm/wgAAQABAAIAAADn/wgAAQABAAIAAADk/wcAAQADAAAAAADj/wcAAQADAAAAAADj/wgAAQABAAIAAADk/wgAAQABAAIAAADz/wcAAQABAAEAAAD0/wcAAQADAAIAAAD0/wgAAQADAAMAAADz/wgAAQABAAIAAAD0/wYAAQADAAIAAAD0/wUAAQADAAIAAAD0/wQAAQADAAIAAAD0/wMAAQADAAIAAADz/wMAAQABAAEAAADz/wIAAQABAAAAAADz/wEAAQABAAAAAAD0/wEAAQADAAIAAAD0/wIAAQADAAIAAADz/wQAAQACAAIAAADz/wUAAQABAAAAAADz/wYAAQABAAAAAADi/wgAAQABAAIAAADi/wcAAQACAAAAAADi/wYAAQADAAIAAADi/wUAAQADAAIAAADi/wQAAQADAAIAAADi/wMAAQADAAIAAADi/wIAAQADAAIAAADi/wEAAQADAAEAAADi/wAAAQADAAAAAADh/wEAAQACAAIAAADh/wIAAQABAAAAAADh/wMAAQABAAAAAADh/wQAAQABAAAAAADh/wUAAQABAAAAAADh/wYAAQABAAAAAADh/wcAAQABAAAAAADh/wgAAQAAAAIAAADh/wAAAQADAAAAAADm/wcAAQADAAAAAADl/wcAAQADAAAAAADl/wgAAQABAAIAAADj/wEAAQABAAIAAADk/wEAAQABAAIAAADl/wEAAQABAAIAAADm/wEAAQABAAIAAADn/wEAAQABAAIAAADo/wEAAQADAAMAAADo/wAAAQAAAAAAAADn/wAAAQADAAAAAADm/wAAAQADAAAAAADl/wAAAQACAAAAAADk/wAAAQABAAEAAADj/wAAAQADAAAAAADy/wQAAQABAAIAAADx/wQAAQABAAIAAADw/wQAAQABAAIAAADv/wQAAQABAAIAAADu/wQAAQABAAIAAADt/wQAAQAAAAIAAADt/wMAAQABAAMAAADu/wMAAQADAAAAAADv/wMAAQADAAAAAADw/wMAAQADAAAAAADx/wMAAQADAAAAAADy/wMAAQADAAAAAADz/wAAAQABAAAAAAD0/wAAAQADAAIAAAD0////AQADAAIAAAD0//7/AQADAAIAAAD0//3/AQADAAIAAAD0//z/AQADAAIAAAD0//v/AQADAAEAAAD0//r/AQACAAEAAAD0//n/AQACAAAAAADz//n/AQABAAEAAADz//r/AQACAAEAAADz//v/AQACAAIAAADz//z/AQABAAAAAADz//3/AQABAAAAAADz//7/AQABAAAAAADz////AQABAAAAAADy//r/AQABAAEAAADy//v/AQABAAIAAADx//v/AQABAAIAAADw//v/AQABAAIAAADv//v/AQABAAIAAADu//v/AQABAAIAAADt//v/AQABAAIAAADs//v/AQABAAIAAADr//v/AQAAAAIAAADr//r/AQABAAAAAADs//r/AQACAAAAAADt//r/AQADAAAAAADu//r/AQADAAAAAADv//r/AQADAAAAAADw//r/AQADAAAAAADx//r/AQADAAAAAADr//n/AQABAAAAAADr//j/AQABAAMAAADs//j/AQAAAAAAAADs//n/AQADAAIAAADz//j/AQABAAMAAAD0//j/AQAAAAAAAADl////AQADAAIAAADl//7/AQADAAIAAADl//3/AQADAAIAAADl//z/AQADAAIAAADl//v/AQADAAIAAADl//r/AQADAAIAAADl//n/AQADAAIAAADl//j/AQAAAAAAAADk//j/AQABAAMAAADk//n/AQABAAAAAADk//r/AQABAAAAAADk//v/AQABAAAAAADk//z/AQABAAAAAADk//3/AQABAAAAAADk//7/AQABAAAAAADk////AQABAAAAAADg/wAAAQACAAAAAADg////AQADAAIAAADg//7/AQADAAIAAADg//3/AQADAAIAAADg//z/AQADAAIAAADg//v/AQADAAIAAADg//r/AQADAAIAAADg//n/AQADAAIAAADg//j/AQADAAIAAADg//f/AQAAAAAAAADf//f/AQABAAMAAADf//j/AQABAAAAAADf//n/AQABAAAAAADf//r/AQABAAAAAADf//v/AQABAAAAAADf//z/AQABAAAAAADf//3/AQABAAAAAADf//7/AQABAAAAAADf////AQABAAAAAADf/wAAAQABAAAAAADf/wEAAQAAAAIAAADg/wEAAQABAAIAAAD1//r/AQACAAAAAAD2//r/AQADAAAAAAD3//r/AQADAAAAAAD4//r/AQADAAAAAAD5//r/AQADAAAAAAD6//r/AQADAAAAAAD7//r/AQADAAAAAAD8//r/AQADAAAAAAD9//r/AQADAAAAAAD+//r/AQADAAAAAAD///r/AQADAAAAAAAAAPr/AQADAAAAAAABAPr/AQADAAAAAAAAAPv/AQABAAIAAAD///v/AQABAAIAAAD+//v/AQABAAIAAAD9//v/AQABAAIAAAABAPv/AQABAAIAAAD1//v/AQABAAIAAAD2//v/AQABAAIAAAD3//v/AQABAAIAAAD4//v/AQABAAIAAAD5//v/AQABAAIAAAD6//v/AQABAAIAAAD7//v/AQABAAIAAAD8//v/AQABAAIAAADy//n/AQABAAMAAAD1//n/AQAAAAAAAAAEAPr/AQACAAEAAAAFAPr/AQACAAEAAAAFAPn/AQACAAEAAAAEAPn/AQACAAEAAAADAPr/AQACAAEAAAACAPr/AQABAAEAAAACAPn/AQABAAAAAAADAPn/AQACAAEAAAACAPv/AQABAAIAAAADAPv/AQABAAIAAAAEAPv/AQABAAIAAAAFAPv/AQABAAIAAAAFAPj/AQADAAAAAAAEAPj/AQADAAAAAAADAPj/AQADAAAAAAACAPj/AQABAAMAAAAGAPj/AQADAAAAAAAHAPj/AQADAAAAAAAIAPj/AQADAAAAAAAJAPj/AQADAAAAAAAKAPj/AQADAAAAAAALAPj/AQADAAAAAAALAPn/AQACAAEAAAALAPr/AQACAAEAAAALAPv/AQABAAIAAAAKAPv/AQABAAIAAAAJAPv/AQABAAIAAAAIAPv/AQABAAIAAAAHAPv/AQABAAIAAAAGAPv/AQABAAIAAAAGAPr/AQACAAEAAAAGAPn/AQACAAEAAAAKAPr/AQACAAEAAAAKAPn/AQACAAEAAAAJAPr/AQACAAEAAAAJAPn/AQACAAEAAAAIAPr/AQACAAEAAAAIAPn/AQACAAEAAAAHAPr/AQACAAEAAAAHAPn/AQACAAEAAAAMAPj/AQADAAAAAAANAPj/AQADAAAAAAAOAPj/AQABAAEAAAAOAPf/AQABAAAAAAAOAPb/AQABAAAAAAAOAPX/AQABAAAAAAAOAPT/AQABAAAAAAAOAPP/AQABAAAAAAAOAPL/AQABAAAAAAAOAPH/AQABAAAAAAAOAPD/AQABAAAAAAAOAO//AQABAAMAAAAPAO//AQAAAAAAAAAPAPD/AQADAAIAAAAPAPH/AQADAAIAAAAPAPL/AQADAAIAAAAPAPP/AQADAAIAAAAPAPf/AQADAAIAAAAPAPb/AQADAAIAAAAPAPX/AQADAAIAAAAPAPT/AQADAAIAAAAPAPj/AQADAAIAAAAPAPn/AQADAAIAAAAPAPr/AQADAAIAAAAPAPv/AQADAAMAAAAOAPv/AQABAAIAAAANAPv/AQABAAIAAAAMAPv/AQABAAIAAAAMAPr/AQACAAEAAAAMAPn/AQACAAEAAAANAPr/AQACAAEAAAAOAPr/AQACAAEAAAAOAPn/AQACAAEAAAANAPn/AQACAAEAAAA=")
+tile_set = ExtResource("2_64pxc")
+
+[node name="Zombie" parent="." instance=ExtResource("3_fx5oa")]
+position = Vector2(-424, -158)
+
+[node name="Zombie2" parent="." instance=ExtResource("3_fx5oa")]
+position = Vector2(-707, -14)
+
+[node name="Trampoline" parent="." instance=ExtResource("4_vklig")]
+position = Vector2(-610, -12)
+
+[node name="WallSpikes" parent="." instance=ExtResource("5_pgkgj")]
+position = Vector2(-649, -199)
+
+[node name="WallSpikes3" parent="." instance=ExtResource("5_pgkgj")]
+position = Vector2(-287, -199)
+
+[node name="WallSpikes4" parent="." instance=ExtResource("5_pgkgj")]
+position = Vector2(72, -199)
+
+[node name="WallSpikes2" parent="." instance=ExtResource("5_pgkgj")]
+position = Vector2(-766, -224)
+
+[node name="Coin" parent="." instance=ExtResource("7_ejvvu")]
+position = Vector2(-707, -39)
+
+[node name="Coin2" parent="." instance=ExtResource("7_ejvvu")]
+position = Vector2(-707, -111)
+
+[node name="Coin3" parent="." instance=ExtResource("7_ejvvu")]
+position = Vector2(76, -372)
+
+[node name="AbilityOrb" parent="." instance=ExtResource("7_64pxc")]
+position = Vector2(-341, 145)
+
+[node name="AbilityOrb2" parent="." instance=ExtResource("7_64pxc")]
+position = Vector2(-342, -238)
+
+[node name="LavaGround" parent="." instance=ExtResource("8_7occ3")]
+z_index = -1
+position = Vector2(-230, -156)
+
+[node name="LavaGround2" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-206, -156)
+
+[node name="LavaGround3" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-182, -156)
+
+[node name="LavaGround4" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-158, -156)
+
+[node name="LavaGround5" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-134, -156)
+
+[node name="LavaGround6" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-110, -156)
+
+[node name="LavaGround7" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-86, -156)
+
+[node name="LavaGround8" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-62, -156)
+
+[node name="LavaGround9" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-38, -156)
+
+[node name="LavaGround10" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(-14, -156)
+
+[node name="LavaGround11" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(10, -156)
+
+[node name="LavaGround12" parent="." instance=ExtResource("8_7occ3")]
+position = Vector2(34, -156)
+
+[node name="LavaGround13" parent="." instance=ExtResource("8_7occ3")]
+z_index = -1
+position = Vector2(58, -156)
+
+[node name="ParryBall" parent="." instance=ExtResource("4_77xs3")]
+position = Vector2(-157, -233)
+
+[node name="ParryBall2" parent="." instance=ExtResource("4_77xs3")]
+position = Vector2(-22, -280)
+
+[node name="Heart" parent="." instance=ExtResource("10_77xs3")]
+position = Vector2(359, -430)

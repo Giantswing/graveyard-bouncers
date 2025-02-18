@@ -3,7 +3,11 @@ extends Node2D
 @onready var transition: Node2D = $Transition
 @onready var scene_container: Node2D = $SceneContainer
 @onready var exit_area: Area2D = $ExitArea
+
 @onready var challenge_bg: ColorRect = $ChallengeBg
+@onready var godrays1: TextureRect = $BgGodRays
+@onready var godrays2: TextureRect = $BgGodRays2
+@onready var godrays3: TextureRect = $BgGodRays3
 
 var player_start_position: Vector2
 var player: PlayerCharacter
@@ -48,7 +52,13 @@ func start_challenge(enter_player: PlayerCharacter) -> void:
 	)
 
 	challenge_active = true
+
 	challenge_bg.show()
+	godrays1.show()
+	godrays2.show()
+	godrays3.show()
+
+
 	player = enter_player
 	player_start_position = player.global_position
 	player.global_position = start_point.global_position
@@ -60,6 +70,10 @@ func exit_challenge(_exit_player: PlayerCharacter) -> void:
 	transition.show()
 	get_tree().create_timer(2.0).timeout.connect(func() -> void:
 		challenge_bg.hide()
+		godrays1.hide()
+		godrays2.hide()
+		godrays3.hide()
+
 		for child in scene_container.get_children():
 			scene_container.remove_child(child)
 			child.queue_free()

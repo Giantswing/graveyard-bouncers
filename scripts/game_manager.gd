@@ -139,7 +139,10 @@ func _ready() -> void:
 
 	Events.round_started.connect(func() -> void: change_mode(MODES.IN_ROUND))
 	Events.round_ended.connect(func() -> void: change_mode(MODES.BEFORE_ROUND))
-	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void: change_mode(MODES.CHALLENGE_MODE))
+	Events.enter_challenge_mode.connect(func(_enter_player: PlayerCharacter) -> void: 
+		use_all_abilities()
+		change_mode(MODES.CHALLENGE_MODE)
+	)
 	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void: change_mode(MODES.BEFORE_ROUND))
 	Events.round_countdown_start.connect(start_countdown)
 
@@ -191,6 +194,14 @@ func use_current_ability() -> void:
 		Events.ability_gained.emit(null)
 	else:
 		Events.ability_gained.emit(player_ability)
+
+
+func use_all_abilities() -> void:
+	for ability in all_abilities:
+		ability.uses = 0
+
+	player_ability = null
+	Events.ability_gained.emit(null)
 
 
 func update_current_challenge() -> void:
