@@ -184,24 +184,18 @@ func gain_ability(new_ability: Ability) -> void:
 		Events.ability_gained.emit(player_ability)
 
 func use_current_ability() -> void:
-	if player_ability == null:
+	if player_ability == null or player_ability.uses <= 0:
 		return
 
 	player_ability.uses -= 1
-
-	if player_ability.uses <= 0:
-		player_ability = null
-		Events.ability_gained.emit(null)
-	else:
-		Events.ability_gained.emit(player_ability)
+	Events.ability_gained.emit(player_ability)
 
 
 func use_all_abilities() -> void:
 	for ability in all_abilities:
 		ability.uses = 0
-
-	player_ability = null
-	Events.ability_gained.emit(null)
+	
+	Events.ability_gained.emit(player_ability)
 
 
 func update_current_challenge() -> void:
@@ -378,6 +372,7 @@ func add_powerup(powerup: PowerUp) -> void:
 		Events.hp_changed.emit(player_hp_max, 0)
 	elif powerup.power_up_name == "dash-increase":
 		find_ability("dash").max_uses += 1
+		print("Dash uses: ", find_ability("dash").max_uses)
 	elif powerup.power_up_name == "extra-life":
 		player_hp_max += 1
 		Events.max_hp_changed.emit(player_hp_max)
