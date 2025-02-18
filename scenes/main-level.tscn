@@ -125,25 +125,6 @@ shader_parameter/fog_direction = Vector2(0, 0.1)
 shader_parameter/scroll_noise_tex = true
 shader_parameter/noise_scroll_direction = Vector2(0, 0.25)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5itvi"]
-shader = ExtResource("9_6qoa1")
-shader_parameter/bottom_color = Color(0.0705882, 0.0627451, 0.0941176, 1)
-shader_parameter/top_color = Color(0.606619, 0.224145, 0.925468, 1)
-shader_parameter/tex = ExtResource("10_5itvi")
-shader_parameter/layer_count = 20
-shader_parameter/time_scale = 3.384
-shader_parameter/base_intensity = 0.128
-shader_parameter/size = 0.06501
-
-[sub_resource type="Gradient" id="Gradient_bh8c8"]
-offsets = PackedFloat32Array(0.132035, 1)
-colors = PackedColorArray(0.0705882, 0.0627451, 0.0941176, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7keex"]
-gradient = SubResource("Gradient_bh8c8")
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bh8c8"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46jna"]
 shader = ExtResource("14_vl0b8")
 shader_parameter/angle = 0.2
@@ -168,6 +149,25 @@ shader_parameter/seed = 6.375
 gradient = SubResource("Gradient_vl0b8")
 width = 1
 height = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5itvi"]
+shader = ExtResource("9_6qoa1")
+shader_parameter/bottom_color = Color(0.0705882, 0.0627451, 0.0941176, 1)
+shader_parameter/top_color = Color(0.606619, 0.224145, 0.925468, 1)
+shader_parameter/tex = ExtResource("10_5itvi")
+shader_parameter/layer_count = 20
+shader_parameter/time_scale = 3.384
+shader_parameter/base_intensity = 0.128
+shader_parameter/size = 0.06501
+
+[sub_resource type="Gradient" id="Gradient_bh8c8"]
+offsets = PackedFloat32Array(0.132035, 1)
+colors = PackedColorArray(0.0705882, 0.0627451, 0.0941176, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7keex"]
+gradient = SubResource("Gradient_bh8c8")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bh8c8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i0uf8"]
 shader = ExtResource("32_628db")
@@ -539,7 +539,6 @@ position = Vector2(0, -5000)
 script = ExtResource("3_ja4wt")
 
 [node name="ChallengeBg" type="ColorRect" parent="ChallengeContainer"]
-visible = false
 light_mask = 3
 z_as_relative = false
 material = SubResource("ShaderMaterial_2sni1")
@@ -548,6 +547,63 @@ offset_top = -1531.0
 offset_right = -691.0
 offset_bottom = -778.0
 scale = Vector2(3.55722, 3.55722)
+
+[node name="BgGodRays" type="TextureRect" parent="ChallengeContainer"]
+z_index = 28
+material = SubResource("ShaderMaterial_46jna")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -462.0
+offset_top = 1551.0
+offset_right = 316.0
+offset_bottom = 2398.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.52034
+scale = Vector2(2.4282, 2.4282)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_yvcr4")
+texture = SubResource("GradientTexture2D_dr822")
+
+[node name="BgGodRays2" type="TextureRect" parent="ChallengeContainer"]
+z_index = 28
+material = SubResource("ShaderMaterial_46jna")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 426.0
+offset_top = 1551.0
+offset_right = 1204.0
+offset_bottom = 2398.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.52034
+scale = Vector2(2.4282, 2.4282)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_yvcr4")
+texture = SubResource("GradientTexture2D_dr822")
+
+[node name="BgGodRays3" type="TextureRect" parent="ChallengeContainer"]
+z_index = 28
+material = SubResource("ShaderMaterial_46jna")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1381.0
+offset_top = 1551.0
+offset_right = 2159.0
+offset_bottom = 2398.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.52034
+scale = Vector2(2.4282, 2.4282)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_yvcr4")
+texture = SubResource("GradientTexture2D_dr822")
 
 [node name="SceneContainer" type="Node2D" parent="ChallengeContainer"]
 
@@ -608,63 +664,6 @@ shape = SubResource("WorldBoundaryShape2D_bh8c8")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ChallengeContainer"]
 stream = ExtResource("5_7keex")
 autoplay = true
-
-[node name="BgGodRays" type="TextureRect" parent="ChallengeContainer"]
-z_index = 28
-material = SubResource("ShaderMaterial_46jna")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -462.0
-offset_top = 1551.0
-offset_right = 316.0
-offset_bottom = 2398.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.52034
-scale = Vector2(2.4282, 2.4282)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = SubResource("Theme_yvcr4")
-texture = SubResource("GradientTexture2D_dr822")
-
-[node name="BgGodRays2" type="TextureRect" parent="ChallengeContainer"]
-z_index = 28
-material = SubResource("ShaderMaterial_46jna")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 426.0
-offset_top = 1551.0
-offset_right = 1204.0
-offset_bottom = 2398.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.52034
-scale = Vector2(2.4282, 2.4282)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = SubResource("Theme_yvcr4")
-texture = SubResource("GradientTexture2D_dr822")
-
-[node name="BgGodRays3" type="TextureRect" parent="ChallengeContainer"]
-z_index = 28
-material = SubResource("ShaderMaterial_46jna")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1381.0
-offset_top = 1551.0
-offset_right = 2159.0
-offset_bottom = 2398.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.52034
-scale = Vector2(2.4282, 2.4282)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = SubResource("Theme_yvcr4")
-texture = SubResource("GradientTexture2D_dr822")
 
 [node name="GameManager" parent="." instance=ExtResource("1_u8x35")]
 

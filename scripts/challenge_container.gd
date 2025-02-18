@@ -47,8 +47,13 @@ func set_up_challenge(challenge: Challenge) -> void:
 
 func start_challenge(enter_player: PlayerCharacter) -> void:
 	transition.show()
-	get_tree().create_timer(3.0).timeout.connect(func() -> void:
-		transition.hide()
+	transition.modulate = Color(0, 0, 0, 1)
+	get_tree().create_timer(2.0).timeout.connect(func() -> void:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(transition, "modulate:a", 0.0, 2.0)
+		tween.finished.connect(func() -> void:
+			transition.hide()
+		)
 	)
 
 	challenge_active = true
