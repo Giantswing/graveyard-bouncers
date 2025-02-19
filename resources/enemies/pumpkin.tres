@@ -11,4 +11,5 @@ chance = 0.5
 chance_decay = 1.0
 free_space = 50.0
 spawn_type = 0
+variations = Array[ExtResource("1_37lgp")]([])
 metadata/_custom_type_script = ExtResource("1_37lgp")

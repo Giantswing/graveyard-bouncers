@@ -159,6 +159,11 @@ func on_ability_gained(ability: Ability) -> void:
 		ability_uses.text = ""
 		return
 
+	if ability.uses <= 0:
+		ability_sprite.modulate = Color(1, 1, 1, 0.3)
+	else:
+		ability_sprite.modulate = Color(1, 1, 1, 1)
+
 	ability_sprite.visible = true
 	ability_sprite.sprite_frames = ability.frames
 	ability_sprite.play("default")

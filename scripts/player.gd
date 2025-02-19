@@ -86,6 +86,8 @@ func _ready() -> void:
 	dash_distance = dash_distance_original
 	jump_str_mult = jump_str_mult_original
 	hit_invincibility_time = hit_invincibility_time_original
+	GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
+	GameManager.instance.use_all_abilities()
 
 	Events.player_died.connect(on_player_died)
 	Events.ability_gained.connect(on_ability_gained)
@@ -265,7 +267,7 @@ func _physics_process(delta: float) -> void:
 func handle_ability() -> void:
 	var current_ability := GameManager.instance.player_ability
 
-	if !current_ability or !ability_pressed:
+	if !current_ability or !ability_pressed or current_ability.uses <= 0:
 		return
 
 	if current_ability.name == "dash":
@@ -528,8 +530,9 @@ func on_picked_up_powerup(powerup: PowerUp) -> void:
 	elif powerup.power_up_name == "shield":
 		hit_invincibility_time = hit_invincibility_time_original * 2.5
 
+
 func on_ability_gained(new_ability: Ability) -> void:
-	if new_ability == null:
+	if new_ability == null or new_ability.uses == 0:
 		sprite.material.set_shader_parameter("width", 0)
 		return
 
