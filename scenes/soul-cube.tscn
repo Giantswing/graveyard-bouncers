@@ -1,0 +1,146 @@
+[gd_scene load_steps=18 format=3 uid="uid://djc4bnnbx8t66"]
+
+[ext_resource type="Script" uid="uid://cptbcymtbucys" path="res://scripts/pickup.gd" id="1_e0urm"]
+[ext_resource type="Texture2D" uid="uid://bskr5ne6l88xw" path="res://sprites/soul-amulet.png" id="2_e0urm"]
+[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="3_ykurd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aqsxy"]
+radius = 21.59
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i64fm"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_i64fm"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_11l1o"]
+gradient = SubResource("Gradient_i64fm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrrbq"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 8, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+inherit_velocity_ratio = 0.132
+gravity = Vector3(0, 2, 0)
+color_ramp = SubResource("GradientTexture1D_11l1o")
+turbulence_enabled = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0urm"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykurd"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0yiw"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnqih"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(0, 30, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q23b3"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(30, 30, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sx0g6"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(60, 30, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_syrfr"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(0, 60, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usf4g"]
+atlas = ExtResource("2_e0urm")
+region = Rect2(30, 60, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uydol"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0urm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykurd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0yiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnqih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q23b3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sx0g6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_syrfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usf4g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[node name="SoulCube" type="Node2D"]
+script = ExtResource("1_e0urm")
+pickup_option = 3
+start_follow_sound = "pickup-follow"
+pickup_sound = "enemy-death"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_aqsxy")
+
+[node name="FollowParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.3108, 0.41664, 0.84, 0.211765)
+material = SubResource("CanvasItemMaterial_i64fm")
+amount = 32
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_mrrbq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_uydol")
+animation = &"idle"
+autoplay = "idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": true,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/soul-amulet.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ff061d733bbe1f813129ee86358b98c5"
+
+[node name="Light" type="PointLight2D" parent="."]
+modulate = Color(0.973341, 0.386927, 0, 1)
+texture_filter = 1
+color = Color(0.639052, 0.636877, 0.985961, 1)
+range_item_cull_mask = 2
+texture = ExtResource("3_ykurd")
+texture_scale = 0.5

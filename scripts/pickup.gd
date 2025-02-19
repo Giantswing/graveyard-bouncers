@@ -13,6 +13,7 @@ var speed: float = 15
 var max_speed: float = 600
 var follow_particles: GPUParticles2D = null
 var player: PlayerCharacter = null
+var rotation_speed: float = 0
 
 var timer: float = 0
 var start_pos: Vector2 = Vector2.ZERO
@@ -25,6 +26,7 @@ enum PICKUP_OPTIONS {
 	COIN,
 	ABILITY_ORB,
 	HEART,
+	SOUL_CUBE,
 }
 
 enum IDLE_MODE {
@@ -85,7 +87,13 @@ func _process(delta: float) -> void:
 
 	time_following += delta
 
+	if rotation_speed > 35:
+		rotation_speed = 35
+
+	rotation += rotation_speed * delta
+
 	if pickup_state == 1:
+		rotation_speed += delta * 10
 		velocity += -direction * speed * 2
 
 		if time_following > 0.1:
@@ -93,13 +101,21 @@ func _process(delta: float) -> void:
 			time_following = 0
 
 	elif pickup_state == 2:
+		rotation_speed += delta * 30
 		other_pos = target.global_position + player.velocity * 0.1
 		direction = (other_pos - my_pos).normalized()
 
 		time_following += delta
 		velocity += direction * speed * 2
 
-		if my_pos.distance_to(other_pos) < 22 or time_following > 1.5:
+		if time_following > 1.2:
+			Utils.fast_tween(self, "global_position", target.global_position, 0.1).finished.connect(func() -> void:
+				time_following = 10
+			)
+
+		if my_pos.distance_to(other_pos) < 22 or time_following > 5:
+			Events.pickup_collected.emit(self)
+
 			if pickup_sound != "":
 				SoundSystem.play_audio(pickup_sound)
 			
@@ -112,8 +128,19 @@ func _process(delta: float) -> void:
 				FxSystem.play_fx("power-up-picked", global_position)
 
 			elif pickup_option == PICKUP_OPTIONS.HEART:
-				Events.hp_changed.emit(GameManager.instance.player_hp + 1, 0)
+				var result: int = GameManager.get_instance().player_hp + 1
+
+				if result > GameManager.get_instance().player_hp_max:
+					result = GameManager.get_instance().player_hp_max
+
+				Events.hp_changed.emit(result, 0)
 				FxSystem.play_fx("power-up-picked", global_position)
+
+			elif pickup_option == PICKUP_OPTIONS.SOUL_CUBE:
+				var stats: Stats = Stats.new()
+				stats.score_reward = 10
+				stats.global_position = global_position
+				Events.enemy_died.emit(stats, false)
 
 			queue_free()
 

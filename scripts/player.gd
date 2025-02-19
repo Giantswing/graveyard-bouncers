@@ -139,8 +139,6 @@ func handle_dash_attack(body: Node2D) -> void:
 		is_attacking = 0
 		animation_controller.play_animation("parry")
 		GameManager.get_instance().set_powerup_active("double-jump", true)
-		Engine.time_scale = 0.1
-		get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
 		FxSystem.play_fx("smoke-hit", position)
 
 func _process(delta: float) -> void:
@@ -153,7 +151,7 @@ func _process(delta: float) -> void:
 
 	animation_controller.handle_animation(movement_input, velocity, grounded, on_wall, is_attacking, received_damage)
 
-	if velocity.y > 0 and is_attacking == 1:
+	if velocity.y > 0 and is_attacking > 0:
 		speed_particles.emitting = true
 		is_attacking = 2
 
@@ -286,6 +284,7 @@ func handle_jump() -> void:
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			velocity.y = -base_strength * jump_str_mult
 			grounded = false
+			is_attacking = 0
 			animation_controller.play_animation("jump")
 			SoundSystem.play_audio("jump")
 
@@ -304,12 +303,14 @@ func handle_jump() -> void:
 			if is_attacking == 0:
 				SoundSystem.play_audio("charge-hit")
 				animation_controller.play_animation("attack")
+				FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 				process_jump()
 				return
 			
 			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
 				SoundSystem.play_audio("charge-hit")
 				animation_controller.play_animation("attack")
+				FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 				GameManager.get_instance().set_powerup_active("double-jump", false)
 				process_jump()
 				return
@@ -369,9 +370,6 @@ func process_attack() -> void:
 			GameManager.get_instance().set_powerup_active("double-jump", true)
 			speed_particles.emitting = false
 
-			Engine.time_scale = 0.4
-			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
-
 			FxSystem.play_fx("smoke-hit-small", position)
 
 			can_jump = false
@@ -409,9 +407,6 @@ func process_parry(target: Stats) -> void:
 			animation_controller.play_animation("parry")
 
 			GameManager.instance.gain_ability(GameManager.instance.find_ability("dash"))
-
-			Engine.time_scale = 0.1
-			get_tree().create_timer(0.05).timeout.connect(reset_time_scale)
 
 			Events.player_parry.emit()
 			speed_particles.emitting = true

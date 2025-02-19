@@ -293,6 +293,31 @@ func _process(delta: float) -> void:
 
 
 
+	# if round_data.has_fog:
+	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 3, 2)
+	# else:
+	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 0.3, 2)
+
+	var current_alpha_multiplier: float = fog.material.get_shader_parameter("alpha_multiplier")
+	var current_color: Color = fog.material.get_shader_parameter("color")
+
+	if round_data.has_fog:
+		fog.material.set_shader_parameter("alpha_multiplier", lerp(current_alpha_multiplier, 2.0, 0.01))
+	else:
+		fog.material.set_shader_parameter("alpha_multiplier", lerp(current_alpha_multiplier, 0.3, 0.01))
+
+	match round_data.ground_type:
+		GameRound.GROUND_TYPES.NORMAL:
+			fog.material.set_shader_parameter("color", lerp(current_color, Color(1.0, 1.0, 1.0, 1.0), 0.01))
+		GameRound.GROUND_TYPES.TOXIC:
+			fog.material.set_shader_parameter("color", lerp(current_color, Color(0.5, 0.7, 0.2, 1.0), 0.01))
+		GameRound.GROUND_TYPES.LAVA:
+			fog.material.set_shader_parameter("color", lerp(current_color, Color(1.0, 0.5, 0.2, 1.0), 0.01))
+
+
+
 func set_up_round() -> void:
 	if current_round < 3:
 		tutorial.visible = true
@@ -323,29 +348,28 @@ func set_up_round() -> void:
 				Utils.fast_tween(new_obj, "position:y", new_obj.position.y - 18, 0.5)
 		
 
-
-	if round_data.has_fog:
-		var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
-		tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 3, 2)
-	else:
-		var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
-		tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 0.3, 2)
+	# if round_data.has_fog:
+	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 3, 2)
+	# else:
+	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
+	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 0.3, 2)
 
 	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:
-			Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 1.0, 1.0, 0.5), 2)
+			# Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 1.0, 1.0, 0.5), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.TOXIC:
-			Utils.fast_tween(fog, "material:shader_parameter/color", Color(0.5, 0.7, 0.2, 1), 2)
+			# Utils.fast_tween(fog, "material:shader_parameter/color", Color(0.5, 0.7, 0.2, 1), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height + offset, 0.5)
 
 		GameRound.GROUND_TYPES.LAVA:
-			Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 0.5, 0.2, 1), 2)
+			# Utils.fast_tween(fog, "material:shader_parameter/color", Color(1.0, 0.5, 0.2, 1), 2)
 			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)

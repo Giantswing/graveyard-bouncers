@@ -106,7 +106,7 @@ z_index = -1
 texture_filter = 1
 material = ExtResource("3_2hyaq")
 sprite_frames = SubResource("SpriteFrames_8y5rn")
-animation = &"Cooldown"
+animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,

@@ -73,9 +73,12 @@ script = ExtResource("1_roaym")
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_anxpr")
+hp = 5
+hp_max = 5
 damage = 1
 can_take_damage = false
 sprite = NodePath("../Sprite")
+always_force_damage = true
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
 collision_layer = 0

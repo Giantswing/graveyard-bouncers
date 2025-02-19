@@ -17,9 +17,12 @@ class_name Stats
 @export var spawn_type: SPAWN_TYPE_OPTIONS = SPAWN_TYPE_OPTIONS.DEFAULT
 @export var only_damage_when_moving_down: bool = false
 @export var dies_when_deal_damage: bool = false
+@export var always_force_damage: bool = false
 
 var hurt_area: Area2D
 var area: Area2D
+var hit_flash_material: ShaderMaterial
+
 @export var height: int = 24
 
 enum DEATH_BEHAVIOUR_OPTIONS {
@@ -37,6 +40,7 @@ enum SPAWN_TYPE_OPTIONS {
 var is_invulnerable: bool = false
 var is_alive: bool = true
 var parent: Node2D
+var time_dead: float = 0
 
 @export var hit_sound: String = ""
 @export var death_sound: String = ""
@@ -64,6 +68,8 @@ func _ready() -> void:
 
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
+		hit_flash_material = sprite.material
+		sprite.material = null
 
 	if spawn_type == SPAWN_TYPE_OPTIONS.GROUND:
 		owner.process_mode = Node.PROCESS_MODE_DISABLED
@@ -93,66 +99,88 @@ func on_animation_finished() -> void:
 		sprite.play("Idle")
 
 
+func _process(delta: float) -> void:
+
+	if !is_alive and sprite:
+		time_dead += delta
+		if time_dead > 0.05:
+			time_dead = 0
+			sprite.position = Vector2(randf_range(-1, 1), 0)
+			sprite.rotation = randf_range(-0.5, 0.5)
+
 
 func hit_flash() -> void:
-	if !sprite or !sprite.material:
+	if !sprite or !hit_flash_material:
 		return
 
+	sprite.material = hit_flash_material
 	sprite.material.set_shader_parameter("active", 1)
-	sprite.offset = Vector2(0, 3.0)
-	sprite.scale = Vector2(1.2, 0.8)
+	sprite.offset = Vector2(0, 0)
+	sprite.scale = Vector2(1.0, 1.0)
 
-	get_tree().create_timer(0.1).connect("timeout", func() -> void:
+	var tween: Tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(sprite, "offset", Vector2(0, 8.0), 0.05)
+	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.7), 0.05)
+	tween.tween_property(sprite, "offset", Vector2(0, 0), 0.2)
+	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.2)
+	tween.finished.connect(func() -> void:
 		sprite.material.set_shader_parameter("active", 0)
-		sprite.offset = Vector2(0, 0)
-		sprite.scale = Vector2(1.0, 1.0)
+		sprite.material = null
 	)
 
 func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> void:
 	if from_parry and can_be_parried:
 		emit_signal("on_parry")
 		
-	if (!can_take_damage or is_invulnerable) and force == false:
+	if is_invulnerable:
+		return
+
+	if !can_take_damage and force == false and !always_force_damage:
 		return
 
 	hp -= amount
-
-
-	emit_signal("on_hit")
 	is_invulnerable = true
 	get_tree().create_timer(invulnerable_time).timeout.connect(reset_invulnerable)
 
 	if sprite and sprite.get_sprite_frames().has_animation("GetHit"):
 		sprite.play("GetHit")
 
+
 	if hp <= 0:
 		if death_sound != "":
 			SoundSystem.play_audio(death_sound)
-		die()
+		die(from_parry)
 	else:
+		emit_signal("on_hit")
+		Events.enemy_hit.emit(self, from_parry)
+
 		if hit_sound != "":
 			SoundSystem.play_audio(hit_sound)
+
 		hit_flash()
 
-func die() -> void:
+func die(from_parry: bool = false) -> void:
 	if !is_alive:
 		return
 
 	is_alive = false
 
 	if sprite:
+		sprite.material = hit_flash_material
 		sprite.material.set_shader_parameter("active", 1)
 
-	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.2, Tween.TRANS_ELASTIC).tween_callback(
+	parent.scale = Vector2(scale.x * 1.2, scale.y * 1.1)
+	emit_signal("on_death")
+
+	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.35, Tween.TRANS_ELASTIC).tween_callback(
 		func() -> void:
-		emit_signal("on_death")
 		parent.queue_free()
 	)
 
 	if hurt_area:
 		hurt_area.queue_free()
 
-	Events.enemy_died.emit(self)
+	Events.enemy_died.emit(self, from_parry)
 
 	if GameManager.get_instance().has_powerup("vampiric") and can_take_damage:
 		var chance: float = 0.1

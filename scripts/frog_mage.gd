@@ -80,9 +80,9 @@ func change_state() -> void:
 			sprite.play("Cooldown")
 			get_tree().create_timer(attack_cooldown).timeout.connect(func() -> void:
 				state = states.FLOATING
+				sprite.play("Idle")
 				get_tree().create_timer(floating_length).timeout.connect(func() -> void:
 					changing_state = false
-					sprite.play("Idle")
 				)
 			)
 		)
@@ -144,6 +144,11 @@ func handle_attacking(delta: float) -> void:
 		sprite.flip_h = true
 	else:
 		sprite.flip_h = false
+
+	if global_position.y < player_pos.y:
+		translate(Vector2(0, 1) * 10 * delta)
+	else:
+		translate(Vector2(0, -1) * 10 * delta)
 
 func handle_floating(delta: float) -> void:
 	# print("Floating")

@@ -47,6 +47,7 @@ script = ExtResource("1_2inn6")
 speed = 80.0
 speed_variance = 30.0
 jump_speed = 400.0
+jump_timer_variance = 0.5
 
 [node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_kanjq")

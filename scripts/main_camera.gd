@@ -10,38 +10,39 @@ extends Camera2D
 @export var on_hit_shake: float = 0.1
 @export var on_parry_shake: float = 0.2
 
-var simple_target: Node2D
 var targets: Array[CameraTarget] = []
 var final_target_pos: Vector2
 var shockwave_offset: Vector2 = Vector2()
 
 var targets_zoom: float = 0
 var max_targets_zoom: float = 0.35
+
 var round_zoom: float = 1
 var zoom_speed: float = 0.01
+var impact_zoom: float = 0
+
+var shockwave_tween: Tween
 
 
 @export var bottom_limit: float = 0
 @export var follow_speed: Vector2 = Vector2(0.08, 0.06)
 
-
 var current_shake_amount: float = 0
 
 func _ready() -> void:
 	Events.hp_changed.connect(on_hp_change)
-	Events.player_parry.connect(on_player_parry)
-	Events.player_dash.connect(on_player_parry)
+	Events.enemy_hit.connect(on_enemy_hit)
+	Events.enemy_died.connect(on_enemy_hit)
+	Events.pickup_collected.connect(func(pickup: Pickup) -> void:
+		var stats: Stats = Stats.new()
+		on_enemy_hit(stats, false)
+	)
+
 
 	Events.player_dash.connect(func() -> void:
 		current_shake_amount = on_parry_shake * 0.2 
-		make_shockwave(0.3, 1, 0.35, 0.10, Vector2(0, 0))
+		make_shockwave(0.2, 1, 0.3, 0.45, Vector2(0, 0))
 	)
-
-	Events.enemy_died.connect(func(stats: Stats) -> void:
-		current_shake_amount = on_parry_shake * 0.2 
-		make_shockwave(0.06, 1, 0.35, 0.45)
-	)
-
 
 	Events.ctarget_add.connect(add_camera_target)
 	Events.ctarget_remove.connect(remove_camera_target)
@@ -73,7 +74,8 @@ func _process(delta: float) -> void:
 	else:
 		round_zoom = 1
 
-	var zoom_target: float = round_zoom + (targets_zoom * -1)
+	impact_zoom = lerpf(impact_zoom, 0, 0.1)
+	var zoom_target: float = round_zoom + (targets_zoom * -1) + impact_zoom
 	zoom = Vector2(lerp(zoom.x, zoom_target, zoom_speed), lerp(zoom.y, zoom_target, zoom_speed))
 
 	if abs(zoom.x - zoom_target) < 0.005:
@@ -86,9 +88,31 @@ func _process(delta: float) -> void:
 	point_target_v2(delta)
 
 
-func on_player_parry() -> void:
-	current_shake_amount = on_parry_shake 
-	make_shockwave(0.2, 1, 0.3, 0.45)
+func on_enemy_hit(stats: Stats, from_parry: bool) -> void:
+	if from_parry:
+		impact_zoom = 0.5
+		current_shake_amount = on_parry_shake 
+		make_shockwave(0.2, 1, 0.3, 0.45)
+		Engine.time_scale = 0.1
+		get_tree().create_timer(0.05).timeout.connect(func() -> void:
+			Engine.time_scale = 1
+		)
+	else:
+		impact_zoom = 0.2
+		current_shake_amount = on_parry_shake * 0.2 
+		make_shockwave(0.06, 1, 0.35, 0.45)
+		Engine.time_scale = 0.01
+		get_tree().create_timer(0.0008).timeout.connect(func() -> void:
+			Engine.time_scale = 1
+		)
+
+func on_enemy_died(stats: Stats, from_parry: bool) -> void:
+	current_shake_amount = on_parry_shake * 0.2 
+	make_shockwave(0.06, 1, 0.35, 0.45)
+
+# func on_player_dash() -> void:
+# 	current_shake_amount = on_parry_shake 
+# 	make_shockwave(0.2, 1, 0.3, 0.45)
 
 
 func make_shockwave(force: float, duration: float, size: float, decay_time: float, shock_offset:Vector2 = Vector2(0, -37)) -> void:
@@ -96,8 +120,12 @@ func make_shockwave(force: float, duration: float, size: float, decay_time: floa
 	wave.material.set_shader_parameter("force", force)
 	shockwave_offset = shock_offset
 
-	Utils.fast_tween(wave, "material:shader_parameter/size", size, duration * 0.2, Tween.TRANS_QUAD)
-	Utils.fast_tween(wave, "material:shader_parameter/force", 0.0, decay_time, Tween.TRANS_QUAD)
+	if shockwave_tween != null and shockwave_tween.is_running():
+		shockwave_tween.kill()
+
+	shockwave_tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_parallel()
+	shockwave_tween.tween_property(wave.material, "shader_parameter/size", size, duration * 0.2)
+	shockwave_tween.tween_property(wave.material, "shader_parameter/force", 0.0, decay_time)
 
 
 func point_target_v2(_delta: float) -> void:

@@ -21,6 +21,7 @@ class SoulInstance:
 	var trail: Line2D
 	var trail_target: Node2D
 	var trail_points: Array[Vector2] = []
+	var light: Light2D
 	var active: bool = false
 	var sprite: AnimatedSprite2D
 
@@ -30,11 +31,14 @@ func _ready() -> void:
 		var new_soul_scene: Line2D = soul_scene.instantiate()
 		new_soul_instance.trail = new_soul_scene
 		new_soul_instance.trail_target = new_soul_scene.get_node("TrailTarget")
+		new_soul_instance.light = new_soul_instance.trail_target.get_node("Light")
 		new_soul_instance.sprite = new_soul_instance.trail_target.get_node("Sprite")
 		add_child(new_soul_instance.trail)
 		souls.append(new_soul_instance)
 
-	Events.enemy_died.connect(spawn_souls)
+	Events.enemy_died.connect(func(stats: Stats, from_parry: bool) -> void: 
+		spawn_souls(stats)
+	)
 	deactivate_all_souls()
 
 	# target_pos = get_viewport().get_canvas_transform().affine_inverse() * Vector2(0, 0)
@@ -45,8 +49,12 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			soul.active = true
 			soul.trail.visible = true
 
-			soul.trail.global_position = spawn_pos + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+			soul.trail.global_position = spawn_pos + Vector2(randf_range(-5, 5), randf_range(-5, 5))
 			soul.trail_target.position = Vector2.ZERO
+			var color: Color = Color.from_hsv(randf_range(0.5, 0.6), 0.2, 0.8)
+
+			soul.trail.modulate = color
+			soul.light.color = color
 
 			var arc_type: int = randi_range(0, 1)
 			var arc_amount: float = randf_range(0.8, 0.9)
@@ -55,11 +63,10 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 
 			var tween_x: Tween = get_tree().create_tween()
 			tween_x.set_trans(Tween.TRANS_EXPO)
-			tween_x.set_ease(Tween.EASE_IN_OUT)
+			tween_x.set_ease(Tween.EASE_IN if arc_type == 0 else Tween.EASE_OUT)
 
 			var tween_y: Tween = get_tree().create_tween()
-			tween_x.set_trans(Tween.TRANS_EXPO)
-			tween_x.set_ease(Tween.EASE_IN if arc_type == 0 else Tween.EASE_OUT)
+
 			tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
 			tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
 
@@ -67,7 +74,7 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * speed)
 			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-10, 10), inwards_time * speed)
 
-			get_tree().create_timer((outwards_time + (inwards_time * 0.95))).timeout.connect(func() -> void:
+			get_tree().create_timer((outwards_time + (inwards_time * speed))).timeout.connect(func() -> void:
 				deactivate_soul(soul)
 				Events.score_changed.emit(GameManager.get_instance().score + 1)
 			)
@@ -107,10 +114,17 @@ func _process(delta: float) -> void:
 	timer += delta * 1
 
 	if souls_to_spawn.size() > 0:
-		soul_spawn_timer += delta
+		soul_spawn_timer += delta * (souls_to_spawn.size() * 10)
+
 		if soul_spawn_timer > 0.05:
-			spawn_soul(souls_to_spawn.pop_front())
-			soul_spawn_timer = 0
+			# if souls_to_spawn.size() > 8:
+			# 	spawn_soul(souls_to_spawn.pop_front())
+
+			if souls_to_spawn.size() > 4:
+				spawn_soul(souls_to_spawn.pop_front())
+			
+			if souls_to_spawn.size() > 0:
+				spawn_soul(souls_to_spawn.pop_front())
 
 	for soul in souls:
 		if !soul.active:
@@ -125,4 +139,3 @@ func _process(delta: float) -> void:
 			var direction: Vector2 = soul.trail.points[soul.trail.points.size() - 1] - soul.trail.points[soul.trail.points.size() - 2]
 			soul.sprite.rotation = direction.angle()
 			soul.sprite.rotation_degrees += 90
-

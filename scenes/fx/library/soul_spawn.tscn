@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwcbu3uib6leo"]
+[gd_scene load_steps=11 format=3 uid="uid://cwcbu3uib6leo"]
 
 [ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="1_b4ril"]
 [ext_resource type="Texture2D" uid="uid://ce3uye0bj7c55" path="res://scenes/fx/library/soul.png" id="2_b4ril"]
+[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="2_v6ipk"]
 
 [sub_resource type="Curve" id="Curve_l56v6"]
 _data = [Vector2(0, 0.264327), 0.0, 0.0, 0, 0, Vector2(0.616052, 1), -0.0838334, -0.0838334, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -48,8 +49,8 @@ animations = [{
 }]
 
 [node name="Soul" type="Line2D"]
-modulate = Color(1, 1, 1, 0.52549)
-width = 2.0
+modulate = Color(0.88902, 0.8217, 0.99, 0.52549)
+width = 0.5
 width_curve = SubResource("Curve_l56v6")
 gradient = SubResource("Gradient_l56v6")
 texture = ExtResource("1_b4ril")
@@ -61,8 +62,18 @@ antialiased = true
 
 [node name="TrailTarget" type="Node2D" parent="."]
 
+[node name="Light" type="PointLight2D" parent="TrailTarget"]
+modulate = Color(0.973341, 0.386927, 0, 1)
+texture_filter = 1
+color = Color(1, 0.537667, 0.27, 1)
+energy = 0.5
+range_item_cull_mask = 2
+texture = ExtResource("2_v6ipk")
+texture_scale = 0.5
+
 [node name="Sprite" type="AnimatedSprite2D" parent="TrailTarget"]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2n1rb")
 animation = &"floating"
 autoplay = "floating"

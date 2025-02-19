@@ -19,7 +19,7 @@ func _ready() -> void:
 	scale = Vector2.ZERO
 	Utils.fast_tween(self, "scale", target_scale, 0.2)
 	get_tree().create_timer(alive_max_time).timeout.connect(func() -> void:
-		stats.take_damage(1000, false, true)
+		queue_free()
 	)
 
 	stats.on_parry.connect(process_parry)
@@ -27,11 +27,12 @@ func _ready() -> void:
 func process_parry() -> void:
 	velocity = Vector2.ZERO
 	returning = true
+	# stats.take_damage(1, true, true)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", owner_stats.global_position, 0.3)
 	tween.finished.connect(func() -> void:
-		owner_stats.take_damage(2)
-		stats.take_damage(1000, false, true)
+		owner_stats.take_damage(2, true)
+		queue_free()
 	)
 
 
