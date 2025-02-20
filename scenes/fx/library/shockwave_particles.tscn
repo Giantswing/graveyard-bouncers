@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfnurat04cu8o"]
+
+[sub_resource type="Gradient" id="Gradient_krq3e"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wlmw4"]
+gradient = SubResource("Gradient_krq3e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lhi55"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 231.26
+initial_velocity_max = 231.26
+gravity = Vector3(0, 25, 0)
+color_ramp = SubResource("GradientTexture1D_wlmw4")
+turbulence_enabled = true
+turbulence_noise_strength = 0.24
+turbulence_noise_scale = 1.254
+
+[node name="ShockwaveParticles" type="GPUParticles2D"]
+texture_filter = 1
+amount = 100
+lifetime = 0.7
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_lhi55")

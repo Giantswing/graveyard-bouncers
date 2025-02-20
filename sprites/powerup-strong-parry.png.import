@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce3uye0bj7c55"
-path="res://.godot/imported/soul.png-00c70e9fa9edb1db781d93d16c6f0ba4.ctex"
+uid="uid://cnhtfujwd4s11"
+path="res://.godot/imported/powerup-strong-parry.png-40d7e907a8c79eceac3dcdbb4a857cdc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/fx/library/soul.png"
-dest_files=["res://.godot/imported/soul.png-00c70e9fa9edb1db781d93d16c6f0ba4.ctex"]
+source_file="res://sprites/powerup-strong-parry.png"
+dest_files=["res://.godot/imported/powerup-strong-parry.png-40d7e907a8c79eceac3dcdbb4a857cdc.ctex"]
 
 [params]
 

@@ -52,6 +52,7 @@ signal on_hit
 signal on_parry
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	hp = hp_max
 	parent = get_parent()
 	hurt_area = get_node_or_null("HurtArea")
@@ -103,10 +104,10 @@ func _process(delta: float) -> void:
 
 	if !is_alive and sprite:
 		time_dead += delta
-		if time_dead > 0.05:
+		if time_dead > 0.04:
 			time_dead = 0
 			sprite.position = Vector2(randf_range(-1, 1), 0)
-			sprite.rotation = randf_range(-0.5, 0.5)
+			sprite.rotation = randf_range(-0.4, 0.4)
 
 
 func hit_flash() -> void:
@@ -121,8 +122,8 @@ func hit_flash() -> void:
 	var tween: Tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(sprite, "offset", Vector2(0, 8.0), 0.05)
 	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.7), 0.05)
-	tween.tween_property(sprite, "offset", Vector2(0, 0), 0.2)
-	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.2)
+	tween.tween_property(sprite, "offset", Vector2(0, 0), 0.3)
+	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.3)
 	tween.finished.connect(func() -> void:
 		sprite.material.set_shader_parameter("active", 0)
 		sprite.material = null
@@ -172,6 +173,10 @@ func die(from_parry: bool = false) -> void:
 	parent.scale = Vector2(scale.x * 1.2, scale.y * 1.1)
 	emit_signal("on_death")
 
+	var tween: Tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(sprite, "offset", Vector2(0, 8.0), 0.05)
+	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.7), 0.05)
+
 	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.35, Tween.TRANS_ELASTIC).tween_callback(
 		func() -> void:
 		parent.queue_free()
@@ -198,6 +203,8 @@ func die(from_parry: bool = false) -> void:
 
 	if wall_reward != 0:
 		GameManager.get_instance().game_width -= wall_reward
+
+	parent.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func reset_invulnerable() -> void:

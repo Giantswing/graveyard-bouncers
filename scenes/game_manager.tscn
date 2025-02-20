@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=61 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://b6crnacouyp0q" path="res://scenes/ability-orb.tscn" id="21_2j6ol"]
 [ext_resource type="Resource" uid="uid://roytb33qa56o" path="res://resources/powerups/powerup-shield.tres" id="21_d3www"]
 [ext_resource type="PackedScene" uid="uid://cwg3c6c5cpi4w" path="res://scenes/challenge_scenes/challenge_basic_02.tscn" id="22_jrl6a"]
+[ext_resource type="Resource" uid="uid://vxy0we7t1y8f" path="res://resources/powerups/powerup-strong-parry.tres" id="22_o8s1w"]
 [ext_resource type="PackedScene" uid="uid://mw252vf27v4x" path="res://scenes/challenge_scenes/challenge_basic_03.tscn" id="40_u168d"]
 [ext_resource type="PackedScene" uid="uid://7e7505bm2uvk" path="res://scenes/challenge_scenes/challenge_intermediate_01.tscn" id="41_fmt0c"]
 
@@ -46,7 +47,7 @@
 script = ExtResource("7_frtjd")
 debug = false
 difficulty = 1.0
-time_limit = 15
+time_limit = 20
 enemy_count = 0
 chance = 1.0
 gravity_multiplier = 0.5
@@ -353,7 +354,7 @@ trampoline_prefab = ExtResource("6_q8mjp")
 helper_enemy_prefab = ExtResource("7_0rse5")
 spikes_prefab = ExtResource("4_30v7y")
 all_abilities = Array[ExtResource("4_aonbx")]([ExtResource("5_lcbjr")])
-all_powerups = Array[ExtResource("7_1llei")]([ExtResource("8_rtxrx"), ExtResource("9_x4ngh"), ExtResource("10_5it8k"), ExtResource("11_d231i"), ExtResource("12_d3www"), ExtResource("13_u168d"), ExtResource("14_fmt0c"), ExtResource("15_o8s1w"), ExtResource("16_cqgt4"), ExtResource("18_x4ngh"), ExtResource("19_5it8k"), ExtResource("20_d231i"), ExtResource("21_d3www")])
+all_powerups = Array[ExtResource("7_1llei")]([ExtResource("8_rtxrx"), ExtResource("9_x4ngh"), ExtResource("10_5it8k"), ExtResource("11_d231i"), ExtResource("12_d3www"), ExtResource("13_u168d"), ExtResource("14_fmt0c"), ExtResource("15_o8s1w"), ExtResource("16_cqgt4"), ExtResource("18_x4ngh"), ExtResource("19_5it8k"), ExtResource("20_d231i"), ExtResource("21_d3www"), ExtResource("22_o8s1w")])
 
 [node name="RoundManager" type="Node2D" parent="."]
 position = Vector2(-13, 0)

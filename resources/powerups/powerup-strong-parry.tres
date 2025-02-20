@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://vxy0we7t1y8f"]
+
+[ext_resource type="SpriteFrames" uid="uid://dxss7gypbhtt5" path="res://resources/powerups/powerup-strong-parry-frames.tres" id="1_ummmm"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_7s8wx"]
+
+[resource]
+script = ExtResource("2_7s8wx")
+frames = ExtResource("1_ummmm")
+power_up_name = "strong-parry"
+power_up_description = "parry deals double damage"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_7s8wx")

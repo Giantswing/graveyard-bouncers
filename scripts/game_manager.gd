@@ -3,7 +3,7 @@ extends Node2D
 class_name GameManager
 
 @export var player_hp_max: int = 3
-@export var game_width_start: float
+var game_width_start: float
 
 @onready var seconds_timer: Timer = %SecondsTimer
 @onready var round_manager: RoundManager = $RoundManager
@@ -51,7 +51,8 @@ var power_up_shop: Node2D
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
 var current_game_width: float = 0
-var game_width: float = 300
+var pre_round_game_width: float = 500
+var game_width: float = 400
 var player: PlayerCharacter 
 var player_screen_pos: Vector2
 var left_wall: Node2D
@@ -100,6 +101,7 @@ func _ready() -> void:
 	grave = $"/root/Level/Scenery/Grave"
 	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
 
+	game_width = pre_round_game_width
 	left_wall.position.x = -game_width / 2
 	right_wall.position.x = game_width / 2
 	trampoline_start_pos = trampoline.position
@@ -317,6 +319,8 @@ func _process(delta: float) -> void:
 
 
 func set_up_round() -> void:
+	game_width = pre_round_game_width
+
 	if current_round < 3:
 		tutorial.visible = true
 	else:
@@ -345,13 +349,6 @@ func set_up_round() -> void:
 				new_obj.position.y = new_obj.position.y + 32
 				Utils.fast_tween(new_obj, "position:y", new_obj.position.y - 18, 0.5)
 		
-
-	# if round_data.has_fog:
-	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
-	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 3, 2)
-	# else:
-	# 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_LINEAR)
-	# 	tween.tween_property(fog, "material:shader_parameter/alpha_multiplier", 0.3, 2)
 
 	match round_data.ground_type:
 		GameRound.GROUND_TYPES.NORMAL:

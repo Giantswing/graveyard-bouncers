@@ -298,20 +298,22 @@ func handle_jump() -> void:
 			velocity.y = -base_strength * jump_str_mult
 			coyote_time = 100
 			SoundSystem.play_audio("jump")
+			FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
+			animation_controller.play_animation("parry", true)
 
 			
 
 		else: # If we are in the air and jump again, we attack
 			if is_attacking == 0:
 				SoundSystem.play_audio("charge-hit")
-				animation_controller.play_animation("attack")
+				animation_controller.play_animation("attack", true)
 				FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 				process_jump()
 				return
 			
 			if is_attacking > 0 and GameManager.get_instance().has_powerup("double-jump"):
 				SoundSystem.play_audio("charge-hit")
-				animation_controller.play_animation("attack")
+				animation_controller.play_animation("attack", true)
 				FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 				GameManager.get_instance().set_powerup_active("double-jump", false)
 				process_jump()
@@ -396,7 +398,12 @@ func process_parry(target: Stats) -> void:
 			
 			if target:
 				var from_parry: bool = true
-				target.take_damage(1, from_parry)
+
+				if GameManager.get_instance().has_powerup("strong-parry"):
+					target.take_damage(2, from_parry)
+				else:
+					target.take_damage(1, from_parry)
+
 				velocity.y = -parry_bounce_str_mult * base_strength * target.bounciness
 
 			SoundSystem.play_audio("parry-hit")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxResource" load_steps=3 format=3 uid="uid://ta0ngvpoeuyd"]
+
+[ext_resource type="Script" uid="uid://cks7h61so0amh" path="res://scripts/fx_resource.gd" id="1_vedv7"]
+[ext_resource type="PackedScene" uid="uid://bfnurat04cu8o" path="res://scenes/fx/library/shockwave_particles.tscn" id="2_vedv7"]
+
+[resource]
+script = ExtResource("1_vedv7")
+key_name = "shockwave-particles"
+scene = ExtResource("2_vedv7")
+amount = 3
+metadata/_custom_type_script = ExtResource("1_vedv7")

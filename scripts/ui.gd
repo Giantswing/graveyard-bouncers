@@ -192,26 +192,28 @@ func update_ui_transparency() -> void:
 	var player_screen_pos: Vector2 = GameManager.instance.player_screen_pos
 	var x_offset: float = 0.3
 	var y_offset: float = 0.4
+	var faded_color: Color = Color(1, 1, 1, 0.1)
+	var full_color: Color = Color(1, 1, 1, 0.7)
 
 	if player_screen_pos.x < x_offset && player_screen_pos.y < y_offset:
-		top_left_container.modulate = lerp(top_left_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+		top_left_container.modulate = lerp(top_left_container.modulate, faded_color, 0.1)
 	else:
-		top_left_container.modulate = lerp(top_left_container.modulate, Color(1, 1, 1, 1), 0.1)
+		top_left_container.modulate = lerp(top_left_container.modulate, full_color, 0.1)
 
 	if player_screen_pos.x > 1 - x_offset && player_screen_pos.y < y_offset:
-		top_right_container.modulate = lerp(top_right_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+		top_right_container.modulate = lerp(top_right_container.modulate, faded_color, 0.1)
 	else:
-		top_right_container.modulate = lerp(top_right_container.modulate, Color(1, 1, 1, 1), 0.1)
+		top_right_container.modulate = lerp(top_right_container.modulate, full_color, 0.1)
 	
 	if player_screen_pos.x < x_offset && player_screen_pos.y > 1 - y_offset:
-		bottom_left_container.modulate = lerp(bottom_left_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+		bottom_left_container.modulate = lerp(bottom_left_container.modulate, faded_color, 0.1)
 	else:
-		bottom_left_container.modulate = lerp(bottom_left_container.modulate, Color(1, 1, 1, 1), 0.1)
+		bottom_left_container.modulate = lerp(bottom_left_container.modulate, full_color, 0.1)
 
 	if player_screen_pos.x > 1 - x_offset && player_screen_pos.y > 1 - y_offset:
-		bottom_right_container.modulate = lerp(bottom_right_container.modulate, Color(1, 1, 1, 0.3), 0.1)
+		bottom_right_container.modulate = lerp(bottom_right_container.modulate, faded_color, 0.1)
 	else:
-		bottom_right_container.modulate = lerp(bottom_right_container.modulate, Color(1, 1, 1, 1), 0.1)
+		bottom_right_container.modulate = lerp(bottom_right_container.modulate, full_color, 0.1)
 
 
 func on_max_hp_changed(new_max_hp: int) -> void:

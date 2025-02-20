@@ -13,6 +13,7 @@ extends Camera2D
 var targets: Array[CameraTarget] = []
 var final_target_pos: Vector2
 var shockwave_offset: Vector2 = Vector2()
+var wave_position: Vector2
 
 var targets_zoom: float = 0
 var max_targets_zoom: float = 0.35
@@ -68,7 +69,7 @@ func _process(delta: float) -> void:
 	if GameManager.instance.game_mode == GameManager.MODES.IN_ROUND:
 		round_zoom = 1
 	elif GameManager.instance.game_mode == GameManager.MODES.BEFORE_ROUND:
-		round_zoom = 1.3
+		round_zoom = 1.15
 	elif GameManager.instance.game_mode == GameManager.MODES.CHALLENGE_MODE:
 		round_zoom = 1
 	else:
@@ -116,6 +117,7 @@ func on_enemy_died(stats: Stats, from_parry: bool) -> void:
 
 
 func make_shockwave(force: float, duration: float, size: float, decay_time: float, shock_offset:Vector2 = Vector2(0, -37)) -> void:
+
 	wave.material.set_shader_parameter("size", size * 0.25)
 	wave.material.set_shader_parameter("force", force)
 	shockwave_offset = shock_offset
@@ -127,9 +129,14 @@ func make_shockwave(force: float, duration: float, size: float, decay_time: floa
 	shockwave_tween.tween_property(wave.material, "shader_parameter/size", size, duration * 0.2)
 	shockwave_tween.tween_property(wave.material, "shader_parameter/force", 0.0, decay_time)
 
+	if force > 0.1:
+		get_tree().create_timer(0.05).timeout.connect(func() -> void:
+			FxSystem.play_fx("shockwave-particles", GameManager.get_player_position())
+		)
+
 
 func point_target_v2(_delta: float) -> void:
-	var wave_position: Vector2 = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x + shockwave_offset.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y) + shockwave_offset.y)
+	wave_position = Vector2(get_viewport_rect().size.x * GameManager.instance.player_screen_pos.x + shockwave_offset.x, get_viewport_rect().size.y * (1 - GameManager.instance.player_screen_pos.y) + shockwave_offset.y)
 	wave.material.set_shader_parameter("global_position", wave_position)
 
 	if targets.size() == 0:
@@ -155,7 +162,7 @@ func point_target_v2(_delta: float) -> void:
 			targets_in += 1
 		
 
-	if targets_out > 0:
+	if targets_out > 0 and GameManager.instance.game_mode != GameManager.MODES.BEFORE_ROUND:
 		targets_zoom = lerp(targets_zoom, max_targets_zoom, 0.0025)
 	else:
 		targets_zoom = 0

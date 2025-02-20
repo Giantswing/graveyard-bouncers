@@ -28,7 +28,7 @@ func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool,
 	if current_animation == "run" and movement_input.x == 0:
 		play_animation("idle")
 
-	if (current_animation == "run" || current_animation == "idle") and !grounded:
+	if (current_animation == "run" || current_animation == "idle") and !grounded and current_animation != "parry":
 		play_animation("jump")
 
 	if current_animation == "jump" and velocity.y > 0:
@@ -53,7 +53,15 @@ func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool,
 
 
 
-func play_animation(animation: String) -> void:
+func play_animation(animation: String, restart: bool = false) -> void:
+	if restart:
+		sprite.play(animation)
+		sprite.stop()
+		sprite.frame = 0
+		sprite.play(animation)
+	else:
+		sprite.play(animation)
+		
+
 	current_animation = animation
-	sprite.play(animation)
-	pass
+	

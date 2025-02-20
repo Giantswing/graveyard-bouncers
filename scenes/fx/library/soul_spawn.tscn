@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cwcbu3uib6leo"]
 
 [ext_resource type="Texture2D" uid="uid://d0glk8rw0fsar" path="res://sprites/basic-particle.png" id="1_b4ril"]
-[ext_resource type="Texture2D" uid="uid://ce3uye0bj7c55" path="res://scenes/fx/library/soul.png" id="2_b4ril"]
+[ext_resource type="Texture2D" uid="uid://ce3uye0bj7c55" path="res://sprites/soul.png" id="2_b4ril"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="2_v6ipk"]
 
 [sub_resource type="Curve" id="Curve_l56v6"]

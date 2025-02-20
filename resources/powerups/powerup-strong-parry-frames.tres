@@ -1,0 +1,35 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://dxss7gypbhtt5"]
+
+[ext_resource type="Texture2D" uid="uid://cnhtfujwd4s11" path="res://sprites/powerup-strong-parry.png" id="1_fb6on"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qoa1"]
+atlas = ExtResource("1_fb6on")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5itvi"]
+atlas = ExtResource("1_fb6on")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bh8c8"]
+atlas = ExtResource("1_fb6on")
+region = Rect2(0, 24, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qoa1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5itvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bh8c8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5itvi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
