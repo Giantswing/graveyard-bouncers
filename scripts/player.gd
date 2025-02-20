@@ -134,7 +134,7 @@ func handle_dash_attack(body: Node2D) -> void:
 	var stats: Stats = body.get_node_or_null("Stats")
 
 	if stats != null and stats.can_take_damage:
-		stats.take_damage(2)
+		stats.take_damage(2, true)
 		velocity.x = 0
 		velocity.y = 0
 		velocity.y = -parry_bounce_str_mult * base_strength * 0.7

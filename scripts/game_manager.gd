@@ -151,6 +151,7 @@ func _ready() -> void:
 	change_mode(MODES.BEFORE_ROUND)
 
 func start_countdown(time: int) -> void:
+	tutorial.visible = false
 	change_mode(MODES.COUNTDOWN)
 	deactivate(trampoline)
 	deactivate(grave)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpbg107alh8ou"]
+[gd_scene load_steps=17 format=3 uid="uid://bpbg107alh8ou"]
 
 [ext_resource type="Script" uid="uid://cof0l32nrruj3" path="res://scripts/challenge_portal.gd" id="1_wclm1"]
 [ext_resource type="Texture2D" uid="uid://x4r04ners3je" path="res://sprites/portal.png" id="2_7eida"]
+[ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="3_in8hx"]
 [ext_resource type="Texture2D" uid="uid://cdnx1fdnt5dgi" path="res://sprites/portal-inside.png" id="3_yf1hf"]
-
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_in8hx"]
 atlas = ExtResource("3_yf1hf")
@@ -38,7 +38,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 20.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_yf1hf"]
@@ -55,7 +55,7 @@ emission_box_extents = Vector3(1, 19.11, 1)
 direction = Vector3(-1, 0, 0)
 spread = 3.584
 initial_velocity_min = 100.0
-initial_velocity_max = 100.0
+initial_velocity_max = 200.0
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_in8hx")
 turbulence_enabled = true
@@ -79,11 +79,17 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_46jna"]
 size = Vector2(20, 39)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_in8hx"]
+size = Vector2(123, 39)
+
 [node name="ChallengePortal" type="Node2D"]
+z_index = 1
+scale = Vector2(1.25, 1.25)
 script = ExtResource("1_wclm1")
-portal_color = Color(0.776471, 0.258824, 0.227451, 1)
+portal_color = Color(0.5607, 0.2314, 0.89, 1)
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 modulate = Color(0.129558, 0.129558, 0.129558, 1)
 offset_left = -16.0
 offset_top = -15.0
@@ -92,8 +98,9 @@ offset_bottom = 23.0
 
 [node name="PortalInside" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.976471, 0.321569, 0.282353, 1)
+light_mask = 3
 texture_filter = 1
-position = Vector2(-4, 5)
+position = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_xihfr")
 autoplay = "default"
 metadata/_aseprite_wizard_interface_config_ = {
@@ -115,9 +122,21 @@ metadata/_aseprite_wizard_source_file_hash_ = "d0db498ab3fde3b2f1fdc645d9728611"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PortalInside"]
 z_index = 10
+amount = 22
 process_material = SubResource("ParticleProcessMaterial_yf1hf")
 
+[node name="Light" type="PointLight2D" parent="PortalInside"]
+unique_name_in_owner = true
+modulate = Color(0.973341, 0.386927, 0, 1)
+texture_filter = 1
+color = Color(1, 0.27, 0.27, 1)
+energy = 1.46
+range_item_cull_mask = 2
+texture = ExtResource("3_in8hx")
+texture_scale = 0.5
+
 [node name="Portal" type="AnimatedSprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_in8hx")
@@ -137,11 +156,20 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "b8e675b633f7ddc19b1703b66c338a4c"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="EnterArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterArea"]
 position = Vector2(5, 2.5)
 shape = SubResource("RectangleShape2D_46jna")
+debug_color = Color(0.609306, 0.00430847, 0.996338, 0.42)
+
+[node name="ActivateArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivateArea"]
+position = Vector2(-66.5, 2)
+shape = SubResource("RectangleShape2D_in8hx")
 debug_color = Color(0.609306, 0.00430847, 0.996338, 0.42)
