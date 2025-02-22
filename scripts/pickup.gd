@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 
 	if pickup_state == 1:
 		rotation_speed += delta * 10
-		velocity += -direction * speed * 2
+		velocity += -direction * speed * 5
 
 		if time_following > 0.1:
 			pickup_state = 2
@@ -108,12 +108,12 @@ func _process(delta: float) -> void:
 		time_following += delta
 		velocity += direction * speed * 2
 
-		if time_following > 1.2:
+		if time_following > 1:
 			Utils.fast_tween(self, "global_position", target.global_position, 0.1).finished.connect(func() -> void:
 				time_following = 10
 			)
 
-		if my_pos.distance_to(other_pos) < 22 or time_following > 5:
+		if (my_pos.distance_to(other_pos) < 22 and time_following > 0.5) or time_following > 5:
 			Events.pickup_collected.emit(self)
 
 			if pickup_sound != "":

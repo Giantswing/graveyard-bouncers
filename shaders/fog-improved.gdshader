@@ -11,7 +11,7 @@ uniform bool scroll_noise_tex = false;
 uniform vec2 noise_scroll_direction = vec2(1.0, 0.0);
 
 float rand(vec2 coord) {
-    return fract(sin(dot(coord, vec2(56, 78)) * 1000.0) * 1000.0);
+    return fract(sin(dot(coord, vec2(56, 78)) * 100.0) * 100.0);
 }
 
 float noise(vec2 coord) {

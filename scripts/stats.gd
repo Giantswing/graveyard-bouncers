@@ -18,6 +18,7 @@ class_name Stats
 @export var only_damage_when_moving_down: bool = false
 @export var dies_when_deal_damage: bool = false
 @export var always_force_damage: bool = false
+@export var gives_combo: bool = false
 
 @onready var master_material: ShaderMaterial = load("res://shaders/materials/MasterMaterial.tres")
 
@@ -133,7 +134,6 @@ func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> 
 
 	if can_be_parried:
 		can_be_parried = false
-		print("parried")
 		get_tree().create_timer(invulnerable_time).timeout.connect(func() -> void:
 			can_be_parried = true
 		)

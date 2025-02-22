@@ -442,7 +442,6 @@ debug_color = Color(0.805982, 0.415632, 0, 0.42)
 target_position = Vector2(23, 0)
 
 [node name="DashCast" type="RayCast2D" parent="Raycasts"]
-collision_mask = 13
 
 [node name="CameraTarget" type="Node2D" parent="."]
 script = ExtResource("7_fjrip")

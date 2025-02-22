@@ -39,6 +39,7 @@ var score: int = 0
 @export var coins: int = 0
 
 var player_hp: int = 3
+var player_combo: int = 0
 
 @export var player_ability: Ability = null
 @export var all_abilities: Array[Ability]
@@ -131,9 +132,28 @@ func _ready() -> void:
 	Events.round_counter_changed.emit(current_round)
 	Events.level_restart.emit()
 
+	Events.enemy_died.connect(func(stats: Stats, from_parry: bool) -> void:
+		var result_combo: int = player_combo + 1
+
+		if has_powerup("combo-ability") && result_combo >= 5:
+			gain_ability(find_ability("dash"))
+
+		if stats.gives_combo:
+			Events.combo_changed.emit(result_combo)
+
+	)
+	Events.enemy_hit.connect(func(stats: Stats, from_parry: bool) -> void:
+		if stats.gives_combo:
+			Events.combo_changed.emit(player_combo)
+	)
+
+	Events.combo_changed.connect(func(new_combo: int) -> void:
+		player_combo = new_combo
+	)
+
 	gain_ability(player_ability)
 
-	Engine.time_scale = 1.0
+	TimeManager.change_time_speed(1.0, 0, true)
 
 	update_current_round()
 	update_current_challenge()
@@ -228,6 +248,9 @@ func on_seconds_timer_timeout() -> void:
 
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
+	if new_hp < player_hp:
+		Events.combo_changed.emit(0)
+
 	player_hp = new_hp
 
 	if player_hp > player_hp_max:
@@ -248,7 +271,7 @@ func pause_game(is_paused: bool) -> void:
 
 func restart_level() -> void:
 	get_tree().paused = false
-	Engine.time_scale = 1.0
+	TimeManager.change_time_speed(1.0, 0, true)
 	get_tree().reload_current_scene()
 
 func exit_game() -> void:
@@ -273,7 +296,7 @@ func _process(delta: float) -> void:
 		pause_game(!game_paused)
 
 
-	current_game_width = lerp(current_game_width, game_width, 0.01)
+	current_game_width = lerp(current_game_width, game_width, 0.05)
 
 	if !game_paused:
 		left_wall.position.x = -current_game_width / 2

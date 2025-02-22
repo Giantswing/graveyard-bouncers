@@ -8,7 +8,7 @@ class_name SoulHolder
 @export var dispersion_amount: float = 50
 @export var outwards_time: float = 0.5
 @export var inwards_time: float = 2
-@export var screen_pos: Vector2 = Vector2(1, 0)
+@export var screen_pos: Vector2 = Vector2(0, 0)
 
 var souls: Array[SoulInstance] = []
 var target_pos: Vector2 = Vector2.ZERO

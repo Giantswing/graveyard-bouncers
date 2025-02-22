@@ -13,5 +13,5 @@ script = ExtResource("2_5q2uk")
 soul_scene = ExtResource("3_try75")
 outwards_time = 0.3
 inwards_time = 0.3
-screen_pos = Vector2(0.2, 0.07)
+screen_pos = Vector2(0.14, 0.09)
 trail_max_points = 10

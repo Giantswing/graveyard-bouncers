@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsquo87wrrkrx"]
+
+[ext_resource type="Shader" uid="uid://b7jleroajldnc" path="res://shaders/fog-improved.gdshader" id="1_ntoob"]
+
+[sub_resource type="Gradient" id="Gradient_46jna"]
+offsets = PackedFloat32Array(0.570093, 0.771028, 0.883178)
+colors = PackedColorArray(0, 0, 0, 1, 0.37414, 0.374139, 0.374139, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ja4wt"]
+gradient = SubResource("Gradient_46jna")
+fill_from = Vector2(1, 0.106838)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qycv7"]
+shader = ExtResource("1_ntoob")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/alpha_multiplier = 0.35
+shader_parameter/OCTAVES = 3
+shader_parameter/enable_pixelation = true
+shader_parameter/pixelation_amount = 512
+shader_parameter/fog_mask = SubResource("GradientTexture2D_ja4wt")
+shader_parameter/fog_direction = Vector2(-0.5, 1)
+shader_parameter/scroll_noise_tex = true
+shader_parameter/noise_scroll_direction = Vector2(-0.5, 0)
+
+[node name="Fog" type="Node2D"]
+top_level = true
+light_mask = 3
+visibility_layer = 3
+z_index = 50
+
+[node name="FogRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+light_mask = 3
+material = SubResource("ShaderMaterial_qycv7")
+offset_left = -372.0
+offset_top = -500.0
+offset_right = 381.0
+offset_bottom = 253.0

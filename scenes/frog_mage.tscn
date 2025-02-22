@@ -87,6 +87,7 @@ score_reward = 10
 spawn_rate_reduction = 30.0
 sprite = NodePath("../Sprite")
 spawn_type = 1
+gives_combo = true
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
 collision_layer = 0

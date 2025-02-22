@@ -36,7 +36,8 @@ func _ready() -> void:
 	Events.enemy_died.connect(on_enemy_hit)
 	Events.pickup_collected.connect(func(pickup: Pickup) -> void:
 		var stats: Stats = Stats.new()
-		on_enemy_hit(stats, false)
+		make_shockwave(0.06, 1, 0.35, 0.45)
+		TimeManager.change_time_speed(0.03, 0.0008)
 	)
 
 
@@ -97,18 +98,16 @@ func on_enemy_hit(stats: Stats, from_parry: bool) -> void:
 		impact_zoom = 0.5
 		current_shake_amount = on_parry_shake 
 		make_shockwave(0.2, 1, 0.3, 0.45)
-		Engine.time_scale = 0.1
-		get_tree().create_timer(0.05).timeout.connect(func() -> void:
-			Engine.time_scale = 1
-		)
+		TimeManager.change_time_speed(0.1, 0.05)
 	else:
 		impact_zoom = 0.2
 		current_shake_amount = on_parry_shake * 0.2 
 		make_shockwave(0.06, 1, 0.35, 0.45)
-		Engine.time_scale = 0.01
-		get_tree().create_timer(0.0008).timeout.connect(func() -> void:
-			Engine.time_scale = 1
-		)
+		TimeManager.change_time_speed(0.01, 0.0012)
+		# Engine.time_scale = 0.01
+		# get_tree().create_timer(0.0008).timeout.connect(func() -> void:
+		# 	Engine.time_scale = 1
+		# )
 
 func on_enemy_died(stats: Stats, from_parry: bool) -> void:
 	current_shake_amount = on_parry_shake * 0.2 

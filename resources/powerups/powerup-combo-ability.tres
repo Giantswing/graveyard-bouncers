@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://di7cui1wcg7ff"]
+
+[ext_resource type="SpriteFrames" uid="uid://bm36lx3j2lsqm" path="res://resources/powerups/powerup-combo-ability-frames.tres" id="1_m0sh2"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_jql7f"]
+
+[resource]
+script = ExtResource("2_jql7f")
+frames = ExtResource("1_m0sh2")
+power_up_name = "combo-ability"
+power_up_description = "high combo kills give ability"
+chance = 1.0
+cost = 10
+amount = 1
+metadata/_custom_type_script = ExtResource("2_jql7f")

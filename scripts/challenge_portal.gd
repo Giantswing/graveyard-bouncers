@@ -10,6 +10,7 @@ class_name ChallengePortal
 @export var enter: bool = true
 @export var active: bool = true
 @export var portal_color: Color = Color(1, 1, 1, 1)
+@onready var master_material: ShaderMaterial = load("res://shaders/materials/MasterMaterial.tres")
 
 var timer: float = 0.0
 var light_position: Vector2 = Vector2.ZERO
@@ -24,6 +25,7 @@ var closed_size: Vector2 = Vector2(3, 0.05)
 func _ready() -> void:
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(sprite, "scale", closed_size, 0.5)
+	sprite.material = master_material.duplicate()
 
 func _process(delta: float) -> void:
 	timer += delta
@@ -67,6 +69,7 @@ func _process(delta: float) -> void:
 
 	light.position = lerp(light.position, light_position, 0.1 * delta * 60.0)
 	light.energy = lerp(light.energy, light_energy, 0.1 * delta * 60.0)
+	sprite.material.set_shader_parameter("master_tint", Color(portal_color.r, portal_color.g, portal_color.b, portal_color.a))
 
 	if active:
 		sprite.modulate = lerp(sprite.modulate, Color(portal_color.r, portal_color.g, portal_color.b, 1), 0.1 * delta * 60.0)

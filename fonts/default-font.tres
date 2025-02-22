@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://bskvkfmytudor"]
 
-[ext_resource type="FontFile" uid="uid://bqqaj5g52ongm" path="res://fonts/depixel/depixelklein.woff" id="1_fcvwa"]
+[ext_resource type="FontFile" uid="uid://br6xi01f1vdmx" path="res://fonts/dpcomic/dpcomic.ttf" id="1_mautr"]
 
 [resource]
-default_font = ExtResource("1_fcvwa")
-default_font_size = 24
+default_font = ExtResource("1_mautr")
+default_font_size = 27

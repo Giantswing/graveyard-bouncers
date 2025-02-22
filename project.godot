@@ -21,6 +21,7 @@ Events="*res://scenes/events.tscn"
 FxSystem="*res://scenes/fx_system.tscn"
 Utils="*res://scenes/utils.tscn"
 SoundSystem="*res://scenes/sound_system.tscn"
+TimeManager="*res://scenes/time_manager.tscn"
 
 [debug]
 

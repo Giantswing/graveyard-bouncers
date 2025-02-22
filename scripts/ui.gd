@@ -33,6 +33,9 @@ var selected_menu_option: int = 0
 var menu_options: Array[Node] = []
 var current_countdown_time: int = 0
 
+var objective_show_position: Vector2 = Vector2(115, 247)
+var objective_hide_position: Vector2 = Vector2(363, 61)
+
 func _ready() -> void:
 	menu_options = %MenuOptions.get_children()
 
@@ -71,13 +74,13 @@ func _ready() -> void:
 			tween.set_parallel(true)
 			tween.set_trans(Tween.TRANS_SINE)
 			tween.set_ease(Tween.EASE_IN_OUT)
-			tween.tween_property(objective_label, "position", Vector2(246, 64), 0.3)
+			tween.tween_property(objective_label, "position", objective_hide_position, 0.3)
 			tween.tween_property(objective_label, "label_settings:font_size", 12, 0.3)
 	)
 
 func on_round_ended() -> void:
 	objective_label.visible = false
-	objective_label.position = Vector2(124.5, 226)
+	objective_label.position = objective_show_position
 	objective_label.label_settings.font_size = 30
 
 func start_countdown(time: int) -> void:
@@ -172,13 +175,13 @@ func on_ability_gained(ability: Ability) -> void:
 
 
 func on_round_counter_changed(new_round: int) -> void:
-	round_label.text = "Round: " + str(new_round)
+	round_label.text = "Round " + str(new_round)
 
 func on_coins_changed(new_coins: int) -> void:
 	coins_label.text = str(new_coins)
 
 func on_round_time_changed(new_time: int) -> void:
-	time_label.text = "Time: " + str(new_time)
+	time_label.text = "Time " + str(new_time)
 
 func on_player_died() -> void:
 	death_score_label.text = str(GameManager.get_instance().score)

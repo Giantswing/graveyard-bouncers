@@ -32,3 +32,4 @@ signal custom_shockwave(force: float, duration: float, size: float, decay_time: 
 signal custom_inverse_shockwave(force: float, duration: float, size: float, decay_time: float)
 signal soul_exchanger_activated(position: Vector2)
 signal soul_remove_finished()
+signal combo_changed(combo: int)

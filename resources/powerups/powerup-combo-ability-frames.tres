@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://bm36lx3j2lsqm"]
+
+[ext_resource type="Texture2D" uid="uid://buy4p6ddlottu" path="res://sprites/powerup-combo-ability.png" id="1_ntvf5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5itvi"]
+atlas = ExtResource("1_ntvf5")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7keex"]
+atlas = ExtResource("1_ntvf5")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmffu"]
+atlas = ExtResource("1_ntvf5")
+region = Rect2(0, 24, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5itvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7keex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmffu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

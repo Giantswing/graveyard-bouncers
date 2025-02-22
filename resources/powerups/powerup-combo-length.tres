@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUp" load_steps=3 format=3 uid="uid://c64uan5qvhw34"]
+
+[ext_resource type="SpriteFrames" uid="uid://rnqjugpexr1g" path="res://resources/powerups/powerup-combo-length-frames.tres" id="1_7fl6n"]
+[ext_resource type="Script" uid="uid://yl18bua5kdc3" path="res://scripts/power_up.gd" id="2_otu2d"]
+
+[resource]
+script = ExtResource("2_otu2d")
+frames = ExtResource("1_7fl6n")
+power_up_name = "combo-length"
+power_up_description = "combo lasts longer"
+chance = 1.0
+cost = 4
+amount = 1
+metadata/_custom_type_script = ExtResource("2_otu2d")

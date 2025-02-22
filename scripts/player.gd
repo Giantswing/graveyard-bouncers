@@ -110,7 +110,7 @@ func _ready() -> void:
 	attack_area.body_entered.connect(on_attack_area_body_entered)
 	attack_area.body_exited.connect(on_attack_area_body_exited)
 
-	dash_attack_area.body_entered.connect(handle_dash_attack)
+	dash_attack_area.body_entered.connect(process_dash_attack)
 
 	on_ability_gained(null)
 
@@ -127,21 +127,25 @@ func get_input() -> void:
 	ability_pressed = Input.is_action_just_pressed("Ability")
 
 
-func handle_dash_attack(body: Node2D) -> void:
+func process_dash_attack(body: Node2D) -> void:
 	if !is_dashing or !GameManager.instance.has_powerup("dash-attack"):
 		return
 
 	var stats: Stats = body.get_node_or_null("Stats")
 
 	if stats != null and stats.can_take_damage:
-		stats.take_damage(2, true)
-		velocity.x = 0
-		velocity.y = 0
-		velocity.y = -parry_bounce_str_mult * base_strength * 0.7
-		is_attacking = 0
-		animation_controller.play_animation("parry")
-		GameManager.get_instance().set_powerup_active("double-jump", true)
-		FxSystem.play_fx("smoke-hit", position)
+		Utils.fast_tween(self, "global_position", stats.global_position, 0.05)
+		get_tree().create_timer(0.05).timeout.connect(func() -> void:
+			stats.take_damage(2, true)
+			velocity.x = 0
+			velocity.y = 0
+			extra_speed = Vector2.ZERO
+			velocity.y = -parry_bounce_str_mult * base_strength
+			is_attacking = 0
+			animation_controller.play_animation("parry")
+			GameManager.get_instance().set_powerup_active("double-jump", true)
+			FxSystem.play_fx("smoke-hit", position)
+		)
 
 func _process(delta: float) -> void:
 	get_input()
@@ -182,7 +186,7 @@ func _process(delta: float) -> void:
 		ctarget.importance.x = 0
 		ctarget.importance.y = 1.4
 		ctarget.offset.x = 0
-		ctarget.offset.y = -130.0
+		ctarget.offset.y = -75.0
 	elif GameManager.instance.game_mode == GameManager.MODES.IN_ROUND:
 		ctarget.importance.x = 0
 		ctarget.importance.y = 1
@@ -461,7 +465,7 @@ func process_dash() -> void:
 
 	animation_controller.play_animation("dash")
 
-	Engine.time_scale = 0.3
+	TimeManager.change_time_speed(0.3, 0.15)
 
 	if movement_input.x < 0:
 		dash_particles.texture = dash_frames_left
@@ -471,7 +475,6 @@ func process_dash() -> void:
 	dash_particles.emitting = true
 
 	Events.player_dash.emit()
-	get_tree().create_timer(0.15).timeout.connect(reset_time_scale)
 	get_tree().create_timer(0.15).timeout.connect(func() -> void: is_dashing = false)
 	get_tree().create_timer(0.06).timeout.connect(func() -> void: dash_particles.emitting = false)
 
@@ -482,10 +485,6 @@ func process_dash() -> void:
 
 func reset_jump() -> void:
 	can_jump = true
-
-
-func reset_time_scale() -> void:
-	Engine.time_scale = 1.0
 
 
 func deactivate_can_be_on_wall() -> void:
@@ -532,6 +531,10 @@ func on_picked_up_powerup(powerup: PowerUp) -> void:
 	elif powerup.power_up_name == "long-dash":
 		dash_distance = dash_distance_original * 1.6
 
+	elif powerup.power_up_name == "dash-attack":
+		dash_cast.set_collision_mask_value(3, true)
+		dash_cast.set_collision_mask_value(4, true)
+
 	elif powerup.power_up_name == "move-faster":
 		mov_speed = mov_speed_original * 1.25
 
@@ -562,7 +565,7 @@ func on_ability_gained(new_ability: Ability) -> void:
 
 
 func on_player_died() -> void:
-	Engine.time_scale = 0.5
+	TimeManager.change_time_speed(0.5, 150, true)
 	queue_free()
 
 
@@ -602,8 +605,7 @@ func get_hit(from: Stats) -> void:
 	SoundSystem.play_audio("get-hit")
 	
 	if(GameManager.get_instance().player_hp > 0):
-		Engine.time_scale = 0.1
-		get_tree().create_timer(0.1).timeout.connect(reset_time_scale)
+		TimeManager.change_time_speed(0.1, 0.1)
 		get_tree().create_timer(0.1).timeout.connect(reset_jump)
 
 	if (from.dies_when_deal_damage):

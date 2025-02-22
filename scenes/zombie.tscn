@@ -87,6 +87,7 @@ damage = 1
 score_reward = 1
 sprite = NodePath("../Sprite")
 spawn_type = 2
+gives_combo = true
 death_sound = "enemy-death"
 
 [node name="HurtArea" type="Area2D" parent="Stats"]
