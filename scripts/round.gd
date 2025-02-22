@@ -28,6 +28,10 @@ enum GROUND_TYPES {
 @export var reward_spawn_rate: float = 4
 @export var max_rewards: int = 5
 
+@export var other_list: Array[PrefabChance]
+@export var other_spawn_rate: float = 4
+@export var max_other: int = 5
+
 @export_category("Extras")
 @export var ground_type: GROUND_TYPES = GROUND_TYPES.NORMAL
 @export var has_trampoline: bool = false

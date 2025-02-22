@@ -50,14 +50,18 @@ var enemy_container: Node2D
 var other_container: Node2D
 var reward_container: Node2D
 var power_up_shop: Node2D
+
 var enemy_spawn_countdown: float = 0
 var reward_spawn_countdown: float = 0
+var other_spawn_countdown: float = 0
+
 var current_game_width: float = 0
 var pre_round_game_width: float = 500
 var game_width: float = 400
 var player_screen_pos: Vector2
 
 var left_wall: Node2D
+
 @onready var left_top_part: Node2D 	 = $"/root/Level/Scenery/TopPart/LeftTopPart"
 @onready var right_top_part: Node2D = $"/root/Level/Scenery/TopPart/RightTopPart"
 
@@ -307,6 +311,7 @@ func _process(delta: float) -> void:
 	if round_started and !game_paused:
 		enemy_spawn_countdown -= delta
 		reward_spawn_countdown -= delta
+		other_spawn_countdown -= delta
 
 		game_width += round_data.game_width_speed_increase * delta
 
@@ -317,6 +322,10 @@ func _process(delta: float) -> void:
 		if reward_spawn_countdown <= 0:
 			reward_spawn_countdown = round_data.reward_spawn_rate 
 			Utils.spawn_prefab_from_list(round_data.reward_list, reward_container, round_data.max_rewards)
+
+		# if other_spawn_countdown <= 0:
+		# 	other_spawn_countdown = round_data.other_spawn_rate
+		# 	Utils.spawn_prefab_from_list(round_data.other_list, other_container, round_data.max_other)
 
 		if enemy_spawn_countdown <= 0 or enemy_container.get_child_count() == 0:
 			enemy_spawn_countdown = round_data.enemy_spawn_rate

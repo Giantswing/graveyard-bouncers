@@ -26,6 +26,10 @@ func _ready() -> void:
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(sprite, "scale", closed_size, 0.5)
 	sprite.material = master_material.duplicate()
+	Events.round_ended.connect(func() -> void:
+		if enter:
+			active = true
+	)
 
 func _process(delta: float) -> void:
 	timer += delta

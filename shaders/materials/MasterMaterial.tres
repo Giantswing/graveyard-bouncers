@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b2nggkmqyhby7"]
 
-[ext_resource type="Shader" path="res://shaders/master_shader.gdshader" id="1_h2tha"]
+[ext_resource type="Shader" uid="uid://dxaest5r18prk" path="res://shaders/master_shader.gdshader" id="1_h2tha"]
 [ext_resource type="Texture2D" uid="uid://rtff7y6hrb5j" path="res://sprites/noise-text.png" id="2_1mmmn"]
 
 [resource]

@@ -138,7 +138,7 @@ func _process(delta: float) -> void:
 
 			elif pickup_option == PICKUP_OPTIONS.SOUL_CUBE:
 				var stats: Stats = Stats.new()
-				stats.score_reward = 10
+				stats.score_reward = 40
 				stats.global_position = global_position
 				Events.enemy_died.emit(stats, false)
 
