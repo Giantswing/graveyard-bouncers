@@ -24,6 +24,7 @@ class SoulInstance:
 	var light: Light2D
 	var active: bool = false
 	var sprite: AnimatedSprite2D
+	var add: bool = true
 
 func _ready() -> void:
 	for i in range(max_soul_spawn):
@@ -39,15 +40,30 @@ func _ready() -> void:
 	Events.enemy_died.connect(func(stats: Stats, from_parry: bool) -> void: 
 		spawn_souls(stats)
 	)
+
+	Events.soul_exchanger_activated.connect(func(start_position: Vector2) -> void: 
+		spawn_soul(target_pos, start_position, false)
+	)
+
 	deactivate_all_souls()
 
 	# target_pos = get_viewport().get_canvas_transform().affine_inverse() * Vector2(0, 0)
 
-func spawn_soul(spawn_pos: Vector2) -> void:
+func get_negative_soul_count() -> int:
+	var count: int = 0
+
+	for soul in souls:
+		if soul.active and !soul.add:
+			count += 1
+
+	return count
+
+func spawn_soul(spawn_pos: Vector2, destination: Vector2 = Vector2.ZERO, add: bool = true) -> void:
 	for soul in souls:
 		if not soul.active:
 			soul.active = true
 			soul.trail.visible = true
+			soul.add = add
 
 			soul.trail.global_position = spawn_pos + Vector2(randf_range(-5, 5), randf_range(-5, 5))
 			soul.trail_target.position = Vector2.ZERO
@@ -70,13 +86,20 @@ func spawn_soul(spawn_pos: Vector2) -> void:
 			tween_x.tween_property(soul.trail_target, "global_position:x", soul.trail.global_position.x + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
 			tween_y.tween_property(soul.trail_target, "global_position:y", soul.trail.global_position.y + randf_range(-dispersion_amount, dispersion_amount), outwards_time)
 
+			if destination == Vector2.ZERO:
+				destination = target_pos
+
 			var speed: float = randf_range(0.7, 1.3)
-			tween_x.tween_property(soul.trail_target, "global_position:x", target_pos.x + randf_range(-10, 10), inwards_time * speed)
-			tween_y.tween_property(soul.trail_target, "global_position:y", target_pos.y + randf_range(-10, 10), inwards_time * speed)
+			tween_x.tween_property(soul.trail_target, "global_position:x", destination.x + randf_range(-10, 10), inwards_time * speed)
+			tween_y.tween_property(soul.trail_target, "global_position:y", destination.y + randf_range(-10, 10), inwards_time * speed)
 
 			get_tree().create_timer((outwards_time + (inwards_time * speed))).timeout.connect(func() -> void:
 				deactivate_soul(soul)
-				Events.score_changed.emit(GameManager.get_instance().score + 1)
+				if add:
+					Events.score_changed.emit(GameManager.get_instance().score + 1)
+				else:
+					Events.soul_remove_finished.emit()
+					Events.score_changed.emit(GameManager.get_instance().score - 1)
 			)
 
 			break

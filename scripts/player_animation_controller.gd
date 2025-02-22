@@ -20,15 +20,15 @@ func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool,
 	if current_animation == "attack" and is_attacking == 0:
 		play_animation("idle")
 
-	if movement_input.x != 0 and grounded:
+	if movement_input.x != 0 and grounded and current_animation != "dash":
 		play_animation("run")
-	elif movement_input.x == 0 and grounded:
+	elif movement_input.x == 0 and grounded and current_animation != "dash":
 		play_animation("idle")
 
 	if current_animation == "run" and movement_input.x == 0:
 		play_animation("idle")
 
-	if (current_animation == "run" || current_animation == "idle") and !grounded and current_animation != "parry":
+	if (current_animation == "run" || current_animation == "idle") and !grounded:
 		play_animation("jump")
 
 	if current_animation == "jump" and velocity.y > 0:

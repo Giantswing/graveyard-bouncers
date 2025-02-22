@@ -268,7 +268,7 @@ metadata/_custom_type_script = ExtResource("2_udu3i")
 
 [sub_resource type="Resource" id="Resource_dlmsr"]
 script = ExtResource("7_frtjd")
-debug = false
+debug = true
 difficulty = 8.0
 time_limit = 35
 enemy_count = 0

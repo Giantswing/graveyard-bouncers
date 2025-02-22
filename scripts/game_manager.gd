@@ -43,6 +43,7 @@ var player_hp: int = 3
 @export var player_ability: Ability = null
 @export var all_abilities: Array[Ability]
 @export var all_powerups: Array[PowerUp]
+@onready var player: PlayerCharacter = $"/root/Level/Player" 
 
 var enemy_container: Node2D
 var other_container: Node2D
@@ -53,13 +54,17 @@ var reward_spawn_countdown: float = 0
 var current_game_width: float = 0
 var pre_round_game_width: float = 500
 var game_width: float = 400
-var player: PlayerCharacter 
 var player_screen_pos: Vector2
+
 var left_wall: Node2D
+@onready var left_top_part: Node2D 	 = $"/root/Level/Scenery/TopPart/LeftTopPart"
+@onready var right_top_part: Node2D = $"/root/Level/Scenery/TopPart/RightTopPart"
+
+var right_wall: Node2D
+
 var toxic_floor: Node2D
 var lava_floor: Node2D
 var normal_floor: Node2D
-var right_wall: Node2D
 var round_started: bool = false
 var game_started: bool = false
 var starting_ground: Bridge 
@@ -70,7 +75,9 @@ var grave_start_pos: Vector2
 var can_restart: bool = false
 var ground_y_pos: float
 var game_paused: bool = false
-var tutorial: Node2D
+
+@onready var tutorial: Node2D = $"/root/Level/Scenery/Tutorial"
+
 
 static var instance: GameManager
 
@@ -86,8 +93,6 @@ static func get_player_position() -> Vector2:
 func _ready() -> void:
 	instance = self
 
-	tutorial = $"/root/Level/Scenery/Tutorial"
-	player = $"/root/Level/Player"
 	normal_floor = $"/root/Level/Scenery/NormalFloor"
 	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
 	lava_floor = $"/root/Level/Scenery/LavaFloor"
@@ -102,8 +107,8 @@ func _ready() -> void:
 	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
 
 	game_width = pre_round_game_width
-	left_wall.position.x = -game_width / 2
-	right_wall.position.x = game_width / 2
+	# left_wall.position.x = -game_width / 2
+	# right_wall.position.x = game_width / 2
 	trampoline_start_pos = trampoline.position
 	grave_start_pos = grave.position
 
@@ -270,9 +275,11 @@ func _process(delta: float) -> void:
 
 	current_game_width = lerp(current_game_width, game_width, 0.01)
 
-	if game_started and !game_paused:
+	if !game_paused:
 		left_wall.position.x = -current_game_width / 2
+		left_top_part.position.x = -current_game_width / 2
 		right_wall.position.x = current_game_width / 2
+		right_top_part.position.x = current_game_width / 2
 
 	if round_started and !game_paused:
 		enemy_spawn_countdown -= delta

@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b2nggkmqyhby7"]
+
+[ext_resource type="Shader" path="res://shaders/master_shader.gdshader" id="1_h2tha"]
+[ext_resource type="Texture2D" uid="uid://rtff7y6hrb5j" path="res://sprites/noise-text.png" id="2_1mmmn"]
+
+[resource]
+shader = ExtResource("1_h2tha")
+shader_parameter/master_tint = Color(1, 1, 1, 1)
+shader_parameter/dissolve_percentage = 1.0
+shader_parameter/burn_texture = ExtResource("2_1mmmn")
+shader_parameter/layer_1 = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/size_1 = 0.05
+shader_parameter/layer_2 = Color(1, 1, 1, 1)
+shader_parameter/size_2 = 0.05
+shader_parameter/layer_3 = Color(1, 0.82, 0.64, 1)
+shader_parameter/size_3 = 0.05
+shader_parameter/hit_active = false
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 0.0
+shader_parameter/outline_pattern = 0
+shader_parameter/outline_inside = false
+shader_parameter/outline_add_margins = false
+shader_parameter/number_of_images = Vector2(1, 1)
+shader_parameter/outline_tint = Color(1, 1, 1, 1)

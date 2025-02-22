@@ -19,9 +19,10 @@ class_name Stats
 @export var dies_when_deal_damage: bool = false
 @export var always_force_damage: bool = false
 
+@onready var master_material: ShaderMaterial = load("res://shaders/materials/MasterMaterial.tres")
+
 var hurt_area: Area2D
 var area: Area2D
-var hit_flash_material: ShaderMaterial
 
 @export var height: int = 24
 
@@ -69,8 +70,7 @@ func _ready() -> void:
 
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
-		hit_flash_material = sprite.material
-		sprite.material = null
+		sprite.material = master_material.duplicate()
 
 	if spawn_type == SPAWN_TYPE_OPTIONS.GROUND:
 		owner.process_mode = Node.PROCESS_MODE_DISABLED
@@ -111,11 +111,10 @@ func _process(delta: float) -> void:
 
 
 func hit_flash() -> void:
-	if !sprite or !hit_flash_material:
+	if !sprite:
 		return
 
-	sprite.material = hit_flash_material
-	sprite.material.set_shader_parameter("active", 1)
+	sprite.material.set_shader_parameter("hit_active", 1)
 	sprite.offset = Vector2(0, 0)
 	sprite.scale = Vector2(1.0, 1.0)
 
@@ -125,13 +124,20 @@ func hit_flash() -> void:
 	tween.tween_property(sprite, "offset", Vector2(0, 0), 0.3)
 	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.3)
 	tween.finished.connect(func() -> void:
-		sprite.material.set_shader_parameter("active", 0)
-		sprite.material = null
+		sprite.material.set_shader_parameter("hit_active", 0)
 	)
 
 func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> void:
 	if from_parry and can_be_parried:
 		emit_signal("on_parry")
+
+	if can_be_parried:
+		can_be_parried = false
+		print("parried")
+		get_tree().create_timer(invulnerable_time).timeout.connect(func() -> void:
+			can_be_parried = true
+		)
+
 		
 	if is_invulnerable:
 		return
@@ -141,6 +147,7 @@ func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> 
 
 	hp -= amount
 	is_invulnerable = true
+
 	get_tree().create_timer(invulnerable_time).timeout.connect(reset_invulnerable)
 
 	if sprite and sprite.get_sprite_frames().has_animation("GetHit"):
@@ -167,8 +174,7 @@ func die(from_parry: bool = false) -> void:
 	is_alive = false
 
 	if sprite:
-		sprite.material = hit_flash_material
-		sprite.material.set_shader_parameter("active", 1)
+		sprite.material.set_shader_parameter("hit_active", 1)
 
 	parent.scale = Vector2(scale.x * 1.2, scale.y * 1.1)
 	emit_signal("on_death")
@@ -176,6 +182,7 @@ func die(from_parry: bool = false) -> void:
 	var tween: Tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(sprite, "offset", Vector2(0, 8.0), 0.05)
 	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.7), 0.05)
+	# tween.parallel().tween_property(sprite, "material:shader_parameter/dissolve_percentage", 0, 0.5)
 
 	Utils.fast_tween(parent, "scale", Vector2(0, 0), 0.35, Tween.TRANS_ELASTIC).tween_callback(
 		func() -> void:

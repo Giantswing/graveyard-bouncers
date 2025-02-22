@@ -174,19 +174,23 @@ func _process(delta: float) -> void:
 
 	if GameManager.instance.game_mode == GameManager.MODES.CHALLENGE_MODE:
 		ctarget.importance.x = 1
+		ctarget.importance.y = 1
 		var look: float = -1 if sprite.flip_h else 1
 		ctarget.offset.y = 0.0
 		ctarget.offset.x = lerpf(ctarget.offset.x, 45.0 * look, 0.01)
 	elif GameManager.instance.game_mode == GameManager.MODES.BEFORE_ROUND:
 		ctarget.importance.x = 0
+		ctarget.importance.y = 1.4
 		ctarget.offset.x = 0
 		ctarget.offset.y = -130.0
 	elif GameManager.instance.game_mode == GameManager.MODES.IN_ROUND:
 		ctarget.importance.x = 0
+		ctarget.importance.y = 1
 		ctarget.offset.x = 0
 		ctarget.offset.y = 0.0
 	elif GameManager.instance.game_mode == GameManager.MODES.COUNTDOWN:
 		ctarget.importance.x = 0
+		ctarget.importance.y = 1
 		ctarget.offset.x = 0
 		ctarget.offset.y = 100.0
 
@@ -323,7 +327,7 @@ func handle_jump() -> void:
 
 
 func process_jump() -> void:
-	var parry_target: Node2D = null
+	var parry_target: Stats = null
 	var max_distance: float = 10000
 	coyote_time = 100
 
@@ -334,7 +338,7 @@ func process_jump() -> void:
 			parry_target = target
 
 
-	if parry_target != null and is_attacking == 0 and can_attack:
+	if parry_target != null and is_attacking == 0 and can_attack and parry_target.can_be_parried:
 		received_damage = false
 		process_parry(parry_target)
 	else:

@@ -383,7 +383,7 @@ process_material = SubResource("ParticleProcessMaterial_dqkch")
 texture_filter = 1
 material = SubResource("ShaderMaterial_tuyoq")
 sprite_frames = SubResource("SpriteFrames_jc3p3")
-animation = &"wallslide"
+animation = &"dash"
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "layer_section": true,

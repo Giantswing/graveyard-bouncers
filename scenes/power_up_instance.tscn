@@ -385,6 +385,7 @@ script = ExtResource("1_po57t")
 
 [node name="Stats" type="Node2D" parent="."]
 script = ExtResource("3_1dnvq")
+can_be_parried = false
 death_sound = "powerup-buy"
 metadata/_custom_type_script = ExtResource("3_1dnvq")
 

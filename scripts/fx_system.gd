@@ -11,6 +11,9 @@ func _ready() -> void:
 
 	set_up_fx_systems()
 
+func get_negative_soul_count() -> int:
+	return soul_holder.get_negative_soul_count()
+
 func set_up_fx_systems() -> void:
 	for fx_name: String in fx_dict.keys():
 		var fx: FxResource = fx_dict[fx_name]

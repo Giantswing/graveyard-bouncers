@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 		charging = true
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2(1.3, 0.7), jump_timer_max - jump_timer)
-		tween.parallel().tween_property(self, "modulate", Color(1, 0.2, 0.2), jump_timer_max - jump_timer)
+		tween.parallel().tween_property(sprite, "material:shader_parameter/master_tint", Color(1, 0.2, 0.2), jump_timer_max - jump_timer)
 
 	if is_on_floor() and jump_timer > jump_timer_max:
 		charging = false
@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 		sprite.rotation = 0
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2(0.6, 1.6), 0.1)
-		tween.parallel().tween_property(self, "modulate", Color(1, 1, 1), 0.1)
+		tween.parallel().tween_property(sprite, "material:shader_parameter/master_tint", Color(1, 1, 1), 0.1)
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.2)
 
 		can_charge = false

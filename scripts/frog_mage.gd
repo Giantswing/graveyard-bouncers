@@ -145,10 +145,11 @@ func handle_attacking(delta: float) -> void:
 	else:
 		sprite.flip_h = false
 
+	var centering_speed: float = 30
 	if global_position.y < player_pos.y:
-		translate(Vector2(0, 1) * 10 * delta)
+		translate(Vector2(0, 1) * centering_speed * delta)
 	else:
-		translate(Vector2(0, -1) * 10 * delta)
+		translate(Vector2(0, -1) * centering_speed * delta)
 
 func handle_floating(delta: float) -> void:
 	# print("Floating")

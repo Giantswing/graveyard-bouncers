@@ -47,6 +47,9 @@ func _ready() -> void:
 
 	Events.ctarget_add.connect(add_camera_target)
 	Events.ctarget_remove.connect(remove_camera_target)
+	Events.custom_shockwave.connect(make_shockwave)
+	Events.custom_inverse_shockwave.connect(make_inverse_shockwave)
+
 	GameManager.get_instance().camera = self
 
 
@@ -114,6 +117,25 @@ func on_enemy_died(stats: Stats, from_parry: bool) -> void:
 # func on_player_dash() -> void:
 # 	current_shake_amount = on_parry_shake 
 # 	make_shockwave(0.2, 1, 0.3, 0.45)
+
+
+func make_inverse_shockwave(force: float, duration: float, size: float, decay_time: float, shock_offset:Vector2 = Vector2(0, -37)) -> void:
+
+	wave.material.set_shader_parameter("size", size)
+	wave.material.set_shader_parameter("force", force)
+	shockwave_offset = shock_offset
+
+	if shockwave_tween != null and shockwave_tween.is_running():
+		shockwave_tween.kill()
+
+	shockwave_tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_parallel()
+	shockwave_tween.tween_property(wave.material, "shader_parameter/size", 0, duration * 0.2)
+	shockwave_tween.tween_property(wave.material, "shader_parameter/force", 0.0, decay_time)
+
+	if force > 0.1:
+		get_tree().create_timer(0.05).timeout.connect(func() -> void:
+			FxSystem.play_fx("shockwave-particles", GameManager.get_player_position())
+		)
 
 
 func make_shockwave(force: float, duration: float, size: float, decay_time: float, shock_offset:Vector2 = Vector2(0, -37)) -> void:

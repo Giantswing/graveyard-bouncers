@@ -81,12 +81,20 @@ func transition(body: Node) -> void:
 
 	if body is PlayerCharacter:
 		active = false
-		get_tree().create_timer(0.25).timeout.connect(func() -> void:
-			SoundSystem.play_audio("portal-enter")
+		Events.custom_inverse_shockwave.emit(-10, 1.3, 0.3, 0.45, Vector2(0, 10))
+		body.modulate = Color(0, 0, 0, 0)
+
+		get_tree().create_timer(0.20).timeout.connect(func() -> void:
+
+			get_tree().create_timer(0.25).timeout.connect(func() -> void:
+				SoundSystem.play_audio("portal-enter")
+				body.modulate = Color(1, 1, 1, 1)
+			)
+
+			if enter:
+				Events.enter_challenge_mode.emit(body as PlayerCharacter)
+			else:
+				Events.exit_challenge_mode.emit(body as PlayerCharacter)
 		)
 
-		if enter:
-			Events.enter_challenge_mode.emit(body as PlayerCharacter)
-		else:
-			Events.exit_challenge_mode.emit(body as PlayerCharacter)
 	
