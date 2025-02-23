@@ -9,12 +9,9 @@ var time_with_player_inside: float = 0
 var trigger_time: float = 1
 
 var subsequent_trigger_time: float = 0.08
-var subsequent_acceleration_increase: float = 0.02
+var subsequent_acceleration_increase: float = 0.005
 var subsequent_acceleration: float = 0
-var min_time: float = 0.01
-
 var cost_increase: int = 5
-
 var holding_souls: int = 0
 var max_holding_souls: int = 15
 var can_charge: bool = true 
@@ -64,11 +61,7 @@ func _process(delta: float) -> void:
 		if time_with_player_inside > trigger_time:
 			time_with_player_inside = trigger_time - (subsequent_trigger_time + subsequent_acceleration)
 
-			subsequent_acceleration += subsequent_acceleration_increase
-			print(subsequent_acceleration)
-
-			if time_with_player_inside >= trigger_time:
-				time_with_player_inside = trigger_time - min_time
+			subsequent_acceleration -= subsequent_acceleration_increase
 
 			var remaining_souls: int = 0
 			remaining_souls = GameManager.get_instance().score - FxSystem.get_negative_soul_count()
@@ -78,7 +71,7 @@ func _process(delta: float) -> void:
 
 			var future_souls: int = holding_souls + FxSystem.get_negative_soul_count()
 			if future_souls >= max_holding_souls:
-				time_with_player_inside = -1.75
+				time_with_player_inside = -1.25
 				subsequent_acceleration = 0
 	else:
 		subsequent_acceleration = 0

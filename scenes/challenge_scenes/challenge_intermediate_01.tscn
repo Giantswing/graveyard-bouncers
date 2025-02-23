@@ -35,9 +35,6 @@ position = Vector2(-707, -14)
 [node name="Trampoline" parent="." instance=ExtResource("4_vklig")]
 position = Vector2(-610, -12)
 
-[node name="WallSpikes" parent="." instance=ExtResource("5_pgkgj")]
-position = Vector2(-649, -199)
-
 [node name="WallSpikes3" parent="." instance=ExtResource("5_pgkgj")]
 position = Vector2(-287, -199)
 

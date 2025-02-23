@@ -24,6 +24,8 @@ class_name Stats
 
 var hurt_area: Area2D
 var area: Area2D
+var vibration: bool = false
+var original_sprite_position: Vector2
 
 @export var height: int = 24
 
@@ -72,6 +74,7 @@ func _ready() -> void:
 	if sprite:
 		sprite.animation_finished.connect(on_animation_finished)
 		sprite.material = master_material.duplicate()
+		original_sprite_position = sprite.position
 
 	if spawn_type == SPAWN_TYPE_OPTIONS.GROUND:
 		owner.process_mode = Node.PROCESS_MODE_DISABLED
@@ -103,11 +106,11 @@ func on_animation_finished() -> void:
 
 func _process(delta: float) -> void:
 
-	if !is_alive and sprite:
+	if (!is_alive or vibration) and sprite:
 		time_dead += delta
 		if time_dead > 0.04:
 			time_dead = 0
-			sprite.position = Vector2(randf_range(-1, 1), 0)
+			sprite.position = original_sprite_position + Vector2(randf_range(-1, 1), 0)
 			sprite.rotation = randf_range(-0.4, 0.4)
 
 
@@ -118,7 +121,7 @@ func hit_flash() -> void:
 	sprite.material.set_shader_parameter("hit_active", 1)
 	sprite.offset = Vector2(0, 0)
 	sprite.scale = Vector2(1.0, 1.0)
-
+	# vibration = true
 	var tween: Tween = get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(sprite, "offset", Vector2(0, 8.0), 0.05)
 	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.7), 0.05)
@@ -126,6 +129,9 @@ func hit_flash() -> void:
 	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.3)
 	tween.finished.connect(func() -> void:
 		sprite.material.set_shader_parameter("hit_active", 0)
+		# vibration = false
+		# sprite.position = original_sprite_position
+		# sprite.rotation = 0
 	)
 
 func take_damage(amount: int, from_parry: bool = false, force: bool = false) -> void:

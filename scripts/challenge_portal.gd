@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 		time_open = min(time_open, max_time_open)
 	else:
 		sprite.rotation = 0.0
-		time_open -= delta
+		time_open -= delta * 0.5
 		time_open = max(time_open, 0.0)
 
 	if time_open >= max_time_open and is_open == 0:

@@ -264,7 +264,8 @@ func _physics_process(delta: float) -> void:
 		process_attack()
 
 	elif (grounded and is_attacking == 2 and !is_parrying): # Failed attack
-		velocity.y = -failed_attack_str_mult * base_strength
+		# velocity.y = -failed_attack_str_mult * base_strength
+		velocity.y = -normal_attack_bounce_str_mult * base_strength
 		is_attacking = 0
 		is_parrying = false
 		FxSystem.play_fx("smoke-hit-small", position)
@@ -349,7 +350,13 @@ func process_jump() -> void:
 		# is_attacking = 1
 		is_attacking = 2
 		received_damage = false
-		velocity.y = -attack_recoil_str_mult * base_strength
+
+		if movement_input.y >= 0.2:
+			velocity.y = base_strength * 2.5
+			animation_controller.play_animation("attack", true, 3)
+			TimeManager.change_time_speed(0.03, 0.0008)
+		else:
+			velocity.y = -attack_recoil_str_mult * base_strength
 
 
 func process_attack() -> void:

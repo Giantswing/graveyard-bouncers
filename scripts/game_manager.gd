@@ -2,30 +2,7 @@ extends Node2D
 
 class_name GameManager
 
-@export var player_hp_max: int = 3
-var game_width_start: float
-
-@onready var seconds_timer: Timer = %SecondsTimer
-@onready var round_manager: RoundManager = $RoundManager
-@onready var fog: ColorRect = %FogRect
-
-@export var current_round: int = 0 
-@export var current_difficulty: float = 1.0
-
-@export var powerups: Array[PowerUp]
-
-@export var heart_reward: PackedScene
-@export var trampoline_prefab: PackedScene
-@export var helper_enemy_prefab: PackedScene
-@export var spikes_prefab: PackedScene
-
-@export var countdown_timer: int = 3
-
-var round_time: int = 0
-var enemy_count: int = 0
-var round_data: GameRound = null
-var challenge_data: Challenge = null
-var camera: Camera2D = null
+static var instance: GameManager
 
 enum MODES { 
 	BEFORE_ROUND,
@@ -34,57 +11,65 @@ enum MODES {
 	CHALLENGE_MODE,
 }
 
-var game_mode: MODES = MODES.BEFORE_ROUND
-var score: int = 0
-@export var coins: int = 0
 
-var player_hp: int = 3
-var player_combo: int = 0
-
-@export var player_ability: Ability = null
-@export var all_abilities: Array[Ability]
-@export var all_powerups: Array[PowerUp]
-@onready var player: PlayerCharacter = $"/root/Level/Player" 
-
-var enemy_container: Node2D
-var other_container: Node2D
-var reward_container: Node2D
-var power_up_shop: Node2D
-
-var enemy_spawn_countdown: float = 0
-var reward_spawn_countdown: float = 0
-var other_spawn_countdown: float = 0
-
-var current_game_width: float = 0
-var pre_round_game_width: float = 500
-var game_width: float = 400
-var player_screen_pos: Vector2
-
-var left_wall: Node2D
-
-@onready var left_top_part: Node2D 	 = $"/root/Level/Scenery/TopPart/LeftTopPart"
-@onready var right_top_part: Node2D = $"/root/Level/Scenery/TopPart/RightTopPart"
-
-var right_wall: Node2D
-
-var toxic_floor: Node2D
-var lava_floor: Node2D
-var normal_floor: Node2D
-var round_started: bool = false
-var game_started: bool = false
-var starting_ground: Bridge 
-var trampoline: Node2D
-var trampoline_start_pos: Vector2
-var grave: Node2D
-var grave_start_pos: Vector2
+var camera: Camera2D = null
 var can_restart: bool = false
-var ground_y_pos: float
+var challenge_data: Challenge = null
+var current_game_width: float = 0
+var enemy_count: int = 0
+var enemy_spawn_countdown: float = 0
+var game_mode: MODES = MODES.BEFORE_ROUND
 var game_paused: bool = false
+var game_started: bool = false
+var game_width: float = 400
+var game_width_start: float
+var ground_y_pos: float
+var other_spawn_countdown: float = 0
+var player_combo: int = 0
+var player_hp: int = 3
+var player_screen_pos: Vector2
+var pre_round_game_width: float = 500
+var reward_spawn_countdown: float = 0
+var round_data: GameRound = null
+var round_started: bool = false
+var round_time: int = 0
+var score: int = 0
 
+
+
+@onready var enemy_container: Node2D = $"/root/Level/Scenery/EnemyContainer"
+@onready var fog: ColorRect = %FogRect
+@onready var lava_floor: Node2D = $"/root/Level/Scenery/LavaFloor"
+@onready var left_top_part: Node2D 	 = $"/root/Level/Scenery/TopPart/LeftTopPart"
+@onready var left_wall: Node2D = $"/root/Level/Scenery/LeftWall"
+@onready var normal_floor: Node2D = $"/root/Level/Scenery/NormalFloor"
+@onready var other_container: Node2D = $"/root/Level/Scenery/OtherContainer"
+@onready var player: PlayerCharacter = $"/root/Level/Player" 
+@onready var power_up_shop: Node2D = $"/root/Level/Scenery/PowerUpShop"
+@onready var reward_container: Node2D = $"/root/Level/Scenery/RewardContainer"
+@onready var right_top_part: Node2D = $"/root/Level/Scenery/TopPart/RightTopPart"
+@onready var right_wall: Node2D = $"/root/Level/Scenery/RightWall"
+@onready var round_manager: RoundManager = $RoundManager
+@onready var seconds_timer: Timer = %SecondsTimer
+@onready var starting_ground: Bridge = $"/root/Level/Scenery/StartingGround"
+@onready var toxic_floor: Node2D = $"/root/Level/Scenery/ToxicFloor"
 @onready var tutorial: Node2D = $"/root/Level/Scenery/Tutorial"
 
 
-static var instance: GameManager
+@export var all_abilities: Array[Ability]
+@export var all_powerups: Array[PowerUp]
+@export var coins: int = 0
+@export var countdown_timer: int = 3
+@export var current_difficulty: float = 1.0
+@export var current_round: int = 0 
+@export var heart_reward: PackedScene
+@export var helper_enemy_prefab: PackedScene
+@export var player_ability: Ability = null
+@export var player_hp_max: int = 3
+@export var powerups: Array[PowerUp]
+@export var spikes_prefab: PackedScene
+@export var trampoline_prefab: PackedScene
+
 
 static func get_instance() -> GameManager:
 	return instance
@@ -98,25 +83,7 @@ static func get_player_position() -> Vector2:
 func _ready() -> void:
 	instance = self
 
-	normal_floor = $"/root/Level/Scenery/NormalFloor"
-	toxic_floor = $"/root/Level/Scenery/ToxicFloor"
-	lava_floor = $"/root/Level/Scenery/LavaFloor"
-	left_wall = $"/root/Level/Scenery/LeftWall"
-	right_wall = $"/root/Level/Scenery/RightWall"
-	starting_ground = $"/root/Level/Scenery/StartingGround"
-	trampoline = $"/root/Level/Scenery/Trampoline"
-	enemy_container = $"/root/Level/Scenery/EnemyContainer"
-	other_container = $"/root/Level/Scenery/OtherContainer"
-	reward_container = $"/root/Level/Scenery/RewardContainer"
-	grave = $"/root/Level/Scenery/Grave"
-	power_up_shop = $"/root/Level/Scenery/PowerUpShop"
-
 	game_width = pre_round_game_width
-	# left_wall.position.x = -game_width / 2
-	# right_wall.position.x = game_width / 2
-	trampoline_start_pos = trampoline.position
-	grave_start_pos = grave.position
-
 	seconds_timer.timeout.connect(on_seconds_timer_timeout)
 	game_width_start = right_wall.position.x - left_wall.position.x
 
@@ -127,7 +94,6 @@ func _ready() -> void:
 	Events.player_died.connect(on_player_died)
 	Events.round_ended.connect(end_round)
 	Events.picked_up_powerup.connect(add_powerup)
-
 	Events.round_time_changed.emit(0)
 	Events.score_changed.emit(score)
 	Events.hp_changed.emit(player_hp_max, 0)
@@ -146,6 +112,7 @@ func _ready() -> void:
 			Events.combo_changed.emit(result_combo)
 
 	)
+
 	Events.enemy_hit.connect(func(stats: Stats, from_parry: bool) -> void:
 		if stats.gives_combo:
 			Events.combo_changed.emit(player_combo)
@@ -154,19 +121,6 @@ func _ready() -> void:
 	Events.combo_changed.connect(func(new_combo: int) -> void:
 		player_combo = new_combo
 	)
-
-	gain_ability(player_ability)
-
-	TimeManager.change_time_speed(1.0, 0, true)
-
-	update_current_round()
-	update_current_challenge()
-
-	set_up_round()
-
-	current_game_width = game_width
-
-	%UI.visible = true 
 
 	Events.round_started.connect(func() -> void: change_mode(MODES.IN_ROUND))
 	Events.round_ended.connect(func() -> void: change_mode(MODES.BEFORE_ROUND))
@@ -177,13 +131,24 @@ func _ready() -> void:
 	Events.exit_challenge_mode.connect(func(_exit_player: PlayerCharacter) -> void: change_mode(MODES.BEFORE_ROUND))
 	Events.round_countdown_start.connect(start_countdown)
 
+
+	TimeManager.change_time_speed(1.0, 0, true)
+
+
+	%UI.visible = true 
+	gain_ability(player_ability)
+	update_current_round()
+	update_current_challenge()
+	set_up_round()
+
+	current_game_width = game_width
+
 	change_mode(MODES.BEFORE_ROUND)
+
 
 func start_countdown(time: int) -> void:
 	tutorial.visible = false
 	change_mode(MODES.COUNTDOWN)
-	deactivate(trampoline)
-	deactivate(grave)
 
 	get_tree().create_timer(time).timeout.connect(func() -> void:
 		if game_mode == MODES.COUNTDOWN:
@@ -408,8 +373,7 @@ func set_up_round() -> void:
 			Utils.fast_tween(normal_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)
-
-
+	
 
 
 func should_spawn(current_amount: int, max_amount: int) -> bool:
@@ -501,13 +465,6 @@ func end_round() -> void:
 
 	starting_ground.enable_bridge()
 
-	get_tree().create_timer(2).timeout.connect(func() -> void:
-		activate(grave)
-		activate(trampoline)
-		grave.position = grave_start_pos
-		trampoline.position = trampoline_start_pos
-	)
-
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
 
@@ -527,25 +484,3 @@ func end_round() -> void:
 	update_current_round()
 	update_current_challenge()
 	set_up_round()
-
-
-func deactivate(target: Node2D) -> void:
-	target.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
-	target.set_collision_layer_value(4, false)
-	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(target, "scale", Vector2(0, 0), 0.5)
-	tween.tween_callback(
-		func() -> void:
-			target.visible = false
-	)
-
-func activate(target: RigidBody2D) -> void:
-	target.set_collision_layer_value(4, true)
-	target.process_mode = Node.ProcessMode.PROCESS_MODE_PAUSABLE
-	target.visible = true
-	target.scale = Vector2(0, 0)
-	target.linear_velocity = Vector2(0, -200)
-
-
-	var tween := get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(target, "scale", Vector2(1, 1), 0.5)

@@ -53,11 +53,11 @@ func handle_animation(movement_input: Vector2, velocity: Vector2, grounded:bool,
 
 
 
-func play_animation(animation: String, restart: bool = false) -> void:
+func play_animation(animation: String, restart: bool = false, frame: int = 0) -> void:
 	if restart:
 		sprite.play(animation)
 		sprite.stop()
-		sprite.frame = 0
+		sprite.frame = frame
 		sprite.play(animation)
 	else:
 		sprite.play(animation)

@@ -165,7 +165,7 @@ position = Vector2(-150, -114)
 position = Vector2(337, 0)
 
 [node name="Mover2" parent="." instance=ExtResource("6_siu8x")]
-position = Vector2(315, -189)
+position = Vector2(315, -149)
 
 [node name="ParryBall3" parent="Mover2" instance=ExtResource("2_siu8x")]
 
@@ -174,7 +174,7 @@ position = Vector2(315, -189)
 [node name="Marker2D" type="Marker2D" parent="Mover2/MovePoints"]
 
 [node name="Marker2D2" type="Marker2D" parent="Mover2/MovePoints"]
-position = Vector2(0, -300)
+position = Vector2(0, -426)
 
 [node name="Coin" parent="." instance=ExtResource("3_hh63v")]
 position = Vector2(-139, -199)

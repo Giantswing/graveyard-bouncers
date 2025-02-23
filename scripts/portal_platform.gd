@@ -11,15 +11,15 @@ var show_portal_at_beginning: bool = false
 	# hide_platform(1)
 
 
-func _process(delta: float) -> void:
-	if show_portal_at_beginning == false and GameManager.get_instance().current_round == 0:
-		portal.process_mode = Node.PROCESS_MODE_DISABLED
-		set_collision_layer_value(1, false)
-		hide()
-	else:
-		portal.process_mode = Node.PROCESS_MODE_PAUSABLE
-		set_collision_layer_value(1, true)
-		show()
+# func _process(delta: float) -> void:
+# 	if show_portal_at_beginning == false and GameManager.get_instance().current_round == 0:
+# 		portal.process_mode = Node.PROCESS_MODE_DISABLED
+# 		set_collision_layer_value(1, false)
+# 		hide()
+# 	else:
+# 		portal.process_mode = Node.PROCESS_MODE_PAUSABLE
+# 		set_collision_layer_value(1, true)
+# 		show()
 	
 
 func hide_platform(_time: int) -> void:

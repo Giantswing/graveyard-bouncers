@@ -103,7 +103,7 @@ func on_enemy_hit(stats: Stats, from_parry: bool) -> void:
 		impact_zoom = 0.2
 		current_shake_amount = on_parry_shake * 0.2 
 		make_shockwave(0.06, 1, 0.35, 0.45)
-		TimeManager.change_time_speed(0.01, 0.0012)
+		TimeManager.change_time_speed(0.01, 0.0014)
 		# Engine.time_scale = 0.01
 		# get_tree().create_timer(0.0008).timeout.connect(func() -> void:
 		# 	Engine.time_scale = 1

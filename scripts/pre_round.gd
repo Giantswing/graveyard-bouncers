@@ -1,63 +1,107 @@
 extends Node2D
 
-var sprite_children: Array[AnimatedSprite2D] = []
-var node_children: Array[Node] = []
-var child_delay: float = 0.1
-var dissolve_duration: float = 0.8
+@export var dissolve_duration: float
+@export var desired_total_duration: float
+@export var appear_delay: float
+
+var targets: Array[PreRoundTarget]
+var child_delay: float
+
+
+class PreRoundTarget:
+	var initial_pos: Vector2
+	var parent: Node
+	var sprites: Array[AnimatedSprite2D]
+
+	func _init(parent_node: Node) -> void:
+		parent = parent_node
+		initial_pos = parent.position
+		sprites = []
+		find_sprites(parent, sprites)
+		for sprite in sprites:
+			if sprite.material == null:
+				sprite.material = load("res://shaders/materials/MasterMaterial.tres").duplicate()
+
+	static func find_sprites(node: Node, result: Array) -> void:
+		if node is AnimatedSprite2D:
+			result.append(node)
+		for child in node.get_children():
+			find_sprites(child, result)
+
+
 
 func _ready() -> void:
-	sprite_children.clear()
-	node_children = get_children()
+	child_delay = desired_total_duration / get_children().size()
 
-	find_by_class(self, "AnimatedSprite2D", sprite_children)
+	var ordered_children: Array[Node] = get_children()
 
-	for child in sprite_children:
-		if child.material == null:
-			child.material = load("res://shaders/materials/MasterMaterial.tres").duplicate()
+	ordered_children.sort_custom(func(a: Node, b: Node) -> bool:
+		return a.global_position.y > b.global_position.y
+	)
 
-	show_children()
+	for i in range(ordered_children.size()):
+		print(ordered_children[i].name)
+		
+
+	for ordered_child in ordered_children:
+		targets.append(PreRoundTarget.new(ordered_child))
+
+	for target in targets:
+		target.parent.hide()
+		target.parent.process_mode = Node.PROCESS_MODE_DISABLED
+
+		for sprite in target.sprites:
+			sprite.hide()
+
+
+	get_tree().create_timer(appear_delay).timeout.connect(func() -> void:
+		show_targets()
+	)
 
 	Events.round_ended.connect(func() -> void:
-		get_tree().create_timer(1.0).timeout.connect(func() -> void:
-			show_children()
-		)
+		get_tree().create_timer(appear_delay).timeout.connect(show_targets)
 	)
 
 	Events.round_countdown_start.connect(func(time: int) -> void:
-		hide_children()
+		hide_targets()
 	)
 
-func find_by_class(node: Node, className: String, result: Array) -> void:
-	if node.is_class(className):
-		result.push_back(node)
-	for child in node.get_children():
-		find_by_class(child, className, result)
+func hide_targets() -> void:
+	for i in range(targets.size() - 1, -1, -1):
+		hide_target(targets[i], targets.size() - 1 - i)
 
-func hide_children() -> void:
-	for i in range(sprite_children.size() - 1, -1, -1):
-		hide_child(sprite_children[i], sprite_children.size() - 1 - i)
+func show_targets() -> void:
+	for i in range(targets.size()):
+		show_target(targets[i], i)
 
-func show_children() -> void:
-	for i in range(sprite_children.size()):
-		show_child(sprite_children[i], i)
+func hide_target(target: PreRoundTarget, index: int) -> void:
+	target.parent.process_mode = Node.PROCESS_MODE_DISABLED
 
-func hide_child(child: AnimatedSprite2D, index: int) -> void:
-	child.material.set_shader_parameter("dissolve_percentage", 1.0)
+	for sprite in target.sprites:
+		sprite.material.set_shader_parameter("dissolve_percentage", 1.0)
+
 	get_tree().create_timer(child_delay * index).timeout.connect(func() -> void:
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(child, "material:shader_parameter/dissolve_percentage", 0.0, dissolve_duration)
-		tween.finished.connect(func() -> void:
-			child.hide()
-			node_children[index].process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
-		)
+		for sprite in target.sprites:
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(sprite, "material:shader_parameter/dissolve_percentage", 0.0, dissolve_duration)
+			tween.finished.connect(func() -> void:
+				sprite.hide()
+				target.parent.process_mode = Node.PROCESS_MODE_DISABLED
+			)
 	)
 
-func show_child(child: AnimatedSprite2D, index: int) -> void:
-	child.material.set_shader_parameter("dissolve_percentage", 0.0)
-	node_children[index].process_mode = Node.ProcessMode.PROCESS_MODE_PAUSABLE
+func show_target(target: PreRoundTarget, index: int) -> void:
+	if target.parent.name == "PortalPlatform" and GameManager.get_instance().current_round == 0:
+		return
+
+	target.parent.show()
+	target.parent.process_mode = Node.PROCESS_MODE_PAUSABLE
+	target.parent.position = target.initial_pos
 
 	get_tree().create_timer(child_delay * index).timeout.connect(func() -> void:
-		child.show()
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(child, "material:shader_parameter/dissolve_percentage", 1.0, dissolve_duration)
+		for sprite in target.sprites:
+			sprite.show()
+			sprite.material.set_shader_parameter("dissolve_percentage", 0.0)
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(sprite, "material:shader_parameter/dissolve_percentage", 1.0, dissolve_duration)
 	)
