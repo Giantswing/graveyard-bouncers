@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dajkbykthp1ww"
-path="res://.godot/imported/center-platform.png-8dc4688f5a07e6a5b258d4d050160d6b.ctex"
+uid="uid://c4tcp4p2hv7qf"
+path="res://.godot/imported/breakable-platform.png-3ac816e06ed0c51bd01856fb49a1d5d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/center-platform.png"
-dest_files=["res://.godot/imported/center-platform.png-8dc4688f5a07e6a5b258d4d050160d6b.ctex"]
+source_file="res://sprites/breakable-platform.png"
+dest_files=["res://.godot/imported/breakable-platform.png-3ac816e06ed0c51bd01856fb49a1d5d8.ctex"]
 
 [params]
 

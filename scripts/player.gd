@@ -386,14 +386,22 @@ func process_attack() -> void:
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
 			if target:
-				velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
+				if target.bounciness > 0:
+					velocity.y = -normal_attack_bounce_str_mult * base_strength * target.bounciness 
+					is_attacking = 0
+				else:
+					can_attack = true
+					animation_controller.last_fall_animation = 2.0
+					velocity.y = -100
+					print(velocity.y)
+
 				target.take_damage(1)
 				SoundSystem.play_audio("shovel-hit")
 			else:
 				velocity.y = -normal_attack_bounce_str_mult * base_strength
+				is_attacking = 0
 
 			can_get_hit = false
-			is_attacking = 0
 			animation_controller.animate_fall(movement_input)
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 

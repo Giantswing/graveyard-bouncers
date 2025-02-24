@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://2k6ugcamddpu"]
+
+[ext_resource type="Script" uid="uid://d4l82wmmlho1n" path="res://scripts/stats.gd" id="1_1tpn0"]
+[ext_resource type="Material" uid="uid://b2nggkmqyhby7" path="res://shaders/materials/MasterMaterial.tres" id="2_1n7cr"]
+[ext_resource type="Texture2D" uid="uid://c4tcp4p2hv7qf" path="res://sprites/breakable-platform.png" id="3_1tpn0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tpn0"]
+atlas = ExtResource("3_1tpn0")
+region = Rect2(0, 0, 80, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1n7cr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tpn0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1n7cr"]
+size = Vector2(80, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1tpn0"]
+size = Vector2(80, 12)
+
+[node name="BreakablePlatform" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Stats" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_1tpn0")
+bounciness = 0.0
+can_be_parried = false
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("2_1n7cr")
+sprite_frames = SubResource("SpriteFrames_1n7cr")
+autoplay = "default"
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "res://sprites",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "/home/alex/Pictures/graveyardbouncers-sprites2/graveyardbouncers-sprites/sprites/breakable-platform.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "4c65312532b9b29116c8dc962906aeb2"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -27)
+shape = SubResource("RectangleShape2D_1n7cr")
+debug_color = Color(0.708846, 0.314529, 1.92523e-07, 0.42)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_1tpn0")
+one_way_collision = true

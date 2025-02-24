@@ -7,5 +7,5 @@
 script = ExtResource("1_2qx37")
 key_name = "walk-smoke"
 scene = ExtResource("2_2qx37")
-amount = 1
+amount = 5
 metadata/_custom_type_script = ExtResource("1_2qx37")

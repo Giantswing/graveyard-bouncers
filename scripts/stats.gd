@@ -198,7 +198,8 @@ func die(from_parry: bool = false) -> void:
 	if hurt_area:
 		hurt_area.queue_free()
 
-	Events.enemy_died.emit(self, from_parry)
+	if bounciness > 0:
+		Events.enemy_died.emit(self, from_parry)
 
 	if GameManager.get_instance().has_powerup("vampiric") and can_take_damage:
 		var chance: float = 0.1

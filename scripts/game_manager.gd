@@ -44,6 +44,7 @@ var score: int = 0
 @onready var left_wall: Node2D = $"/root/Level/Scenery/LeftWall"
 @onready var normal_floor: Node2D = $"/root/Level/Scenery/NormalFloor"
 @onready var other_container: Node2D = $"/root/Level/Scenery/OtherContainer"
+@onready var in_round_scenery: DissolveScenery = $"/root/Level/Scenery/InRoundScenery"
 @onready var player: PlayerCharacter = $"/root/Level/Player" 
 @onready var power_up_shop: Node2D = $"/root/Level/Scenery/PowerUpShop"
 @onready var reward_container: Node2D = $"/root/Level/Scenery/RewardContainer"
@@ -374,6 +375,10 @@ func set_up_round() -> void:
 			Utils.fast_tween(toxic_floor, "position:y", ground_height + offset, 0.5)
 			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)
 	
+
+
+	if round_data.round_scenery != null:
+		in_round_scenery.add_scenery(round_data.round_scenery)
 
 
 func should_spawn(current_amount: int, max_amount: int) -> bool:

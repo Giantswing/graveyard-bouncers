@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=67 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
@@ -42,8 +42,10 @@
 [ext_resource type="Resource" uid="uid://vxy0we7t1y8f" path="res://resources/powerups/powerup-strong-parry.tres" id="22_o8s1w"]
 [ext_resource type="Resource" uid="uid://di7cui1wcg7ff" path="res://resources/powerups/powerup-combo-ability.tres" id="23_cqgt4"]
 [ext_resource type="Resource" uid="uid://c64uan5qvhw34" path="res://resources/powerups/powerup-combo-length.tres" id="24_m4bod"]
+[ext_resource type="PackedScene" uid="uid://qbrmvdk3u63d" path="res://scenes/round_scenery/round_scenery_01.tscn" id="40_1yyf5"]
 [ext_resource type="PackedScene" uid="uid://mw252vf27v4x" path="res://scenes/challenge_scenes/challenge_basic_03.tscn" id="40_u168d"]
 [ext_resource type="PackedScene" uid="uid://7e7505bm2uvk" path="res://scenes/challenge_scenes/challenge_intermediate_01.tscn" id="41_fmt0c"]
+[ext_resource type="PackedScene" uid="uid://b8wexraft51h2" path="res://scenes/challenge_scenes/challenge_basic_04.tscn" id="45_1q03k"]
 
 [sub_resource type="Resource" id="Resource_30v7y"]
 script = ExtResource("7_frtjd")
@@ -343,6 +345,34 @@ has_fog = false
 spike_amount = 0
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
+[sub_resource type="Resource" id="Resource_1q03k"]
+script = ExtResource("7_frtjd")
+debug = true
+difficulty = 1.0
+time_limit = 10
+enemy_count = 0
+chance = 1.0
+gravity_multiplier = 0.5
+game_width_speed_increase = 4.0
+start_game_width = 650.0
+max_game_width = 650.0
+enemy_list = Array[ExtResource("2_udu3i")]([])
+enemy_spawn_rate = 2.0
+max_enemies = 10
+reward_list = Array[ExtResource("2_udu3i")]([])
+reward_spawn_rate = 4.0
+max_rewards = 5
+other_list = Array[ExtResource("2_udu3i")]([])
+other_spawn_rate = 4.0
+max_other = 5
+round_scenery = ExtResource("40_1yyf5")
+ground_type = 0
+has_trampoline = false
+has_helper_enemy = false
+has_fog = false
+spike_amount = 0
+metadata/_custom_type_script = ExtResource("7_frtjd")
+
 [sub_resource type="Resource" id="Resource_c7a3q"]
 script = ExtResource("16_ry0e6")
 debug = false
@@ -359,6 +389,14 @@ chance = 1.0
 difficulty = 3.0
 metadata/_custom_type_script = ExtResource("16_ry0e6")
 
+[sub_resource type="Resource" id="Resource_1yyf5"]
+script = ExtResource("16_ry0e6")
+debug = false
+scene = ExtResource("45_1q03k")
+chance = 1.0
+difficulty = 4.0
+metadata/_custom_type_script = ExtResource("16_ry0e6")
+
 [sub_resource type="Resource" id="Resource_fmt0c"]
 script = ExtResource("16_ry0e6")
 debug = false
@@ -372,7 +410,7 @@ script = ExtResource("16_ry0e6")
 debug = false
 scene = ExtResource("41_fmt0c")
 chance = 1.0
-difficulty = 5.0
+difficulty = 6.0
 metadata/_custom_type_script = ExtResource("16_ry0e6")
 
 [node name="GameManager" type="Node2D"]
@@ -388,9 +426,9 @@ trampoline_prefab = ExtResource("6_q8mjp")
 [node name="RoundManager" type="Node2D" parent="."]
 position = Vector2(-13, 0)
 script = ExtResource("6_ternb")
-game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_30v7y"), SubResource("Resource_ry0e6"), SubResource("Resource_pc0jn"), SubResource("Resource_4vth2"), SubResource("Resource_jrl6a"), SubResource("Resource_2j6ol"), SubResource("Resource_8ldib"), SubResource("Resource_dlmsr"), SubResource("Resource_q8mjp")])
+game_rounds = Array[ExtResource("7_frtjd")]([SubResource("Resource_30v7y"), SubResource("Resource_ry0e6"), SubResource("Resource_pc0jn"), SubResource("Resource_4vth2"), SubResource("Resource_jrl6a"), SubResource("Resource_2j6ol"), SubResource("Resource_8ldib"), SubResource("Resource_dlmsr"), SubResource("Resource_q8mjp"), SubResource("Resource_1q03k")])
 chance_decay_rate = 0.5
-game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q"), SubResource("Resource_kvitc"), SubResource("Resource_fmt0c"), SubResource("Resource_o8s1w")])
+game_challenges = Array[ExtResource("16_ry0e6")]([SubResource("Resource_c7a3q"), SubResource("Resource_kvitc"), SubResource("Resource_1yyf5"), SubResource("Resource_fmt0c"), SubResource("Resource_o8s1w")])
 
 [node name="SecondsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

@@ -23,11 +23,11 @@
 [ext_resource type="PackedScene" uid="uid://ewq68vpmsm17" path="res://scenes/lava_ball.tscn" id="9_aksw0"]
 [ext_resource type="Texture2D" uid="uid://fvok74n3mel8" path="res://sprites/spikes.png" id="10_5itvi"]
 [ext_resource type="PackedScene" uid="uid://1cdkvfj1vbge" path="res://scenes/power_up_instance.tscn" id="10_dr822"]
-[ext_resource type="Script" uid="uid://br5y30k5j28w6" path="res://scripts/pre_round.gd" id="11_6qoa1"]
+[ext_resource type="Script" uid="uid://ctof57e8t4moj" path="res://scripts/dissolver.gd" id="11_7keex"]
 [ext_resource type="Script" uid="uid://c2ii2mke1pk65" path="res://scripts/power_up_shop.gd" id="11_aqsxy"]
 [ext_resource type="AudioStream" uid="uid://cfyrrbvwhoby6" path="res://sounds/library/rain.ogg" id="11_bh8c8"]
 [ext_resource type="PackedScene" uid="uid://vcjlnsnxysjs" path="res://scenes/parry_ball.tscn" id="12_5itvi"]
-[ext_resource type="Texture2D" uid="uid://dajkbykthp1ww" path="res://scenes/center-platform.png" id="13_5itvi"]
+[ext_resource type="Texture2D" uid="uid://dajkbykthp1ww" path="res://sprites/center-platform.png" id="13_5itvi"]
 [ext_resource type="PackedScene" uid="uid://ccxiftmad277w" path="res://scenes/soul_exchanger.tscn" id="13_6qoa1"]
 [ext_resource type="Texture2D" uid="uid://bnjc0cbacld0g" path="res://sprites/2d_lights_and_shadows_neutral_point_light.webp" id="13_cvmw5"]
 [ext_resource type="Shader" uid="uid://bam5m8hgrlq8o" path="res://shaders/rain.gdshader" id="14_dr822"]
@@ -567,34 +567,35 @@ current = true
 [node name="Scenery" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="PreRound" type="Node2D" parent="Scenery"]
-script = ExtResource("11_6qoa1")
-dissolve_duration = 0.5
-desired_total_duration = 1.0
-appear_delay = 1.0
+[node name="PreRoundScenery" type="Node2D" parent="Scenery"]
+script = ExtResource("11_7keex")
+dissolve_duration = 0.3
+desired_total_duration = 1.5
+appear_delay = 2.0
+show_pre_round = true
 
-[node name="ParryBall" parent="Scenery/PreRound" instance=ExtResource("12_5itvi")]
+[node name="ParryBall" parent="Scenery/PreRoundScenery" instance=ExtResource("12_5itvi")]
 position = Vector2(-197, -85)
 
-[node name="ParryBall4" parent="Scenery/PreRound" instance=ExtResource("12_5itvi")]
+[node name="ParryBall4" parent="Scenery/PreRoundScenery" instance=ExtResource("12_5itvi")]
 position = Vector2(-197, -161)
 
-[node name="SoulExchanger" parent="Scenery/PreRound" instance=ExtResource("13_6qoa1")]
+[node name="SoulExchanger" parent="Scenery/PreRoundScenery" instance=ExtResource("13_6qoa1")]
 position = Vector2(-204, -252)
 
-[node name="Platform" type="StaticBody2D" parent="Scenery/PreRound"]
+[node name="Platform" type="StaticBody2D" parent="Scenery/PreRoundScenery"]
 z_index = -1
 position = Vector2(-236, -219)
 rotation = 3.14159
 scale = Vector2(1, -1)
 collision_layer = 64
 
-[node name="Collision" type="CollisionShape2D" parent="Scenery/PreRound/Platform"]
+[node name="Collision" type="CollisionShape2D" parent="Scenery/PreRoundScenery/Platform"]
 position = Vector2(-36, -3)
 shape = SubResource("RectangleShape2D_2sni1")
 one_way_collision = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Scenery/PreRound/Platform/Collision"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Scenery/PreRoundScenery/Platform/Collision"]
 texture_filter = 1
 position = Vector2(-7.62939e-06, 2)
 sprite_frames = SubResource("SpriteFrames_7keex")
@@ -613,25 +614,25 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "ff11123084bfb39735a0fafd549c39f9"
 
-[node name="Trampoline" parent="Scenery/PreRound" instance=ExtResource("3_6rdlt")]
+[node name="Trampoline" parent="Scenery/PreRoundScenery" instance=ExtResource("3_6rdlt")]
 position = Vector2(-115, -73)
 
-[node name="Grave" parent="Scenery/PreRound" instance=ExtResource("4_yyih8")]
+[node name="Grave" parent="Scenery/PreRoundScenery" instance=ExtResource("4_yyih8")]
 position = Vector2(114, -76)
 
-[node name="PortalPlatform" type="StaticBody2D" parent="Scenery/PreRound"]
+[node name="PortalPlatform" type="StaticBody2D" parent="Scenery/PreRoundScenery"]
 unique_name_in_owner = true
 z_index = -1
 position = Vector2(236, -98)
 collision_layer = 64
 script = ExtResource("16_2sni1")
 
-[node name="Collision" type="CollisionShape2D" parent="Scenery/PreRound/PortalPlatform"]
+[node name="Collision" type="CollisionShape2D" parent="Scenery/PreRoundScenery/PortalPlatform"]
 position = Vector2(-36, -3)
 shape = SubResource("RectangleShape2D_2sni1")
 one_way_collision = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Scenery/PreRound/PortalPlatform/Collision"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Scenery/PreRoundScenery/PortalPlatform/Collision"]
 texture_filter = 1
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_7keex")
@@ -650,10 +651,15 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "ff11123084bfb39735a0fafd549c39f9"
 
-[node name="ChallengePortal" parent="Scenery/PreRound/PortalPlatform/Collision" instance=ExtResource("5_ja4wt")]
+[node name="ChallengePortal" parent="Scenery/PreRoundScenery/PortalPlatform/Collision" instance=ExtResource("5_ja4wt")]
 position = Vector2(17.9999, -30)
 
 [node name="InRoundScenery" type="Node2D" parent="Scenery"]
+script = ExtResource("11_7keex")
+dissolve_duration = 0.25
+desired_total_duration = 0.5
+appear_delay = 0.5
+show_in_round = true
 
 [node name="TopPart" type="Node2D" parent="Scenery"]
 position = Vector2(0, -400)
