@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfvketufl80v4"]
+
+[ext_resource type="TileSet" uid="uid://bdnaudq6gm8s3" path="res://tiles/tileset-round.tres" id="1_2oh3a"]
+
+[node name="Scenery02" type="Node2D"]
+
+[node name="Tile" type="Node2D" parent="."]
+position = Vector2(161, 62)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Tile"]
+z_index = 1
+z_as_relative = false
+texture_filter = 1
+position = Vector2(-297, -2)
+tile_map_data = PackedByteArray(0, 0, 253, 255, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 254, 255, 0, 0, 1, 0, 1, 0, 4, 0, 0, 0, 255, 255, 0, 0, 1, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 4, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0, 4, 0, 0, 0)
+tile_set = ExtResource("1_2oh3a")

@@ -378,7 +378,9 @@ func set_up_round() -> void:
 
 
 	if round_data.round_scenery != null:
-		in_round_scenery.add_scenery(round_data.round_scenery)
+		in_round_scenery.scenery_to_spawn = round_data.round_scenery
+	else:
+		in_round_scenery.clear_scenery()
 
 
 func should_spawn(current_amount: int, max_amount: int) -> bool:

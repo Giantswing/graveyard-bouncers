@@ -71,54 +71,56 @@ func startup() -> void:
 			hide_targets()
 		)
 
-		# Events.round_countdown_start.connect(func(time: int) -> void:
-		# 	if scenery_to_spawn != null:
-		# 		prepare_scenery()
-		# )
+		Events.round_countdown_start.connect(func(time: int) -> void:
+			if scenery_to_spawn != null:
+				prepare_scenery()
+		)
 
 		Events.round_started.connect(func() -> void:
 			get_tree().create_timer(appear_delay).timeout.connect(show_targets)
 		)
 
 
-func add_scenery(scenery: PackedScene) -> void:
-	scenery_to_spawn = scenery
-	prepare_scenery()
+func clear_scenery() -> void:
+	targets.clear()
+	for child in get_children():
+		child.queue_free()
 
+	scenery_to_spawn = null
 
 func prepare_scenery() -> void:
 	if scenery_to_spawn != null:
+		targets.clear()
 		for child in get_children():
 			child.queue_free()
-
-		targets = []
 
 		var new_scenery: Node = scenery_to_spawn.instantiate()
 		new_scenery.position = Vector2(0, 0)
 		add_child(new_scenery)
-
-		# for child in new_scenery.get_children():
-		# 	add_child(child)
 			
 
+	hide()
+	get_tree().create_timer(0.1).timeout.connect(func() -> void:
+		child_delay = desired_total_duration / get_children().size()
 
-	child_delay = desired_total_duration / get_children().size()
+		var ordered_children: Array[Node] = get_children()
 
-	var ordered_children: Array[Node] = get_children()
+		ordered_children.sort_custom(func(a: Node, b: Node) -> bool:
+			return a.global_position.y > b.global_position.y
+		)
 
-	ordered_children.sort_custom(func(a: Node, b: Node) -> bool:
-		return a.global_position.y > b.global_position.y
+		for ordered_child in ordered_children:
+			targets.append(DissolveTarget.new(ordered_child))
+
+		for target in targets:
+			target.parent.hide()
+			target.parent.process_mode = Node.PROCESS_MODE_DISABLED
+
+			for sprite in target.sprites:
+				sprite.hide()
+
+		show()
 	)
-
-	for ordered_child in ordered_children:
-		targets.append(DissolveTarget.new(ordered_child))
-
-	for target in targets:
-		target.parent.hide()
-		target.parent.process_mode = Node.PROCESS_MODE_DISABLED
-
-		for sprite in target.sprites:
-			sprite.hide()
 
 
 

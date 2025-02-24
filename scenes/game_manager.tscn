@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=68 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
@@ -42,6 +42,7 @@
 [ext_resource type="Resource" uid="uid://vxy0we7t1y8f" path="res://resources/powerups/powerup-strong-parry.tres" id="22_o8s1w"]
 [ext_resource type="Resource" uid="uid://di7cui1wcg7ff" path="res://resources/powerups/powerup-combo-ability.tres" id="23_cqgt4"]
 [ext_resource type="Resource" uid="uid://c64uan5qvhw34" path="res://resources/powerups/powerup-combo-length.tres" id="24_m4bod"]
+[ext_resource type="PackedScene" uid="uid://bfvketufl80v4" path="res://scenes/round_scenery/round_scenery_02.tscn" id="34_rjroa"]
 [ext_resource type="PackedScene" uid="uid://qbrmvdk3u63d" path="res://scenes/round_scenery/round_scenery_01.tscn" id="40_1yyf5"]
 [ext_resource type="PackedScene" uid="uid://mw252vf27v4x" path="res://scenes/challenge_scenes/challenge_basic_03.tscn" id="40_u168d"]
 [ext_resource type="PackedScene" uid="uid://7e7505bm2uvk" path="res://scenes/challenge_scenes/challenge_intermediate_01.tscn" id="41_fmt0c"]
@@ -67,6 +68,7 @@ max_rewards = 3
 other_list = Array[ExtResource("2_udu3i")]([])
 other_spawn_rate = 4.0
 max_other = 5
+round_scenery = ExtResource("40_1yyf5")
 ground_type = 0
 has_trampoline = false
 has_helper_enemy = false
@@ -94,6 +96,7 @@ max_rewards = 8
 other_list = Array[ExtResource("2_udu3i")]([])
 other_spawn_rate = 4.0
 max_other = 5
+round_scenery = ExtResource("34_rjroa")
 ground_type = 0
 has_trampoline = false
 has_helper_enemy = true
@@ -159,6 +162,7 @@ max_rewards = 2
 other_list = Array[ExtResource("2_udu3i")]([])
 other_spawn_rate = 4.0
 max_other = 5
+round_scenery = ExtResource("40_1yyf5")
 ground_type = 1
 has_trampoline = false
 has_helper_enemy = true
@@ -347,8 +351,8 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_1q03k"]
 script = ExtResource("7_frtjd")
-debug = true
-difficulty = 1.0
+debug = false
+difficulty = 100.0
 time_limit = 10
 enemy_count = 0
 chance = 1.0
