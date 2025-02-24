@@ -98,6 +98,7 @@ func _ready() -> void:
 		is_attacking = 0
 	)
 
+	Events.pickup_collected.connect(on_pickup_collected)
 
 	Events.enter_challenge_mode.connect(func(_player: PlayerCharacter) -> void: disable_movement())
 	Events.exit_challenge_mode.connect(func(_player: PlayerCharacter) -> void:	disable_movement())
@@ -160,6 +161,8 @@ func _process(delta: float) -> void:
 	if velocity.y > 0 and is_attacking > 0:
 		speed_particles.emitting = true
 		is_attacking = 2
+	else:
+		speed_particles.emitting = false
 
 	if velocity.y > 0 and is_attacking != 2 and speed_particles.emitting == true:
 		speed_particles.emitting = false
@@ -235,8 +238,10 @@ func _physics_process(delta: float) -> void:
 
 	if is_dashing == false:
 		if is_on_floor() and grounded == false:
+			animation_controller.animate_fall(movement_input)
 			SoundSystem.play_audio("fall")
 			FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
+
 
 		grounded = is_on_floor()
 	else:
@@ -265,7 +270,11 @@ func _physics_process(delta: float) -> void:
 
 	elif (grounded and is_attacking == 2 and !is_parrying): # Failed attack
 		# velocity.y = -failed_attack_str_mult * base_strength
-		velocity.y = -normal_attack_bounce_str_mult * base_strength
+		# velocity.y = -normal_attack_bounce_str_mult * base_strength
+		velocity.y = 0
+		FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
+		animation_controller.animate_fall(movement_input, "attack")
+
 		is_attacking = 0
 		is_parrying = false
 		FxSystem.play_fx("smoke-hit-small", position)
@@ -306,6 +315,7 @@ func handle_jump() -> void:
 			extra_speed.x = -movement_input.x * 1500 * extra_speed_strength
 			velocity.y = -base_strength * jump_str_mult
 			coyote_time = 100
+			animation_controller.animate_fall(movement_input, "wall")
 			SoundSystem.play_audio("jump")
 			FxSystem.play_fx("walk-smoke", position + Vector2(0, 15))
 			animation_controller.play_animation("parry", true)
@@ -351,7 +361,7 @@ func process_jump() -> void:
 		is_attacking = 2
 		received_damage = false
 
-		if movement_input.y >= 0.2:
+		if movement_input.y >= 0.6:
 			velocity.y = base_strength * 2.5
 			animation_controller.play_animation("attack", true, 3)
 			TimeManager.change_time_speed(0.03, 0.0008)
@@ -384,6 +394,7 @@ func process_attack() -> void:
 
 			can_get_hit = false
 			is_attacking = 0
+			animation_controller.animate_fall(movement_input)
 			get_tree().create_timer(0.1).timeout.connect(reset_can_get_hit)
 
 			GameManager.get_instance().set_powerup_active("double-jump", true)
@@ -405,6 +416,7 @@ func process_attack() -> void:
 func process_parry(target: Stats) -> void:
 	velocity.y = 0
 	is_parrying = true
+	animation_controller.animate_fall(movement_input, "parry")
 
 	Utils.fast_tween(self, "position:y", target.global_position.y - target.height, 0.05).tween_callback(
 		func() -> void:
@@ -526,6 +538,9 @@ func on_round_ended() -> void:
 	velocity.y = -base_strength * 2.3
 	is_attacking = 0
 
+
+func on_pickup_collected(pickup: Pickup) -> void:
+	animation_controller.animate_fall(movement_input)
 
 func on_picked_up_powerup(powerup: PowerUp) -> void:
 	if powerup.power_up_name == "sticky-boots":

@@ -93,6 +93,7 @@ func _process(delta: float) -> void:
 	rotation += rotation_speed * delta
 
 	if pickup_state == 1:
+		z_index = 5
 		rotation_speed += delta * 10
 		velocity += -direction * speed * 5
 

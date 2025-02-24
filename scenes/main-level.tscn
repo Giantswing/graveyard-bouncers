@@ -46,7 +46,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2sni1"]
 shader = ExtResource("34_46jna")
-shader_parameter/color = Color(0.47545, 0.333, 0.74, 0.0588235)
+shader_parameter/color = Color(0.41501, 0.3854, 0.47, 0.0588235)
 shader_parameter/alpha_multiplier = 4.05
 shader_parameter/OCTAVES = 4
 shader_parameter/enable_pixelation = false
@@ -587,6 +587,7 @@ z_index = -1
 position = Vector2(-236, -219)
 rotation = 3.14159
 scale = Vector2(1, -1)
+collision_layer = 64
 
 [node name="Collision" type="CollisionShape2D" parent="Scenery/PreRound/Platform"]
 position = Vector2(-36, -3)
@@ -622,6 +623,7 @@ position = Vector2(114, -76)
 unique_name_in_owner = true
 z_index = -1
 position = Vector2(236, -98)
+collision_layer = 64
 script = ExtResource("16_2sni1")
 
 [node name="Collision" type="CollisionShape2D" parent="Scenery/PreRound/PortalPlatform"]
@@ -650,6 +652,8 @@ metadata/_aseprite_wizard_source_file_hash_ = "ff11123084bfb39735a0fafd549c39f9"
 
 [node name="ChallengePortal" parent="Scenery/PreRound/PortalPlatform/Collision" instance=ExtResource("5_ja4wt")]
 position = Vector2(17.9999, -30)
+
+[node name="InRoundScenery" type="Node2D" parent="Scenery"]
 
 [node name="TopPart" type="Node2D" parent="Scenery"]
 position = Vector2(0, -400)
@@ -1812,7 +1816,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "6629a63eaf3f52ecd7bae216542966e8"
 
 [node name="SoulCube" parent="." instance=ExtResource("43_5itvi")]
-position = Vector2(-112, -122)
+position = Vector2(119, -212)
 
 [node name="SoulCube2" parent="." instance=ExtResource("43_5itvi")]
-position = Vector2(-112, -186)
+position = Vector2(119, -276)
