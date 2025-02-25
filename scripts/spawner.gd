@@ -51,5 +51,6 @@ func _process(delta: float) -> void:
 func process_spawn() -> void:
 	var new_obj: Node2D = spawn.instantiate()
 	new_obj.global_position = spawn_point.global_position
-	game_manager.other_container.add_child(new_obj)
+	# game_manager.other_container.add_child(new_obj)
+	add_child(new_obj)
 	spawn_limit -= 1
