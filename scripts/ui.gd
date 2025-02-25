@@ -100,6 +100,9 @@ func start_countdown(time: int) -> void:
 		GameRound.ROUND_MODES.ENEMY_COUNT:
 			objective = "Defeat " + str(GameManager.get_instance().round_data.enemy_count) + " enemies"
 
+		GameRound.ROUND_MODES.COLLECT:
+			objective = "Collect " + str(GameManager.get_instance().round_data.collect_amount) + " soul cubes"
+
 	objective_label.text = objective
 
 	countdown_label.label_settings.font_size = increased_countdown_font_size

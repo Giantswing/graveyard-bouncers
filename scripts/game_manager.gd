@@ -17,6 +17,7 @@ var can_restart: bool = false
 var challenge_data: Challenge = null
 var current_game_width: float = 0
 var enemy_count: int = 0
+var collect_count: int = 0
 var enemy_spawn_countdown: float = 0
 var game_mode: MODES = MODES.BEFORE_ROUND
 var game_paused: bool = false
@@ -102,6 +103,7 @@ func _ready() -> void:
 	Events.coins_changed.emit(coins)
 	Events.round_counter_changed.emit(current_round)
 	Events.level_restart.emit()
+	Events.pickup_collected.connect(on_pickup_collected)
 
 	Events.enemy_died.connect(func(stats: Stats, from_parry: bool) -> void:
 		var result_combo: int = player_combo + 1
@@ -218,6 +220,11 @@ func on_seconds_timer_timeout() -> void:
 	
 	check_end_round()
 
+func on_pickup_collected(pickup: Pickup) -> void:
+	if pickup.pickup_option == Pickup.PICKUP_OPTIONS.SOUL_CUBE and round_data.mode == GameRound.ROUND_MODES.COLLECT and game_mode == MODES.IN_ROUND:
+		collect_count += 1
+		check_end_round()
+
 func check_end_round() -> void:
 	match round_data.mode:
 		GameRound.ROUND_MODES.TIME_LIMIT:
@@ -228,6 +235,9 @@ func check_end_round() -> void:
 			if enemy_count <= 0:
 				Events.round_ended.emit()
 
+		GameRound.ROUND_MODES.COLLECT:
+			if collect_count >= round_data.collect_amount:
+				Events.round_ended.emit()
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
 	if new_hp < player_hp:
@@ -389,6 +399,7 @@ func set_up_round() -> void:
 	
 
 	enemy_count = round_data.enemy_count
+	collect_count = 0
 
 	if round_data.round_scenery != null:
 		in_round_scenery.scenery_to_spawn = round_data.round_scenery

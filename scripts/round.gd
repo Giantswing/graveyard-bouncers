@@ -20,6 +20,7 @@ enum ROUND_MODES {
 @export var mode: ROUND_MODES = ROUND_MODES.TIME_LIMIT
 @export var time_limit: int = 45
 @export var enemy_count: int = 0
+@export var collect_amount: int = 0
 
 @export var chance: float = 1
 

@@ -42,7 +42,7 @@
 [ext_resource type="Resource" uid="uid://vxy0we7t1y8f" path="res://resources/powerups/powerup-strong-parry.tres" id="22_o8s1w"]
 [ext_resource type="Resource" uid="uid://di7cui1wcg7ff" path="res://resources/powerups/powerup-combo-ability.tres" id="23_cqgt4"]
 [ext_resource type="Resource" uid="uid://c64uan5qvhw34" path="res://resources/powerups/powerup-combo-length.tres" id="24_m4bod"]
-[ext_resource type="PackedScene" uid="uid://qbrmvdk3u63d" path="res://scenes/round_scenery/round_scenery_01.tscn" id="40_1yyf5"]
+[ext_resource type="PackedScene" uid="uid://djc4bnnbx8t66" path="res://scenes/soul-cube.tscn" id="40_1yyf5"]
 [ext_resource type="PackedScene" uid="uid://mw252vf27v4x" path="res://scenes/challenge_scenes/challenge_basic_03.tscn" id="40_u168d"]
 [ext_resource type="PackedScene" uid="uid://7e7505bm2uvk" path="res://scenes/challenge_scenes/challenge_intermediate_01.tscn" id="41_fmt0c"]
 [ext_resource type="PackedScene" uid="uid://b8wexraft51h2" path="res://scenes/challenge_scenes/challenge_basic_04.tscn" id="45_1q03k"]
@@ -54,6 +54,7 @@ difficulty = 1.0
 mode = 0
 time_limit = 20
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 200.0
 start_game_width = 200.0
@@ -82,6 +83,7 @@ difficulty = 2.0
 mode = 0
 time_limit = 15
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 300.0
 start_game_width = 150.0
@@ -110,6 +112,7 @@ difficulty = 3.0
 mode = 0
 time_limit = 25
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 400.0
 start_game_width = 400.0
@@ -150,6 +153,7 @@ difficulty = 4.0
 mode = 0
 time_limit = 45
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 300.0
 start_game_width = 300.0
@@ -190,6 +194,7 @@ difficulty = 5.0
 mode = 0
 time_limit = 45
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 600.0
 start_game_width = 150.0
@@ -218,6 +223,7 @@ difficulty = 6.0
 mode = 0
 time_limit = 40
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 700.0
 start_game_width = 150.0
@@ -258,6 +264,7 @@ difficulty = 7.0
 mode = 0
 time_limit = 35
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 400.0
 start_game_width = 150.0
@@ -310,6 +317,7 @@ difficulty = 8.0
 mode = 0
 time_limit = 35
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 450.0
 start_game_width = 150.0
@@ -338,6 +346,7 @@ difficulty = 8.0
 mode = 0
 time_limit = 30
 enemy_count = 0
+collect_amount = 0
 chance = 1.0
 max_game_width = 600.0
 start_game_width = 150.0
@@ -361,13 +370,13 @@ metadata/_custom_type_script = ExtResource("7_frtjd")
 
 [sub_resource type="Resource" id="Resource_rjroa"]
 script = ExtResource("2_udu3i")
-name = "zombie"
-prefab = ExtResource("16_pc0jn")
+name = "soul-cube"
+prefab = ExtResource("40_1yyf5")
 chance = 1.0
 chance_decay = 1.0
-free_space = 30.0
-spawn_type = 0
-amount = 5
+free_space = 150.0
+spawn_type = 1
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -375,19 +384,19 @@ metadata/_custom_type_script = ExtResource("2_udu3i")
 script = ExtResource("7_frtjd")
 debug = true
 difficulty = 100.0
-mode = 1
+mode = 2
 time_limit = 10
 enemy_count = 15
+collect_amount = 3
 chance = 1.0
 max_game_width = 650.0
 start_game_width = 650.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
-round_scenery = ExtResource("40_1yyf5")
-enemy_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_rjroa")])
+enemy_list = Array[ExtResource("2_udu3i")]([])
 enemy_spawn_rate = 2.0
 max_enemies = 10
-reward_list = Array[ExtResource("2_udu3i")]([])
+reward_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_rjroa")])
 reward_spawn_rate = 4.0
 max_rewards = 5
 other_list = Array[ExtResource("2_udu3i")]([])
