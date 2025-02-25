@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://7e7505bm2uvk"]
+[gd_scene load_steps=12 format=4 uid="uid://7e7505bm2uvk"]
 
 [ext_resource type="PackedScene" uid="uid://bpbg107alh8ou" path="res://scenes/challenge_portal.tscn" id="1_4pgoa"]
 [ext_resource type="TileSet" uid="uid://ot8wl4noujsw" path="res://tiles/tileset01.tres" id="2_64pxc"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bc3x6txpt86pv" path="res://scenes/coin.tscn" id="7_ejvvu"]
 [ext_resource type="PackedScene" uid="uid://dtyg2va2kyx66" path="res://scenes/lava_ground.tscn" id="8_7occ3"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="10_77xs3"]
+[ext_resource type="PackedScene" uid="uid://hbv4b73838o7" path="res://scenes/spawner.tscn" id="11_pgkgj"]
 
 [node name="ChallengeIntermediate01" type="Node2D"]
 
@@ -57,9 +58,6 @@ position = Vector2(76, -372)
 
 [node name="AbilityOrb" parent="." instance=ExtResource("7_64pxc")]
 position = Vector2(-341, 145)
-
-[node name="AbilityOrb2" parent="." instance=ExtResource("7_64pxc")]
-position = Vector2(-342, -238)
 
 [node name="LavaGround" parent="." instance=ExtResource("8_7occ3")]
 z_index = -1
@@ -110,3 +108,8 @@ position = Vector2(-22, -280)
 
 [node name="Heart" parent="." instance=ExtResource("10_77xs3")]
 position = Vector2(359, -430)
+
+[node name="Spawner" parent="." instance=ExtResource("11_pgkgj")]
+position = Vector2(-338, -226)
+spawn = ExtResource("7_64pxc")
+time_to_spawn = 2.0

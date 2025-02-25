@@ -100,7 +100,7 @@ start_follow_sound = "pickup-follow"
 pickup_sound = "enemy-death"
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

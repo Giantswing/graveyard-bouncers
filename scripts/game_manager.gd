@@ -212,7 +212,7 @@ func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
-	if round_time >= round_data.time_limit && round_data.time_limit > 0:
+	if round_time >= round_data.time_limit && round_data.time_limit > 0 && round_data.mode == round_data.ROUND_MODES.TIME_LIMIT:
 		Events.round_ended.emit()
 
 
@@ -428,7 +428,7 @@ func has_powerup(powerup_name: String, ignore_active: bool = false) -> bool:
 	return false
 
 
-	
+
 func set_powerup_active(powerup_name: String, active: bool) -> void:
 	for powerup in powerups:
 		if powerup.power_up_name == powerup_name:
