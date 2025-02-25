@@ -15,7 +15,7 @@ var delta_process: float = 0.0
 func _ready() -> void:
 	game_manager = GameManager.get_instance()
 	spawn_name = spawn.instantiate().name
-	print(spawn_name)
+	# print(spawn_name)
 
 func _process(delta: float) -> void:
 	if spawn_limit == 0:

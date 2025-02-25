@@ -91,8 +91,14 @@ func start_countdown(time: int) -> void:
 	objective_label.label_settings.font_size = 30
 
 	var objective: String = ""
-	if GameManager.get_instance().round_data.time_limit > 0:
-		objective = "Survive for " + str(GameManager.get_instance().round_data.time_limit) + " seconds"
+	var mode: int = GameManager.get_instance().round_data.mode
+
+	match mode:
+		GameRound.ROUND_MODES.TIME_LIMIT:
+			objective = "Survive for " + str(GameManager.get_instance().round_data.time_limit) + " seconds"
+
+		GameRound.ROUND_MODES.ENEMY_COUNT:
+			objective = "Defeat " + str(GameManager.get_instance().round_data.enemy_count) + " enemies"
 
 	objective_label.text = objective
 

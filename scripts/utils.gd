@@ -31,6 +31,12 @@ func spawn_prefab(prefab: PackedScene, container: Node2D, pos_type: PrefabChance
 	if container == null:
 		container = $"/root/Level/Scenery/OtherContainer" 
 
+	if chance_container != null:
+		if chance_container.amount == 0:
+			return null
+		else:
+			chance_container.amount -= 1
+
 	var horizontal_wall_padding := 20
 	var max_tries := 20
 	var game_width := GameManager.instance.game_width

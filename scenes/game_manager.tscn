@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://b2woo3o5u7plh"]
+[gd_scene load_steps=68 format=3 uid="uid://b2woo3o5u7plh"]
 
 [ext_resource type="Script" uid="uid://bpl7sasa57kjk" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="PackedScene" uid="uid://dd1tc4t4v24k0" path="res://scenes/heart-reward.tscn" id="2_rtxrx"]
@@ -139,6 +139,7 @@ chance = 0.5
 chance_decay = 1.0
 free_space = 30.0
 spawn_type = 0
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -178,6 +179,7 @@ chance = 0.25
 chance_decay = 1.0
 free_space = 50.0
 spawn_type = 0
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -245,6 +247,7 @@ chance = 0.25
 chance_decay = 1.0
 free_space = 30.0
 spawn_type = 1
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -284,6 +287,7 @@ chance = 1.0
 chance_decay = 1.0
 free_space = 80.0
 spawn_type = 1
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -295,6 +299,7 @@ chance = 1.0
 chance_decay = 1.0
 free_space = 120.0
 spawn_type = 3
+amount = -1
 variations = Array[ExtResource("2_udu3i")]([])
 metadata/_custom_type_script = ExtResource("2_udu3i")
 
@@ -354,20 +359,32 @@ has_fog = false
 spike_amount = 0
 metadata/_custom_type_script = ExtResource("7_frtjd")
 
+[sub_resource type="Resource" id="Resource_rjroa"]
+script = ExtResource("2_udu3i")
+name = "zombie"
+prefab = ExtResource("16_pc0jn")
+chance = 1.0
+chance_decay = 1.0
+free_space = 30.0
+spawn_type = 0
+amount = 5
+variations = Array[ExtResource("2_udu3i")]([])
+metadata/_custom_type_script = ExtResource("2_udu3i")
+
 [sub_resource type="Resource" id="Resource_1q03k"]
 script = ExtResource("7_frtjd")
-debug = false
+debug = true
 difficulty = 100.0
-mode = 0
+mode = 1
 time_limit = 10
-enemy_count = 0
+enemy_count = 15
 chance = 1.0
 max_game_width = 650.0
 start_game_width = 650.0
 gravity_multiplier = 0.5
 game_width_speed_increase = 4.0
 round_scenery = ExtResource("40_1yyf5")
-enemy_list = Array[ExtResource("2_udu3i")]([])
+enemy_list = Array[ExtResource("2_udu3i")]([SubResource("Resource_rjroa")])
 enemy_spawn_rate = 2.0
 max_enemies = 10
 reward_list = Array[ExtResource("2_udu3i")]([])

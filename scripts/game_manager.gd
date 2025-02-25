@@ -112,6 +112,10 @@ func _ready() -> void:
 		if stats.gives_combo:
 			Events.combo_changed.emit(result_combo)
 
+		if round_data.mode == GameRound.ROUND_MODES.ENEMY_COUNT and stats.hp_max > 0 and stats.score_reward > 0 and game_mode == MODES.IN_ROUND:
+			enemy_count -= 1
+			check_end_round()
+
 	)
 
 	Events.enemy_hit.connect(func(stats: Stats, from_parry: bool) -> void:
@@ -212,9 +216,17 @@ func on_seconds_timer_timeout() -> void:
 	round_time += 1
 	Events.round_time_changed.emit(round_time)
 	
-	if round_time >= round_data.time_limit && round_data.time_limit > 0 && round_data.mode == round_data.ROUND_MODES.TIME_LIMIT:
-		Events.round_ended.emit()
+	check_end_round()
 
+func check_end_round() -> void:
+	match round_data.mode:
+		GameRound.ROUND_MODES.TIME_LIMIT:
+			if round_time >= round_data.time_limit && round_data.time_limit > 0:
+				Events.round_ended.emit()
+
+		GameRound.ROUND_MODES.ENEMY_COUNT:
+			if enemy_count <= 0:
+				Events.round_ended.emit()
 
 
 func on_hp_changed(new_hp: int, _change: int) -> void:
@@ -376,6 +388,7 @@ func set_up_round() -> void:
 			Utils.fast_tween(lava_floor, "position:y", ground_height, 0.5)
 	
 
+	enemy_count = round_data.enemy_count
 
 	if round_data.round_scenery != null:
 		in_round_scenery.scenery_to_spawn = round_data.round_scenery
